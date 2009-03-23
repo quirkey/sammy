@@ -79,7 +79,7 @@ var jqUnit = jqUnit || {};
   
   function test(name, callback, nowait) {
     if(_config.currentModule)
-      name = _config.currentModule + " module: " + name;
+      name = _config.currentModule + " : " + name;
       
     var filter = location.search.slice(1);
     if ( filter && encodeURIComponent(name).indexOf(filter) == -1 )
