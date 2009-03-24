@@ -22,8 +22,7 @@
 
     context('Sammy.Application', 'route', {
       before: function() {
-        this.app = Sammy.Application(function() {
-
+        this.app = new Sammy.Application(function() {
           this.route('get', /test/, function() {
             $('#main').trigger('click');
           });
@@ -36,23 +35,25 @@
     })
     .should('throw error if parameters are not correct', function() {
       var app = this.a('app');
-      try {
+      raised(/route/, function () {
         app.route('get', function() {});
-      } catch(e) {
-        match(/route/,e.message);
-      }
+      });
     })		
     .should('turn a string path into a regular expression', function() {
       var app = this.a('app');
-      isType(app.routes['get'][1], Object);
+      ok(app.routes['get']);
+      var route = app.routes['get'][1];
+      isType(route.path, RegExp);
     })
     .should('append route to application.routes object', function() {
       var app = this.a('app');
-      ok(app.routes['get'])
-      isType(app.routes['get'][0], Object);
+      ok(app.routes['get']);
+      var route = app.routes['get'][0]
+      isType(route.path, RegExp);
+      equals(route.verb, 'get');
+      defined(route, 'callback');
     });
-    // 
-
+    //
   }
 
 })(jQuery);
