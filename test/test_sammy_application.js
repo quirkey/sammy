@@ -1,45 +1,58 @@
 (function($) {
-  
+
   with(jqUnit) {
-    describe('Sammy.Application', 'init');
-    should('initialize with function', function() {
-      ok(true);
+
+    context('Sammy.Application', 'init', {
+      before: function() {
+        this.app = new Sammy.Application(function() {
+          this.random_setting = 1;
+        });
+      }
+    })
+    .should('create a sammy object', function() {
+      defined(this.a('app'), 'route');
+    })
+    .should('set arbitrary settings in the app', function() {
+      equals(this.a('app').random_setting, 1);
+    })
+    .should('initialize empty routes object', function() {
+      isType(this.a('app').routes, Object);
     });
-    
-    should('return an application object', function() {
-      ok(true);
+
+
+    context('Sammy.Application', 'route', {
+      before: function() {
+        this.app = Sammy.Application(function() {
+
+          this.route('get', /test/, function() {
+            $('#main').trigger('click');
+          });
+
+          this.route('get', '/blah', function() {
+            $('#testarea').show();
+          });
+        });
+      }
+    })
+    .should('throw error if parameters are not correct', function() {
+      var app = this.a('app');
+      try {
+        app.route('get', function() {});
+      } catch(e) {
+        match(/route/,e.message);
+      }
+    })		
+    .should('turn a string path into a regular expression', function() {
+      var app = this.a('app');
+      isType(app.routes['get'][1], Object);
+    })
+    .should('append route to application.routes object', function() {
+      var app = this.a('app');
+      ok(app.routes['get'])
+      isType(app.routes['get'][0], Object);
     });
-    
-    describe('Sammy.Application', 'route');
-    should('accept a type, a path, and a callback', function() {
-      ok(true);
-    });
-    
-    should('throw error if parameters are not correct', function() {
-      
-    });
-    
-    should('turn a string path into a regular expression', function() {
-      
-    });
-    
-    should('append route to application.routes object', function() {
-      
-    });
-    
-    describe('Sammy.Application', '_find_route');
-    should('find closest match when there are multiple possibilities', function() {
-      
-    });
-    
-    should('resort to / if no path is given', function() {
-      
-    });
-    
-    describe('Sammy.Application', '_call');
-    describe('Sammy.Application', '_call', 'with a Sammy.Event');
-    
-    
+    // 
+
   }
-  
+
 })(jQuery);
