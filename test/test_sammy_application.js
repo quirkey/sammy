@@ -33,13 +33,13 @@
         });
       }
     })
-    .should('throw error if parameters are not correct', function() {
+    .should_eventually('throw error if parameters are not correct', function() {
       var app = this.a('app');
       raised(/route/, function () {
         app.route('get', function() {});
       });
     })		
-    .should('turn a string path into a regular expression', function() {
+    .should_eventually('turn a string path into a regular expression', function() {
       var app = this.a('app');
       ok(app.routes['get']);
       var route = app.routes['get'][1];
@@ -54,6 +54,23 @@
       defined(route, 'callback');
     });
     //
+    
+    context('Sammy.Application','run', {
+    
+    })
+    .should_eventually('attach application instance to body')
+    .should_eventually('live bind events to all forms')
+    .should_eventually('bind event to URL change')
+    .should_eventually('bind event to clicks as specified by routes')
+    
+    context('Sammy.Application','lookup_route', {
+      
+    })
+    .should_eventually('find a route by verb and route')
+    .should_eventually('find a route by verb and partial route')
+    .should_eventually('raise error when route can not be found')
+    .should_eventually('die silently if route is not found and 404s are off')
+    
   }
 
 })(jQuery);
