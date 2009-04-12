@@ -63,12 +63,39 @@
     .should_eventually('bind event to URL change')
     .should_eventually('bind event to clicks as specified by routes')
     
-    context('Sammy.Application','lookup_route', {
-      
+    context('Sammy.Application','lookupRoute', {
+      before: function() {
+        this.app = new Sammy.Application(function() {
+          this.route('get', /\/blah\/(.+)/, function() {
+            $('#main').trigger('click');
+          });
+
+          this.route('post', '/blah', function() {
+            $('#testarea').show();
+          });
+        });
+      }
     })
-    .should_eventually('find a route by verb and route')
-    .should_eventually('find a route by verb and partial route')
-    .should_eventually('raise error when route can not be found')
+    .should('find a route by verb and route', function() {
+      var app = this.a('app');
+      var route = app.lookupRoute('post','/blah');
+      isType(route, Object)
+      equals(route.verb, 'post');
+      defined(route, 'callback');
+    })
+    .should('find a route by verb and partial route', function() {
+      var app = this.a('app');
+      var route = app.lookupRoute('get','/blah/mess');
+      isType(route, Object)
+      equals(route.verb, 'get');
+      defined(route, 'callback');
+    })
+    .should('raise error when route can not be found', function() {
+      var app = this.a('app');
+      raised(/404/, function() {
+        app.lookupRoute('get','/blurgh');
+      });
+    })
     .should_eventually('die silently if route is not found and 404s are off')
     
   }
