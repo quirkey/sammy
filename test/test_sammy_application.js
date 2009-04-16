@@ -30,6 +30,10 @@
           this.route('get', '/blah', function() {
             $('#testarea').show();
           });
+          
+          this.get(/blurgh/, function() {
+            alert('blurgh');
+          });
         });
       }
     })
@@ -52,15 +56,39 @@
       isType(route.path, RegExp);
       equals(route.verb, 'get');
       defined(route, 'callback');
+    })
+    .should('allow shortcuts for defining routes', function() {
+      var app = this.a('app');
+      ok(app.routes['get']);
+      var route = app.routes['get'][2];
+      isType(route.path, RegExp);
+      equals(route.verb, 'get');
+      defined(route, 'callback');
     });
     //
     
     context('Sammy.Application','run', {
-    
+      before: function () {
+        $('.get_area').html('');
+        this.app = new Sammy.Application(function() {
+          this.get('#/test', function() {
+            $('.get_area').html('test success');
+          });
+        });
+        this.app.run();
+      },
+      after: function () {
+        this.app.unload();
+      }
     })
-    .should_eventually('attach application instance to body')
+    .should('attach application instance to body', function() {
+      isObj(this.a('app'), $.data('body', 'sammy.app'));
+    })
     .should_eventually('live bind events to all forms')
-    .should_eventually('bind event to URL change')
+    .should('trigger events on URL change', function() {
+      window.location = '#/test';
+      equals('test success', $('.get_area').html());
+    })
     .should_eventually('bind event to clicks as specified by routes')
     
     context('Sammy.Application','lookupRoute', {
