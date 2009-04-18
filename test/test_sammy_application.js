@@ -69,12 +69,16 @@
     
     context('Sammy.Application','run', {
       before: function () {
-        $('.get_area').html('');
+        // $('.get_area').html('');
+        $('.get_area').show();
+        $('.get_area').text('test success');
         this.app = new Sammy.Application(function() {
-          this.get('#/test', function() {
-            $('.get_area').html('test success');
+          this.route('get', '#/test', function() {
+            $('#main').text('test success');
+            this.log('running bitches');
           });
         });
+        console.log(this.app);
         this.app.run();
       },
       after: function () {
@@ -82,12 +86,12 @@
       }
     })
     .should('attach application instance to body', function() {
-      isObj(this.a('app'), $.data('body', 'sammy.app'));
+      isObj($.data('body', 'sammy.app'), this.a('app'));
     })
     .should_eventually('live bind events to all forms')
     .should('trigger events on URL change', function() {
       window.location = '#/test';
-      equals('test success', $('.get_area').html());
+      equals($('.get_area').text(), 'test success');
     })
     .should_eventually('bind event to clicks as specified by routes')
     
