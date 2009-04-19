@@ -16,11 +16,15 @@
   <script type="text/javascript" charset="utf-8">
     ;(function($) {
       var app = new Sammy.Application(function() {
+        with(this) {
+          get('#/', function() {
+            this.render('text', '#main', '');
+          });
         
-        this.get('#/', function() {
-          this.render('text', '#main', 'hello world!');
-        });
-        
+          get('#/test', function() {
+            this.render('text', '#main', 'Hello World');
+          });
+        }
       });
     
       $(function() {
@@ -35,8 +39,9 @@
   <div id="container">
     <div id="main">
     </div>
-    <div id="link">
-      <p><a href="#/">Click me!</a></p>
+    <ul id="link">
+      <li><a href="#/test">Click me!</a></li>
+      <li><a href="#/">Back</a></li>
     </div>
   </div>
 </body>
