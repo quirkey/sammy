@@ -62,16 +62,17 @@
       .should('put html in selector', function() {
         equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
       });
-
-      context('Sammy', 'EventContext', 'render', 'html', {
+      
+      context('Sammy', 'EventContext', 'render', 'partial', {
         before: function() {
           this.context = test_context;
-          this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
+          this.context.render('partial', '#test_area', 'fixtures/partial.html')
         }
       })
       .should('put html in selector', function() {
-        equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
+        equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
       });
+      
 
     };
   });

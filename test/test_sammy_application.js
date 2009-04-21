@@ -87,8 +87,13 @@
       })
       .should_eventually('live bind events to all forms')
       .should('trigger events on URL change', function() {
-        window.location = '#/test';
-        equals($('.get_area').text(), 'test success');
+        window.location.hash = '#/test';
+        expect(1);
+        stop();
+        setTimeout(function() {
+          equals($('.get_area').text(), 'test success');
+          start();
+        }, 1000);
       })
       .should_eventually('bind event to clicks as specified by routes')
 
