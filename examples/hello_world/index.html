@@ -17,13 +17,15 @@
     ;(function($) {
       var app = new Sammy.Application(function() {
         with(this) {
-          get('#/', function() {
-            this.render('text', '#main', '');
-          });
+          
+          get('#/', function() { with(this) {
+            render('text', '#main', '');
+          }});
         
-          get('#/test', function() {
-            this.render('text', '#main', 'Hello World');
-          });
+          get('#/test', function() { with(this) {
+            render('text', '#main', 'Hello World');
+          }});
+          
         }
       });
     

@@ -29,8 +29,13 @@
           this.context = test_context;
         }
       })
-      .should('set full location if url is provided')
-      .should_eventually('only set hash if location is prefixed with #');
+      .should_eventually('set full location if url is provided', function() {
+
+      })
+      .should('only set hash if location is prefixed with #', function() {
+        this.a('context').redirect('#/blah');
+        equals('#/blah', window.location.hash);
+      });
 
       context('Sammy', 'EventContext', 'raise')
       .should_eventually('throw error');
@@ -58,6 +63,15 @@
         equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
       });
 
+      context('Sammy', 'EventContext', 'render', 'html', {
+        before: function() {
+          this.context = test_context;
+          this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
+        }
+      })
+      .should('put html in selector', function() {
+        equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
+      });
 
     };
   });
