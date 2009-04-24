@@ -74,6 +74,11 @@
               $('.get_area').text('test success');
               this.log('running bitches');
             });
+            
+            this.route('post', /test/, function() {
+              $('.get_area').text(this.params['test_input']);
+              return false;
+            });
           });
           this.app.run();
         },
@@ -85,15 +90,13 @@
         console.log('app', this.a('app'), $.data('body', 'sammy.app'));
         isObj($.data('body', 'sammy.app'), this.a('app'));
       })
-      .should_eventually('live bind events to all forms')
+      .should('live bind events to all forms', function() {
+        $('#form').submit();
+        equals($('.get_area').text(),'TEST');
+      })
       .should('trigger events on URL change', function() {
         window.location.hash = '#/test';
-        expect(1);
-        stop();
-        setTimeout(function() {
-          equals($('.get_area').text(), 'test success');
-          start();
-        }, 1000);
+        equals($('.get_area').text(), 'test success');
       })
       .should_eventually('bind event to clicks as specified by routes')
 
