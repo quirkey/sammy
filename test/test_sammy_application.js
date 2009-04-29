@@ -9,13 +9,13 @@
         }
       })
       .should('create a sammy object', function() {
-        defined(this.a('app'), 'route');
+        defined(this.app, 'route');
       })
       .should('set arbitrary settings in the app', function() {
-        equals(this.a('app').random_setting, 1);
+        equals(this.app.random_setting, 1);
       })
       .should('initialize empty routes object', function() {
-        isType(this.a('app').routes, Object);
+        isType(this.app.routes, Object);
       });
 
 
@@ -37,19 +37,19 @@
         }
       })
       .should_eventually('throw error if parameters are not correct', function() {
-        var app = this.a('app');
+        var app = this.app;
         raised(/route/, function () {
           app.route('get', function() {});
         });
       })		
       .should_eventually('turn a string path into a regular expression', function() {
-        var app = this.a('app');
+        var app = this.app;
         ok(app.routes['get']);
         var route = app.routes['get'][1];
         isType(route.path, RegExp);
       })
       .should('append route to application.routes object', function() {
-        var app = this.a('app');
+        var app = this.app;
         ok(app.routes['get']);
         var route = app.routes['get'][0]
         isType(route.path, RegExp);
@@ -57,7 +57,7 @@
         defined(route, 'callback');
       })
       .should('allow shortcuts for defining routes', function() {
-        var app = this.a('app');
+        var app = this.app;
         ok(app.routes['get']);
         var route = app.routes['get'][2];
         isType(route.path, RegExp);
@@ -68,11 +68,11 @@
 
       context('Sammy.Application','run', {
         before: function () {
-          $('.get_area').html('');
+          // $('.get_area').html('');
           this.app = new Sammy.Application(function() {
             this.route('get', '#/test', function() {
+              console.log('running')
               $('.get_area').text('test success');
-              this.log('running bitches');
             });
             
             this.route('post', /test/, function() {
@@ -87,16 +87,19 @@
         }
       })
       .should('attach application instance to body', function() {
-        console.log('app', this.a('app'), $.data('body', 'sammy.app'));
-        isObj($.data('body', 'sammy.app'), this.a('app'));
+        isObj($('body').data('sammy.app'), this.app);
       })
       .should('live bind events to all forms', function() {
-        $('#form').submit();
-        equals($('.get_area').text(),'TEST');
+        $('form').submit();
+        soon(function() {
+          this.equals($('.get_area').text(),'TEST');
+        });
       })
       .should('trigger events on URL change', function() {
         window.location.hash = '#/test';
-        equals($('.get_area').text(), 'test success');
+        soon(function() {
+          this.equals($('.get_area').text(), 'test success');
+        }, 5);
       })
       .should_eventually('bind event to clicks as specified by routes')
 
@@ -114,21 +117,21 @@
         }
       })
       .should('find a route by verb and route', function() {
-        var app = this.a('app');
+        var app = this.app;
         var route = app.lookupRoute('post','/blah');
         isType(route, Object)
         equals(route.verb, 'post');
         defined(route, 'callback');
       })
       .should('find a route by verb and partial route', function() {
-        var app = this.a('app');
+        var app = this.app;
         var route = app.lookupRoute('get','/blah/mess');
         isType(route, Object)
         equals(route.verb, 'get');
         defined(route, 'callback');
       })
       .should('raise error when route can not be found', function() {
-        var app = this.a('app');
+        var app = this.app;
         raised(/404/, function() {
           app.lookupRoute('get','/blurgh');
         });
