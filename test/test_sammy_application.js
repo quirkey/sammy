@@ -39,12 +39,6 @@
           });
         }
       })
-      .should_eventually('throw error if parameters are not correct', function() {
-        var app = this.app;
-        raised(/route/, function () {
-          app.route('get', function() {});
-        });
-      })		
       .should_eventually('turn a string path into a regular expression', function() {
         var app = this.app;
         ok(app.routes['get']);
