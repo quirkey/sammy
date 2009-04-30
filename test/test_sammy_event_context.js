@@ -1,7 +1,9 @@
 (function($) {
   $(function() {
     with(jqUnit) {
-      var test_app = new Sammy.Application(function() {});
+      var test_app = new Sammy.Application(function() {
+        this.silence_404 = false;
+      });
       var test_context = new Sammy.EventContext(test_app, 'get', '#/test/:test', {test: 'hooray'});
 
       context('Sammy', 'EventContext','init', {
@@ -40,11 +42,17 @@
         equals('#/blah', window.location.hash);
       });
 
-      context('Sammy', 'EventContext', 'raise')
-      .should_eventually('throw error');
-
-      context('Sammy', 'EventContext', 'not_found')
-      .should_eventually('throw not found error')
+      context('Sammy', 'EventContext', 'notFound', {
+        before: function() {
+          this.context = test_context;
+        }
+      })
+      .should('throw 404 error', function() {
+        var context = this.context;
+        raised(/404/, function() {
+          context.notFound();
+        });
+      });
 
       context('Sammy', 'EventContext', 'render', 'text', {
         before: function() {
