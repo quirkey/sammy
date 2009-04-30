@@ -71,8 +71,9 @@
           // $('.get_area').html('');
           this.app = new Sammy.Application(function() {
             this.route('get', '#/test', function() {
-              console.log('running')
+              this.log('running test')
               $('.get_area').text('test success');
+              this.log('running test', $('.get_area').text());
             });
             
             this.route('post', /test/, function() {
@@ -81,25 +82,26 @@
             });
           });
           this.app.run();
-        },
-        after: function () {
-          this.app.unload();
         }
       })
       .should('attach application instance to body', function() {
         isObj($('body').data('sammy.app'), this.app);
       })
       .should('live bind events to all forms', function() {
+        var app = this.app;
         $('form').submit();
         soon(function() {
           this.equals($('.get_area').text(),'TEST');
+          app.unload();
         });
       })
       .should('trigger events on URL change', function() {
+        var app = this.app;
         window.location.hash = '#/test';
         soon(function() {
           this.equals($('.get_area').text(), 'test success');
-        }, 5);
+          app.unload();
+        });
       })
       .should_eventually('bind event to clicks as specified by routes')
 

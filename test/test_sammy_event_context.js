@@ -73,7 +73,9 @@
       })
       .should('put html in selector', function() {
         this.context.render('partial', '#test_area', 'fixtures/partial.html')
-        equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+        soon(function () {
+          this.equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+        });
       });
       
 
