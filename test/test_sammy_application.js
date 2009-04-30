@@ -33,17 +33,29 @@
               $('#testarea').show();
             });
 
+            this.route('get', '/boosh/:boosh1/:boosh2', function() {
+              $('#testarea').show();
+            });
+
             this.get(/blurgh/, function() {
               alert('blurgh');
             });
           });
         }
       })
-      .should_eventually('turn a string path into a regular expression', function() {
+      .should('turn a string path into a regular expression', function() {
         var app = this.app;
         ok(app.routes['get']);
         var route = app.routes['get'][1];
         isType(route.path, RegExp);
+      })
+      .should('turn a string path with a named param into a regex and save to param_names', function() {
+        var app = this.app;
+        ok(app.routes['get']);
+        var route = app.routes['get'][2];
+        isType(route.path, RegExp);
+        isObj(route.path, /\/boosh\/([^\/]+)\/([^\/]+)/);
+        isObj(['boosh1', 'boosh2'], route.param_names);
       })
       .should('append route to application.routes object', function() {
         var app = this.app;
@@ -56,7 +68,7 @@
       .should('allow shortcuts for defining routes', function() {
         var app = this.app;
         ok(app.routes['get']);
-        var route = app.routes['get'][2];
+        var route = app.routes['get'][3];
         isType(route.path, RegExp);
         equals(route.verb, 'get');
         defined(route, 'callback');
@@ -132,16 +144,26 @@
       
       context('Sammy.Application','runRoute', {
         before: function() {
+          this.context_params = {};
+          var context_params = this.context_params; 
           this.app = new Sammy.Application(function() {
             this.route('get', /\/blah\/(.+)/, function() {
-              $('#main').trigger('click');
+              context_params = this.params;
             });
 
-            this.route('post', '/blah', function() {
-              $('#testarea').show();
+            this.route('get', '#/boosh/:test', function() {
+              context_params = this.params;
             });
           });
         }
+      })
+      .should('set named params from a string route', function() {
+        this.app.runRoute('get', '#/boosh/blurgh');
+        equals(this.context_params['test'], 'blurgh');
+      })
+      .should('set unnamed params from a regex route in splat', function() {
+        this.app.runRoute('get', '#/blah/could/be/anything');
+        equals(this.context_params['splat'], 'could/be/anything');
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
