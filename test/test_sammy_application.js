@@ -131,14 +131,35 @@
         isType(route, Object)
         equals(route.verb, 'get');
         defined(route, 'callback');
+      });
+      
+      context('Sammy.Application','runRoute', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.route('get', /\/blah\/(.+)/, function() {
+              $('#main').trigger('click');
+            });
+
+            this.route('post', '/blah', function() {
+              $('#testarea').show();
+            });
+          });
+        }
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
+        app.silence_404 = false;
         raised(/404/, function() {
-          app.lookupRoute('get','/blurgh');
+          app.runRoute('get','/blurgh');
         });
       })
-      .should_eventually('die silently if route is not found and 404s are off')
+      .should('die silently if route is not found and 404s are off', function() {
+        var app = this.app;
+        app.silence_404 = true;
+        notRaised(function() {
+          app.runRoute('get','/blurgh');
+        });
+      })
 
     }
   });
