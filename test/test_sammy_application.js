@@ -151,17 +151,18 @@
               context_params = this.params;
             });
 
-            this.route('get', '#/boosh/:test', function() {
+            this.route('get', '#/boosh/:test/:test2', function() {
               context_params = this.params;
             });
           });
         }
       })
       .should('set named params from a string route', function() {
-        this.app.runRoute('get', '#/boosh/blurgh');
+        this.app.runRoute('get', '#/boosh/blurgh/kapow');
         equals(this.context_params['test'], 'blurgh');
+        equals(this.context_params['test2'], 'kapow');
       })
-      .should('set unnamed params from a regex route in splat', function() {
+      .should('set unnamed params from a regex route in "splat"', function() {
         this.app.runRoute('get', '#/blah/could/be/anything');
         equals(this.context_params['splat'], 'could/be/anything');
       })
