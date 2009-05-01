@@ -77,8 +77,10 @@
 
       context('Sammy.Application','run', {
         before: function () {
-          // $('.get_area').html('');
+          $('.get_area').text('');
           this.app = new Sammy.Application(function() {
+            this.element_selector = '#main';
+            
             this.route('get', '#/test', function() {
               this.log('running test')
               $('.get_area').text('test success');
@@ -89,18 +91,22 @@
               $('.get_area').text(this.params['test_input']);
               return false;
             });
+            
+            this.bind('blurgh', function () {
+              $('.get_area').text('event fired');
+            });
           });
           this.app.run();
         }
       })
-      .should('attach application instance to body', function() {
-        isObj($('body').data('sammy.app'), this.app);
+      .should('attach application instance to element', function() {
+        isObj($('#main').data('sammy.app'), this.app);
       })
-      .should('live bind events to all forms', function() {
+      .should('bind events to all forms', function() {
         var app = this.app;
         $('form').submit();
         soon(function() {
-          this.equals($('.get_area').text(),'TEST');
+          equals($('.get_area').text(), 'TEST');
           app.unload();
         });
       })
@@ -108,11 +114,24 @@
         var app = this.app;
         window.location.hash = '#/test';
         soon(function() {
-          this.equals($('.get_area').text(), 'test success');
+          equals($('.get_area').text(), 'test success');
           app.unload();
         });
       })
-      .should_eventually('bind event to clicks as specified by routes')
+      .should('bind events only to the sammy app namespace', function() {
+        $('#main').trigger('blurgh');
+        soon(function() {
+          equals($('.get_area').text(), '');
+        });
+      })
+      .should('trigger events using the apps trigger method', function() {
+        var app = this.app;
+        app.trigger('blurgh');
+        soon(function() {
+          equals($('.get_area').text(), 'event fired');
+          app.unload();
+        });
+      });
 
       context('Sammy.Application','lookupRoute', {
         before: function() {

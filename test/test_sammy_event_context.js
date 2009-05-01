@@ -83,11 +83,38 @@
       .should('put html in selector', function() {
         this.context.render('partial', '#test_area', 'fixtures/partial.html')
         soon(function () {
-          this.equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+          equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
         });
       });
       
-
+      context('Sammy', 'EventContext', 'trigger', {
+        before: function() {
+          this.context = test_context;
+        }
+      })
+      .should('trigger custom event on application', function() {
+        var spec_context = this;
+        spec_context.event_fired = false;
+        test_app.bind('custom', function() {
+          spec_context.event_fired = true;
+        });
+        this.context.trigger('custom');
+        soon(function() {
+          equals(spec_context.event_fired, true);
+        });
+      })
+      .should('set the context of the event to the Sammy.EventContext', function() {
+        var spec_context = this;
+        var event_context = null;
+        test_app.bind('other.custom', function() {
+          event_context = this;
+        });
+        this.context.trigger('other.custom');
+        soon(function() {
+          isObj(event_context, test_context);
+        });
+      });
+      
     };
   });
 })(jQuery);
