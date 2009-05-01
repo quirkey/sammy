@@ -144,27 +144,26 @@
       
       context('Sammy.Application','runRoute', {
         before: function() {
-          this.context_params = {};
-          var context_params = this.context_params; 
+          var context = this;
           this.app = new Sammy.Application(function() {
             this.route('get', /\/blah\/(.+)/, function() {
-              context_params = this.params;
+              context.params = this.params;
             });
 
             this.route('get', '#/boosh/:test/:test2', function() {
-              context_params = this.params;
+              context.params = this.params;
             });
           });
         }
       })
       .should('set named params from a string route', function() {
         this.app.runRoute('get', '#/boosh/blurgh/kapow');
-        equals(this.context_params['test'], 'blurgh');
-        equals(this.context_params['test2'], 'kapow');
+        equals(this.params['test'], 'blurgh');
+        equals(this.params['test2'], 'kapow');
       })
       .should('set unnamed params from a regex route in "splat"', function() {
         this.app.runRoute('get', '#/blah/could/be/anything');
-        equals(this.context_params['splat'], 'could/be/anything');
+        equals(this.params['splat'], 'could/be/anything');
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
