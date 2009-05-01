@@ -113,7 +113,19 @@
         soon(function() {
           isObj(event_context, test_context);
         });
-      });
+      })
+      .should('pass data as an argument to the bound method', function() {
+        var passed_data = null;
+        var test_data   = {boosh: 'blurgh'};
+        test_app.bind('custom-with-data', function(e, data) {
+          passed_data = data;
+        });
+        this.context.trigger('custom-with-data', test_data);
+        soon(function() {
+          isObj(passed_data, test_data);
+        });
+      })
+      ;
       
     };
   });
