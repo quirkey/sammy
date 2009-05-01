@@ -55,7 +55,7 @@
         var route = app.routes['get'][2];
         isType(route.path, RegExp);
         isObj(route.path, /\/boosh\/([^\/]+)\/([^\/]+)/);
-        isObj(['boosh1', 'boosh2'], route.param_names);
+        isSet(['boosh1', 'boosh2'], route.param_names);
       })
       .should('append route to application.routes object', function() {
         var app = this.app;
