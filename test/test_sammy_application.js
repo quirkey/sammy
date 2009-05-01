@@ -124,6 +124,17 @@
           equals($('.get_area').text(), '');
         });
       })
+      .should('set the context of the bound events to the app', function() {
+        var app = this.app;
+        var event_context = null;
+        this.app.bind('serious-boosh', function() {
+          event_context = this;
+        });
+        app.trigger('serious-boosh');
+        soon(function() {
+          isObj(event_context, app);
+        });
+      })
       .should('trigger events using the apps trigger method', function() {
         var app = this.app;
         app.trigger('blurgh');
