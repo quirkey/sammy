@@ -93,11 +93,14 @@
               $('.get_area').text('event fired');
             });
           });
-          this.app.run();
+          this.app.run('#/');
         }
       })
       .should('attach application instance to element', function() {
         isObj($('#main').data('sammy.app'), this.app);
+      })
+      .should('set the location to the start url', function() {
+        equals(window.location.hash, '#/');
       })
       .should('bind events to all forms', function() {
         var app = this.app;

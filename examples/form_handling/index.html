@@ -33,21 +33,18 @@
         
         get('#/display', function() { with(this) {
           if (form_fields) {
-            var display = "";
-            $.each(form_fields, function(k, v) {
-              display += "<strong>" + k + "</strong> " + v + "<br />";
-            });
-            render('html', '#main', display)
+            render('html', '#main', form_fields.toHTML());
           } else {
             redirect('#/form')
           }
         }});
         
       }});
-    
+      
       $(function() {
-        app.run()
+        app.run('#/');
       });
+    
     })(jQuery);
   </script>
 	
