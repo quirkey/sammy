@@ -227,7 +227,41 @@
         notRaised(function() {
           app.runRoute('get','/blurgh');
         });
+      });
+      
+      context('Sammy.Application','before', {
+        before: function() {
+          var context = this;
+          context.before  = {};
+          context.route   = {};
+          this.app = new Sammy.Application(function() {
+            this.before(function() {
+              this.params['belch'] = 'burp';
+              context.before = this;
+            });
+            
+            this.get('#/', function() {
+              context.route = this;
+            });
+          });
+        }
       })
+      .should('run before route', function() {
+        var context = this;
+        this.app.run('#/');
+        soon(function() {
+          equals(context.route.params['belch'], 'burp');
+          context.app.unload();
+        });
+      })
+      .should('set context to event context', function() {
+        var context = this;
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.route, context.before);
+          context.app.unload();
+        });
+      });      
 
     }
   // });
