@@ -262,7 +262,43 @@
           context.app.unload();
         });
       });      
-
+      
+      
+      context('Sammy.Application','after', {
+        before: function() {
+          var context = this;
+          context.after  = {};
+          context.route   = {};
+          this.app = new Sammy.Application(function() {
+            this.after(function() {
+              this.params['belch'] = 'burp';
+              context.after = this;
+            });
+            
+            this.get('#/', function() {
+              this.params['belch'] = 'boosh';
+              context.route = this;
+            });
+          });
+        }
+      })
+      .should('run after route', function() {
+        var context = this;
+        this.app.run('#/');
+        soon(function() {
+          equals(context.after.params['belch'], 'burp');
+          context.app.unload();
+        });
+      })
+      .should('set context to event context', function() {
+        var context = this;
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.route, context.after);
+          context.app.unload();
+        });
+      });      
+      
     }
   // });
 })(jQuery);
