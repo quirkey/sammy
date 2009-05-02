@@ -1,5 +1,4 @@
 (function($) {
-  $(function() {
     with(jqUnit) {
       var test_app = new Sammy.Application(function() {
         this.silence_404 = false;
@@ -128,5 +127,4 @@
       ;
       
     };
-  });
 })(jQuery);

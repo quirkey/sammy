@@ -1,5 +1,5 @@
 (function($) {
-  $(function() {
+  // $(function() {
     with(jqUnit) {
       context('Sammy.Application', 'init', {
         before: function() {
@@ -81,29 +81,42 @@
           this.app = new Sammy.Application(function() {
             this.element_selector = '#main';
             
+            this.route('get', '#/', function() {
+              $('.get_area').text('');
+            });
+            
             this.route('get', '#/test', function() {
               $('.get_area').text('test success');
             });
             
             this.route('post', /test/, function() {
               this.app.form_was_run = 'YES';
+              return false;
             });
             
             this.bind('blurgh', function () {
               $('.get_area').text('event fired');
             });
           });
-          this.app.run('#/');
         }
       })
       .should('attach application instance to element', function() {
+        this.app.run();
+        console.log('data', $('#main').data('sammy.app'), 'app', this.app);
         isObj($('#main').data('sammy.app'), this.app);
+        this.app.unload();
       })
       .should('set the location to the start url', function() {
-        equals(window.location.hash, '#/');
+        var app = this.app;
+        app.run('#/');
+        soon(function() {
+          equals(window.location.hash, '#/');
+          app.unload();
+        });
       })
       .should('bind events to all forms', function() {
         var app = this.app;
+        app.run('#/');
         $('form').submit();
         soon(function() {
           equals(app.form_was_run, 'YES');
@@ -112,6 +125,7 @@
       })
       .should('trigger events on URL change', function() {
         var app = this.app;
+        app.run();
         window.location.hash = '#/test';
         soon(function() {
           equals($('.get_area').text(), 'test success');
@@ -119,9 +133,12 @@
         });
       })
       .should('bind events only to the sammy app namespace', function() {
+        var app = this.app;
+        app.run('#/');
         $('#main').trigger('blurgh');
         soon(function() {
           equals($('.get_area').text(), '');
+          app.unload();
         });
       })
       .should('set the context of the bound events to the app', function() {
@@ -130,13 +147,16 @@
         this.app.bind('serious-boosh', function() {
           event_context = this;
         });
+        app.run();
         app.trigger('serious-boosh');
         soon(function() {
           isObj(event_context, app);
+          app.unload();
         });
       })
       .should('trigger events using the apps trigger method', function() {
         var app = this.app;
+        app.run();
         app.trigger('blurgh');
         soon(function() {
           equals($('.get_area').text(), 'event fired');
@@ -211,5 +231,5 @@
       })
 
     }
-  });
+  // });
 })(jQuery);

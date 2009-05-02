@@ -26,7 +26,7 @@
           render('partial', '#main', 'files/form.html');
         }});
         
-        post(/pretend\/post\/url/, function() { with(this) {
+        post('#/pretend/post/url', function() { with(this) {
           form_fields = params
           redirect('#/display')
         }});
