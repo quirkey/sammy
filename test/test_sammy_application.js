@@ -82,14 +82,11 @@
             this.element_selector = '#main';
             
             this.route('get', '#/test', function() {
-              this.log('running test')
               $('.get_area').text('test success');
-              this.log('running test', $('.get_area').text());
             });
             
             this.route('post', /test/, function() {
-              $('.get_area').text(this.params['test_input']);
-              return false;
+              this.app.form_was_run = 'YES';
             });
             
             this.bind('blurgh', function () {
@@ -106,7 +103,7 @@
         var app = this.app;
         $('form').submit();
         soon(function() {
-          equals($('.get_area').text(), 'TEST');
+          equals(app.form_was_run, 'YES');
           app.unload();
         });
       })
