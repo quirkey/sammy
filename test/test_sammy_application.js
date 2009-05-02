@@ -102,7 +102,7 @@
       })
       .should('attach application instance to element', function() {
         this.app.run();
-        isObj($('#main').data('sammy.app'), this.app);
+        isObj($('#main').data('sammy-app'), this.app);
         this.app.unload();
       })
       .should('set the location to the start url', function() {
