@@ -102,7 +102,6 @@
       })
       .should('attach application instance to element', function() {
         this.app.run();
-        console.log('data', $('#main').data('sammy.app'), 'app', this.app);
         isObj($('#main').data('sammy.app'), this.app);
         this.app.unload();
       })
