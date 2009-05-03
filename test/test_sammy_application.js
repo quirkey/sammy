@@ -93,7 +93,7 @@
         }
       })
       .should('add callback to the listeners collection', function() {
-        equals(this.app.listeners['boosh'].length, 1)
+        equals(this.app.listeners['boosh'].length, 1);
       })
       .should('not be able to trigger before run', function() {
         var app = this.app;
@@ -179,7 +179,7 @@
           app.unload();
         });
       })
-      .should('set the context of the bound events to the app', function() {
+      .should('set the context of the bound events to an EventContext', function() {
         var app = this.app;
         var event_context = null;
         this.app.bind('serious-boosh', function() {
@@ -188,11 +188,13 @@
         app.run();
         app.trigger('serious-boosh');
         soon(function() {
-          isObj(event_context, app);
+          isObj(event_context.app, app);
+          equals(event_context.verb, 'bind');
+          equals(event_context.path, 'serious-boosh');
           app.unload();
-        });
+        }, this, 1, 3);
       })
-      .should('trigger events using the apps trigger method', function() {
+      .should('trigg  er events using the apps trigger method', function() {
         var app = this.app;
         app.run();
         app.trigger('blurgh');
