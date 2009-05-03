@@ -89,6 +89,10 @@
       context('Sammy', 'EventContext', 'trigger', {
         before: function() {
           this.context = test_context;
+          test_app.run();
+        },
+        after: function() {
+          test_app.unload();
         }
       })
       .should('trigger custom event on application', function() {

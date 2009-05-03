@@ -74,7 +74,47 @@
         defined(route, 'callback');
       });
       //
-
+      
+      context('Sammy.Application', 'bind', {
+        before: function() {
+          var context = this;
+          context.triggered = false;
+          this.app = new Sammy.Application(function() {
+            
+            this.bind('boosh', function() {
+              context.triggered = 'boosh';
+            });
+            
+            this.bind('blurgh', function() {
+              context.triggered = 'blurgh';
+            });
+            
+          });
+        }
+      })
+      .should('add callback to the listeners collection', function() {
+        console.log('listeners', this.app.listeners);
+        equals(this.app.listeners['boosh'].length, 1)
+      })
+      .should('not be able to trigger before run', function() {
+        var app = this.app;
+        var context = this;
+        app.trigger('boosh');
+        soon(function() {
+          equals(context.triggered, false);
+        });
+      })
+      .should('actually bind/be able to trigger to element after run', function() {
+        var app = this.app;
+        var context = this;
+        app.run();
+        app.trigger('blurgh');
+        soon(function() {
+          equals(context.triggered, 'blurgh');
+          app.unload();
+        });
+      })
+      
       context('Sammy.Application','run', {
         before: function () {
           $('.get_area').text('');
