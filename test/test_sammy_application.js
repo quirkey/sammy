@@ -93,7 +93,6 @@
         }
       })
       .should('add callback to the listeners collection', function() {
-        console.log('listeners', this.app.listeners);
         equals(this.app.listeners['boosh'].length, 1)
       })
       .should('not be able to trigger before run', function() {
