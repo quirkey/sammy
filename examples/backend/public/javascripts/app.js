@@ -1,6 +1,7 @@
 ;(function($) {
   var app = new Sammy.Application(function() { with(this) {
     element_selector = '#main';
+    var db = null;
     
     // display tasks
     get('#/', function() { with (this) {
@@ -13,23 +14,22 @@
       this.log('running!', this);
     });
     
-    // before(function() {
-    //   alert('here');
-    //   var app = this;
-    //   if (app.db == 'undefined') app.db = $.cloudkit;
-    //   app.db.boot({
-    //     success: function() {
-    //       app.trigger('db-loaded');
-    //     },
-    //     failure: function() {
-    //       app.trigger('error', {message: 'Could not connect to CloudKit.'})
-    //     }
-    //   })
-    // });
-    // 
-    // bind('db-loaded', function() {
-    //   this.runRoute('get', '#/')
-    // });
+    bind('run', function() {
+      var context = this;
+      if (!db) db = $.cloudkit;
+      db.boot({
+        success: function() {
+          context.trigger('db-loaded');
+        },
+        failure: function() {
+          context.trigger('error', {message: 'Could not connect to CloudKit.'})
+        }
+      })
+    });
+    
+    bind('db-loaded', function() {
+      this.redirect('#/')
+    });
     
     bind('error', function(e, data) {
       $('#error').text(data.message).show();

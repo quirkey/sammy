@@ -129,6 +129,7 @@
       'redirect'
     ],
     _last_route: null,
+    _running: false,
     
     data_store_name: 'sammy-app',
     element_selector: 'body',
@@ -139,7 +140,8 @@
     
     init: function(app_function) {
       var app = this;
-      this.routes = {};
+      this.routes    = {};
+      this.listeners = {};
       this.namespace = this.uuid();
       $.each(this._route_verbs, function() {
         app._defineRouteShortcut(this);
@@ -199,10 +201,10 @@
     },
     
     bind: function(name, data, callback) {
+      // build the callback
       // if the arity is 2, callback is the second argument
       if (typeof callback == 'undefined') callback = data;
-      console.log('bind', this, name, callback);
-      return this.$element().bind(this.eventNamespace() + name, data, function() {
+      var listener_callback =  function() {
         // pull off the context from the arguments to the callback
         var e, context, data; 
         e       = arguments[0];
@@ -210,7 +212,18 @@
         data    = arguments[2];
         e.cleaned_type = e.type.replace(context.eventNamespace(), '');
         return callback.apply(context, [e, data]);
-      });
+      };
+      
+      // it could be that the app element doesnt exist yet
+      // so attach to the listeners array and then run()
+      // will actually bind the event.
+      if (!this.listeners[name]) this.listeners[name] = [];
+      this.listeners[name].push(listener_callback);
+      if (this.isRunning()) {
+        // if the app is running
+        // *actually* bind the event to the app element
+        return this._listen(name, listener_callback);
+      }
     },
     
     trigger: function(name, data, context) {
@@ -226,9 +239,23 @@
       return this.bind('event-context-after', callback);
     },
     
+    isRunning: function() {
+      return this._running;
+    },
+    
     run: function(start_url) {
+      if (this.isRunning()) return false;
       var app = this;
+      
+      // actually bind all the listeners
+      $.each(this.listeners, function(name, listeners) {
+        $.each(listeners, function(i, listener_callback) {
+          app._listen(name, listener_callback);
+        });
+      });
+      
       this.trigger('run', {start_url: start_url});
+      this._running = true;
       // set data for app
       this.$element().data(this.data_store_name, this);
       // set last location
@@ -258,6 +285,8 @@
     },
     
     unload: function() {
+      if (!this.isRunning()) return false;
+      var app = this;
       this.trigger('unload');
       // clear interval
       clearInterval(this._interval);
@@ -265,13 +294,20 @@
       this.$element().find('form').unbind('submit');
       // clear data
       this.$element().removeData(this.data_store_name);
+      // unbind all events
+      $.each(this.listeners, function(name, listeners) {
+        $.each(listeners, function(i, listener_callback) {
+          app._unlisten(name, listener_callback);
+        });
+      });
+      this._running = false;
     },
     
     addLogger: function(logger) {
       var app = this;
-      // $.each(this._app_events, function() {
-      //   app.bind(this, logger);
-      // });
+      $.each(this._app_events, function() {
+        app.bind(this, logger);
+      });
     },
     
     lookupRoute: function(verb, path) {
@@ -373,6 +409,14 @@
       
       this.runRoute(verb, path, params);
       return false;
+    },
+    
+    _listen: function(name, callback) {
+      return this.$element().bind(this.eventNamespace() + name, callback);
+    },
+    
+    _unlisten: function(name, callback) {
+      return this.$element().unbind(this.eventNamespace() + name, callback);
     }
     
     
