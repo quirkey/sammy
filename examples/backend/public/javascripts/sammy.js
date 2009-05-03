@@ -201,6 +201,7 @@
     bind: function(name, data, callback) {
       // if the arity is 2, callback is the second argument
       if (typeof callback == 'undefined') callback = data;
+      console.log('bind', this, name, callback);
       return this.$element().bind(this.eventNamespace() + name, data, function() {
         // pull off the context from the arguments to the callback
         var e, context, data; 
@@ -268,9 +269,9 @@
     
     addLogger: function(logger) {
       var app = this;
-      $.each(this._app_events, function() {
-        app.bind(this, logger);
-      });
+      // $.each(this._app_events, function() {
+      //   app.bind(this, logger);
+      // });
     },
     
     lookupRoute: function(verb, path) {
