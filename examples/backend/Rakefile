@@ -1,6 +1,6 @@
 task :start => :copy_files do
-  system 'open http://localhost:9393/'
-  system 'shotgun app.ru'
+  system 'open http://localhost:9292/'
+  system 'rackup app.ru'
 end
 
 desc 'copy latest sammy and jquery from lib and vendor'

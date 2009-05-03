@@ -10,4 +10,12 @@
       #error{:style => 'display:none'}
         %span.close x
       #main
+        #tasks
+        #task_entry
+          %form{:action => '#/tasks', :method => 'post'}
+            %p
+              %input{:type => 'text', :name => 'entry', :class => 'entry'}
+            %p
+              %input{:type => 'submit', :value => 'Create'}
+              
       #debug
