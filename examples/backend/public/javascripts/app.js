@@ -36,7 +36,8 @@
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
         }
-      })
+      });
+      return false;
     }});
     
     get('#/connecting', function() { with(this) {
@@ -69,9 +70,9 @@
   }});
   
   $(function() {
-    // app.addLogger(function(e, data) {
-    //   $('#debug').append([app.toString(), e.cleaned_type, data, '<br />'].join(' '));
-    // })
+    app.addLogger(function(e, data) {
+      $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '<br />'].join(' '));
+    })
     app.run('#/');
   })
 })(jQuery);

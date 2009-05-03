@@ -273,9 +273,10 @@
       // bind re-binding to html-changed event
       this.bind('html-changed', function() {
         // bind form submission 
-        app.$element().find('form').bind('submit', function() {
+        app.$element().find('form:not(.sammy-bound)').bind('submit', function() {
           return app._checkFormSubmission(this);
-        });
+        }).addClass('sammy-bound');
+        
       });
       // bind unload to body unload
       $('body').bind('onunload', function() {
