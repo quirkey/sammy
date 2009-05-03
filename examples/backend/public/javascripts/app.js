@@ -6,6 +6,10 @@
     db = null;
     db_loaded = false;
     
+    var renderTask = function(task) {
+      $('#tasks').append('<li id="' + task.id() + '">' + task.json().entry + '</li>');
+    }
+    
     before(function() { with(this) {
       if (!db_loaded) {
         redirect('#/connecting');
@@ -17,7 +21,7 @@
       if (!db_loaded) return false;
       $('#tasks').html('');
       $.each(db.collection('tasks').all(), function(i, task) {
-        $('#tasks').append('<li>' + task.json().entry + '</li>');
+        renderTask(task);
       });
     }});
     
@@ -27,7 +31,7 @@
       db.collection('tasks').create({entry: params['entry']}, {
         success: function(task) {
           context.log('created', task.json());
-          $('#tasks').append(task.json().entry);
+          renderTask(task);
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
