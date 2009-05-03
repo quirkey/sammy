@@ -156,10 +156,11 @@
         var app = this.app;
         app.run('#/');
         $('form').submit();
+        matches(/sammy-app/, $('form')[0].className);
         soon(function() {
           equals(app.form_was_run, 'YES');
           app.unload();
-        });
+        }, this, 1, 2);
       })
       .should('trigger events on URL change', function() {
         var app = this.app;
