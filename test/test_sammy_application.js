@@ -303,6 +303,18 @@
           isObj(context.route, context.before);
           context.app.unload();
         });
+      })
+      .should('not run route if before returns false', function() {
+        var context = this;
+        context.app.before(function() {
+          return false;
+        });
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.before.app, context.app);
+          isObj(context.route, {});
+          context.app.unload();
+        }, this, 1, 2);
       });      
       
       
