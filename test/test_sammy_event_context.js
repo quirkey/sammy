@@ -124,6 +124,19 @@
         soon(function () {
           equals(contents, '<div class="test_template">TEMPLATE!</div>');
         });
+      })
+      .should('use cached template the second call', function() {
+        var contents = '';
+        this.context.partial('fixtures/templated_partial.html', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) { 
+          contents = data; 
+        });
+        soon(function () {
+          equals(contents, '<div class="test_template">TEMPLATE!</div>');
+          this.context.partial('fixtures/templated_partial.html', {name: 'CACHED!', class_name: 'test_template'}, function(data) { 
+            contents = data;
+          });
+          equals(contents, '<div class="test_template">CACHED!</div>');
+        }, this, 1, 2);
       });      
       
       context('Sammy', 'EventContext', 'trigger', {
