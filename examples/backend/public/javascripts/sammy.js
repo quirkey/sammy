@@ -64,17 +64,22 @@
   // John Resig - http://ejohn.org/ - MIT Licensed
   // adapted from: http://ejohn.org/blog/javascript-micro-templating/
   // by Greg Borenstein http://ideasfordozens.com in Feb 2009
-  $.srender = function(template, data, target){
-    $.srender.cache = {};
+  // --
+  // slightly modified for Sammy for caching templates by name
+  $.srender = function(name, template, data) {
+    $.srender.cache = $.srender.cache || {};
     // target is an optional element; if provided, the result will be inserted into it
     // otherwise the result will simply be returned to the caller   
-    if($.srender.cache[template]){
-      fn = $.srender.cache[template] 
-    }
-    else{
+    if ($.srender.cache[name]) {
+      fn = $.srender.cache[name];
+    } else {
+      if (typeof template == 'undefined') {
+        // was a cache check, return false
+        return false;
+      }
       // Generate a reusable function that will serve as a template
       // generator (and which will be cached).
-      fn = $.srender.cache[template] = new Function("obj",
+      fn = $.srender.cache[name] = new Function("obj",
       "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
       // Introduce the data as local variables using with(){}
@@ -82,23 +87,20 @@
 
       // Convert the template into pure JavaScript
       template
-      .replace(/[\r\t\n]/g, " ")
-      .split("<%").join("\t")
-      .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-      .replace(/\t=(.*?)%>/g, "',$1,'")
-      .split("\t").join("');")
-      .split("%>").join("p.push('")
-      .split("\r").join("\\'")
-      + "');}return p.join('');");
+        .replace(/[\r\t\n]/g, " ")
+        .split("<%").join("\t")
+        .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+        .replace(/\t=(.*?)%>/g, "',$1,'")
+        .split("\t").join("');")
+        .split("%>").join("p.push('")
+        .split("\r").join("\\'")
+        + "');}return p.join('');");
     }
-
-    // populate the optional element
-    // or return the result
-    if(target){
-      target.html(fn(data));
-      return false
-    } else{
+    
+    if (typeof data != 'undefined') {
       return fn(data);
+    } else {
+      return fn;
     }
   }
 })(jQuery);
@@ -177,18 +179,15 @@
     _app_events: [
       'init',
       'run',
-      'html-changed',
       'unload',
       'lookup-route',
       'run-route',
       'route-found',
       'event-context-before',
       'event-context-after',
+      'changed',
       'error-404',
       'check-form-submission',
-      'render-text',
-      'render-html',
-      'render-partial',
       'redirect'
     ],
     _last_route: null,
@@ -275,7 +274,7 @@
         context = arguments[1];
         data    = arguments[2];
         e.cleaned_type = e.type.replace(context.eventNamespace(), '');
-        return callback.apply(context, [e, data]);
+        callback.apply(context, [e, data]);
       };
       
       // it could be that the app element doesnt exist yet
@@ -334,8 +333,8 @@
         app._checkURL.apply(app);
       }, this.run_interval_every);
       
-      // bind re-binding to html-changed event
-      this.bind('html-changed', function() {
+      // bind re-binding to after route
+      this.bind('changed', function() {
         // bind form submission 
         app.$element().find('form:not(.' + app.eventNamespace() + ')').bind('submit', function() {
           return app._checkFormSubmission(this);
@@ -347,7 +346,7 @@
       });
       
       // trigger html changed
-      this.trigger('html-changed');
+      this.trigger('changed');
     },
     
     unload: function() {
@@ -429,6 +428,7 @@
         context.trigger('event-context-before');
         var returned = route.callback.apply(context);
         context.trigger('event-context-after');
+        context.trigger('changed');
         return returned;
       } else {
         this.notFound(verb, path);
@@ -500,14 +500,7 @@
   // 
   // Event wraps jQuery events and is passed to Sammy application routes
   Sammy.EventContext = Sammy.Object.extend({
-    
-    render_types: {
-                   'text':    'renderText', 
-                   'html':    'renderHTML',
-                   'partial': 'renderPartial',
-                   'template': 'renderTemplate'
-                  },
-    
+        
     init: function(app, verb, path, params) {
       this.app    = app;
       this.verb   = verb;
@@ -515,15 +508,57 @@
       this.params = new Sammy.Object(params);
     },
     
-    render: function(type, selector, content, options) {
-      if (typeof options == 'undefined' && 
-         (typeof content == 'undefined' || typeof content == 'object')) {
-        // if the arguments are more like type, content, options
-        options = content;
-        content = selector;
-        selector = this.app.$element();
+    // render: function(type, selector, content, options) {
+    //   if (typeof options == 'undefined' && 
+    //      (typeof content == 'undefined' || typeof content == 'object')) {
+    //     // if the arguments are more like type, content, options
+    //     options = content;
+    //     content = selector;
+    //     selector = this.app.$element();
+    //   }
+    //   return this['_' + this.render_types[type]](selector, content, options);
+    // },
+    
+    $element: function() {
+      return this.app.$element();
+    },
+    
+    template: function(template, data, name) {
+      // use name for caching
+      if (typeof name == 'undefined') name = template;
+      return $.srender(name, template, $.extend({}, data, this));
+    },
+    
+    partial: function(path, data, callback) {
+      var t, rendered, context;
+      context = this;
+      if (typeof callback == 'undefined') {
+        if (typeof data == 'function') {
+          // callback is in the data position
+          callback = data;
+          data = {};
+        } else {
+          // we should use the default callback
+          callback = function(data) {
+            context.app.$element().html(data);
+          }
+        }
       }
-      return this['_' + this.render_types[type]](selector, content, options);
+      t    = $.srender(path);
+      data = $.extend({}, data, this);
+      if (t) {
+        // the template was already cached
+        rendered = t(data);
+        callback.apply(context, [rendered]);
+        context.trigger('changed');
+      } else {
+        // the template wasnt cached, we need to fetch it
+        $.get(path, function(template) {
+           rendered = $.srender(path, template, data);
+           callback.apply(context, [rendered]);
+           context.trigger('changed');
+        });
+      }
     },
         
     redirect: function(to) {
@@ -548,42 +583,7 @@
     
     notFound: function() {
       return this.app.notFound(this.verb, this.path);
-    },
-    
-    _renderText: function(selector, content, options) {
-      var $selector = $(selector).text(content);
-      this.trigger('render-text', {selector: selector, content: content, options: options});
-      this.trigger('html-changed');
-      return $selector;
-    },
-    
-    _renderHTML: function(selector, content, options) {
-      var $selector = $(selector).html(content);
-      this.trigger('render-html', {selector: selector, content: content, options: options});
-      this.trigger('html-changed');
-      return $selector;
-    },
-    
-    _renderPartial: function(selector, content, options) {
-      var context = this;
-      this.trigger('render-partial', {selector: selector, content: content, options: options});
-      return $.get(content, function(data) {
-        if (typeof options != 'undefined') {
-          context.renderTemplate(selector, data, options);
-        } else {
-          $(selector).html(data);
-          context.trigger('html-changed');
-        }
-      });
-    },
-    
-    _renderTemplate: function(selector, content, options) {
-      var $selector = $(selector).html($.srender(content, options));
-      this.trigger('render-template', {selector: selector, content: content, options: options});
-      this.trigger('html-changed');
-      return $selector;
-    },
-    
+    }    
     
   });
 
