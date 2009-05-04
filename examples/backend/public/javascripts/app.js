@@ -7,9 +7,10 @@
     db_loaded = false;
     
     var renderTask = function(task) {
-      $('#tasks').append('<li id="' + task.id() + '">' + task.json().entry + '</li>');
+      // $('#tasks').append('<li class="task" id="' + task.id() + '">' + task.json().entry + '</li>');
+      
     }
-    
+                
     before(function() { with(this) {
       if (!db_loaded) {
         redirect('#/connecting');
@@ -27,16 +28,15 @@
     
     post('#/tasks', function() { with(this) {
       var context = this;
-      db.collection('tasks').create({entry: params['entry']}, {
+      var task    = {entry: params['entry'], created_at: Date()};
+      db.collection('tasks').create(task, {
         success: function(task) {
-          context.log('created', task.json());
           renderTask(task);
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
         }
       });
-      return false;
     }});
     
     get('#/connecting', function() { with(this) {
@@ -55,7 +55,11 @@
           db_loaded = false;
           context.trigger('error', {message: 'Could not connect to CloudKit.'})
         }
-      })
+      });
+      
+      $('li.task').live('click', function() {
+        
+      });
     });
     
     bind('db-loaded', function() { with(this) {
@@ -65,6 +69,7 @@
     bind('error', function(e, data) { with(this) {
       render('text', '#error', data.message).show();
     }});
+    
     
   }});
   

@@ -8,5 +8,5 @@ class Tasks < Sinatra::Default
   get '/' do
     haml :index
   end
-    
+      
 end

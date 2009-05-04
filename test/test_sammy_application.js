@@ -195,7 +195,7 @@
           app.unload();
         }, this, 1, 3);
       })
-      .should('trigg  er events using the apps trigger method', function() {
+      .should('trigger events using the apps trigger method', function() {
         var app = this.app;
         app.run();
         app.trigger('blurgh');

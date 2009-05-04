@@ -73,6 +73,17 @@
         this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
         equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
       });
+
+      context('Sammy', 'EventContext', 'render', 'template', {
+        before: function() {
+          this.context = test_context;
+        }
+      })
+      .should('put use srender to interpolate in content', function() {
+        this.context.render('template', '#test_area', '<div class="test_class"><%= text %></div>', {text: 'TEXT!'})
+        equals($('#test_area').html(), '<div class="test_class">TEXT!</div>');
+      });
+      
       
       context('Sammy', 'EventContext', 'render', 'partial', {
         before: function() {
@@ -83,6 +94,12 @@
         this.context.render('partial', '#test_area', 'fixtures/partial.html')
         soon(function () {
           equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+        });
+      })
+      .should('run through templating/srender if json is passed as an additional argument', function() {
+        this.context.render('partial', '#test_area', 'fixtures/templated_partial.html', {class_name: 'templated', name: 'TEMPLATED PARTIAL'});
+        soon(function () {
+          equals($('#test_area').html(), '<div class="templated">TEMPLATED PARTIAL</div>');
         });
       });
       
@@ -127,8 +144,7 @@
         soon(function() {
           isObj(passed_data, test_data);
         });
-      })
-      ;
+      });
       
     };
 })(jQuery);
