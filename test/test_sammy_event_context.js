@@ -104,30 +104,27 @@
       });
       
       
-      context('Sammy', 'EventContext', 'render', 'partial', {
+      context('Sammy', 'EventContext', 'partial', {
         before: function() {
           this.context = test_context;
         }
       })
-      .should('put html in selector', function() {
-        this.context.render('partial', '#test_area', 'fixtures/partial.html')
+      .should('pass contents to callback', function() {
+        var contents = '';
+        this.context.partial('fixtures/partial.html', function(data) { contents = data; });
         soon(function () {
-          equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+          equals(contents, '<div class="test_partial">PARTIAL</div>');
         });
       })
       .should('run through templating/srender if json is passed as an additional argument', function() {
-        this.context.render('partial', '#test_area', 'fixtures/partial.html')
-        soon(function () {
-          equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+        var contents = '';
+        this.context.partial('fixtures/templated_partial.html', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) { 
+          contents = data; 
         });
-      })
-      .should('assume selector is the app element if none is passed', function() {
-        this.context.render('partial', 'fixtures/partial.html')
         soon(function () {
-          equals(test_app.$element().html(), '<div class="test_partial">PARTIAL</div>');
+          equals(contents, '<div class="test_template">TEMPLATE!</div>');
         });
-      });
-      
+      });      
       
       context('Sammy', 'EventContext', 'trigger', {
         before: function() {
