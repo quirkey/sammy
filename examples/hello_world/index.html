@@ -19,11 +19,11 @@
         with(this) {
           
           get('#/', function() { with(this) {
-            render('text', '#main', '');
+            $('#main').text('');
           }});
         
           get('#/test', function() { with(this) {
-            render('text', '#main', 'Hello World');
+            $('#main').text('Hello World');
           }});
           
         }

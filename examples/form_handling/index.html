@@ -16,24 +16,25 @@
   <script type="text/javascript" charset="utf-8">
     ;(function($) {
       var app = new Sammy.Application(function() { with(this) {
+        element_selector = '#main';
         form_fields = null;
         
         get('#/', function() { with(this) {
-          render('text', '#main', 'Click form!');
+          $element().text('Click form!');
         }});
       
         get('#/form', function() { with(this) {
-          render('partial', '#main', 'files/form.html');
+          partial('files/form.html');
         }});
         
         post('#/pretend/post/url', function() { with(this) {
-          form_fields = params
-          redirect('#/display')
+          form_fields = params;
+          redirect('#/display');
         }});
         
         get('#/display', function() { with(this) {
           if (form_fields) {
-            render('html', '#main', form_fields.toHTML());
+            $element().html(form_fields.toHTML());
           } else {
             redirect('#/form')
           }

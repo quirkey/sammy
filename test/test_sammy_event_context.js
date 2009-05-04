@@ -137,6 +137,12 @@
           });
           equals(contents, '<div class="test_template">CACHED!</div>');
         }, this, 1, 2);
+      })
+      .should('replace default app element if no callback is passed', function() {
+        this.context.partial('fixtures/templated_partial.html', {name: 'TEMPLATE!', class_name: 'test_template'});
+        soon(function () {
+          equals(test_app.$element().html(), '<div class="test_template">TEMPLATE!</div>');
+        });
       });      
       
       context('Sammy', 'EventContext', 'trigger', {
