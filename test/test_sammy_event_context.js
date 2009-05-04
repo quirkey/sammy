@@ -58,48 +58,49 @@
       });
 
 
-      context('Sammy', 'EventContext', 'render', 'text', {
-        before: function() {
-          this.context = test_context;
-        }
-      })
-      .should('put text in selector', function() {
-        this.context.render('text', '#test_area', 'test it')
-        equals($('#test_area').text(), 'test it');
-      })
-      .should('assume selector is the app element if none is passed', function() {
-        this.context.render('text', 'im in main');
-        equals(test_app.$element().text(), 'im in main');
-      });
-
-
-      context('Sammy', 'EventContext', 'render', 'html', {
-        before: function() {
-          this.context = test_context;
-        }
-      })
-      .should('put html in selector', function() {
-        this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
-        equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
-      })
-      .should('assume selector is the app element if none is passed', function() {
-        this.context.render('html', '<span>im in main</span>');
-        equals(test_app.$element().html(), '<span>im in main</span>');
-      });
+      // context('Sammy', 'EventContext', 'render', 'text', {
+      //   before: function() {
+      //     this.context = test_context;
+      //   }
+      // })
+      // .should('put text in selector', function() {
+      //   this.context.render('text', '#test_area', 'test it')
+      //   equals($('#test_area').text(), 'test it');
+      // })
+      // .should('assume selector is the app element if none is passed', function() {
+      //   this.context.render('text', 'im in main');
+      //   equals(test_app.$element().text(), 'im in main');
+      // });
+      // 
+      // 
+      // context('Sammy', 'EventContext', 'render', 'html', {
+      //   before: function() {
+      //     this.context = test_context;
+      //   }
+      // })
+      // .should('put html in selector', function() {
+      //   this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
+      //   equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
+      // })
+      // .should('assume selector is the app element if none is passed', function() {
+      //   this.context.render('html', '<span>im in main</span>');
+      //   equals(test_app.$element().html(), '<span>im in main</span>');
+      // });
       
 
-      context('Sammy', 'EventContext', 'render', 'template', {
+      context('Sammy', 'EventContext', 'template', {
         before: function() {
           this.context = test_context;
         }
       })
       .should('put use srender to interpolate in content', function() {
-        this.context.render('template', '#test_area', '<div class="test_class"><%= text %></div>', {text: 'TEXT!'})
-        equals($('#test_area').html(), '<div class="test_class">TEXT!</div>');
+        var rendered = this.context.template('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
+        equals(rendered, '<div class="test_class">TEXT!</div>');
       })
-      .should('assume selector is the app element if none is passed', function() {
-        this.context.render('template', '<div class="test_class"><%= text %></div>', {text: 'MAIN!'});
-        equals(test_app.$element().html(), '<div class="test_class">MAIN!</div>');
+      .should('should set the context of the template to the test_context', function() {
+        this.context.blurgh = 'boosh';
+        var rendered = this.context.template('<div class="test_class"><%= text %> <%= blurgh %></div>', {text: 'TEXT!'});
+        equals(rendered, '<div class="test_class">TEXT! boosh</div>');
       });
       
       
