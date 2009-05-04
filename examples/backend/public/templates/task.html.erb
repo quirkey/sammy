@@ -1,0 +1,4 @@
+<li class="task <%= task.completed ? 'completed' : '' %>" id="task_<%= task.id %>">
+  <input type="checkbox" checked="<%= task.completed ? 'checked' : '' %>" />
+  <span class="entry"><%= task.entry %></span>
+</li>

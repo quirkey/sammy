@@ -6,11 +6,7 @@
     db = null;
     db_loaded = false;
     
-    var renderTask = function(task) {
-      // $('#tasks').append('<li class="task" id="' + task.id() + '">' + task.json().entry + '</li>');
-      
-    }
-                
+                    
     before(function() { with(this) {
       if (!db_loaded) {
         redirect('#/connecting');
@@ -21,26 +17,31 @@
     // display tasks
     get('#/', function() { with (this) {
       $('#tasks').html('');
-      $.each(db.collection('tasks').all(), function(i, task) {
-        renderTask(task);
+      each(db.collection('tasks').all(), function(i, task) {
+        this.render('partial', '#tasks', '/templates/task.html.erb', task.json());
       });
     }});
     
     post('#/tasks', function() { with(this) {
       var context = this;
-      var task    = {entry: params['entry'], created_at: Date()};
+      var task    = {
+        entry: params['entry'], 
+        completed: false, 
+        created_at: Date()
+      };
       db.collection('tasks').create(task, {
         success: function(task) {
-          renderTask(task);
+          context.render('partial', '#tasks', '/templates/task.html.erb', task.json());
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
         }
       });
+      return false;
     }});
     
     get('#/connecting', function() { with(this) {
-      render('text', '#tasks', '... Loading ...');
+      render('html', '<span class="loading">... Loading ...</span>');
     }});
           
     bind('run', function() {

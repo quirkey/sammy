@@ -59,6 +59,50 @@
   };
 })();
 
+(function($) {
+  // Simple JavaScript Templating
+  // John Resig - http://ejohn.org/ - MIT Licensed
+  // adapted from: http://ejohn.org/blog/javascript-micro-templating/
+  // by Greg Borenstein http://ideasfordozens.com in Feb 2009
+  $.srender = function(template, data, target){
+    $.srender.cache = {};
+    // target is an optional element; if provided, the result will be inserted into it
+    // otherwise the result will simply be returned to the caller   
+    if($.srender.cache[template]){
+      fn = $.srender.cache[template] 
+    }
+    else{
+      // Generate a reusable function that will serve as a template
+      // generator (and which will be cached).
+      fn = $.srender.cache[template] = new Function("obj",
+      "var p=[],print=function(){p.push.apply(p,arguments);};" +
+
+      // Introduce the data as local variables using with(){}
+      "with(obj){p.push('" +
+
+      // Convert the template into pure JavaScript
+      template
+      .replace(/[\r\t\n]/g, " ")
+      .split("<%").join("\t")
+      .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+      .replace(/\t=(.*?)%>/g, "',$1,'")
+      .split("\t").join("');")
+      .split("%>").join("p.push('")
+      .split("\r").join("\\'")
+      + "');}return p.join('');");
+    }
+
+    // populate the optional element
+    // or return the result
+    if(target){
+      target.html(fn(data));
+      return false
+    } else{
+      return fn(data);
+    }
+  }
+})(jQuery);
+
 // Sammy
 (function($) {
   
@@ -79,7 +123,7 @@
     },
     toHTML: function() {
       var display = "";
-      $.each(this, function(k, v) {
+      this.each(function(k, v) {
         if (v.constructor != Function) {
           display += "<strong>" + k + "</strong> " + v + "<br />";
         }
@@ -91,6 +135,25 @@
         this._uuid = Date.now() + '-' + parseInt(Math.random() * 1000);
       }
       return this._uuid;
+    },
+    // if passed an object and a callback, will iterate over the object
+    // with (k, v) in the context of this object.
+    // if passed just an argument - will itterate over 
+    // the properties of this Sammy.Object
+    each: function() {
+      var context, object, callback, bound_callback;
+      context = this;
+      if (typeof arguments[0] != 'function') {
+        object = arguments[0];
+        callback = arguments[1];
+      } else {
+        object = this;
+        callback = arguments[0];
+      }
+      bound_callback = function() {
+        return callback.apply(context, arguments);
+      }
+      $.each(object, bound_callback);
     },
     log: function()	{
       var args = [].slice.call(arguments);
@@ -144,8 +207,8 @@
       this.listeners = {};
       this.befores   = [];
       this.namespace = this.uuid();
-      $.each(this._route_verbs, function() {
-        app._defineRouteShortcut(this);
+      this.each(this._route_verbs, function(i, verb) {
+        this._defineRouteShortcut(verb);
       });
       app_function.apply(this);
       if (this.debug) {
@@ -185,9 +248,9 @@
         this.routes[verb] = [r];
       } else {
         // place in order of longest path first
-        $.each(this.routes[verb], function(i, route)  {
+        this.each(this.routes[verb], function(i, route)  {
           if (path.toString().length >= route.path.toString().length) {
-            app.routes[verb].splice(i, 0, r);
+            this.routes[verb].splice(i, 0, r);
             // exit each()
             return false; 
           }
@@ -251,9 +314,9 @@
       var app = this;
       
       // actually bind all the listeners
-      $.each(this.listeners, function(name, listeners) {
-        $.each(listeners, function(i, listener_callback) {
-          app._listen(name, listener_callback);
+      this.each(this.listeners, function(name, listeners) {
+        this.each(listeners, function(i, listener_callback) {
+          this._listen(name, listener_callback);
         });
       });
       
@@ -300,9 +363,9 @@
       // clear data
       this.$element().removeData(this.data_store_name);
       // unbind all events
-      $.each(this.listeners, function(name, listeners) {
-        $.each(listeners, function(i, listener_callback) {
-          app._unlisten(name, listener_callback);
+      this.each(this.listeners, function(name, listeners) {
+        this.each(listeners, function(i, listener_callback) {
+          this._unlisten(name, listener_callback);
         });
       });
       this._running = false;
@@ -310,8 +373,8 @@
     
     addLogger: function(logger) {
       var app = this;
-      $.each(this._app_events, function() {
-        app.bind(this, logger);
+      this.each(this._app_events, function() {
+        this.bind(this, logger);
       });
     },
     
@@ -319,7 +382,7 @@
       var routed = false;
       this.trigger('lookup-route', {verb: verb, path: path});
       if (typeof this.routes[verb] != 'undefined') {
-        $.each(this.routes[verb], function(i, route) {
+        this.each(this.routes[verb], function(i, route) {
           if (path.match(route.path)) {
             routed = route;
             return false;
@@ -341,7 +404,7 @@
           // first match is the full path
           path_params.shift();
           // for each of the matches
-          $.each(path_params, function(i, param) {
+          this.each(path_params, function(i, param) {
             // if theres a matching param name
             if (route.param_names[i]) {
               // set the name to the match
@@ -441,7 +504,8 @@
     render_types: {
                    'text':    'renderText', 
                    'html':    'renderHTML',
-                   'partial': 'renderPartial'
+                   'partial': 'renderPartial',
+                   'template': 'renderTemplate'
                   },
     
     init: function(app, verb, path, params) {
@@ -451,33 +515,17 @@
       this.params = new Sammy.Object(params);
     },
     
-    render: function(type, selector, content) {
-      return this[this.render_types[type]](selector, content);
+    render: function(type, selector, content, options) {
+      if (typeof options == 'undefined' && 
+         (typeof content == 'undefined' || typeof content == 'object')) {
+        // if the arguments are more like type, content, options
+        options = content;
+        content = selector;
+        selector = this.app.$element();
+      }
+      return this['_' + this.render_types[type]](selector, content, options);
     },
-    
-    renderText: function(selector, content) {
-      var $selector = $(selector).text(content);
-      this.trigger('render-text', {selector: selector, content: content});
-      this.trigger('html-changed');
-      return $selector;
-    },
-    
-    renderHTML: function(selector, content) {
-      var $selector = $(selector).html(content);
-      this.trigger('render-html', {selector: selector, content: content});
-      this.trigger('html-changed');
-      return $selector;
-    },
-    
-    renderPartial: function(selector, content) {
-      var context = this;
-      this.trigger('render-partial', {selector: selector, content: content});
-      return $.get(content, function(data) {
-        $(selector).html(data);
-        context.trigger('html-changed');
-      });
-    },
-    
+        
     redirect: function(to) {
       this.trigger('redirect', {to: to});
       if (to.match(/^\#/)) {
@@ -500,7 +548,42 @@
     
     notFound: function() {
       return this.app.notFound(this.verb, this.path);
-    }
+    },
+    
+    _renderText: function(selector, content, options) {
+      var $selector = $(selector).text(content);
+      this.trigger('render-text', {selector: selector, content: content, options: options});
+      this.trigger('html-changed');
+      return $selector;
+    },
+    
+    _renderHTML: function(selector, content, options) {
+      var $selector = $(selector).html(content);
+      this.trigger('render-html', {selector: selector, content: content, options: options});
+      this.trigger('html-changed');
+      return $selector;
+    },
+    
+    _renderPartial: function(selector, content, options) {
+      var context = this;
+      this.trigger('render-partial', {selector: selector, content: content, options: options});
+      return $.get(content, function(data) {
+        if (typeof options != 'undefined') {
+          context.renderTemplate(selector, data, options);
+        } else {
+          $(selector).html(data);
+          context.trigger('html-changed');
+        }
+      });
+    },
+    
+    _renderTemplate: function(selector, content, options) {
+      var $selector = $(selector).html($.srender(content, options));
+      this.trigger('render-template', {selector: selector, content: content, options: options});
+      this.trigger('html-changed');
+      return $selector;
+    },
+    
     
   });
 
