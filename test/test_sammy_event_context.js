@@ -2,6 +2,7 @@
     with(jqUnit) {
       var test_app = new Sammy.Application(function() {
         this.silence_404 = false;
+        this.element_selector = '#main';
       });
       var test_context = new Sammy.EventContext(test_app, 'get', '#/test/:test', {test: 'hooray'});
 
@@ -23,6 +24,7 @@
       .should('set params', function() {
         isObj(this.context.params, new Sammy.Object({test: 'hooray'}));
       });
+      
 
       context('Sammy', 'EventContext', 'redirect', {
         before: function() {
@@ -42,6 +44,7 @@
         equals('#/blah', window.location.hash);
       });
 
+
       context('Sammy', 'EventContext', 'notFound', {
         before: function() {
           this.context = test_context;
@@ -54,6 +57,7 @@
         });
       });
 
+
       context('Sammy', 'EventContext', 'render', 'text', {
         before: function() {
           this.context = test_context;
@@ -62,7 +66,12 @@
       .should('put text in selector', function() {
         this.context.render('text', '#test_area', 'test it')
         equals($('#test_area').text(), 'test it');
+      })
+      .should('assume selector is the app element if none is passed', function() {
+        this.context.render('text', 'im in main');
+        equals(test_app.$element().text(), 'im in main');
       });
+
 
       context('Sammy', 'EventContext', 'render', 'html', {
         before: function() {
@@ -72,7 +81,12 @@
       .should('put html in selector', function() {
         this.context.render('html', '#test_area', '<div class="test_class">TEST!</div>')
         equals($('#test_area').html(), '<div class="test_class">TEST!</div>');
+      })
+      .should('assume selector is the app element if none is passed', function() {
+        this.context.render('html', '<span>im in main</span>');
+        equals(test_app.$element().html(), '<span>im in main</span>');
       });
+      
 
       context('Sammy', 'EventContext', 'render', 'template', {
         before: function() {
@@ -82,6 +96,10 @@
       .should('put use srender to interpolate in content', function() {
         this.context.render('template', '#test_area', '<div class="test_class"><%= text %></div>', {text: 'TEXT!'})
         equals($('#test_area').html(), '<div class="test_class">TEXT!</div>');
+      })
+      .should('assume selector is the app element if none is passed', function() {
+        this.context.render('template', '<div class="test_class"><%= text %></div>', {text: 'MAIN!'});
+        equals(test_app.$element().html(), '<div class="test_class">MAIN!</div>');
       });
       
       
@@ -97,11 +115,18 @@
         });
       })
       .should('run through templating/srender if json is passed as an additional argument', function() {
-        this.context.render('partial', '#test_area', 'fixtures/templated_partial.html', {class_name: 'templated', name: 'TEMPLATED PARTIAL'});
+        this.context.render('partial', '#test_area', 'fixtures/partial.html')
         soon(function () {
-          equals($('#test_area').html(), '<div class="templated">TEMPLATED PARTIAL</div>');
+          equals($('#test_area').html(), '<div class="test_partial">PARTIAL</div>');
+        });
+      })
+      .should('assume selector is the app element if none is passed', function() {
+        this.context.render('partial', 'fixtures/partial.html')
+        soon(function () {
+          equals(test_app.$element().html(), '<div class="test_partial">PARTIAL</div>');
         });
       });
+      
       
       context('Sammy', 'EventContext', 'trigger', {
         before: function() {
