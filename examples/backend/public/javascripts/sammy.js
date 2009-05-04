@@ -142,6 +142,7 @@
       var app = this;
       this.routes    = {};
       this.listeners = {};
+      this.befores   = [];
       this.namespace = this.uuid();
       $.each(this._route_verbs, function() {
         app._defineRouteShortcut(this);
@@ -197,7 +198,7 @@
     },
     
     eventNamespace: function() {
-      return this.data_store_name + '-' + this.namespace + ':';
+      return this.data_store_name + '-' + this.namespace + '-';
     },
     
     bind: function(name, data, callback) {
@@ -234,7 +235,7 @@
     },
     
     before: function(callback) {
-      return this.bind('event-context-before', callback);
+      return this.befores.push(callback);
     },
     
     after: function(callback) {
@@ -273,10 +274,9 @@
       // bind re-binding to html-changed event
       this.bind('html-changed', function() {
         // bind form submission 
-        app.$element().find('form:not(.sammy-bound)').bind('submit', function() {
+        app.$element().find('form:not(.' + app.eventNamespace() + ')').bind('submit', function() {
           return app._checkFormSubmission(this);
-        }).addClass('sammy-bound');
-        
+        }).addClass(app.eventNamespace());
       });
       // bind unload to body unload
       $('body').bind('onunload', function() {
@@ -294,7 +294,9 @@
       // clear interval
       clearInterval(this._interval);
       // unbind form submits
-      this.$element().find('form').unbind('submit');
+      this.$element().find('form')
+        .unbind('submit')
+        .removeClass(app.eventNamespace());
       // clear data
       this.$element().removeData(this.data_store_name);
       // unbind all events
@@ -355,6 +357,12 @@
         // set event context
         var context  = new Sammy.EventContext(this, verb, path, params);
         this.last_route = route;
+        // run all the before filters
+        var before_value = true; 
+        var befores = this.befores.slice(0);
+        while (befores.length > 0) {
+          if (befores.shift().apply(context) === false) return false;
+        }
         context.trigger('event-context-before');
         var returned = route.callback.apply(context);
         context.trigger('event-context-after');

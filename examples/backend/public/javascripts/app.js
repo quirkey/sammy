@@ -13,12 +13,12 @@
     before(function() { with(this) {
       if (!db_loaded) {
         redirect('#/connecting');
+        return false;
       }
     }});
     
     // display tasks
     get('#/', function() { with (this) {
-      if (!db_loaded) return false;
       $('#tasks').html('');
       $.each(db.collection('tasks').all(), function(i, task) {
         renderTask(task);
@@ -26,7 +26,6 @@
     }});
     
     post('#/tasks', function() { with(this) {
-      if (!db_loaded) return false;
       var context = this;
       db.collection('tasks').create({entry: params['entry']}, {
         success: function(task) {
@@ -76,4 +75,3 @@
     app.run('#/');
   })
 })(jQuery);
-
