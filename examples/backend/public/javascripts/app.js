@@ -11,15 +11,25 @@
       if (!db_loaded) {
         redirect('#/connecting');
         return false;
-      }
+      } 
     }});
     
     // display tasks
     get('#/', function() { with (this) {
-      $('#tasks').html('');
-      each(db.collection('tasks').all(), function(i, task) {
-        this.render('partial', '#tasks', '/templates/task.html.erb', task.json());
+      partial('/templates/index.html.erb', function(html) {
+        $('#main').html(html);
+        this.each(db.collection('tasks').all(), function(i, task) {
+          this.log('task', task.json());
+          this.partial('/templates/task.html.erb', {task: task.json(), id: task.id()}, function(task_html) {
+            $(task_html).data('task', task).prependTo('#tasks');
+          });
+        });
       });
+    }});
+    
+    get('#/tasks/:id', function() { with(this) {
+      this.task = db.collection('tasks').get(params['id']).json();
+      this.partial('/templates/task_details.html.erb')
     }});
     
     post('#/tasks', function() { with(this) {
@@ -31,7 +41,9 @@
       };
       db.collection('tasks').create(task, {
         success: function(task) {
-          context.render('partial', '#tasks', '/templates/task.html.erb', task.json());
+          context.partial('/templates/task.html.erb', {task: task.json()}, function(task_html) {
+            $('#tasks').prepend(task_html);
+          });
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
@@ -41,7 +53,7 @@
     }});
     
     get('#/connecting', function() { with(this) {
-      render('html', '<span class="loading">... Loading ...</span>');
+      $('#main').html('<span class="loading">... Loading ...</span>');
     }});
           
     bind('run', function() {
