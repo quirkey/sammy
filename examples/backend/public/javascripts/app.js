@@ -5,8 +5,7 @@
     var db, db_loaded;
     db = null;
     db_loaded = false;
-    
-                    
+                        
     before(function() { with(this) {
       if (!db_loaded) {
         redirect('#/connecting');
@@ -20,7 +19,7 @@
         $('#main').html(html);
         this.each(db.collection('tasks').all(), function(i, task) {
           this.log('task', task.json());
-          this.partial('/templates/task.html.erb', {task: task.json(), id: task.id()}, function(task_html) {
+          this.partial('/templates/task.html.erb', {task: task}, function(task_html) {
             $(task_html).data('task', task).prependTo('#tasks');
           });
         });
@@ -41,7 +40,7 @@
       };
       db.collection('tasks').create(task, {
         success: function(task) {
-          context.partial('/templates/task.html.erb', {task: task.json()}, function(task_html) {
+          context.partial('/templates/task.html.erb', {task: task}, function(task_html) {
             $('#tasks').prepend(task_html);
           });
         },
@@ -55,7 +54,13 @@
     get('#/connecting', function() { with(this) {
       $('#main').html('<span class="loading">... Loading ...</span>');
     }});
-          
+    
+    bind('task-toggle', function(e, data) { with(this) {
+      this.task = db.collection('tasks').get(data['id']);
+      this.task.attr('completed', function() { return (this == true ? false : true); });
+      this.task.update();
+    }});
+    
     bind('run', function() {
       var context = this;
       db = $.cloudkit;
@@ -70,8 +75,8 @@
         }
       });
       
-      $('li.task').live('click', function() {
-        
+      $('li.task :checkbox').live('click', function() {
+        context.trigger('task-toggle', {id: $(this).parents('.task').attr('id')});
       });
     });
     

@@ -578,7 +578,7 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
       $.ajax({
         type: 'PUT',
         url: meta.uri,
-        data: JSON.stringify(spec),
+        data: JSON.stringify($.extend(json,spec)),
         contentType: 'application/json',
         dataType: 'json',
         beforeSend: function(xhr) {
@@ -589,7 +589,7 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
           if (response.status == 200) {
             meta = JSON.parse(response.responseText);
             meta.id = id;
-            json = spec;
+            json = $.extend(json,spec);
             callbacks.success();
           } else {
             // TODO implement default 412 strategy as progressive diff/merge
@@ -636,7 +636,22 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
 
     that.isDeleted = function() {
       return (meta.deleted == true);
-    }
+    };
+    
+    that.attr = function(name, value) {
+      if (typeof json[name] != 'undefined') {
+        switch(typeof value) {
+          case 'undefined':
+            return json[name]; break;
+          case 'function':
+            return json[name] = value.apply(json[name]); break;
+          default:
+            return json[name] = value;
+        }
+      } else if (typeof meta[name] != 'undefined') {
+        return meta[name];
+      }
+    };
 
     return that;
   };
