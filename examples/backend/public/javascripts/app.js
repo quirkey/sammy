@@ -3,7 +3,7 @@
     element_selector = '#main';
     
     var db, db_loaded;
-    db = null;
+    db        = null;
     db_loaded = false;
                         
     before(function() { with(this) {
@@ -43,6 +43,8 @@
           context.partial('/templates/task.html.erb', {task: task}, function(task_html) {
             $('#tasks').prepend(task_html);
           });
+          // clear the form
+          $('.entry').val('')
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
@@ -61,6 +63,8 @@
       this.task.update();
     }});
     
+    
+        
     bind('run', function() {
       var context = this;
       db = $.cloudkit;

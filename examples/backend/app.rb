@@ -8,5 +8,8 @@ class Tasks < Sinatra::Default
   get '/' do
     haml :index
   end
-      
+  
+  get '/stylesheets/:sheet.css' do
+    sass :"#{params['sheet']}"
+  end
 end
