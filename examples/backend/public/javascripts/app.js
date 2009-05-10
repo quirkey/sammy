@@ -60,7 +60,10 @@
     bind('task-toggle', function(e, data) { with(this) {
       this.task = db.collection('tasks').get(data['id']);
       this.task.attr('completed', function() { return (this == true ? false : true); });
-      this.task.update();
+      this.task.update({
+        success: function() {
+        }
+      });
     }});
     
     
