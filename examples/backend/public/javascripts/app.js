@@ -44,7 +44,7 @@
             $('#tasks').prepend(task_html);
           });
           // clear the form
-          $('.entry').val('')
+          $('.entry').val('');
         },
         error: function() {
           context.trigger('error', {message: 'Sorry, could not save your task.'})
@@ -58,16 +58,17 @@
     }});
     
     bind('task-toggle', function(e, data) { with(this) {
-      this.task = db.collection('tasks').get(data['id']);
+      this.log('data', data)
+      var $task = data.$task;
+      this.task = db.collection('tasks').get($task.attr('id'));
       this.task.attr('completed', function() { return (this == true ? false : true); });
-      this.task.update({
+      this.task.update({}, {
         success: function() {
+          $task.toggleClass('completed');
         }
       });
     }});
     
-    
-        
     bind('run', function() {
       var context = this;
       db = $.cloudkit;
@@ -83,7 +84,8 @@
       });
       
       $('li.task :checkbox').live('click', function() {
-        context.trigger('task-toggle', {id: $(this).parents('.task').attr('id')});
+        var $task = $(this).parents('.task');
+        context.trigger('task-toggle', {$task: $task});
       });
     });
     
