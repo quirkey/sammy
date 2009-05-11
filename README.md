@@ -1,6 +1,6 @@
 # Sammy
 
-http://code.quirkey.com/sammy
+[http://code.quirkey.com/sammy](http://code.quirkey.com/sammy)
 
 ## Description
 
@@ -15,7 +15,7 @@ Include it in your document AFTER jquery.
 
 Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are a little different, though. Not only can you define 'get' and 'post' routes, but you can also bind routes to custom events triggered by your application.
 
-You set up a Sammy Application by passing a Function to the $.sammy (which is a shortcut for the Sammy.Application constructor).
+You set up a Sammy Application by passing a Function to the `$.sammy` (which is a shortcut for the Sammy.Application constructor).
 
     $.sammy(function() { with(this) {
       
@@ -46,7 +46,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 ## More Information
 
-Please see the website at http://code.quirkey.com/sammy for more detailed documentation. 
+Please see the website at [http://code.quirkey.com/sammy](http://code.quirkey.com/sammy) for more detailed documentation. 
 
 Also the examples/ folder has a number of working examples, each with thier own README.
 
@@ -54,7 +54,7 @@ Sammy also has a full test suite. Check test/sammy.html.
 
 ## License
 
-Sammy is covered by the MIT License. See LICENSE for more information.\
+Sammy is covered by the MIT License. See LICENSE for more information.
 
 Sammy includes code originaly created by John Resig ([Class implementation](http://ejohn.org/blog/simple-javascript-inheritance/)) and Greg Borenstien ([srender](http://github.com/atduskgreg/srender/tree/master)).
 
