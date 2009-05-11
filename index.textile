@@ -1,0 +1,77 @@
+---
+layout: quirkey_code
+title: Sammy
+github_name: sammy
+gem: false
+nav:
+  - name: What
+    link: "#what"
+  - name: Why
+    link: "#why"
+  - name: Usage
+    link: "#usage"
+  - name: Dependencies
+    link: "#dependencies"
+---
+
+h2(project_name). {{ page.github_name }}
+
+h3(#what). What
+
+Sammy is a tiny javascript framework built on top of jQuery inspired by Ruby's "Sinatra.":http://sinatrarb.com
+
+h3(#why). Why
+
+jQuery is probably the fastest, most robust way to abstract basic low-level Javascript functionality that every Javascript devleoper needs. However, it really remains low-level and does not imply any structure or organization for larger scale Javascript applications. 
+
+Working heavily with Sinatra, I realized that the simple route definitions and structure it provided could be a great fit with jQuery/JavaScript. Not only does it allow you to respond to specific URLs, but utilizing the URL hash (#) you can create single page applications that still respond to the back button in your browser (ala Gmail).
+
+I started off on this project thinking "It would be cool to implement Sinatra in JavaScript". Sammy has become more then that, I've tried to follow JS and jQuery conventions instead of Ruby and its made for a small (< 20K) library for defining simple to complex applications.
+
+h3(#basics). Basics
+
+Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are a little different, though. Not only can you define 'get' and 'post' routes, but you can also bind routes to custom events triggered by your application.
+
+You set up a Sammy Application by passing a Function to the @$.sammy@ (which is a shortcut for the Sammy.Application constructor).
+
+{% highlight javascript %}
+$.sammy(function() { with(this) {
+
+  get('#/', function() { with(this) {
+    $('#main').text('Welcome!');
+  }});
+
+}});
+{% endhighlight %}
+
+Inside of the 'app' function() @this@ is the Application. This is where you can configure the application and add routes.
+
+Above, we defined a @get()@ route. When the browser is pointed to @#/@ the function passed to that route will be run. Inside of the route function, @this@ is a @Sammy.EventContext@. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
+
+Once you've defined an application the only thing left to do is run it. The best practice behavior is to encapulate @run()@ in a document.ready block:
+
+{% highlight javascript %}
+var app = $.sammy(...)
+
+$(function() {
+  app.run();
+});
+{% endhighlight %}
+
+This will guaruntee that the DOM is loaded before we try to apply functionality to it.
+
+h3(#more). More!
+
+I've split up the information into a couple different sections. 
+
+* "Routes":routes.html
+* "Events":events.html
+* "API":api.html
+* "FAQ":faq.html
+* "Examples":examples.html
+
+h3(#dependencies). Dependencies
+
+Sammy requires:
+
+* jQuery >= 1.3.2
