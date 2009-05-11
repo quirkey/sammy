@@ -1,0 +1,36 @@
+---
+layout: quirkey_code_multi
+title: Sammy
+github_name: sammy
+nav:
+  - name: Overview
+    link: index.html
+  - name: Installation
+    link: install.html
+  - name: Documentation
+    link: docs/index.html
+---
+
+h2(project_name). Sammy
+
+h2. Installation
+
+h3. Downloading
+
+<p>Github in thier infinite awesomeness also lets you download the source in multiple formats.</p>
+<div class="download">
+  <a href="http://github.com/quirkey/{{ page.github_name }}/zipball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/zip.png" />
+  </a>
+  <a href="http://github.com/quirkey/{{ page.github_name }}/tarball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/tar.png" />
+  </a>
+</div>
+
+Once downloaded, the copy @lib/sammy.js@ into your project's public javascripts directory.
+
+h3(#dependencies). Dependencies
+
+Sammy requires:
+
+* jQuery >= 1.3.2 ("http://jquery.com":http://jquery.com)

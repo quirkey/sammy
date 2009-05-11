@@ -1,0 +1,31 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - Events
+github_name: sammy
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+---
+
+h2(project_name). Sammy
+
+h2. Documentation
+
+h3. API
+
+"Sammy.Object":api/sammy.object.html
+"Sammy.Application":api/sammy.application.html
+"Sammy.EventContext":api/sammy.event_context.html

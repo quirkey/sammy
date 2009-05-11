@@ -1,0 +1,89 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - Events
+github_name: sammy
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+---
+
+h2(project_name). Sammy
+
+h2. Documentation
+
+h3. Events
+
+Inside of a Sammy application javascript events can be defined, bound, and triggered. The methods for doing this purposely look identical to the jQuery Event API. Though they look the same, there function is slightly different.
+
+h4. Bind
+
+Custom events can be bound within the application definintion block with the @bind()@ method.
+
+{% highlight javascript %}
+// bind(name, callback)
+bind('db-loaded', function(e, data) {
+  this.redirect('#/');
+});
+{% endhighlight%}
+
+Internally, Sammy binds the events to the application element within a unique application namespace. This means that if you have two Sammy applications running in the same document, you can trigger and bind events without worrying about double trigger issues. Events are also automatically bound and unbound to the DOM on @run()@ and @unload()@.
+
+Inside of the callback, @this@ is a Sammy.EventContext just like it is for "routes.":routes.html This means you can @redirect@, @partial@, etc.
+
+h4. Trigger
+
+The other side of events is @trigger()@ which trigger's the custom events you've defined. @trigger()@ works within both the context of the app and other events/routes.
+
+These triggers are equivelent:
+
+{% highlight javascript %}
+var app = $.sammy(function() {
+  
+  bind('test', function() {
+    // trigger on EventContext
+    this.trigger('other-event');
+  });
+  
+});
+// trigger on the app itself
+app.trigger('other-event');
+{% endhighlight%}
+
+You can also pass a custom data object to trigger. These get passed to the bound callback as the second argument.
+
+{% highlight javascript %}
+var app = $.sammy(function() {
+  
+  bind('test', function(e, data) { with(this) {
+    alert(data['my_data']);
+  }});
+  
+  get('#/', function() { with(this) {
+    trigger('test', {my_data: 'EVENTED!'});
+  }});
+  
+});
+{% endhighlight%}
+
+With this example, taking our browser to @#/@ would fire the event @'test'@ passing and alerting our precious data.
+
+h4. Pre-defined Events
+
+Sammy application has a number of predefined events that are fired throughout an app's life cycle. Its often useful to bind/listen to these existing events in order to invoke functionality at paticular points. 
+
+The most common use case is listening to @run@. run is the first event fired in the apps lifecycle and can be useful for establishing a connection to a database, build out a list of documents, etc.
+
+To see a list of all the pre-defined events, "check the API":!!!

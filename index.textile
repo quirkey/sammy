@@ -1,20 +1,24 @@
 ---
-layout: quirkey_code
+layout: quirkey_code_multi
 title: Sammy
 github_name: sammy
-gem: false
 nav:
-  - name: What
-    link: "#what"
-  - name: Why
-    link: "#why"
-  - name: Usage
-    link: "#usage"
-  - name: Dependencies
-    link: "#dependencies"
+  - name: Overview
+    link: index.html
+    sub:
+      - name: What
+        link: "#what"
+      - name: Why
+        link: "#why"
+      - name: Basics
+        link: "#usage"
+  - name: Installation
+    link: install.html
+  - name: Documentation
+    link: docs/index.html
 ---
 
-h2(project_name). {{ page.github_name }}
+h2(project_name). Sammy
 
 h3(#what). What
 

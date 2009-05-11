@@ -1,0 +1,152 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - Routes
+github_name: sammy
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+---
+
+h2(project_name). Sammy
+
+h2. Documentation
+
+h3. Routes
+
+The main building block of a Sammy application is a set of routes. A route is made up of three simple pieces:
+
+* A verb _(get, post, put, delete)_
+* A path _(#/, test/path/, #/my_path/:var)_
+* A callback _(function() {...})_
+
+Inside the Sammy.Application block, Routes can be defined in two ways: Using @route@ directly or using the verb shortcuts.
+
+Directly:
+
+{% highlight javascript %}
+// route(verb, path, callback)
+route('get', '#/', function() { 
+  ...
+});
+{% endhighlight %}
+
+Equivilent to:
+
+{% highlight javascript %}
+// verb(path, callback)
+get('#/', function() { 
+  ...
+});
+{% endhighlight %}
+
+h4. Verbs
+
+Out of the 4 verbs, @get@ is the most common. @get@ routes are invoked whenever the URL or URL hash changes. If the URL or hash matches one of the route paths, the callback for that route is invoked.
+
+@post@, @put@, and @delete@ are only invoked by submitted forms. At @run()@ Sammy binds events to @submit()@ for all the forms. When a form is submitted, Sammy looks for a route that matches the path of the form (the action) and the verb (the method). If a route is found, the callback is executed. 
+
+For example, this route:
+
+{% highlight javascript %}
+put('#/post/form', function() { 
+  ...
+  return false;
+});
+{% endhighlight %}
+
+Would be executed when this form is submitted:
+
+{% highlight html %}
+<form action="#/post/form" method="PUT">
+  <label>First Name</label><br />
+  <input type="text" name="first_name" />
+  <input type="submit" value="Submit" />
+</form>
+{% endhighlight %}
+
+If you don't want to actually sumbit the form (allow its default behavior), you must return @false@ from the matching routes callback.
+
+h4. Paths
+
+Paths can be either full URIs (eg. /blah/blah/blah) or just the end hash (eg. #/mypath). The benefit of using the hash, is that you can define a single page application (no full refreshes) that preserves the back button/history.
+
+Paths can be defined as strings or regular expressions. In fact internally, all paths are converted to regular expressions. That means these are equivilent:
+
+{% highlight javascript %}
+// string
+get('/test/123', function() { 
+  ...
+});
+
+// regexp
+get(/^\/test\/123/, function() { 
+  ...
+});
+{% endhighlight %}
+
+Sammy also parses the path for named and un-named params. This means you can pull things like 'id's and 'slug's out of the path for dyamic parsing.
+
+Any string starting with @:@ in a path will be pulled out and converted to a named param.
+
+Given an app with this route:
+
+{% highlight javascript %}
+get('#/by_name/:name', function() { with(this) {
+  alert(params['name']);
+}});
+{% endhighlight %}
+
+Pointing the browser to @#/by_name/quirkey@ would give you the fabulous system prompt reading 'quirkey'. 
+
+This works with mulitple params in a single path. It does not work if you want to match strings that contain '/'. If you want that you can use Regexp and 'splat'.
+
+Given a Regexp route:
+{% highlight javascript %}
+get(/\#\/by_name\/(.*)/, function() { with(this) {
+  alert(params['splat']);
+}});
+{% endhighlight %}
+
+Going to @#/by_name/quirkey@ will give you that same wonderful alert. However, because the regex is more lenient. @#/by_name/quirkey/boosh@ will also assign
+@quirkey/boosh@ to splat. Using the Regexp in this way is useful for defining routes where you need more control over.
+
+h4. Callbacks
+
+Callbacks are just anonymous javascript functions passed to a route. They are only invoked when the route is matched.
+
+Inside of the callback, the @this@ is a new @Sammy.EventContext@. Event context has a number of useful methods as well as some important attributes. "See the API for the full details.":!!!
+
+For example, you can access the @params@, the current path (@path@), etc. More importantly you can run any jQuery methods or methods of the EventContext like @template@, @partial@, @redirect@, etc.
+
+A helpful convention is wrapping the context in @with@ so that you dont have to always refer to @this@ when invoking methods or getting params.
+
+These are equivilent:
+
+{% highlight javascript %}
+get('#/by_name/:name', function() { with(this) {
+  redirect('#/' + params['name']);
+}});
+
+get('#/by_name/:name', function() {
+  this.redirect('#/' + this.params['name']);
+});
+{% endhighlight %}
+
+
+
+
+
+

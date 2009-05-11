@@ -1,0 +1,28 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - API
+github_name: sammy
+nav:
+  - name: Overview
+    link: ../../index.html
+  - name: Installation
+    link: ../../install.html
+  - name: Documentation
+    link: ../../index.html
+    sub:
+      - name: Routes
+        link: ../routes.html
+      - name: Events
+        link: ../events.html
+      - name: FAQ
+        link: ../faq.html
+      - name: API
+        link: ../api.html
+---
+
+h2(project_name). Sammy
+
+h2. Documentation
+
+h3. API: Sammy.Object
+

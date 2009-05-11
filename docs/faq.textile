@@ -1,0 +1,37 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - FAQ
+github_name: sammy
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+---
+
+h2(project_name). Sammy
+
+h2. Documentation
+
+h3. FAQ
+
+h4. How can I use templates?
+
+h4. How do I load views from other files?
+
+h4. Can I run multiple apps in the same document?
+
+h4. I want Sammy to do X!
+
+
