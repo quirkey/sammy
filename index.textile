@@ -68,11 +68,10 @@ h3(#more). More!
 
 I've split up the information into a couple different sections. 
 
-* "Routes":routes.html
-* "Events":events.html
-* "API":api.html
-* "FAQ":faq.html
-* "Examples":examples.html
+* "Routes":docs/routes.html
+* "Events":docs/events.html
+* "API":docs/api.html
+* "FAQ":docs/faq.html
 
 h3(#dependencies). Dependencies
 
