@@ -48,7 +48,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 Please see the website at [http://code.quirkey.com/sammy](http://code.quirkey.com/sammy) for more detailed documentation. 
 
-Also the examples/ folder has a number of working examples, each with thier own README.
+Also the [examples/](http://github.com/quirkey/sammy/tree/master/examples/) folder has a number of working examples, each with thier own README.
 
 Sammy also has a full test suite. Check test/sammy.html.
 
