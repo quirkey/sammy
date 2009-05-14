@@ -28,12 +28,56 @@ h3. FAQ
 
 h4. How can I use templates?
 
-You can render templates.
+Currently you can render templates using ERB style notation. 
+{% highlight erb %}
+<div id="mytemplate">
+  <%= variable %>
+</div>
+{% endhighlight %}
+
+Internally, Sammy uses a modified "$.srender":http://github.com/atduskgreg/srender to do the parsing. Both @template()@ and @partial()@ use this method internally.
+See "the API":api.html for more details.
 
 h4. How do I load views from other files?
 
+In an @EventContext@ the @partial()@ method can asynchronoulsy load views and enact on the data, appending, replacing or parising it.
+
 h4. Can I run multiple apps in the same document?
+
+Yes! Each @Sammy.Application@ is bound to a specific element and also has a unique ID and namespace. Since the whole Application is encapsulated in an object, the app can actually be passed around and modified during the course of a request.
+
+You can also bind different applications to different elements on the page, basically creating 'controllers' for the individual elements. For example:
+
+{% highlight javascript %}
+
+var menu = $.sammy(function() { with(this) {
+  
+  element_selector = '#menu';
+  
+  get('#/', function() { ... //load the initial menu });
+  
+  get('#/:nav', function() { ...// show the subnav for :nav});
+  
+}});
+
+var main = $.sammy(function() { with(this) {
+  
+  element_selector = '#main';
+  
+  get('#/', function() { ... //load the index });
+  
+  get('#/:nav', function() { ...// show the page coresponding to :nav});
+  
+}});
+
+$(function() {
+  menu.run();
+  main.run('#/');
+});
+{% endhighlight %}
+
+With this pattern, you can seperate the functionality for the menu and the main element, while responding to the exact same events.
 
 h4. I want Sammy to do X!
 
-
+That's awesome! Please feel free to fork "the project on github":http://github.com/quirkey/sammy and contact me if you have questions.

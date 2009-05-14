@@ -86,4 +86,4 @@ Sammy application has a number of predefined events that are fired throughout an
 
 The most common use case is listening to @run@. run is the first event fired in the apps lifecycle and can be useful for establishing a connection to a database, build out a list of documents, etc.
 
-To see a list of all the pre-defined events, "check the API":!!!
+To see a list of all the pre-defined events, "check the API":api.html

@@ -127,7 +127,7 @@ h4. Callbacks
 
 Callbacks are just anonymous javascript functions passed to a route. They are only invoked when the route is matched.
 
-Inside of the callback, the @this@ is a new @Sammy.EventContext@. Event context has a number of useful methods as well as some important attributes. "See the API for the full details.":!!!
+Inside of the callback, the @this@ is a new @Sammy.EventContext@. Event context has a number of useful methods as well as some important attributes. "See the API for the full details.":api.html
 
 For example, you can access the @params@, the current path (@path@), etc. More importantly you can run any jQuery methods or methods of the EventContext like @template@, @partial@, @redirect@, etc.
 
