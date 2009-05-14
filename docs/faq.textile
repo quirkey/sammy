@@ -28,6 +28,8 @@ h3. FAQ
 
 h4. How can I use templates?
 
+You can render templates.
+
 h4. How do I load views from other files?
 
 h4. Can I run multiple apps in the same document?
