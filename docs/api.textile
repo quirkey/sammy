@@ -26,982 +26,917 @@ h2. Documentation
 
 h3. API
 
-<div class="api">
-  <div class='klass'>
-    <h2>
-      Sammy.Application
-   &gt; Sammy.Object
-    </h2>
+<div class='api'>
+<div class='klass'>
+  <h2>
+    Sammy.Application
+    &gt;
+    Sammy.Object
+  </h2>
+  <div class='doc'>
+    <h2>Sammy.Application</h2>
+    <p>
+    Sammy.Application is the Base prototype for defining
+    &#8216;applications&#8217;. An &#8216;application&#8217; is a collection of
+    &#8216;routes&#8217; and bound events that is attached to an element when
+    <tt>run()</tt> is called.
+    </p>
+  </div>
+  <h3>Attributes</h3>
+  <ul>
+    <li>
+      <a href='#attr_0'>APP_EVENTS</a>
+    </li>
+    <li>
+      <a href='#attr_1'>ROUTE_VERBS</a>
+    </li>
+    <li>
+      <a href='#attr_2'>data_store_name</a>
+    </li>
+    <li>
+      <a href='#attr_3'>debug</a>
+    </li>
+    <li>
+      <a href='#attr_4'>element_selector</a>
+    </li>
+    <li>
+      <a href='#attr_5'>run_interval_every</a>
+    </li>
+    <li>
+      <a href='#attr_6'>silence_404</a>
+    </li>
+  </ul>
+  <hr />
+  <div class='attr' id='attr_0'>
+    <h4>
+      APP_EVENTS
+      =
+      <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect']</span>
+    </h4>
     <div class='doc'>
-      <h2>Sammy.Application</h2>
       <p>
-      Sammy.Application is the Base prototype for defining
-      &#8216;applications&#8217;. An &#8216;application&#8217; is a collection of
-      &#8216;routes&#8217; and bound events that is attached to an element when
-      <tt>run()</tt> is called.
+      An array of the default events triggered by the application during its
+      lifecycle
       </p>
     </div>
-    <h3>Attributes</h3>
-    <ul>
-      <li>
-        <a href='#attr_0'>APP_EVENTS</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_1'>ROUTE_VERBS</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_2'>data_store_name</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_3'>debug</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_4'>element_selector</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_5'>run_interval_every</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#attr_6'>silence_404</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='attr' id='attr_0'>
-      <h4>
-        APP_EVENTS
-        =
-        <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect']</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        An array of the default events triggered by the application during its
-        lifecycle
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_1'>
-      <h4>
-        ROUTE_VERBS
-        =
-        <span>['get','post','put','delete']</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        the four route verbs
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_2'>
-      <h4>
-        data_store_name
-        =
-        <span>'sammy-app'</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
-        entry assocciated with the application&#8217;s <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_3'>
-      <h4>
-        debug
-        =
-        <span>false</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        When set to true, logs all of the default events using <tt>log()</tt>
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_4'>
-      <h4>
-        element_selector
-        =
-        <span>'body'</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Defines what element the application is bound to. Provide a selector
-        (parseable by <tt>jQuery()</tt>) and this will be used by
-        <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_5'>
-      <h4>
-        run_interval_every
-        =
-        <span>50</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The time in milliseconds that the URL is queried for changes
-        </p>
-      </div>
-    </div>
-    <div class='attr' id='attr_6'>
-      <h4>
-        silence_404
-        =
-        <span>true</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        When set to false, will throw a javascript error when a route is invoked
-        and can not be found.
-        </p>
-      </div>
-    </div>
-    <h3>Methods</h3>
-    <ul>
-      <li>
-        <a href='#meth_0'>$element</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_1'>addLogger</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_2'>after</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_3'>before</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_4'>bind</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_5'>currentLocation</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_6'>eventNamespace</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_7'>init</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_8'>isRunning</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_9'>lookupRoute</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_10'>notFound</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_11'>route</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_12'>run</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_13'>runRoute</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_14'>toString</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_15'>trigger</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_16'>unload</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='meth' id='meth_0'>
-      <h4>
-        $element
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        returns a jQuery object of the Applications bound element.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_1'>
-      <h4>
-        addLogger
-        <span>
-          (
-          <em>logger</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Provide a callback that is invoked every time one of the APP_EVENTS is
-        triggered.
-        </p>
-        <h3>Example</h3>
-        {% highlight javascript %}
-         // Prints log messages to #debug
-         $(function() {
-           app.addLogger(function(e, data) {
-             $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '&lt;br /&gt;'].join(' '));
-           })
-           app.run('#/');
-         });
-        {% endhighlight %}
-      </div>
-    </div>
-    <div class='meth' id='meth_2'>
-      <h4>
-        after
-        <span>
-          (
-          <em>callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut for binding a callback to be run after a route is executed.
-        After callbacks have no guarunteed order.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_3'>
-      <h4>
-        before
-        <span>
-          (
-          <em>callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Takes a single callback that is pushed on to a stack. Before any route is
-        run, the callbacks are evaluated in order within the current
-        <tt>Sammy.EventContext</tt>
-        </p>
-        <p>
-        If any of the callbacks explicitly return false, execution of any further
-        callbacks and the route itself is halted.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
-      <h4>
-        bind
-        <span>
-          (
-          <em>name, data, callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Works just like <tt>jQuery.bind()</tt> with a couple noteable differences.
-        </p>
-        <ul>
-        <li>It binds all events to the application element
-
-        </li>
-        <li>All events are bound within the <tt>eventNamespace()</tt>
-
-        </li>
-        <li>Events are not actually bound until the application is started with
-        <tt>run()</tt>
-
-        </li>
-        </ul>
-        <p>
-        See <a
-        href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
-        for more info.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
-      <h4>
-        currentLocation
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Returns a cloned location object.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
-      <h4>
-        eventNamespace
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A unique event namespace defined per application. All events bound with
-        <tt>bind()</tt> are automatically bound within this space.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_7'>
-      <h4>
-        init
-        <span>
-          (
-          <em>app_function</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Initializes a new Sammy.Application. The only argument an
-        &#8216;app_function&#8217; is evaluated within the context of the
-        application.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_8'>
-      <h4>
-        isRunning
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Returns a boolean of weather the current application is running.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_9'>
-      <h4>
-        lookupRoute
-        <span>
-          (
-          <em>verb, path</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Given a verb and a String path, will return either a route object or false
-        if a matching route can be found within the current defined set.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_10'>
-      <h4>
-        notFound
-        <span>
-          (
-          <em>verb, path</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        If <tt>silence_404</tt> is set to <tt>false</tt> will throw a &#8216;404
-        Not Found&#8217; error.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_11'>
-      <h4>
-        route
-        <span>
-          (
-          <em>verb, path, callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        <tt>route()</tt> is the main method for defining routes within an
-        application. For great detail on routes, check out: <a
-        href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
-        </p>
-        <p>
-        This method also has aliases for each of the different verbs (eg.
-        <tt>get()</tt>, <tt>post()</tt>, etc.)
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>A String in the set of ROUTE_VERBS
-
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>A Regexp or a String representing the path to match to invoke this verb.
-
-        </td></tr>
-        <tr><td valign="top"><tt>callback</tt>:</td><td>A Function that is called/evaluated whent the route is run see:
-        <tt>runRoute()</tt>
-
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_12'>
-      <h4>
-        run
-        <span>
-          (
-          <em>start_url</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Actually starts the application&#8217;s lifecycle. <tt>run()</tt> should be
-        invoked within a document.ready block to ensure the DOM exists before
-        binding events, etc.
-        </p>
-        <h3>Example</h3>
-        {% highlight javascript %}
-           var app = $.sammy(function() { ... }); // your application
-           $(function() { // document.ready
-               app.run();
-            });
-        {% endhighlight %}
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>start_url</tt>:</td><td>Optionally, a String can be passed which the App will redirect to
-
-        </td></tr>
-        </table>
-        {% highlight javascript %}
-                     after the events/routes have been bound.
-        {% endhighlight %}
-      </div>
-    </div>
-    <div class='meth' id='meth_13'>
-      <h4>
-        runRoute
-        <span>
-          (
-          <em>verb, path, params</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
-        possible URL params and then invokes the route&#8217;s callback within a
-        new <tt>Sammy.EventContext</tt>.
-        </p>
-        <p>
-        You probably will never have to call this directly.
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>A String for the verb.
-
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>A String path to lookup.
-
-        </td></tr>
-        <tr><td valign="top"><tt>params</tt>:</td><td>An Object of Params pulled from the URI or passed directly.
-
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_14'>
-      <h4>
-        toString
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        //=> Sammy.Application: body
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_15'>
-      <h4>
-        trigger
-        <span>
-          (
-          <em>name, data, context</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Triggers custom events defined with <tt>bind()</tt>
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>name</tt>:</td><td>The name of the event. Automatically prefixed with the
-        <tt>eventNamespace()</tt>
-
-        </td></tr>
-        <tr><td valign="top"><tt>data</tt>:</td><td>An optional Object that can be passed to the bound callback.
-
-        </td></tr>
-        <tr><td valign="top"><tt>context</tt>:</td><td>An optional context/Object in which to execute the bound callback. If no
-        context is supplied a the context is a new <tt>Sammy.EventContext</tt>
-
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_16'>
-      <h4>
-        unload
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The opposite of <tt>run()</tt>, un-binds all event listeners and intervals
-        <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
-        when the document is closed.
-        </p>
-      </div>
-    </div>
   </div>
-  <div class='klass'>
-    <h2>
-      Sammy.Object
-   &gt; Class
-    </h2>
+  <div class='attr' id='attr_1'>
+    <h4>
+      ROUTE_VERBS
+      =
+      <span>['get','post','put','delete']</span>
+    </h4>
     <div class='doc'>
-      <h2>Sammy.Object</h2>
       <p>
-      Sammy.Object is the base for all other Sammy classes. It provides some
-      useful functionality, including cloning, iterating, etc.
+      the four route verbs
       </p>
     </div>
-    <h3>Methods</h3>
-    <ul>
-      <li>
-        <a href='#meth_0'>clone</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_1'>each</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_2'>init</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_3'>log</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_4'>toHTML</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_5'>uuid</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='meth' id='meth_0'>
-      <h4>
-        clone
-        <span>
-          (
-          <em>obj</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        If passed an obj, clone the attributes and methods of that object If called
-        without arguments, clones the callee.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_1'>
-      <h4>
-        each
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        If passed an object and a callback, will iterate over the object with (k,
-        v) in the context of this object. If passed just an argument - will
-        itterate over the properties of this Sammy.Object
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_2'>
-      <h4>
-        init
-        <span>
-          (
-          <em>set</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Extend the passed object as a Sammy.Object
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_3'>
-      <h4>
-        log
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Uses console.log to log the arguments. If console (firebug is not present),
-        it logs to the ether. Also prefixes the arguments with a timestamp.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
-      <h4>
-        toHTML
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Renders a simple HTML version of this Objects attributes. Does not render
-        functions. For example. Given this Sammy.Object:
-        </p>
-        {% highlight javascript %}
-           var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
-           s.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'
-        {% endhighlight %}
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
-      <h4>
-        uuid
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Generates a unique identifing string. Used for application namespaceing.
-        </p>
-      </div>
+  </div>
+  <div class='attr' id='attr_2'>
+    <h4>
+      data_store_name
+      =
+      <span>'sammy-app'</span>
+    </h4>
+    <div class='doc'>
+      <p>
+      On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
+      entry assocciated with the application&#8217;s <tt>$element()</tt>
+      </p>
     </div>
   </div>
-  <div class='klass'>
-    <h2>
-      Sammy.EventContext
-   &gt; Sammy.Object
-    </h2>
+  <div class='attr' id='attr_3'>
+    <h4>
+      debug
+      =
+      <span>false</span>
+    </h4>
     <div class='doc'>
-      <h2>Sammy.EventContext</h2>
       <p>
-      <tt>Sammy.EventContext</tt> objects are created every time a route is run
-      or a bound event is triggered. The callbacks for these events are evaluated
-      within a <tt>Sammy.EventContext</tt> This within these callbacks the
-      special methods of <tt>EventContext</tt> are available.
+      When set to true, logs all of the default events using <tt>log()</tt>
+      </p>
+    </div>
+  </div>
+  <div class='attr' id='attr_4'>
+    <h4>
+      element_selector
+      =
+      <span>'body'</span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Defines what element the application is bound to. Provide a selector
+      (parseable by <tt>jQuery()</tt>) and this will be used by
+      <tt>$element()</tt>
+      </p>
+    </div>
+  </div>
+  <div class='attr' id='attr_5'>
+    <h4>
+      run_interval_every
+      =
+      <span>50</span>
+    </h4>
+    <div class='doc'>
+      <p>
+      The time in milliseconds that the URL is queried for changes
+      </p>
+    </div>
+  </div>
+  <div class='attr' id='attr_6'>
+    <h4>
+      silence_404
+      =
+      <span>true</span>
+    </h4>
+    <div class='doc'>
+      <p>
+      When set to false, will throw a javascript error when a route is invoked
+      and can not be found.
+      </p>
+    </div>
+  </div>
+  <h3>Methods</h3>
+  <ul>
+    <li>
+      <a href='#meth_0'>$element</a>
+    </li>
+    <li>
+      <a href='#meth_1'>addLogger</a>
+    </li>
+    <li>
+      <a href='#meth_2'>after</a>
+    </li>
+    <li>
+      <a href='#meth_3'>before</a>
+    </li>
+    <li>
+      <a href='#meth_4'>bind</a>
+    </li>
+    <li>
+      <a href='#meth_5'>currentLocation</a>
+    </li>
+    <li>
+      <a href='#meth_6'>eventNamespace</a>
+    </li>
+    <li>
+      <a href='#meth_7'>init</a>
+    </li>
+    <li>
+      <a href='#meth_8'>isRunning</a>
+    </li>
+    <li>
+      <a href='#meth_9'>lookupRoute</a>
+    </li>
+    <li>
+      <a href='#meth_10'>notFound</a>
+    </li>
+    <li>
+      <a href='#meth_11'>route</a>
+    </li>
+    <li>
+      <a href='#meth_12'>run</a>
+    </li>
+    <li>
+      <a href='#meth_13'>runRoute</a>
+    </li>
+    <li>
+      <a href='#meth_14'>toString</a>
+    </li>
+    <li>
+      <a href='#meth_15'>trigger</a>
+    </li>
+    <li>
+      <a href='#meth_16'>unload</a>
+    </li>
+  </ul>
+  <hr />
+  <div class='meth' id='meth_0'>
+    <h4>
+      $element
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      returns a jQuery object of the Applications bound element.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_1'>
+    <h4>
+      addLogger
+      <span>
+        (
+        <em>logger</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Provide a callback that is invoked every time one of the APP_EVENTS is
+      triggered.
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-       $.sammy(function() { with(this) {
-         // The context here is this Sammy.Application
-         get('#/:name', function() { with(this) {
-           // The context here is a new Sammy.EventContext
-           if (params['name'] == 'sammy') {
-             partial('name.html.erb', {name: 'Sammy'});
-           } else {
-             redirect('#/somewhere-else')
-           }
-         }});
-       }});
+       // Prints log messages to #debug
+       $(function() {
+         app.addLogger(function(e, data) {
+           $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '&lt;br /&gt;'].join(' '));
+         })
+         app.run('#/');
+       });
       {% endhighlight %}
     </div>
-    <h3>Methods</h3>
-    <ul>
-      <li>
-        <a href='#meth_0'>$element</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_1'>eventNamespace</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_2'>init</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_3'>notFound</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_4'>partial</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_5'>redirect</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_6'>template</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href='#meth_7'>trigger</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='meth' id='meth_0'>
-      <h4>
-        $element
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut to the app&#8217;s <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_1'>
-      <h4>
-        eventNamespace
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut to app&#8217;s <tt>eventNamespace()</tt>
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_2'>
-      <h4>
-        init
-        <span>
-          (
-          <em>app, verb, path, params</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Initialize a new EventContext
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>app</tt>:</td><td>The <tt>Sammy.Application</tt> this event is called within.
-
-        </td></tr>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>The verb invoked to run this context/route.
-
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>The string path invoked to run this context/route.
-
-        </td></tr>
-        <tr><td valign="top"><tt>params</tt>:</td><td>An Object of optional params to pass to the context. Is converted to a
-        <tt>Sammy.Object</tt>.
-
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_3'>
-      <h4>
-        notFound
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Raises a possible <tt>notFound()</tt> error for the current path.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
-      <h4>
-        partial
-        <span>
-          (
-          <em>path, data, callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Used for rendering remote templates or documents within the current
-        application/DOM.
-        </p>
-        <p>
-        There are a couple different ways to use <tt>partial()</tt>:
-        </p>
-        {% highlight javascript %}
-             partial('doc.html');
-             //=&gt; Replaces $element() with the contents of doc.html
-
-             partial('doc.html.erb', {name: 'Sammy'});
-             //=&gt; Replaces $element() with the contents of doc.html.erb run through &lt;tt&gt;template()&lt;/tt&gt;
-
-             partial('doc.html.erb', function(data) {
-               // data is the contents of the template.
-               $('.other-selector').html(data);
-             });
-        {% endhighlight %}
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
-      <h4>
-        redirect
-        <span>
-          (
-          <em>to</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Changes the location of the current window. If <tt>to</tt> begins with
-        &#8217;#&#8217; it only changes the document&#8217;s hash.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
-      <h4>
-        template
-        <span>
-          (
-          <em>template, data, name</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Uses <tt>$.srender</tt> to parse ERB like templates.
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>template</tt>:</td><td>A String template. &#8217;<% %>&#8217; tags are evaluated as Javascript and
-        replaced with the elements in data.
-
-        </td></tr>
-        <tr><td valign="top"><tt>data</tt>:</td><td>An Object containing the replacement values for the template. data is
-        extended with the <tt>EventContext</tt> allowing you to call its methods
-        within the template.
-
-        </td></tr>
-        <tr><td valign="top"><tt>name</tt>:</td><td>An optional String name to cache the template. Is used in
-        <tt>partial()</tt> to cache remote templates.
-
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_7'>
-      <h4>
-        trigger
-        <span>
-          (
-          <em>name, data</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Triggers events on <tt>app</tt> within the current context.
-        </p>
-      </div>
+  </div>
+  <div class='meth' id='meth_2'>
+    <h4>
+      after
+      <span>
+        (
+        <em>callback</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      A shortcut for binding a callback to be run after a route is executed.
+      After callbacks have no guarunteed order.
+      </p>
     </div>
   </div>
+  <div class='meth' id='meth_3'>
+    <h4>
+      before
+      <span>
+        (
+        <em>callback</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Takes a single callback that is pushed on to a stack. Before any route is
+      run, the callbacks are evaluated in order within the current
+      <tt>Sammy.EventContext</tt>
+      </p>
+      <p>
+      If any of the callbacks explicitly return false, execution of any further
+      callbacks and the route itself is halted.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_4'>
+    <h4>
+      bind
+      <span>
+        (
+        <em>name, data, callback</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Works just like <tt>jQuery.bind()</tt> with a couple noteable differences.
+      </p>
+      <ul>
+      <li>It binds all events to the application element
+      
+      </li>
+      <li>All events are bound within the <tt>eventNamespace()</tt>
+      
+      </li>
+      <li>Events are not actually bound until the application is started with
+      <tt>run()</tt>
+      
+      </li>
+      </ul>
+      <p>
+      See <a
+      href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
+      for more info.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_5'>
+    <h4>
+      currentLocation
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Returns a cloned location object.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_6'>
+    <h4>
+      eventNamespace
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      A unique event namespace defined per application. All events bound with
+      <tt>bind()</tt> are automatically bound within this space.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_7'>
+    <h4>
+      init
+      <span>
+        (
+        <em>app_function</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Initializes a new Sammy.Application. The only argument an
+      &#8216;app_function&#8217; is evaluated within the context of the
+      application.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_8'>
+    <h4>
+      isRunning
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Returns a boolean of weather the current application is running.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_9'>
+    <h4>
+      lookupRoute
+      <span>
+        (
+        <em>verb, path</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Given a verb and a String path, will return either a route object or false
+      if a matching route can be found within the current defined set.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_10'>
+    <h4>
+      notFound
+      <span>
+        (
+        <em>verb, path</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      If <tt>silence_404</tt> is set to <tt>false</tt> will throw a &#8216;404
+      Not Found&#8217; error.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_11'>
+    <h4>
+      route
+      <span>
+        (
+        <em>verb, path, callback</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      <tt>route()</tt> is the main method for defining routes within an
+      application. For great detail on routes, check out: <a
+      href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
+      </p>
+      <p>
+      This method also has aliases for each of the different verbs (eg.
+      <tt>get()</tt>, <tt>post()</tt>, etc.)
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>verb</tt>:</td><td>A String in the set of ROUTE_VERBS
+      
+      </td></tr>
+      <tr><td valign="top"><tt>path</tt>:</td><td>A Regexp or a String representing the path to match to invoke this verb.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>callback</tt>:</td><td>A Function that is called/evaluated whent the route is run see:
+      <tt>runRoute()</tt>
+      
+      </td></tr>
+      </table>
+    </div>
+  </div>
+  <div class='meth' id='meth_12'>
+    <h4>
+      run
+      <span>
+        (
+        <em>start_url</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Actually starts the application&#8217;s lifecycle. <tt>run()</tt> should be
+      invoked within a document.ready block to ensure the DOM exists before
+      binding events, etc.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+         var app = $.sammy(function() { ... }); // your application
+         $(function() { // document.ready
+             app.run();
+          });
+      {% endhighlight %}
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>start_url</tt>:</td><td>Optionally, a String can be passed which the App will redirect to
+      
+      </td></tr>
+      </table>
+      {% highlight javascript %}
+                   after the events/routes have been bound.
+      {% endhighlight %}
+    </div>
+  </div>
+  <div class='meth' id='meth_13'>
+    <h4>
+      runRoute
+      <span>
+        (
+        <em>verb, path, params</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
+      possible URL params and then invokes the route&#8217;s callback within a
+      new <tt>Sammy.EventContext</tt>.
+      </p>
+      <p>
+      You probably will never have to call this directly.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>verb</tt>:</td><td>A String for the verb.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>path</tt>:</td><td>A String path to lookup.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>params</tt>:</td><td>An Object of Params pulled from the URI or passed directly.
+      
+      </td></tr>
+      </table>
+    </div>
+  </div>
+  <div class='meth' id='meth_14'>
+    <h4>
+      toString
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      //=> Sammy.Application: body
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_15'>
+    <h4>
+      trigger
+      <span>
+        (
+        <em>name, data, context</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Triggers custom events defined with <tt>bind()</tt>
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>name</tt>:</td><td>The name of the event. Automatically prefixed with the
+      <tt>eventNamespace()</tt>
+      
+      </td></tr>
+      <tr><td valign="top"><tt>data</tt>:</td><td>An optional Object that can be passed to the bound callback.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>context</tt>:</td><td>An optional context/Object in which to execute the bound callback. If no
+      context is supplied a the context is a new <tt>Sammy.EventContext</tt>
+      
+      </td></tr>
+      </table>
+    </div>
+  </div>
+  <div class='meth' id='meth_16'>
+    <h4>
+      unload
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      The opposite of <tt>run()</tt>, un-binds all event listeners and intervals
+      <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
+      when the document is closed.
+      </p>
+    </div>
+  </div>
+</div>
+<div class='klass'>
+  <h2>
+    Sammy.Object
+    &gt;
+    Class
+  </h2>
+  <div class='doc'>
+    <h2>Sammy.Object</h2>
+    <p>
+    Sammy.Object is the base for all other Sammy classes. It provides some
+    useful functionality, including cloning, iterating, etc.
+    </p>
+  </div>
+  <h3>Methods</h3>
+  <ul>
+    <li>
+      <a href='#meth_0'>clone</a>
+    </li>
+    <li>
+      <a href='#meth_1'>each</a>
+    </li>
+    <li>
+      <a href='#meth_2'>init</a>
+    </li>
+    <li>
+      <a href='#meth_3'>log</a>
+    </li>
+    <li>
+      <a href='#meth_4'>toHTML</a>
+    </li>
+    <li>
+      <a href='#meth_5'>uuid</a>
+    </li>
+  </ul>
+  <hr />
+  <div class='meth' id='meth_0'>
+    <h4>
+      clone
+      <span>
+        (
+        <em>obj</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      If passed an obj, clone the attributes and methods of that object If called
+      without arguments, clones the callee.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_1'>
+    <h4>
+      each
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      If passed an object and a callback, will iterate over the object with (k,
+      v) in the context of this object. If passed just an argument - will
+      itterate over the properties of this Sammy.Object
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_2'>
+    <h4>
+      init
+      <span>
+        (
+        <em>set</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Extend the passed object as a Sammy.Object
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_3'>
+    <h4>
+      log
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Uses console.log to log the arguments. If console (firebug is not present),
+      it logs to the ether. Also prefixes the arguments with a timestamp.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_4'>
+    <h4>
+      toHTML
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Renders a simple HTML version of this Objects attributes. Does not render
+      functions. For example. Given this Sammy.Object:
+      </p>
+      {% highlight javascript %}
+         var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
+         s.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'
+      {% endhighlight %}
+    </div>
+  </div>
+  <div class='meth' id='meth_5'>
+    <h4>
+      uuid
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Generates a unique identifing string. Used for application namespaceing.
+      </p>
+    </div>
+  </div>
+</div>
+<div class='klass'>
+  <h2>
+    Sammy.EventContext
+    &gt;
+    Sammy.Object
+  </h2>
+  <div class='doc'>
+    <h2>Sammy.EventContext</h2>
+    <p>
+    <tt>Sammy.EventContext</tt> objects are created every time a route is run
+    or a bound event is triggered. The callbacks for these events are evaluated
+    within a <tt>Sammy.EventContext</tt> This within these callbacks the
+    special methods of <tt>EventContext</tt> are available.
+    </p>
+    <h3>Example</h3>
+    {% highlight javascript %}
+     $.sammy(function() { with(this) {
+       // The context here is this Sammy.Application
+       get('#/:name', function() { with(this) {
+         // The context here is a new Sammy.EventContext
+         if (params['name'] == 'sammy') {
+           partial('name.html.erb', {name: 'Sammy'});
+         } else {
+           redirect('#/somewhere-else')
+         }
+       }});
+     }});
+    {% endhighlight %}
+  </div>
+  <h3>Methods</h3>
+  <ul>
+    <li>
+      <a href='#meth_0'>$element</a>
+    </li>
+    <li>
+      <a href='#meth_1'>eventNamespace</a>
+    </li>
+    <li>
+      <a href='#meth_2'>init</a>
+    </li>
+    <li>
+      <a href='#meth_3'>notFound</a>
+    </li>
+    <li>
+      <a href='#meth_4'>partial</a>
+    </li>
+    <li>
+      <a href='#meth_5'>redirect</a>
+    </li>
+    <li>
+      <a href='#meth_6'>template</a>
+    </li>
+    <li>
+      <a href='#meth_7'>trigger</a>
+    </li>
+  </ul>
+  <hr />
+  <div class='meth' id='meth_0'>
+    <h4>
+      $element
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      A shortcut to the app&#8217;s <tt>$element()</tt>
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_1'>
+    <h4>
+      eventNamespace
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      A shortcut to app&#8217;s <tt>eventNamespace()</tt>
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_2'>
+    <h4>
+      init
+      <span>
+        (
+        <em>app, verb, path, params</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Initialize a new EventContext
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>app</tt>:</td><td>The <tt>Sammy.Application</tt> this event is called within.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>verb</tt>:</td><td>The verb invoked to run this context/route.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>path</tt>:</td><td>The string path invoked to run this context/route.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>params</tt>:</td><td>An Object of optional params to pass to the context. Is converted to a
+      <tt>Sammy.Object</tt>.
+      
+      </td></tr>
+      </table>
+    </div>
+  </div>
+  <div class='meth' id='meth_3'>
+    <h4>
+      notFound
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Raises a possible <tt>notFound()</tt> error for the current path.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_4'>
+    <h4>
+      partial
+      <span>
+        (
+        <em>path, data, callback</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Used for rendering remote templates or documents within the current
+      application/DOM.
+      </p>
+      <p>
+      There are a couple different ways to use <tt>partial()</tt>:
+      </p>
+      {% highlight javascript %}
+           partial('doc.html');
+           //=&gt; Replaces $element() with the contents of doc.html
+      
+           partial('doc.html.erb', {name: 'Sammy'});
+           //=&gt; Replaces $element() with the contents of doc.html.erb run through &lt;tt&gt;template()&lt;/tt&gt;
+      
+           partial('doc.html.erb', function(data) {
+             // data is the contents of the template.
+             $('.other-selector').html(data);
+           });
+      {% endhighlight %}
+    </div>
+  </div>
+  <div class='meth' id='meth_5'>
+    <h4>
+      redirect
+      <span>
+        (
+        <em>to</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Changes the location of the current window. If <tt>to</tt> begins with
+      &#8217;#&#8217; it only changes the document&#8217;s hash.
+      </p>
+    </div>
+  </div>
+  <div class='meth' id='meth_6'>
+    <h4>
+      template
+      <span>
+        (
+        <em>template, data, name</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Uses <tt>$.srender</tt> to parse ERB like templates.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>template</tt>:</td><td>A String template. &#8217;<% %>&#8217; tags are evaluated as Javascript and
+      replaced with the elements in data.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>data</tt>:</td><td>An Object containing the replacement values for the template. data is
+      extended with the <tt>EventContext</tt> allowing you to call its methods
+      within the template.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>name</tt>:</td><td>An optional String name to cache the template. Is used in
+      <tt>partial()</tt> to cache remote templates.
+      
+      </td></tr>
+      </table>
+    </div>
+  </div>
+  <div class='meth' id='meth_7'>
+    <h4>
+      trigger
+      <span>
+        (
+        <em>name, data</em>
+        )
+      </span>
+    </h4>
+    <div class='doc'>
+      <p>
+      Triggers events on <tt>app</tt> within the current context.
+      </p>
+    </div>
+  </div>
+</div>
 </div>
