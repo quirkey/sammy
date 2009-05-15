@@ -32,6 +32,8 @@ Working heavily with Sinatra, I realized that the simple route definitions and s
 
 I started off on this project thinking "It would be cool to implement Sinatra in JavaScript". Sammy has become more then that, I've tried to follow JS and jQuery conventions instead of Ruby and its made for a small (< 20K) library for defining simple to complex applications.
 
+I see Sammy as a great way to build simple to complex applications built upon RESTful data stores like "CouchDB":http://couchdb.apache.org/ or "Cloudkit.":http://getcloudkit.com Theres an example of Cloudkit integration in "examples/backend/":http://github.com/quirkey/sammy/tree/master/examples/backend
+
 h3(#basics). Basics
 
 Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are a little different, though. Not only can you define 'get' and 'post' routes, but you can also bind routes to custom events triggered by your application.
