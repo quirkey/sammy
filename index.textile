@@ -12,6 +12,8 @@ nav:
         link: "#why"
       - name: Basics
         link: "#usage"
+      - name: More!
+        link: "#more"
   - name: Installation
     link: install.html
   - name: Documentation
@@ -77,8 +79,4 @@ I've split up the information into a couple different sections.
 
 There are also some basic but functional examples (with more coming) in the "examples/ folder":http://github.com/quirkey/sammy/tree/master/examples/
 
-h3(#dependencies). Dependencies
-
-Sammy requires:
-
-* jQuery >= 1.3.2
+You can also follow the latest updates on twitter: "@sammy_js":http://twitter.com/sammy_js
