@@ -44,13 +44,19 @@ This will guaruntee that the DOM is loaded before we try to apply functionality 
 Sammy requires jQuery > 1.3.2
 Get it from: [http://jquery.com](http://jquery.com)
 
-## More Information
+## More!
 
-Please see the website at [http://code.quirkey.com/sammy](http://code.quirkey.com/sammy) for more detailed documentation. 
+### Learn!
 
-Also the [examples/](http://github.com/quirkey/sammy/tree/master/examples/) folder has a number of working examples, each with thier own README.
+* [Intro](http://code.quirkey.com/sammy)
+* [Docs](http://code.quirkey.com/sammy/docs/)
+* [Examples](http://github.com/quirkey/sammy/tree/master/examples/)
+* [Blog/Screencasts](http://www.quirkey.com/blog/category/sammy/)
 
-Sammy also has a full test suite. Check test/sammy.html.
+### Keep informed!
+
+* [Follow @sammy_js](http://twitter.com/sammy_js)
+* [Join the mailing list](http://groups.google.com/group/sammyjs)
 
 ## License
 
