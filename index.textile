@@ -76,7 +76,10 @@ I've split up the information into a couple different sections.
 * "Events":docs/events.html
 * "API":docs/api.html
 * "FAQ":docs/faq.html
+* "Examples":http://github.com/quirkey/sammy/tree/master/examples/
+* "Blog/Screencasts":http://www.quirkey.com/blog/category/sammy/
 
-There are also some basic but functional examples (with more coming) in the "examples/ folder":http://github.com/quirkey/sammy/tree/master/examples/
+Ways to stay informed/get in contact:
 
-You can also follow the latest updates on twitter: "@sammy_js":http://twitter.com/sammy_js
+* "Twitter: @sammy_js":http://twitter.com/sammy_js
+* "Join the Mailing List":http://groups.google.com/group/sammyjs
