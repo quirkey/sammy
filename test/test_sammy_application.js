@@ -40,6 +40,10 @@
             this.get(/blurgh/, function() {
               alert('blurgh');
             });
+
+			this.get('#/', function() {
+              alert('home');
+            });
           });
         }
       })
@@ -72,8 +76,17 @@
         isType(route.path, RegExp);
         equals(route.verb, 'get');
         defined(route, 'callback');
-      });
-      //
+      })
+	  .should('append late and short route to application.routes object', function() {
+		var app = this.app
+	    ok(app.routes['get']);
+	    equals(5, app.routes['get'].length())
+        var route = app.routes['get'][4];
+		isType(route.path, RegExp);
+        equals(route.verb, 'get');
+        defined(route, 'callback');
+		equals(route.path.toString(), "/#\//")
+	  });
       
       context('Sammy.Application', 'bind', {
         before: function() {
