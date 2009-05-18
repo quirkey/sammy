@@ -2,6 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Events
 github_name: sammy
+current_version: 0.1.1
 nav:
   - name: Overview
     link: ../index.html
