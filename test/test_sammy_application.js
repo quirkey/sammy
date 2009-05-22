@@ -216,8 +216,17 @@
           equals($('.get_area').text(), 'event fired');
           app.unload();
         });
+      })
+      .should('die silently if route is not found and 404s are off', function() {
+        var app = this.app;
+        app.silence_404 = true;
+        app.run();
+        notRaised(function() {
+          window.location = '#/no-route-for-me'
+          soon(function() { app.unload(); });
+        });
       });
-
+      
       context('Sammy.Application','lookupRoute', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -273,13 +282,6 @@
         var app = this.app;
         app.silence_404 = false;
         raised(/404/, function() {
-          app.runRoute('get','/blurgh');
-        });
-      })
-      .should('die silently if route is not found and 404s are off', function() {
-        var app = this.app;
-        app.silence_404 = true;
-        notRaised(function() {
           app.runRoute('get','/blurgh');
         });
       });
