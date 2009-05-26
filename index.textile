@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy
 github_name: sammy
-current_version: 0.1.1
+current_version: 0.1.2
 nav:
   - name: Overview
     link: index.html
@@ -25,7 +25,7 @@ h2(project_name). Sammy
 
 h3(#what). What
 
-Sammy is a tiny javascript framework built on top of jQuery inspired by Ruby's "Sinatra.":http://sinatrarb.com
+Sammy is a tiny javascript framework built on top of jQuery inspired by Ruby's "Sinatra.":http://www.sinatrarb.com
 
 h3(#why). Why
 
