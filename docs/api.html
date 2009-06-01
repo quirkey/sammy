@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Events
 github_name: sammy
-current_version: 0.1.1
+current_version: 0.1.3
 nav:
   - name: Overview
     link: ../index.html
@@ -141,7 +141,7 @@ nav:
         </p>
         {% highlight javascript %}
            var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
-           s.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'
+           s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
         {% endhighlight %}
       </div>
     </div>
@@ -382,7 +382,7 @@ nav:
          // Prints log messages to #debug
          $(function() {
            app.addLogger(function(e, data) {
-             $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '&lt;br /&gt;'].join(' '));
+             $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '<br />'].join(' '));
            })
            app.run('#/');
          });
@@ -774,7 +774,7 @@ nav:
       special methods of <tt>EventContext</tt> are available.
       </p>
       <h3>Example</h3>
-      <pre>
+      {% highlight javascript %}
        $.sammy(function() { with(this) {
          // The context here is this Sammy.Application
          get('#/:name', function() { with(this) {
@@ -786,7 +786,7 @@ nav:
            }
          }});
        }});
-      </pre>
+      {% endhighlight %}
     </div>
     <h3>Methods</h3>
     <ul>
@@ -911,10 +911,10 @@ nav:
         </p>
         {% highlight javascript %}
              partial('doc.html');
-             //=&gt; Replaces $element() with the contents of doc.html
+             //=> Replaces $element() with the contents of doc.html
         
              partial('doc.html.erb', {name: 'Sammy'});
-             //=&gt; Replaces $element() with the contents of doc.html.erb run through &lt;tt&gt;template()&lt;/tt&gt;
+             //=> Replaces $element() with the contents of doc.html.erb run through <tt>template()</tt>
         
              partial('doc.html.erb', function(data) {
                // data is the contents of the template.
