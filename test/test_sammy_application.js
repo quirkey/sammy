@@ -85,7 +85,7 @@
         isType(route.path, RegExp);
         equals(route.verb, 'get');
         defined(route, 'callback');
-        equals(route.path.toString(), new RegExp("#/").toString());
+        equals(route.path.toString(), new RegExp("#/$").toString());
       });
       
       context('Sammy.Application', 'bind', {
