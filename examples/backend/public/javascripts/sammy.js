@@ -85,6 +85,8 @@
   
   Sammy = {};
   
+  Sammy.VERSION = '0.1.4';
+  
   // == Sammy.Object
   //
   // Sammy.Object is the base for all other Sammy classes. It provides some useful 
@@ -123,7 +125,7 @@
     // Generates a unique identifing string. Used for application namespaceing.
     uuid: function() {
       if (typeof this._uuid == 'undefined' || !this._uuid) {
-        this._uuid = Date.now() + '-' + parseInt(Math.random() * 1000);
+        this._uuid = (new Date()).getTime() + '-' + parseInt(Math.random() * 1000);
       }
       return this._uuid;
     },
@@ -204,17 +206,18 @@
     // The only argument an 'app_function' is evaluated within the context of the application.
     init: function(app_function) {
       var app = this;
-      this.routes    = {};
-      this.listeners = {};
-      this.befores   = [];
-      this.namespace = this.uuid();
+      this.routes            = {};
+      this.listeners         = {};
+      this.befores           = [];
+      this.namespace         = this.uuid();
+      this.context_prototype = Sammy.EventContext.extend({});
       this.each(this.ROUTE_VERBS, function(i, verb) {
         this._defineRouteShortcut(verb);
       });
       app_function.apply(this);
       if (this.debug) {
         this.addLogger(function(e, data) {
-          this.log(app.toString(), e.cleaned_type, data || {});
+          app.log(app.toString(), e.cleaned_type, data || {});
         })
       }
     },
@@ -252,22 +255,28 @@
           param_names.push(path_match[1]);
         }
         // replace with the path replacement
-        path = new RegExp(path.replace(PATH_NAME_MATCHER, PATH_REPLACER));
+        path = new RegExp(path.replace(PATH_NAME_MATCHER, PATH_REPLACER) + "$");
       }
       var r = {verb: verb, path: path, callback: callback, param_names: param_names};
       // add route to routes array
-      if (typeof this.routes[verb] == 'undefined')  {
+      if (typeof this.routes[verb] == 'undefined' || this.routes[verb].length == 0)  {
         // add to the front of an empty array
         this.routes[verb] = [r];
       } else {
         // place in order of longest path first
+        var placed = false;
         this.each(this.routes[verb], function(i, route)  {
           if (path.toString().length >= route.path.toString().length) {
             this.routes[verb].splice(i, 0, r);
+            placed = true;
             // exit each()
             return false; 
           }
         });
+        // not placed? path is the shortest seen so far. append to the end
+        if (!placed) {
+          this.routes[verb].push(r);
+        }
       }
       // return the route
       return r;
@@ -324,7 +333,7 @@
     //
     trigger: function(name, data, context) {
       if (typeof context == 'undefined') {
-        context = new Sammy.EventContext(this, 'bind', name, data);
+        context = new this.context_prototype(this, 'bind', name, data);
       }
       return this.$element().triggerHandler(context.eventNamespace() + name, [context, data]);
     },
@@ -348,6 +357,35 @@
     // Returns a boolean of weather the current application is running.
     isRunning: function() {
       return this._running;
+    },
+    
+    // Helpers extends the EventContext prototype specific to this app.
+    // This allows you to define app specific helper functions that can be used
+    // whenever you're inside of an event context (templates, routes, bind).
+    // 
+    // === Example
+    //
+    //    var app = $.sammy(function() {
+    //      
+    //      helpers({
+    //        upcase: function(text) {
+    //         return text.toString().toUpperCase();
+    //        }
+    //      });
+    //      
+    //      get('#/', function() { with(this) {
+    //        // inside of this context I can use the helpers
+    //        $('#main').html(upcase($('#main').text());
+    //      }});
+    //      
+    //    });
+    //    
+    // === Arguments
+    // 
+    // +extensions+:: An object collection of functions to extend the context.
+    //  
+    helpers: function(extensions) {
+      this.context_prototype = this.context_prototype.extend(extensions);
     },
     
     // Actually starts the application's lifecycle. <tt>run()</tt> should be invoked
@@ -442,9 +480,8 @@
     //  });
     //
     addLogger: function(logger) {
-      var app = this;
-      this.each(this.APP_EVENTS, function() {
-        this.bind(this, logger);
+      this.each(this.APP_EVENTS, function(i, e) {
+        this.bind(e, logger);
       });
     },
     
@@ -466,8 +503,10 @@
     
     // First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the 
     // possible URL params and then invokes the route's callback within a new
-    // <tt>Sammy.EventContext</tt>.
-    // 
+    // <tt>Sammy.EventContext</tt>. If the route can not be found, it calls 
+    // <tt>notFound()</tt> and raise an error. If <tt>silence_404</tt> is <tt>true</tt>
+    // this error will be caught be the internal methods that call <tt>runRoute</tt>.
+    //
     // You probably will never have to call this directly.
     //
     // === Arguments
@@ -475,6 +514,10 @@
     // +verb+:: A String for the verb.
     // +path+:: A String path to lookup.
     // +params+:: An Object of Params pulled from the URI or passed directly.
+    //
+    // === Returns
+    //
+    // Either returns the value returned by the route callback or raises a 404 Not Found error.
     //
     runRoute: function(verb, path, params) {
       this.trigger('run-route', {verb: verb, path: path, params: params});
@@ -502,7 +545,7 @@
         }
         
         // set event context
-        var context  = new Sammy.EventContext(this, verb, path, params);
+        var context  = new this.context_prototype(this, verb, path, params);
         this.last_route = route;
         // run all the before filters
         var before_value = true; 
@@ -526,12 +569,10 @@
       return location;
     },
     
-    // If <tt>silence_404</tt> is set to <tt>false</tt> will throw a '404 Not Found' error.
+    // This thows a '404 Not Found' error.
     notFound: function(verb, path) {
       this.trigger('error-404', {verb: verb, path: path});
-      if (!this.silence_404) {
-        throw('404 Not Found ' + verb + ' ' + path);
-      };
+      throw('404 Not Found ' + verb + ' ' + path);
     },
     
     _defineRouteShortcut: function(verb) {
@@ -542,23 +583,34 @@
     },
     
     _checkURL: function() {
-      // get current location
-      var location = this.currentLocation();
-      // compare to see if hash has changed
-      if (location.hash != '' && location.hash != this.last_location.hash) {
-        // lookup route for current hash
-        this.runRoute('get', location.hash);
-      // compare to see if path has changed
-      } else if (location.pathname != this.last_location.pathname) {
-        // lookup route for current path
-        this.runRoute('get', location.pathname)
+      try { // try, catch 404s
+        // get current location
+        var location, returned;
+        location = this.currentLocation();
+        // compare to see if hash has changed
+        if (location.hash != '' && location.hash != this.last_location.hash) {
+          // lookup route for current hash
+          returned = this.runRoute('get', location.hash);
+        // compare to see if path has changed
+        } else if (location.pathname != this.last_location.pathname) {
+          // lookup route for current path
+          returned = this.runRoute('get', location.pathname)
+        }
+        // reset last location
+        this.last_location = location;
+      } catch(e) {
+        // unless the error is a 404 and 404s are silenced
+        if (e.toString().match(/^404/) && this.silence_404) {
+          return returned;
+        } else {
+          throw(e);
+        }
       }
-      // reset last location
-      this.last_location = location;
+      return returned;
     },
     
     _checkFormSubmission: function(form) {
-      var $form, path, verb, params;
+      var $form, path, verb, params, returned;
       this.trigger('check-form-submission', {form: form});
       $form = $(form);
       path  = $form.attr('action');
@@ -567,9 +619,16 @@
       $form.find(':input[type!=submit]').each(function() {
         params[$(this).attr('name')] = $(this).val();
       });
-      
-      this.runRoute(verb, path, params);
-      return false;
+      try { // catch 404s
+        returned = this.runRoute(verb, path, params);
+      } catch(e) {
+        if (e.toString().match(/^404/) && this.silence_404) {
+          return true;
+        } else {
+          throw(e);
+        }
+      }
+      return (typeof returned == 'undefined') ? false : returned;
     },
     
     _listen: function(name, callback) {

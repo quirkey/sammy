@@ -101,9 +101,6 @@
   }});
   
   $(function() {
-    app.addLogger(function(e, data) {
-      $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '<br />'].join(' '));
-    })
     app.run('#/');
   })
 })(jQuery);
