@@ -410,6 +410,60 @@
           this.app.unload();
         }, this, 2, 2);
       });
+     
+      context('Sammy.Application', 'getLocation', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            
+          });
+          
+          this.override_app = new Sammy.Application(function() {
+            
+            this.getLocation = function() {
+              return $('body').data('location');
+            }
+            
+          });
+        }
+      })
+      .should('return the browsers hash by default', function() {
+        window.location = '#/boosh';
+        soon(function() {
+          equals(this.app.getLocation(), "#/boosh");
+        }, this);
+      })
+      .should('return the result of the overridden function', function() {
+        $('body').data('location', '#/blah');
+        equals(this.override_app.getLocation(), '#/blah');
+      });
+      
+      context('Sammy.Application', 'setLocation', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            
+          });
+          
+          this.override_app = new Sammy.Application(function() {
+            
+            this.setLocation = function(new_location) {
+              return $('body').data('location', new_location);
+            }
+            
+          });
+        }
+      })
+      .should('set the browsers hash by default', function() {
+        this.app.setLocation('#/blurgh');
+        soon(function() {
+          equals(window.location.hash, '#/blurgh');
+        })
+      })
+      .should('set using the overridden function', function() {
+        this.override_app.setLocation('#/blargh');
+        soon(function() {
+          equals($('body').data('location'), '#/blargh');
+        })
+      });
             
     }
   // });
