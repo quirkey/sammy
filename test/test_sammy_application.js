@@ -25,7 +25,7 @@
       context('Sammy.Application', 'route', {
         before: function() {
           this.app = new Sammy.Application(function() {
-            this.route('get', /test/, function() {
+            this.route('get', /testing/, function() {
               $('#main').trigger('click');
             });
 
