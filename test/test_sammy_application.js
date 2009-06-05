@@ -186,6 +186,7 @@
       })
       .should('bind events only to the sammy app namespace', function() {
         var app = this.app;
+        window.location.hash = '#';
         app.run('#/');
         $('#main').trigger('blurgh');
         soon(function() {
@@ -222,7 +223,7 @@
         app.silence_404 = true;
         app.run();
         notRaised(function() {
-          window.location = '#/no-route-for-me'
+          window.location.hash = '#/no-route-for-me'
           soon(function() { app.unload(); });
         });
       });
@@ -305,6 +306,7 @@
       })
       .should('run before route', function() {
         var context = this;
+        window.location.hash = '#';
         this.app.run('#/');
         soon(function() {
           equals(context.route.params['belch'], 'burp');
@@ -427,7 +429,7 @@
         }
       })
       .should('return the browsers hash by default', function() {
-        window.location = '#/boosh';
+        window.location.hash = '#/boosh';
         soon(function() {
           equals(this.app.getLocation(), "#/boosh");
         }, this);
