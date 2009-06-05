@@ -57,6 +57,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 * [Follow @sammy_js](http://twitter.com/sammy_js)
 * [Join the mailing list](http://groups.google.com/group/sammyjs)
+* [Chat with us in #sammy](irc://irc.freenode.net/#sammy)
 
 ## License
 
