@@ -143,6 +143,20 @@
         soon(function () {
           equals(test_app.$element().html(), '<div class="test_template">TEMPLATE!</div>');
         });
+      })
+      .should('trigger changed after the partial callback', function() {
+        var changed = false;
+        test_app.bind('changed', function() {
+          changed = true;
+        });
+        test_app.run();
+        this.context.partial('fixtures/partial.html', function(data) { 
+          changed = false;
+        });
+        soon(function() {
+          ok(changed);
+          test_app.unload();
+        });
       });      
       
       context('Sammy', 'EventContext', 'trigger', {
