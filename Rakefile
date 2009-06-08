@@ -1,7 +1,7 @@
 desc 'Pulls the current version from lib/sammy.js'
 task :version do
   f = File.read('lib/sammy.js')
-  @version = f.match(/Sammy.VERSION \= \'([\d\.]+)\'/)[1]
+  @version = f.match(/Sammy.VERSION \= \'([\d\w\.]+)\'/)[1]
   puts "VERSION: " + @version
 end
 

@@ -101,6 +101,10 @@
         this.context.blurgh = 'boosh';
         var rendered = this.context.template('<div class="test_class"><%= text %> <%= blurgh %></div>', {text: 'TEXT!'});
         equals(rendered, '<div class="test_class">TEXT! boosh</div>');
+      })
+      .should('render templates with a lot of single quotes', function() {
+        var rendered = this.context.template("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
+        equals(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
       });
       
       
