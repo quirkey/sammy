@@ -29,9 +29,11 @@ h3. Routes
 
 The main building block of a Sammy application is a set of routes. A route is made up of three simple pieces:
 
-* A verb _(get, post, put, delete)_
+* A verb _(get, post, put, delete*)_ 
 * A path _(#/, test/path/, #/my_path/:var)_
 * A callback _(function() {...})_
+
+_* delete is not currently supported with shortcuts, but you can still use route('delete', path, callback)_
 
 Inside the Sammy.Application block, Routes can be defined in two ways: Using @route@ directly or using the verb shortcuts.
 
