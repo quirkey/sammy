@@ -28,7 +28,7 @@ h3. Downloading
   </a>
 </div>
 
-Once downloaded, the copy @lib/sammy.js@ into your project's public javascripts directory.
+Once downloaded, copy @lib/sammy.js@ or @lib/sammy.min.js@ into your project's public javascripts directory.
 
 h3(#dependencies). Dependencies
 
