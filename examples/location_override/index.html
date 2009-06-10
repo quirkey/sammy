@@ -33,7 +33,7 @@
         }});
       
         get('/user/:name', function() { with(this) {
-          $element().html('Youre at ' + params['name'] + "'s page. <a href='#' class='back'>Go Back</a>.");
+          $element().html('Youre at ' + params['name'] + "'s page. <a href='/' class='back'>Go Back</a>.");
         }});
         
         bind('back', function() { with(this) {
@@ -43,10 +43,17 @@
         
         bind('run', function() {
           var context = this;
-          $('.back').live('click', function() {
-            context.trigger('back');
+          $('a').live('click', function() {
+            var href = $(this).attr('href');
+            if (href.match(/^\//)) { // local link
+              context.redirect(href);
+              return false;
+            } else {
+              return true; // execute actual href
+            }
           });
         });
+        
       }});
       
       $(function() {
@@ -62,8 +69,11 @@
   <div id="container">
     <input id="location" type="text" />
     <div id="main">
-      
+
     </div>
+    <ul>
+      <li><a href="/">Go Home</a></li>
+      <li><a href="/user/blah">Check out this user</a></li>
   </div>
 </body>
 </html>
