@@ -1,0 +1,14 @@
+== 0.2.0 [06/01/09]
+
+New:
+  - Location Overrides: All location methods refer to two Sammy.Application methods: getLocation() and setLocation() which return and take a string, respectively. The default behavior is to pull the location from window.location.hash, but these methods can be overridden to provide alternate location strategies. Theres an example in examples/location_override. (thanks to britg, CodeOfficer) 
+  - Sammy.Object#toHash() returns a JS object with any functions stripped. Useful for using with params.
+  - Sammy.Application#swap() is the method called within partial() for changing the content of $element(). The default behavior is just to use $.fn.html(), but can be overridden to provide some fancy animations.
+  
+Fixed:
+  - The 'changed' event is only fired at run() and after a partial's callback. This is the event to bind to, to check the DOM after a partial() call. (thanks to hpoydar).
+  - template() (aka $.srender) handles single quoted attributes now (aka generated HAML)
+  - When the app booted up, run() would redirect to the start_url even if another location was present.
+  - the _checkLocation() method now sets last_location properly (which fixes continual checking if route isnt found)
+
+
