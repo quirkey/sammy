@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Events
 github_name: sammy
-current_version: 0.1.3
+current_version: 0.2.0
 nav:
   - name: Overview
     link: ../index.html
@@ -57,7 +57,10 @@ nav:
         <a href='#meth_4'>toHTML</a>
       </li>
       <li>
-        <a href='#meth_5'>uuid</a>
+        <a href='#meth_5'>toHash</a>
+      </li>
+      <li>
+        <a href='#meth_6'>uuid</a>
       </li>
     </ul>
     <hr />
@@ -146,6 +149,21 @@ nav:
       </div>
     </div>
     <div class='meth' id='meth_5'>
+      <h4>
+        toHash
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4>
+      <div class='doc'>
+        <p>
+        Returns a copy of the object with Functions removed.
+        </p>
+      </div>
+    </div>
+    <div class='meth' id='meth_6'>
       <h4>
         uuid
         <span>
@@ -308,10 +326,10 @@ nav:
         <a href='#meth_4'>bind</a>
       </li>
       <li>
-        <a href='#meth_5'>currentLocation</a>
+        <a href='#meth_5'>eventNamespace</a>
       </li>
       <li>
-        <a href='#meth_6'>eventNamespace</a>
+        <a href='#meth_6'>getLocation</a>
       </li>
       <li>
         <a href='#meth_7'>helpers</a>
@@ -338,13 +356,19 @@ nav:
         <a href='#meth_14'>runRoute</a>
       </li>
       <li>
-        <a href='#meth_15'>toString</a>
+        <a href='#meth_15'>setLocation</a>
       </li>
       <li>
-        <a href='#meth_16'>trigger</a>
+        <a href='#meth_16'>swap</a>
       </li>
       <li>
-        <a href='#meth_17'>unload</a>
+        <a href='#meth_17'>toString</a>
+      </li>
+      <li>
+        <a href='#meth_18'>trigger</a>
+      </li>
+      <li>
+        <a href='#meth_19'>unload</a>
       </li>
     </ul>
     <hr />
@@ -460,21 +484,6 @@ nav:
     </div>
     <div class='meth' id='meth_5'>
       <h4>
-        currentLocation
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Returns a cloned location object.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
-      <h4>
         eventNamespace
         <span>
           (
@@ -486,6 +495,23 @@ nav:
         <p>
         A unique event namespace defined per application. All events bound with
         <tt>bind()</tt> are automatically bound within this space.
+        </p>
+      </div>
+    </div>
+    <div class='meth' id='meth_6'>
+      <h4>
+        getLocation
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4>
+      <div class='doc'>
+        <p>
+        The default behavior is to return the current window&#8217;s location hash.
+        Override this and <tt>setLocation()</tt> to detach the app from the
+        window.location object.
         </p>
       </div>
     </div>
@@ -699,6 +725,61 @@ nav:
     </div>
     <div class='meth' id='meth_15'>
       <h4>
+        setLocation
+        <span>
+          (
+          <em>new_location</em>
+          )
+        </span>
+      </h4>
+      <div class='doc'>
+        <p>
+        The default behavior is to set the current window&#8217;s location.
+        Override this and <tt>getLocation()</tt> to detach the app from the
+        window.location object.
+        </p>
+        <h3>Arguments</h3>
+        <table>
+        <tr><td valign="top"><tt>new_location</tt>:</td><td>A new location string (e.g. &#8217;#/&#8217;)
+        
+        </td></tr>
+        </table>
+      </div>
+    </div>
+    <div class='meth' id='meth_16'>
+      <h4>
+        swap
+        <span>
+          (
+          <em>content</em>
+          )
+        </span>
+      </h4>
+      <div class='doc'>
+        <p>
+        Swaps the content of <tt>$element()</tt> with <tt>content</tt> You can
+        override this method to provide an alternate swap behavior for
+        <tt>EventContext.partial()</tt>.
+        </p>
+        <h3>Example</h3>
+        {% highlight javascript %}
+           var app = $.sammy(function() {
+        
+             // implements a 'fade out'/'fade in'
+             this.swap = function(content) {
+               this.$element().hide('slow').html(content).show('slow');
+             }
+        
+             get('#/', function() {
+               this.partial('index.html.erb') // will fade out and in
+             });
+        
+           });
+        {% endhighlight %}
+      </div>
+    </div>
+    <div class='meth' id='meth_17'>
+      <h4>
         toString
         <span>
           (
@@ -712,7 +793,7 @@ nav:
         </p>
       </div>
     </div>
-    <div class='meth' id='meth_16'>
+    <div class='meth' id='meth_18'>
       <h4>
         trigger
         <span>
@@ -741,7 +822,7 @@ nav:
         </table>
       </div>
     </div>
-    <div class='meth' id='meth_17'>
+    <div class='meth' id='meth_19'>
       <h4>
         unload
         <span>
