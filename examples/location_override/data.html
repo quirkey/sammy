@@ -32,20 +32,20 @@
         };
         
         get('#/', function() { with(this) {
-          $("#output").text("matched: /");
+          $("#output").text("matched: #/");
         }});
       
         get('#/link/:id', function() { with(this) {
-          $("#output").text("matched: /link/:" + params['id']);
+          $("#output").text("matched: #/link/:" + params['id']);
         }});
         
         post('#/form', function() { with(this) {
-          $("#output").text("post matched: /form/method - params[field] = " + params['field']);
+          $("#output").text("post matched: #/form - params[field] = " + params['field']);
           return false;
         }});
         
         put('#/form', function() { with(this) {
-          $("#output").text("put matched: /form/method - params[field] = " + params['field']);
+          $("#output").text("put matched: #/form - params[field] = " + params['field']);
           return false;
         }});
 
