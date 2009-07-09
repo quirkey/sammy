@@ -466,7 +466,52 @@
           equals($('body').data('location'), '#/blargh');
         })
       });
+      
+      
+      context('Sammy.Application', 'post routes', {
+        before: function() {
+          var context = this;
+          context.visited = [];
+          context.location = "";
+          context.posted   = false;
+          this.app = new Sammy.Application(function() {
             
+            this.get('#/blah', function() {
+              context.location = "blah";
+              context.visited.push('blah');
+              this.redirect('#/boosh');
+            });
+            
+            this.get('#/boosh', function() {
+              context.location = "boosh";
+              context.visited.push('boosh');
+            });
+            
+            this.post(/test/, function() {
+              context.location = "post";
+              context.posted   = true;
+              context.visited.push('post');
+              this.redirect('#/boosh');
+            });
+          });
+        }
+      })
+      .should('redirect after a get', function() {
+        var context = this;
+        context.app.run();
+        window.location.hash = '#/blah';
+        soon(function() {
+          context.location = "boosh";
+          $('form').submit();
+          soon(function() {
+            ok(context.posted);
+            equals(context.visited, ['blah', 'boosh', 'post', 'boosh']);
+            equals(context.location, 'boosh');
+            context.app.unload();
+          }, this, 2, 3);
+        });
+      });
+      
     }
   // });
 })(jQuery);

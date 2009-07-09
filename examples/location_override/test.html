@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Location Demo</title>
+	<style type="text/css" media="screen">
+	 #main { background-color: #CCCCCC;  }
+	 #output { background-color: #FF6666; }
+	</style>
+	
+	<script src="../../vendor/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+	
+  <script type="text/javascript" charset="utf-8">
+    ;(function($) {
+      
+      // ----------------------------------------------------------------
+
+      Sammy.Application.prototype.getLocation = function() {
+        if (this.$element().data('appState') == undefined) {
+          this.$element().data('appState', '');
+        };
+        return this.$element().data('appState');
+      };
+  
+      Sammy.Application.prototype.setLocation = function(newState) {
+        console.log('setLocation called with:', newState);
+        return this.$element().data('appState', newState);
+      };
+      
+      // ----------------------------------------------------------------
+      
+      var app = new Sammy.Application(function() { with(this) {
+        element_selector = '#main';
+      
+        get('#/link', function() { with(this) {
+          $("#output").text("matched: #/link");
+          redirect('#/test_route');
+        }});
+        
+        post('#/form', function() { with(this) {
+          $("#output").text("post matched: #/form (REDIRECT UNSUCCESSFUL)");
+          redirect('#/test_route');
+        }});
+    
+        get('#/test_route', function() { with(this) {
+          $("#output").text("matched: #/test_route (REDIRECT SUCCESSFUL)");
+        }});
+
+        bind('run', function() { with(this) {
+          var context = this;
+          var element = context.$element();
+
+          // intercept click events manually
+          // we dont want the url to change for matched routes
+          $('a', element).bind('click', function(e) {
+            var path = $(this).attr('href');
+            if (path.match(/^#/)) {
+              context.redirect(path);
+              return false;
+            } else {
+              return true;
+            }
+          });
+          
+        }});
+      }});
+      
+      // ----------------------------------------------------------------
+      
+      $(function() {
+        app.run();
+      });
+    
+    })(jQuery);
+  </script>
+	
+</head>
+
+<body>
+  <div id="container">
+    
+    <h2>Using <strong>redirects</strong> with the new location storage.</h2>
+    
+    <p>This example defines 2 routes, <strong>#/link</strong> and <strong>#/form</strong> ... both of which execute a redirect to <strong>#/test_route</strong></p>
+    
+    <p><u>When #/link route triggers the redirect</u>, the behavior is as expected every time. And when I look in console I can see setLocation being called <strong>twice</strong> as I'd expect.</p>
+
+    <p><u>When #/form route triggers the redirect</u>, the behavior seems inconsistent.</p>
+    
+    <p>The first form submit is successful, the redirect occurs and the body of the #/test_route executes. BUT! looking in console, we see setLocation only being called <strong>once</strong> for the #/test_route/ and not at all for the #/form route preceeding it.</p>
+    
+    <p>Because #/test_route was the last location set, and because the #/form route never did a setLocation anyway, repeated clicks to submit the form will not be heard.</p>
+    
+    <p>I kind of expect that when a form submission is caught it will trigger a Setlocation ... but looking in _checkFormSubmission, i see that the form routes are manually run here via runRoute, bypassing setLocation entirely!</p>
+    
+    <p>Any thoughts on this? I know that recording app state via data attributes isn't a core feature of sammy, but I'm curious to hear if you think caught form submits should still bypass setLocation etc.</p>
+    
+    <div id="main">
+      <ul>
+        <li><a href="quirkey.html">reset</a></li>
+        <li><a href="#/link">#/link</a></li>
+      </ul>
+      
+      <form action="#/form" method="post">
+        <p><input type="text" name="field" value="WAS POSTED" id="field"/></p>
+        <p><input type="submit" value="Continue &rarr;"/></p>
+      </form>
+    </div>
+    
+    <h1>Results</h1>
+    
+    <div id="output">
+    </div>
+    
+  </div>
+  
+</body>
+</html>

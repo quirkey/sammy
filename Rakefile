@@ -25,33 +25,6 @@ task :minify => :version do
   end
 end
 
-
-desc "Automatically run something when code is changed"
-task :on_update do
-  require 'find'
-  files = {}
- 
-  loop do
-    changed = false
-    Find.find(File.dirname(__FILE__)) do |file|
-      next unless file =~ /\.rb$/
-      ctime = File.ctime(file).to_i
- 
-      if ctime != files[file]
-        files[file] = ctime
-        changed = true
-      end
-    end
- 
-    if changed
-      system ARGV[1]
-      puts "\nWaiting for a *.rb change"
-    end
- 
-    sleep 1
-  end
-end
-
 # Modified from peterc: http://gist.github.com/113226
 desc "Automatically run something when code is changed"
 task :autotest do
@@ -78,4 +51,9 @@ task :autotest do
  
     sleep 1
   end
+end
+
+desc 'launch the test file in the browser' 
+task :test do
+  system "open #{File.join(File.dirname(__FILE__), 'test', 'sammy.html')}"
 end
