@@ -500,16 +500,18 @@
         var context = this;
         context.app.run();
         window.location.hash = '#/blah';
-        soon(function() {
-          context.location = "boosh";
+        expect(3)
+        stop();
+        setTimeout(function() {
           $('form').submit();
-          soon(function() {
+          setTimeout(function() {
             ok(context.posted);
-            equals(context.visited, ['blah', 'boosh', 'post', 'boosh']);
+            isObj(context.visited, ['blah', 'boosh', 'post', 'boosh']);
             equals(context.location, 'boosh');
             context.app.unload();
-          }, this, 2, 3);
-        });
+            start();
+          }, 1000);
+        }, 1000);
       });
       
     }
