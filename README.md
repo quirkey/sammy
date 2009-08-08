@@ -25,11 +25,11 @@ You set up a Sammy Application by passing a Function to the `$.sammy` (which is 
       
     }});
 
-Inside of the 'app' function() `this` is the Application. This is where you can configure the application and add routes.
+Inside the 'app' function() `this` is the Application. This is where you can configure the application and add routes.
 
-Above, we defined a `get()` route. When the browser is pointed to `#/` the function passed to that route will be run. Inside of the route function, `this` is a Sammy.EventContext. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
+Above, we defined a `get()` route. When the browser is pointed to `#/` the function passed to that route will be run. Inside the route function, `this` is a Sammy.EventContext. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
 
-Once you've defined an application the only thing left to do is run it. The best practice behavior is to encapulate `run()` in a document.ready block:
+Once you've defined an application the only thing left to do is run it. The best-practice behavior is to encapulate `run()` in a document.ready block:
 
     var app = $.sammy(...)
     
@@ -37,11 +37,11 @@ Once you've defined an application the only thing left to do is run it. The best
       app.run();
     });
 
-This will guaruntee that the DOM is loaded before we try to apply functionality to it.
+This will guarantee that the DOM is loaded before we try to apply functionality to it.
 
 ## Dependencies
 
-Sammy requires jQuery > 1.3.2
+Sammy requires jQuery >= 1.3.2
 Get it from: [http://jquery.com](http://jquery.com)
 
 ## More!
@@ -63,5 +63,5 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 Sammy is covered by the MIT License. See LICENSE for more information.
 
-Sammy includes code originaly created by John Resig ([Class implementation](http://ejohn.org/blog/simple-javascript-inheritance/)) and Greg Borenstien ([srender](http://github.com/atduskgreg/srender/tree/master)).
+Sammy includes code originally created by John Resig ([Class implementation](http://ejohn.org/blog/simple-javascript-inheritance/)) and Greg Borenstien ([srender](http://github.com/atduskgreg/srender/tree/master)).
 
