@@ -131,15 +131,29 @@
       })
       .should('use cached template the second call', function() {
         var contents = '';
-        this.context.partial('fixtures/templated_partial.html', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) { 
+        this.context.partial('fixtures/templated_partial.html', {name: 'NOT CACHED!', class_name: 'test_template'}, function(data) { 
           contents = data; 
         });
         soon(function () {
-          equals(contents, '<div class="test_template">TEMPLATE!</div>');
+          equals(contents, '<div class="test_template">NOT CACHED!</div>');
           this.context.partial('fixtures/templated_partial.html', {name: 'CACHED!', class_name: 'test_template'}, function(data) { 
             contents = data;
           });
           equals(contents, '<div class="test_template">CACHED!</div>');
+        }, this, 1, 2);
+      })
+			.should('not cache in debug mode', function() {
+				var contents = '';
+        this.context.app.debug = true;
+this.context.partial('fixtures/templated_partial.html', {name: 'NOT CACHED!', class_name: 'test_template'}, function(data) { 
+          contents = data; 
+        });
+        soon(function () {
+          equals(contents, '<div class="test_template">NOT CACHED!</div>');
+          this.context.partial('fixtures/templated_partial.html', {name: 'CACHED!', class_name: 'test_template'}, function(data) { 
+            contents = data;
+          });
+          equals(contents, '<div class="test_template">NOT CACHED!</div>');
         }, this, 1, 2);
       })
       .should('replace default app element if no callback is passed', function() {
