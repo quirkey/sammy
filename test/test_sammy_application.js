@@ -235,6 +235,10 @@
               $('#main').trigger('click');
             });
 
+            this.route('get', '/boo', function() {
+              $('#main').trigger('click');
+            });
+
             this.route('post', '/blah', function() {
               $('#testarea').show();
             });
@@ -252,6 +256,13 @@
         var app = this.app;
         var route = app.lookupRoute('get','/blah/mess');
         isType(route, Object)
+        equals(route.verb, 'get');
+        defined(route, 'callback');
+      })
+      .should('ignore any hash query string when looking up a route', function() {
+        var app = this.app;
+        var route = app.lookupRoute('get', '#/boo?ohdontmindeme');
+        isType(route, Object);
         equals(route.verb, 'get');
         defined(route, 'callback');
       });
@@ -278,6 +289,11 @@
       .should('set unnamed params from a regex route in "splat"', function() {
         this.app.runRoute('get', '#/blah/could/be/anything');
         equals(this.params['splat'], 'could/be/anything');
+      })
+      .should('set additional params from a query string after the hash', function() {
+        this.app.runRoute('get', '#/boosh/farg/wow?with=some&nifty=params');
+        equals(this.params['with'], 'some');
+        equals(this.params['nifty'], 'params');
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
