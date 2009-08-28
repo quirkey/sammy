@@ -145,7 +145,7 @@
 			.should('not cache in debug mode', function() {
 				var contents = '';
         this.context.app.debug = true;
-this.context.partial('fixtures/templated_partial.html', {name: 'NOT CACHED!', class_name: 'test_template'}, function(data) { 
+        this.context.partial('fixtures/templated_partial.html', {name: 'NOT CACHED!', class_name: 'test_template'}, function(data) { 
           contents = data; 
         });
         soon(function () {
