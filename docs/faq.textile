@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - FAQ
 github_name: sammy
-current_version: 0.2.0
+current_version: 0.2.1
 nav:
   - name: Overview
     link: ../index.html
