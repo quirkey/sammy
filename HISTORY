@@ -1,3 +1,14 @@
+== 0.2.1 [08/28/09]
+
+New:
+  - Query string parameters: You can now pass extra parameters to a route using the traditional Query string params scheme. e.g #/my/route?var1=blah will give you params['var1'] #=> 'blah' inside an Event context. (Thanks to Jesse Hallet [halletj]) See the commit (cb309b91c0ab80d4e8d6ef9bc97314607cc0da76) for more info.
+
+Fixed:
+  - Redirection in POST routes wasnt working properly. (Thanks Russel Jones [CodeOfficer])
+  - Dont cache partial templates in debug mode. (Thanks Jonathan Vaught [gravelpup])
+  - Spelling and grammar fixes to README/Docs (Thanks Jason Davies [jasondavies])
+  
+
 == 0.2.0 [06/01/09]
 
 New:
