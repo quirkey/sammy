@@ -295,6 +295,15 @@
         equals(this.params['with'], 'some');
         equals(this.params['nifty'], 'params');
       })
+      .should('exclude the query string from named param values', function() {
+        this.app.runRoute('get', '#/boosh/farg/wow?with=some&nifty=params');
+        equals(this.params['test'], 'farg');
+        equals(this.params['test2'], 'wow');
+      })
+      .should('exclude the query string from unnamed param values', function() {
+        this.app.runRoute('get', '#/blah/could/be/anything?except=aquerystring');
+        equals(this.params['splat'], 'could/be/anything');
+      })
       .should('raise error when route can not be found', function() {
         var app = this.app;
         app.silence_404 = false;
