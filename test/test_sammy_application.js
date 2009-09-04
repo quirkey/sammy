@@ -3,8 +3,10 @@
     with(jqUnit) {
       context('Sammy.Application', 'init', {
         before: function() {
-          this.app = new Sammy.Application(function() {
+          var context = this;
+          this.app = new Sammy.Application(function(app) {
             this.random_setting = 1;
+            context.yielded_app = app;
           });
         }
       })
@@ -19,6 +21,9 @@
       })
       .should('initialize empty routes object', function() {
         isType(this.app.routes, Object);
+      })
+      .should('yield the app as a argument', function() {
+        equals(this.yielded_app, this.app)
       });
 
 
@@ -129,6 +134,8 @@
       
       context('Sammy.Application','run', {
         before: function () {
+          var context = this;
+          context.yielded_context = "";
           $('.get_area').text('');
           this.app = new Sammy.Application(function() {
             this.element_selector = '#main';
@@ -144,6 +151,10 @@
             this.route('post', /test/, function() {
               this.app.form_was_run = 'YES';
               return false;
+            });
+            
+            this.route('get', '#/yield', function(c) {
+              context.yielded_context = c;
             });
             
             this.bind('blurgh', function () {
@@ -197,6 +208,7 @@
       .should('set the context of the bound events to an EventContext', function() {
         var app = this.app;
         var event_context = null;
+        var yielded_context = null;
         this.app.bind('serious-boosh', function() {
           event_context = this;
         });
@@ -208,6 +220,15 @@
           equals(event_context.path, 'serious-boosh');
           app.unload();
         }, this, 1, 3);
+      })
+      .should('yield the event context to the route', function() {
+        var app = this.app;
+        window.location.hash = '#';
+        app.run('#/yield');
+        soon(function() {
+          matches(/EventContext/, this.yielded_context.toString());
+          app.unload();
+        }, this);
       })
       .should('trigger events using the apps trigger method', function() {
         var app = this.app;
