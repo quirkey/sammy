@@ -125,7 +125,7 @@
           equals(context.triggered, 'blurgh');
           app.unload();
         });
-      })
+      });
       
       context('Sammy.Application','run', {
         before: function () {
