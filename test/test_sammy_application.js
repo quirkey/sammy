@@ -26,7 +26,6 @@
         equals(this.yielded_app, this.app)
       });
 
-
       context('Sammy.Application', 'route', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -46,7 +45,7 @@
               alert('blurgh');
             });
 
-			      this.get('#/', function() {
+           this.get('#/', function() {
               alert('home');
             });
           });
@@ -82,7 +81,7 @@
         equals(route.verb, 'get');
         defined(route, 'callback');
       })
-  	  .should('append late and short route to application.routes object', function() {
+      .should('append late and short route to application.routes object', function() {
         var app = this.app;
         ok(app.routes['get']);
         equals(5, app.routes['get'].length)
@@ -92,21 +91,21 @@
         defined(route, 'callback');
         equals(route.path.toString(), new RegExp("#/$").toString());
       });
-      
+    
       context('Sammy.Application', 'bind', {
         before: function() {
           var context = this;
           context.triggered = false;
           this.app = new Sammy.Application(function() {
-            
+          
             this.bind('boosh', function() {
               context.triggered = 'boosh';
             });
-            
+          
             this.bind('blurgh', function() {
               context.triggered = 'blurgh';
             });
-            
+          
           });
         }
       })
@@ -131,7 +130,7 @@
           app.unload();
         });
       });
-      
+    
       context('Sammy.Application','run', {
         before: function () {
           var context = this;
@@ -139,24 +138,24 @@
           $('.get_area').text('');
           this.app = new Sammy.Application(function() {
             this.element_selector = '#main';
-            
+          
             this.route('get', '#/', function() {
               $('.get_area').text('');
             });
-            
+          
             this.route('get', '#/test', function() {
               $('.get_area').text('test success');
             });
-            
+          
             this.route('post', /test/, function() {
               this.app.form_was_run = 'YES';
               return false;
             });
-            
+          
             this.route('get', '#/yield', function(c) {
               context.yielded_context = c;
             });
-            
+          
             this.bind('blurgh', function () {
               $('.get_area').text('event fired');
             });
@@ -248,7 +247,7 @@
           soon(function() { app.unload(); });
         });
       });
-      
+    
       context('Sammy.Application','lookupRoute', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -287,7 +286,7 @@
         equals(route.verb, 'get');
         defined(route, 'callback');
       });
-      
+    
       context('Sammy.Application','runRoute', {
         before: function() {
           var context = this;
@@ -332,7 +331,7 @@
           app.runRoute('get','/blurgh');
         });
       });
-      
+    
       context('Sammy.Application','before', {
         before: function() {
           var context = this;
@@ -343,7 +342,7 @@
               this.params['belch'] = 'burp';
               context.before = this;
             });
-            
+          
             this.get('#/', function() {
               context.route = this;
             });
@@ -379,7 +378,7 @@
           context.app.unload();
         }, this, 1, 2);
       });      
-      
+    
       context('Sammy.Application','after', {
         before: function() {
           var context = this;
@@ -390,7 +389,7 @@
               this.params['belch'] = 'burp';
               context.after = this;
             });
-            
+          
             this.get('#/', function() {
               this.params['belch'] = 'boosh';
               context.route = this;
@@ -414,25 +413,25 @@
           context.app.unload();
         });
       });      
-      
-      
+    
+    
       context('Sammy.Application','helpers', {
         before: function() {
           var context = this;
           context.event_context = null;
           this.app = new Sammy.Application(function() {
-            
+          
             this.helpers({
               helpme: function() {
                 return "halp!";
               }
             });
-            
+          
             this.get('#/', function() {
               this.params['belch'] = 'boosh';
               context.event_context = this;
             });
-            
+          
             this.bind('blurgh', function() {
               context.event_context = this;
             });
@@ -458,19 +457,19 @@
           this.app.unload();
         }, this, 2, 2);
       });
-     
+   
       context('Sammy.Application', 'getLocation', {
         before: function() {
           this.app = new Sammy.Application(function() {
-            
-          });
           
+          });
+        
           this.override_app = new Sammy.Application(function() {
-            
+          
             this.getLocation = function() {
               return $('body').data('location');
             }
-            
+          
           });
         }
       })
@@ -484,19 +483,19 @@
         $('body').data('location', '#/blah');
         equals(this.override_app.getLocation(), '#/blah');
       });
-      
+    
       context('Sammy.Application', 'setLocation', {
         before: function() {
           this.app = new Sammy.Application(function() {
-            
-          });
           
+          });
+        
           this.override_app = new Sammy.Application(function() {
-            
+          
             this.setLocation = function(new_location) {
               return $('body').data('location', new_location);
             }
-            
+          
           });
         }
       })
@@ -512,8 +511,8 @@
           equals($('body').data('location'), '#/blargh');
         })
       });
-      
-      
+    
+    
       context('Sammy.Application', 'post routes', {
         before: function() {
           var context = this;
@@ -521,18 +520,18 @@
           context.location = "";
           context.posted   = false;
           this.app = new Sammy.Application(function() {
-            
+          
             this.get('#/blah', function() {
               context.location = "blah";
               context.visited.push('blah');
               this.redirect('#/boosh');
             });
-            
+          
             this.get('#/boosh', function() {
               context.location = "boosh";
               context.visited.push('boosh');
             });
-            
+          
             this.post(/test/, function() {
               context.location = "post";
               context.posted   = true;
@@ -558,6 +557,73 @@
             start();
           }, 1000);
         }, 1000);
+      });
+      
+      context('Sammy.Application', 'use', {
+        before: function() {
+          var context = this;
+          var TrivialLogin = function(app, a, b, c) {
+            context.plugin_this = this;
+            this.a = a;
+            app.b = b;
+            this.c = c;
+            
+            this.isAuthenticated = function(username) {
+              return true;
+            }
+            
+            this.helpers({
+              alert: function(message) {
+                this.$element().append(message);
+              },
+              template: function(template, data) {
+                return "MY USELESS TEMPLATE";
+              }
+            });
+            
+            this.get('#/login', function(e) {
+              e.alert(e.template("Please Login"));
+            });
+          };
+          
+          this.app = new Sammy.Application(function() {
+            this.use(TrivialLogin, 1, 2, 3);
+            this.element_selector = '.get_area';
+            
+            this.get('#/', function() {
+              this.alert('BOOSH');
+            });
+            
+          });
+          
+        }
+      })
+      .should('evaluate the function within the context of the app', function() {
+        equals(this.plugin_this, this.app);
+      })
+      .should('add defined routes to the applications routes', function() {
+        equals(this.app.routes['get'].length, 2);
+      })
+      .should('add defined methods to the application', function() {
+        isType(this.app.isAuthenticated, Function);
+      })
+      .should('override event context methods with helpers()', function() {
+        $('.get_area').text('');
+        var app = this.app;
+        window.location.hash = "";
+        app.run('#/login');
+        soon(function() {
+          equals($('.get_area').text(), 'MY USELESS TEMPLATE');
+          app.unload();
+        });
+      })
+      .should('not override the global EventContext prototype methods', function() {
+        matches(/\$\.srender/, new Sammy.EventContext().template.toString());
+      })
+      .should('yield additional arguments as arguments to the plugin', function() {
+        equals(this.app.a, 1);
+        equals(this.app.b, 2);
+        equals(this.app.c, 3);
       });
       
     }
