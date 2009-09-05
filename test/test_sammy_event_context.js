@@ -1,7 +1,7 @@
 (function($) {
     with(jqUnit) {
       var test_app = new Sammy.Application(function() {
-        this.silence_404 = false;
+        this.silence_404 = true;
         this.element_selector = '#main';
       });
       var test_context = new Sammy.EventContext(test_app, 'get', '#/test/:test', {test: 'hooray'});
@@ -205,7 +205,7 @@
         });
         this.context.trigger('other.custom');
         soon(function() {
-          isObj(event_context, test_context);
+          equals(event_context.toString(), test_context.toString());
         });
       })
       .should('pass data as an argument to the bound method', function() {
