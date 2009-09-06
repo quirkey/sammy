@@ -42,6 +42,11 @@
       .should('only set hash if location is prefixed with #', function() {
         this.context.redirect('#/blah');
         equals('#/blah', window.location.hash);
+      })
+      .should('join the arguments with / if more then one argument is provided', function() {
+        var boosh = 'boosh';
+        this.context.redirect('#', 'blah', boosh);
+        equals('#/blah/boosh', window.location.hash);
       });
 
 
