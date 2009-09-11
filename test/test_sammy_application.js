@@ -551,7 +551,7 @@
           $('form').submit();
           setTimeout(function() {
             ok(context.posted);
-            isObj(context.visited, ['blah', 'boosh', 'post', 'boosh']);
+            isObj(context.visited, ['blah', 'boosh', 'post', 'boosh'], "was: " + context.visited);
             equals(context.location, 'boosh');
             context.app.unload();
             start();
