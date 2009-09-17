@@ -25,13 +25,13 @@ h2(project_name). Sammy
 
 h3(#what). What
 
-Sammy is a tiny javascript framework built on top of jQuery inspired by Ruby's "Sinatra.":http://www.sinatrarb.com
+Sammy is a tiny javascript framework built on top of jQuery. It's RESTful Evented JavaScript.
 
 h3(#why). Why
 
 jQuery is probably the fastest, most robust way to abstract basic low-level Javascript functionality that every Javascript devleoper needs. However, it really remains low-level and does not imply any structure or organization for larger scale Javascript applications. 
 
-Working heavily with Sinatra, I realized that the simple route definitions and structure it provided could be a great fit with jQuery/JavaScript. Not only does it allow you to respond to specific URLs, but utilizing the URL hash (#) you can create single page applications that still respond to the back button in your browser (ala Gmail).
+Working heavily with "Sinatra":http://www.sinatrarb.com, I realized that the simple route definitions and structure it provided could be a great fit with jQuery/JavaScript. Not only does it allow you to respond to specific URLs, but utilizing the URL hash (#) you can create single page applications that still respond to the back button in your browser (ala Gmail).
 
 I started off on this project thinking "It would be cool to implement Sinatra in JavaScript". Sammy has become more then that, I've tried to follow JS and jQuery conventions instead of Ruby and its made for a small (< 20K) library for defining simple to complex applications.
 
@@ -57,7 +57,7 @@ Inside of the 'app' function() @this@ is the Application. This is where you can 
 
 Above, we defined a @get()@ route. When the browser is pointed to @#/@ the function passed to that route will be run. Inside of the route function, @this@ is a @Sammy.EventContext@. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
 
-Once you've defined an application the only thing left to do is run it. The best practice behavior is to encapulate @run()@ in a document.ready block:
+Once you've defined an application the only thing left to do is run it. The best practice behavior is to encapsulate @run()@ in a document.ready block:
 
 {% highlight javascript %}
 var app = $.sammy(...)
