@@ -100,10 +100,12 @@
           
             this.bind('boosh', function() {
               context.triggered = 'boosh';
+              context.inner_context = this;
             });
           
             this.bind('blurgh', function() {
               context.triggered = 'blurgh';
+              context.inner_context = this;
             });
           
           });
@@ -129,6 +131,33 @@
           equals(context.triggered, 'blurgh');
           app.unload();
         });
+      })
+      .should('catch events on the bound element', function() {
+        var app = this.app;
+        var context = this;
+        app.run();
+        app.$element().trigger('boosh');
+        soon(function() {
+          equals(context.triggered, 'boosh');
+          equals(context.inner_context.verb, 'bind');
+          app.unload();
+        }, this, 2, 2);
+      })
+      .should('set the context of the bound events to an EventContext', function() {
+        var app = this.app;
+        var event_context = null;
+        var yielded_context = null;
+        this.app.bind('serious-boosh', function() {
+          event_context = this;
+        });
+        app.run();
+        app.trigger('serious-boosh');
+        soon(function() {
+          isObj(event_context.app, app);
+          equals(event_context.verb, 'bind');
+          equals(event_context.path, 'serious-boosh');
+          app.unload();
+        }, this, 1, 3);
       });
     
       context('Sammy.Application','run', {
@@ -178,14 +207,14 @@
       .should('bind events to all forms', function() {
         var app = this.app;
         app.run('#/');
-        $('form').submit();
-        matches(/sammy-app/, $('form')[0].className);
-        soon(function() {
-          equals(app.form_was_run, 'YES');
-          app.unload();
-        }, this, 1, 2);
+        // $('form').submit();
+        // matches(/sammy-app/, $('form')[0].className);
+        // soon(function() {
+        //   equals(app.form_was_run, 'YES');
+        //   app.unload();
+        // }, this, 1, 2);
       })
-      .should('trigger events on URL change', function() {
+      .should('trigger routes on URL change', function() {
         var app = this.app;
         app.run();
         window.location.hash = '#/test';
@@ -193,32 +222,6 @@
           equals($('.get_area').text(), 'test success');
           app.unload();
         });
-      })
-      .should('bind events only to the sammy app namespace', function() {
-        var app = this.app;
-        window.location.hash = '#';
-        app.run('#/');
-        $('#main').trigger('blurgh');
-        soon(function() {
-          equals($('.get_area').text(), '');
-          app.unload();
-        });
-      })
-      .should('set the context of the bound events to an EventContext', function() {
-        var app = this.app;
-        var event_context = null;
-        var yielded_context = null;
-        this.app.bind('serious-boosh', function() {
-          event_context = this;
-        });
-        app.run();
-        app.trigger('serious-boosh');
-        soon(function() {
-          isObj(event_context.app, app);
-          equals(event_context.verb, 'bind');
-          equals(event_context.path, 'serious-boosh');
-          app.unload();
-        }, this, 1, 3);
       })
       .should('yield the event context to the route', function() {
         var app = this.app;
