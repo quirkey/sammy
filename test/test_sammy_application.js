@@ -54,16 +54,16 @@
       .should('turn a string path into a regular expression', function() {
         var app = this.app;
         ok(app.routes['get']);
-        var route = app.routes['get'][2];
+        var route = app.routes['get'][1];
         isType(route.path, RegExp);
       })
       .should('turn a string path with a named param into a regex and save to param_names', function() {
         var app = this.app;
         ok(app.routes['get']);
-        var route = app.routes['get'][0];
+        var route = app.routes['get'][2];
         isType(route.path, RegExp);
-        isObj(route.path, /\/boosh\/([^\/]+)\/([^\/]+)/);
-        isSet(['boosh1', 'boosh2'], route.param_names);
+        isObj(route.path, /\/boosh\/([^\/]+)\/([^\/]+)$/);
+        isSet(route.param_names, ['boosh1', 'boosh2']);
       })
       .should('append route to application.routes object', function() {
         var app = this.app;
