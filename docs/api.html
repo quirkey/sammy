@@ -1,26 +1,73 @@
----
-layout: quirkey_code_multi
-title: Sammy - Documentation - Events
-github_name: sammy
-current_version: 0.2.1
-nav:
-  - name: Overview
-    link: ../index.html
-  - name: Installation
-    link: ../install.html
-  - name: Documentation
-    link: index.html
-    sub:
-      - name: Routes
-        link: routes.html
-      - name: Events
-        link: events.html
-      - name: FAQ
-        link: faq.html
-      - name: API
-        link: api.html
----
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>.:  Sammy - Documentation - Events :: Quirkey.com :: Code :: :: Quirkey NYC, LLC :: Aaron Quint :: Web Developer :: Brooklyn, NY :.</title>
+  <link rel="stylesheet" href="/stylesheets/quirkey.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/pages.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/api.css" type="text/css" media="screen" charset="utf-8" />
+  <script src="/javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/quirkey.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+  <a href="http://github.com/quirkey/sammy"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:50;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub" /></a>
+  <div id="container">
+    <div id="header_holder">
+      <div id="header">
+        <div id="logo" class="quirkey_nav_open"><img src="/images/logo.png" width="224" height="215" alt="Logo"/></div>
+        <h1>Quirkey<a href="/" class="q_code">Code</a></h1>
+        <div id="quirkey_nav" style="display: none;">
+          <h1 class="quirkey_portfolio">Quirkey<a href="http://portfolio.quirkey.com/" class="q_portfolio">Portfolio</a><span class="description">Selected work.</span></h1>
+          <h1 class="quirkey_log">Quirkey<a href="http://log.quirkey.com/" class="q_log">Log</a><span class="description">Up-to-the-minute updates from the interweb.</span></h1>
+          <h1 class="quirkey_blog">Quirkey<a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a><span class="description">Articles, Tutorials, etc.</span></h1>
+          <h1 class="quirkey_com">Quirkey<a href="http://www.quirkey.com" class="q_com">.com</a><span class="description">The Lobby; General Information.</span></h1>
+        </div>
+      </div>
+      <div class="quirkey_nav_close" style="display:none;"><a href="#">^</a></div>
+    </div>
+    <div id="main">
+      
+      <div id="latest_version"><a href="#installing">0.2.1</a></div>
+      
+      
+      <ul id="pagenav">
+        
+        <li>
+            <a href="../index.html">Overview</a>
+            
+        </li>
+        
+        <li>
+            <a href="../install.html">Installation</a>
+            
+        </li>
+        
+        <li>
+            <a href="index.html">Documentation</a>
+            
+            <ul>
+              
+                <li><a href="routes.html">Routes</a></li>
+              
+                <li><a href="events.html">Events</a></li>
+              
+                <li><a href="faq.html">FAQ</a></li>
+              
+                <li><a href="api.html">API</a></li>
+              
+            </ul>
+            
+        </li>
+        
+      </ul>
+      
+      <div id="content">
+        
 <h2 class='project_name'>Sammy</h2>
 <h2>Documentation</h2>
 <h3>API</h3>
@@ -142,10 +189,11 @@ nav:
         Renders a simple HTML version of this Objects attributes. Does not render
         functions. For example. Given this Sammy.Object:
         </p>
-        {% highlight javascript %}
-           var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
-           s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
-        {% endhighlight %}
+        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nb">Object</span><span class="p">({</span><span class="nx">first_name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="o">,</span> <span class="nx">last_name</span><span class="o">:</span> <span class="s1">&#39;Davis Jr.&#39;</span><span class="p">});</span>
+           <span class="nx">s</span><span class="p">.</span><span class="nx">toHTML</span><span class="p">()</span> <span class="c">//=&gt; &#39;&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;&#39;</span>
+        
+</pre>
+</div>
       </div>
     </div>
     <div class='meth' id='meth_5'>
@@ -402,15 +450,16 @@ nav:
         triggered.
         </p>
         <h3>Example</h3>
-        {% highlight javascript %}
-         // Prints log messages to #debug
-         $(function() {
-           app.addLogger(function(e, data) {
-             $('#debug').append([app.toString(), app.namespace, e.cleaned_type, data, '<br />'].join(' '));
-           })
-           app.run('#/');
-         });
-        {% endhighlight %}
+        <div class="highlight"><pre>         <span class="c">// Prints log messages to #debug</span>
+         <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+           <span class="nx">app</span><span class="p">.</span><span class="nx">addLogger</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="o">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+             <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#debug&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">([</span><span class="nx">app</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="o">,</span> <span class="nx">app</span><span class="p">.</span><span class="nx">namespace</span><span class="o">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">cleaned_type</span><span class="o">,</span> <span class="nx">data</span><span class="o">,</span> <span class="s1">&#39;&lt;br /&gt;&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">));</span>
+           <span class="p">})</span>
+           <span class="nx">app</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="p">);</span>
+         <span class="p">});</span>
+        
+</pre>
+</div>
       </div>
     </div>
     <div class='meth' id='meth_2'>
@@ -531,22 +580,23 @@ nav:
         whenever you&#8217;re inside of an event context (templates, routes, bind).
         </p>
         <h3>Example</h3>
-        {% highlight javascript %}
-           var app = $.sammy(function() {
+        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         
-             helpers({
-               upcase: function(text) {
-                return text.toString().toUpperCase();
-               }
-             });
+             <span class="nx">helpers</span><span class="p">({</span>
+               <span class="nx">upcase</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">text</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">toUpperCase</span><span class="p">();</span>
+               <span class="p">}</span>
+             <span class="p">});</span>
         
-             get('#/', function() { with(this) {
-               // inside of this context I can use the helpers
-               $('#main').html(upcase($('#main').text());
-             }});
+             <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+               <span class="c">// inside of this context I can use the helpers</span>
+               <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">upcase</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+             <span class="p">}});</span>
         
-           });
-        {% endhighlight %}
+           <span class="p">});</span>
+        
+</pre>
+</div>
         <h3>Arguments</h3>
         <table>
         <tr><td valign="top"><tt>extensions</tt>:</td><td>An object collection of functions to extend the context.
@@ -668,12 +718,13 @@ nav:
         binding events, etc.
         </p>
         <h3>Example</h3>
-        {% highlight javascript %}
-           var app = $.sammy(function() { ... }); // your application
-           $(function() { // document.ready
-               app.run();
-            });
-        {% endhighlight %}
+        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span> <span class="c">// your application</span>
+           <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c">// document.ready</span>
+               <span class="nx">app</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+            <span class="p">});</span>
+        
+</pre>
+</div>
         <h3>Arguments</h3>
         <table>
         <tr><td valign="top"><tt>start_url</tt>:</td><td>&#8220;value&#8221;, Optionally, a String can be passed which the App will
@@ -762,20 +813,21 @@ nav:
         <tt>EventContext.partial()</tt>.
         </p>
         <h3>Example</h3>
-        {% highlight javascript %}
-           var app = $.sammy(function() {
+        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         
-             // implements a 'fade out'/'fade in'
-             this.swap = function(content) {
-               this.$element().hide('slow').html(content).show('slow');
-             }
+             <span class="c">// implements a &#39;fade out&#39;/&#39;fade in&#39;</span>
+             <span class="k">this</span><span class="p">.</span><span class="nx">swap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+               <span class="k">this</span><span class="p">.</span><span class="nx">$element</span><span class="p">().</span><span class="nx">hide</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">content</span><span class="p">).</span><span class="nx">show</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">);</span>
+             <span class="p">}</span>
         
-             get('#/', function() {
-               this.partial('index.html.erb') // will fade out and in
-             });
+             <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+               <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;index.html.erb&#39;</span><span class="p">)</span> <span class="c">// will fade out and in</span>
+             <span class="p">});</span>
         
-           });
-        {% endhighlight %}
+           <span class="p">});</span>
+        
+</pre>
+</div>
       </div>
     </div>
     <div class='meth' id='meth_17'>
@@ -855,19 +907,20 @@ nav:
       special methods of <tt>EventContext</tt> are available.
       </p>
       <h3>Example</h3>
-      {% highlight javascript %}
-       $.sammy(function() { with(this) {
-         // The context here is this Sammy.Application
-         get('#/:name', function() { with(this) {
-           // The context here is a new Sammy.EventContext
-           if (params['name'] == 'sammy') {
-             partial('name.html.erb', {name: 'Sammy'});
-           } else {
-             redirect('#/somewhere-else')
-           }
-         }});
-       }});
-      {% endhighlight %}
+      <div class="highlight"><pre>       <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+         <span class="c">// The context here is this Sammy.Application</span>
+         <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/:name&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+           <span class="c">// The context here is a new Sammy.EventContext</span>
+           <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sammy&#39;</span><span class="p">)</span> <span class="p">{</span>
+             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;name.html.erb&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
+           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+             <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#/somewhere-else&#39;</span><span class="p">)</span>
+           <span class="p">}</span>
+         <span class="p">}});</span>
+       <span class="p">}});</span>
+      
+</pre>
+</div>
     </div>
     <h3>Methods</h3>
     <ul>
@@ -990,18 +1043,19 @@ nav:
         <p>
         There are a couple different ways to use <tt>partial()</tt>:
         </p>
-        {% highlight javascript %}
-             partial('doc.html');
-             //=> Replaces $element() with the contents of doc.html
+        <div class="highlight"><pre>             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html&#39;</span><span class="p">);</span>
+             <span class="c">//=&gt; Replaces $element() with the contents of doc.html</span>
         
-             partial('doc.html.erb', {name: 'Sammy'});
-             //=> Replaces $element() with the contents of doc.html.erb run through <tt>template()</tt>
+             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html.erb&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
+             <span class="c">//=&gt; Replaces $element() with the contents of doc.html.erb run through &lt;tt&gt;template()&lt;/tt&gt;</span>
         
-             partial('doc.html.erb', function(data) {
-               // data is the contents of the template.
-               $('.other-selector').html(data);
-             });
-        {% endhighlight %}
+             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html.erb&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+               <span class="c">// data is the contents of the template.</span>
+               <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.other-selector&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+             <span class="p">});</span>
+        
+</pre>
+</div>
       </div>
     </div>
     <div class='meth' id='meth_5'>
@@ -1068,3 +1122,27 @@ nav:
     </div>
   </div>
 </div>
+      </div>
+    </div>
+    <div id="contact">
+      <p>Feel free to email me at aaron at quirkey dot com.</p>
+      <p>Please check out my <a href="http://quirkey.com/blog">blog.</a></p>
+      <p>If you like or use this library &#8211; I don&#8217;t want donations &#8211; but you can <a href="http://www.workingwithrails.com/person/8362-aaron-quint">recommend me on workingwithrails.com</a> or hire me to work on your next project.</p>
+    </div>
+    <div id="footer">
+      <p class="quirkey_links">Quirkey<span>|</span><a href="http://www.quirkey.com" class="q_com">.com</a><span>|</span><a href="http://portfolio.quirkey.com" class="q_portfolio">Portfolio</a><span>|</span><a href="http://code.quirkey.com" class="q_code">Code</a><span>|</span><a href="http://log.quirkey.com" class="q_log">Log</a><span>|</span><a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a></p>
+      <p id="copy">client identity and work property of creators. quirkey logo and identity, &copy; 2005-2009 Quirkey NYC, LLC</p>
+    </div>
+  </div>
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-3763169-2");
+    pageTracker._trackPageview();
+    } catch(err) {}
+    </script>
+</body>
+</html>
