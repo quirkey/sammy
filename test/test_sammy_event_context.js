@@ -98,7 +98,7 @@
           this.context = test_context;
         }
       })
-      .should('put use srender to interpolate in content', function() {
+      .should('use srender to interpolate in content', function() {
         var rendered = this.context.template('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
         equals(rendered, '<div class="test_class">TEXT!</div>');
       })
