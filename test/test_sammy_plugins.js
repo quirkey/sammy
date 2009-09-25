@@ -46,6 +46,33 @@
        .should('clear specific cache value', function() {
          this.app.clearCache('mycache');
          equals(typeof this.app.cache('mycache'), 'undefined')
-       });      
+       });
+       
+      
+       context('Sammy', 'Template', {
+         before: function() {
+           this.app = new Sammy.Application(function() {
+             this.use(Sammy.Template);
+           });
+           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+         }
+       })
+       .should('add template helper to event context', function() {
+         ok($.isFunction(this.context.template));
+       })
+       .should('interpolate content', function() {
+         var rendered = this.context.template('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
+         equals(rendered, '<div class="test_class">TEXT!</div>');
+       })
+       .should('set the context of the template to the test_context', function() {
+         this.context.blurgh = 'boosh';
+         var rendered = this.context.template('<div class="test_class"><%= text %> <%= blurgh %></div>', {text: 'TEXT!'});
+         equals(rendered, '<div class="test_class">TEXT! boosh</div>');
+       })
+       .should('render templates with a lot of single quotes', function() {
+         var rendered = this.context.template("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
+         equals(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+       });
+    
     };
 })(jQuery);
