@@ -57,3 +57,9 @@ desc 'launch the test file in the browser'
 task :test do
   system "open #{File.join(File.dirname(__FILE__), 'test', 'sammy.html')}"
 end
+
+task :doc do
+  tmp_doc_path = '/tmp/sammy.api.html'
+  sh "ruby vendor/jsdoc.rb lib/sammy.js > #{tmp_doc_path}"
+  
+end
