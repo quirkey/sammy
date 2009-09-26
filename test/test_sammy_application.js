@@ -178,6 +178,7 @@
           
             this.route('post', /test/, function() {
               this.app.form_was_run = 'YES';
+              this.app.form_params = this.params;
               return false;
             });
           
@@ -207,12 +208,22 @@
       .should('bind events to all forms', function() {
         var app = this.app;
         app.run('#/');
-        // $('form').submit();
-        // matches(/sammy-app/, $('form')[0].className);
-        // soon(function() {
-        //   equals(app.form_was_run, 'YES');
-        //   app.unload();
-        // }, this, 1, 2);
+        $('form').submit();
+        matches(/sammy-app/, $('form')[0].className);
+        soon(function() {
+          equals(app.form_was_run, 'YES');
+          app.unload();
+        }, this, 1, 2);
+      })
+      .should('parse params for forms', function() {
+        var app = this.app;
+        app.run('#/');
+        $('form').submit();
+        soon(function() {
+          ok(app.form_params);
+          isObj(app.form_params['check[]'], ['TEST 1', 'TEST 2']);
+          app.unload();
+        }, this, 1, 2);
       })
       .should('trigger routes on URL change', function() {
         var app = this.app;
