@@ -579,13 +579,13 @@
               alert: function(message) {
                 this.$element().append(message);
               },
-              template: function(template, data) {
-                return "MY USELESS TEMPLATE";
+              partial: function(template, data) {
+                return "MY USELESS PARTIAL";
               }
             });
             
             this.get('#/login', function(e) {
-              e.alert(e.template("Please Login"));
+              e.alert(e.partial("Please Login"));
             });
           };
           
@@ -616,12 +616,12 @@
         window.location.hash = "";
         app.run('#/login');
         soon(function() {
-          equals($('.get_area').text(), 'MY USELESS TEMPLATE');
+          equals($('.get_area').text(), 'MY USELESS PARTIAL');
           app.unload();
         });
       })
       .should('not override the global EventContext prototype methods', function() {
-        matches(/\$\.srender/, new Sammy.EventContext().template.toString());
+        matches(/swap\(/, new Sammy.EventContext().partial.toString());
       })
       .should('yield additional arguments as arguments to the plugin', function() {
         equals(this.app.a, 1);
