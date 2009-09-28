@@ -1,0 +1,58 @@
+%div.api
+  %ul.klasses
+    - doc.each do |klass, klass_methods|
+      %li
+        %a{:href => '#' + klass[:klass]}= klass[:klass]
+  - doc.each do |klass, klass_methods|
+    / its just a function
+    - if klass_methods[:methods].empty? 
+      %div.meth{:id => klass[:klass]}
+        %h2
+          =klass[:klass] 
+          %span
+            (
+            %em=klass[:args].join(', ')
+            )
+        %div.doc><
+          =convert(klass[:doc])
+    - else
+      %div.klass{:id => klass[:klass]}
+        %h2
+          =klass[:klass]
+          %span
+            (
+            %em=klass[:args].join(', ')
+            )
+        %div.doc><
+          = convert(klass[:doc] || "")
+        - unless klass_methods[:attributes].empty?
+          %h3 Attributes
+          %ul
+            - klass_methods[:attributes].each_with_index do |meth,i|
+              %li
+                %a{:href => "#attr_\#{i}"}=meth[:name]
+          %hr
+          - klass_methods[:attributes].each_with_index do |attribute, i|
+            %div.attr{:id => "attr_\#{i}"}
+              %h4
+                =attribute[:name] 
+                \\=
+                %span=attribute[:default]
+              %div.doc><
+                = convert(attribute[:doc])
+        %h3 Methods
+        %ul
+          -klass_methods[:methods].each_with_index do |meth,i|
+            %li
+              %a{:href => "#meth_\#{i}"}=meth[:name]
+        %hr
+        -klass_methods[:methods].each_with_index do |meth,i|
+          %div.meth{:id => "meth_\#{i}"}
+            %h4
+              =meth[:name] 
+              %span
+                (
+                %em=meth[:args].join(', ')
+                )
+            %div.doc><
+              =convert(meth[:doc])

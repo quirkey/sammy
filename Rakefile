@@ -60,6 +60,9 @@ end
 
 task :doc do
   tmp_doc_path = '/tmp/sammy.api.html'
-  sh "ruby vendor/jsdoc.rb lib/sammy.js > #{tmp_doc_path}"
+  api_template_path = 'site/docs/api_template.html'
+  final_path   = 'site/docs/api.html'
   
+  sh "ruby vendor/jsdoc/jsdoc.rb lib/sammy.js lib/plugins/ > #{tmp_doc_path}"
+  sh "cat #{api_template_path} #{tmp_doc_path} > #{final_path}"
 end
