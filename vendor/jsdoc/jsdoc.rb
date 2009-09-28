@@ -46,7 +46,7 @@ else
 end
 
 # klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+([A-Z][\w\d\.]+)\.extend\(/
-klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+function\s*\(([\w\d\s,]+)?\)/
+klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+function\s*\(([^\)]+)?\)/
 function_regexp  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*function\s*\(([\w\d\s,]+)?\))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
 attribute_regexp = /^\s+([\w\d_\$]+)\:\s+(.*)\,\s+/i
 

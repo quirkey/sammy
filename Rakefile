@@ -58,6 +58,7 @@ task :test do
   system "open #{File.join(File.dirname(__FILE__), 'test', 'sammy.html')}"
 end
 
+desc 'generate the API documentation'
 task :doc do
   tmp_doc_path = '/tmp/sammy.api.html'
   api_template_path = 'site/docs/api_template.html'
@@ -65,4 +66,15 @@ task :doc do
   
   sh "ruby vendor/jsdoc/jsdoc.rb lib/sammy.js lib/plugins/ > #{tmp_doc_path}"
   sh "cat #{api_template_path} #{tmp_doc_path} > #{final_path}"
+end
+
+desc 'update the current version # in the pages'
+task :update_version => :version do
+  Dir['site/**/*.*'].each do |file|
+    File.open(file, 'rw') do |f|
+      contents = f.read
+      contents.gsub!(/current_version\: ([\d\.]+)/, "current_version: #{@version}")
+      f << contents
+    end
+  end
 end
