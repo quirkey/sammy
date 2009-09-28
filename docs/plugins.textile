@@ -1,6 +1,6 @@
 ---
 layout: quirkey_code_multi
-title: Sammy - Documentation
+title: Sammy - Documentation - Plugins
 github_name: sammy
 current_version: 0.2.1
 nav:
@@ -27,20 +27,4 @@ h2(project_name). Sammy
 
 h2. Documentation
 
-I've split up the information into a couple different sections. 
-
-h4. "Routes":routes.html
-
-The building blocks of a Sammy application.
-
-h4. "Events":events.html
-
-Get more advanced by building an event driven application, using custom events and namespaces.
-
-h4. "FAQ":faq.html
-
-Answers to possibly common questions.
-
-h4. "API":api.html
-
-The method level documentation of Sammy.
+h3. Plugins
