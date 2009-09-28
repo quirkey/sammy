@@ -30,10 +30,10 @@
           %ul
             - klass_methods[:attributes].each_with_index do |meth,i|
               %li
-                %a{:href => "#attr_\#{i}"}=meth[:name]
+                %a{:href => "#attr_#{i}"}=meth[:name]
           %hr
           - klass_methods[:attributes].each_with_index do |attribute, i|
-            %div.attr{:id => "attr_\#{i}"}
+            %div.attr{:id => "attr_#{i}"}
               %h4
                 =attribute[:name] 
                 \\=
@@ -44,10 +44,10 @@
         %ul
           -klass_methods[:methods].each_with_index do |meth,i|
             %li
-              %a{:href => "#meth_\#{i}"}=meth[:name]
+              %a{:href => "#meth_#{i}"}=meth[:name]
         %hr
         -klass_methods[:methods].each_with_index do |meth,i|
-          %div.meth{:id => "meth_\#{i}"}
+          %div.meth{:id => "meth_#{i}"}
             %h4
               =meth[:name] 
               %span
