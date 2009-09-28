@@ -8,7 +8,7 @@
              this.cache('mynumcache', 3);
            });
            this.other_app = new Sammy.Application(function() {
-             this.use(Sammy.Cache);
+             this.use(Sammy.Cache, 'data');
              this.cache('mycache', 'not my value');
              this.cache('mynumcache', 7);
            });
