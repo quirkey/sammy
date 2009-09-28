@@ -1,92 +1,103 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-  <title>.:  Sammy - Documentation - Events :: Quirkey.com :: Code :: :: Quirkey NYC, LLC :: Aaron Quint :: Web Developer :: Brooklyn, NY :.</title>
-  <link rel="stylesheet" href="/stylesheets/quirkey.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/pages.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/api.css" type="text/css" media="screen" charset="utf-8" />
-  <script src="/javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/quirkey.js" type="text/javascript" charset="utf-8"></script>
-</head>
-
-<body>
-  <a href="http://github.com/quirkey/sammy"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:50;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub" /></a>
-  <div id="container">
-    <div id="header_holder">
-      <div id="header">
-        <div id="logo" class="quirkey_nav_open"><img src="/images/logo.png" width="224" height="215" alt="Logo"/></div>
-        <h1>Quirkey<a href="/" class="q_code">Code</a></h1>
-        <div id="quirkey_nav" style="display: none;">
-          <h1 class="quirkey_portfolio">Quirkey<a href="http://portfolio.quirkey.com/" class="q_portfolio">Portfolio</a><span class="description">Selected work.</span></h1>
-          <h1 class="quirkey_log">Quirkey<a href="http://log.quirkey.com/" class="q_log">Log</a><span class="description">Up-to-the-minute updates from the interweb.</span></h1>
-          <h1 class="quirkey_blog">Quirkey<a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a><span class="description">Articles, Tutorials, etc.</span></h1>
-          <h1 class="quirkey_com">Quirkey<a href="http://www.quirkey.com" class="q_com">.com</a><span class="description">The Lobby; General Information.</span></h1>
-        </div>
-      </div>
-      <div class="quirkey_nav_close" style="display:none;"><a href="#">^</a></div>
-    </div>
-    <div id="main">
-      
-      <div id="latest_version"><a href="#installing">0.2.1</a></div>
-      
-      
-      <ul id="pagenav">
-        
-        <li>
-            <a href="../index.html">Overview</a>
-            
-        </li>
-        
-        <li>
-            <a href="../install.html">Installation</a>
-            
-        </li>
-        
-        <li>
-            <a href="index.html">Documentation</a>
-            
-            <ul>
-              
-                <li><a href="routes.html">Routes</a></li>
-              
-                <li><a href="events.html">Events</a></li>
-              
-                <li><a href="faq.html">FAQ</a></li>
-              
-                <li><a href="api.html">API</a></li>
-              
-            </ul>
-            
-        </li>
-        
-      </ul>
-      
-      <div id="content">
-        
-<h2 class='project_name'>Sammy</h2>
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - API
+github_name: sammy
+current_version: 0.2.1
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: Plugins
+        link: plugins.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+---
+<h2 class="project_name">Sammy</h2>
 <h2>Documentation</h2>
 <h3>API</h3>
-
 <div class='api'>
-  <div class='klass'>
+  <ul class='klasses'>
+    <li>
+      <a href='#Sammy.addLogger'>Sammy.addLogger</a>
+    </li>
+    <li>
+      <a href='#Sammy.log'>Sammy.log</a>
+    </li>
+    <li>
+      <a href='#Sammy.Object'>Sammy.Object</a>
+    </li>
+    <li>
+      <a href='#Sammy.Application'>Sammy.Application</a>
+    </li>
+    <li>
+      <a href='#MyPlugin'>MyPlugin</a>
+    </li>
+    <li>
+      <a href='#Sammy.EventContext'>Sammy.EventContext</a>
+    </li>
+    <li>
+      <a href='#Sammy.MemoryCacheProxy'>Sammy.MemoryCacheProxy</a>
+    </li>
+    <li>
+      <a href='#Sammy.DataCacheProxy'>Sammy.DataCacheProxy</a>
+    </li>
+    <li>
+      <a href='#Sammy.Cache'>Sammy.Cache</a>
+    </li>
+    <li>
+      <a href='#Sammy.Template'>Sammy.Template</a>
+    </li>
+  </ul>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.addLogger'>
+    <h2>
+      Sammy.addLogger
+      <span>
+        (
+        <em>logger</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Add to the global logger pool. Takes a function that accepts an unknown
+    number of arguments and should print them or send them somewhere The first
+    argument is always a timestamp.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.log'>
+    <h2>
+      Sammy.log
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sends a log message to each logger listed in the global loggers pool. Can
+    take any number of arguments. Also prefixes the arguments with a timestamp.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Object'>
     <h2>
       Sammy.Object
-      &gt;
-      Class
-    </h2>
-    <div class='doc'>
-      <h2>Sammy.Object</h2>
-      <p>
-      Sammy.Object is the base for all other Sammy classes. It provides some
-      useful functionality, including cloning, iterating, etc.
-      </p>
-    </div>
-    <h3>Methods</h3>
+      <span>
+        (
+        <em>obj</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Object is the base for all other Sammy classes. It provides some
+    useful functionality, including cloning, iterating, etc.
+    </p></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#meth_0'>clone</a>
@@ -95,19 +106,28 @@
         <a href='#meth_1'>each</a>
       </li>
       <li>
-        <a href='#meth_2'>init</a>
+        <a href='#meth_2'>extend</a>
       </li>
       <li>
-        <a href='#meth_3'>log</a>
+        <a href='#meth_3'>join</a>
       </li>
       <li>
-        <a href='#meth_4'>toHTML</a>
+        <a href='#meth_4'>keys</a>
       </li>
       <li>
-        <a href='#meth_5'>toHash</a>
+        <a href='#meth_5'>log</a>
       </li>
       <li>
-        <a href='#meth_6'>uuid</a>
+        <a href='#meth_6'>toHTML</a>
+      </li>
+      <li>
+        <a href='#meth_7'>toHash</a>
+      </li>
+      <li>
+        <a href='#meth_8'>toString</a>
+      </li>
+      <li>
+        <a href='#meth_9'>uuid</a>
       </li>
     </ul>
     <hr />
@@ -119,14 +139,10 @@
           <em>obj</em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        If passed an obj, clone the attributes and methods of that object If called
-        without arguments, clones the callee.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      If passed an obj, clone the attributes and methods of that object If called
+      without arguments, clones the callee.
+      </p></div></div>
     <div class='meth' id='meth_1'>
       <h4>
         each
@@ -135,31 +151,47 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        If passed an object and a callback, will iterate over the object with (k,
-        v) in the context of this object. If passed just an argument - will
-        itterate over the properties of this Sammy.Object
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      If passed an object and a callback, will iterate over the object with (k,
+      v) in the context of this object. If passed just an argument - will
+      itterate over the properties of this Sammy.Object
+      </p></div></div>
     <div class='meth' id='meth_2'>
       <h4>
-        init
+        extend
         <span>
           (
-          <em>set</em>
+          <em>obj</em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Extend the passed object as a Sammy.Object
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      Extend this object with the passed object
+      </p></div></div>
     <div class='meth' id='meth_3'>
+      <h4>
+        join
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      convenience method to join as many arguments as you want by the first
+      argument - useful for making paths
+      </p></div></div>
+    <div class='meth' id='meth_4'>
+      <h4>
+        keys
+        <span>
+          (
+          <em>attributes_only</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns an array of keys for this object. If <tt>attributes_only</tt> is
+      true will not return keys that map to a <tt>function()</tt>
+      </p></div></div>
+    <div class='meth' id='meth_5'>
       <h4>
         log
         <span>
@@ -167,15 +199,10 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Uses console.log to log the arguments. If console (firebug is not present),
-        it logs to the ether. Also prefixes the arguments with a timestamp.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
+      </h4><div class='doc'><p>
+      Shortcut to Sammy.log
+      </p></div></div>
+    <div class='meth' id='meth_6'>
       <h4>
         toHTML
         <span>
@@ -183,20 +210,15 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Renders a simple HTML version of this Objects attributes. Does not render
-        functions. For example. Given this Sammy.Object:
-        </p>
-        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nb">Object</span><span class="p">({</span><span class="nx">first_name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="o">,</span> <span class="nx">last_name</span><span class="o">:</span> <span class="s1">&#39;Davis Jr.&#39;</span><span class="p">});</span>
-           <span class="nx">s</span><span class="p">.</span><span class="nx">toHTML</span><span class="p">()</span> <span class="c">//=&gt; &#39;&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;&#39;</span>
-        
-</pre>
-</div>
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
+      </h4><div class='doc'><p>
+      Renders a simple HTML version of this Objects attributes. Does not render
+      functions. For example. Given this Sammy.Object:
+      </p>
+      {% highlight javascript %}
+       var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
+       s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
+      {% endhighlight %}</div></div>
+    <div class='meth' id='meth_7'>
       <h4>
         toHash
         <span>
@@ -204,14 +226,23 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Returns a copy of the object with Functions removed.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
+      </h4><div class='doc'><p>
+      Returns a copy of the object with Functions removed.
+      </p></div></div>
+    <div class='meth' id='meth_8'>
+      <h4>
+        toString
+        <span>
+          (
+          <em>include_functions</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns a string representation of this object. if
+      <tt>include_functions</tt> is true, it will also toString() the methods of
+      this object. By default only prints the attributes.
+      </p></div></div>
+    <div class='meth' id='meth_9'>
       <h4>
         uuid
         <span>
@@ -219,30 +250,26 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Generates a unique identifing string. Used for application namespaceing.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      Generates a unique identifing string. Used for application namespaceing.
+      </p></div></div>
   </div>
-  <div class='klass'>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Application'>
     <h2>
       Sammy.Application
-      &gt;
-      Sammy.Object
-    </h2>
-    <div class='doc'>
-      <h2>Sammy.Application</h2>
-      <p>
-      Sammy.Application is the Base prototype for defining
-      &#8216;applications&#8217;. An &#8216;application&#8217; is a collection of
-      &#8216;routes&#8217; and bound events that is attached to an element when
-      <tt>run()</tt> is called.
-      </p>
-    </div>
-    <h3>Attributes</h3>
+      <span>
+        (
+        <em>app_function</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Application is the Base prototype for defining
+    &#8216;applications&#8217;. An &#8216;application&#8217; is a collection of
+    &#8216;routes&#8217; and bound events that is attached to an element when
+    <tt>run()</tt> is called. The only argument an &#8216;app_function&#8217;
+    is evaluated within the context of the application.
+    </p></div><h3>Attributes</h3>
     <ul>
       <li>
         <a href='#attr_0'>APP_EVENTS</a>
@@ -270,153 +297,71 @@
     <div class='attr' id='attr_0'>
       <h4>
         APP_EVENTS
-        =
+        \=
         <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect']</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        An array of the default events triggered by the application during its
-        lifecycle
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      An array of the default events triggered by the application during its
+      lifecycle
+      </p></div></div>
     <div class='attr' id='attr_1'>
       <h4>
         ROUTE_VERBS
-        =
+        \=
         <span>['get','post','put','delete']</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        the four route verbs
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      the four route verbs
+      </p></div></div>
     <div class='attr' id='attr_2'>
       <h4>
         data_store_name
-        =
+        \=
         <span>'sammy-app'</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
-        entry assocciated with the application&#8217;s <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
+      entry assocciated with the application&#8217;s <tt>$element()</tt>
+      </p></div></div>
     <div class='attr' id='attr_3'>
       <h4>
         debug
-        =
+        \=
         <span>false</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        When set to true, logs all of the default events using <tt>log()</tt>
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      When set to true, logs all of the default events using <tt>log()</tt>
+      </p></div></div>
     <div class='attr' id='attr_4'>
       <h4>
         element_selector
-        =
+        \=
         <span>'body'</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Defines what element the application is bound to. Provide a selector
-        (parseable by <tt>jQuery()</tt>) and this will be used by
-        <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      Defines what element the application is bound to. Provide a selector
+      (parseable by <tt>jQuery()</tt>) and this will be used by
+      <tt>$element()</tt>
+      </p></div></div>
     <div class='attr' id='attr_5'>
       <h4>
         run_interval_every
-        =
+        \=
         <span>50</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The time in milliseconds that the URL is queried for changes
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      The time in milliseconds that the URL is queried for changes
+      </p></div></div>
     <div class='attr' id='attr_6'>
       <h4>
         silence_404
-        =
+        \=
         <span>true</span>
-      </h4>
-      <div class='doc'>
-        <p>
-        When set to false, will throw a javascript error when a route is invoked
-        and can not be found.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      When set to false, will throw a javascript error when a route is invoked
+      and can not be found.
+      </p></div></div>
     <h3>Methods</h3>
     <ul>
       <li>
         <a href='#meth_0'>$element</a>
       </li>
       <li>
-        <a href='#meth_1'>addLogger</a>
-      </li>
-      <li>
-        <a href='#meth_2'>after</a>
-      </li>
-      <li>
-        <a href='#meth_3'>before</a>
-      </li>
-      <li>
-        <a href='#meth_4'>bind</a>
-      </li>
-      <li>
-        <a href='#meth_5'>eventNamespace</a>
-      </li>
-      <li>
-        <a href='#meth_6'>getLocation</a>
-      </li>
-      <li>
-        <a href='#meth_7'>helpers</a>
-      </li>
-      <li>
-        <a href='#meth_8'>init</a>
-      </li>
-      <li>
-        <a href='#meth_9'>isRunning</a>
-      </li>
-      <li>
-        <a href='#meth_10'>lookupRoute</a>
-      </li>
-      <li>
-        <a href='#meth_11'>notFound</a>
-      </li>
-      <li>
-        <a href='#meth_12'>route</a>
-      </li>
-      <li>
-        <a href='#meth_13'>run</a>
-      </li>
-      <li>
-        <a href='#meth_14'>runRoute</a>
-      </li>
-      <li>
-        <a href='#meth_15'>setLocation</a>
-      </li>
-      <li>
-        <a href='#meth_16'>swap</a>
-      </li>
-      <li>
-        <a href='#meth_17'>toString</a>
-      </li>
-      <li>
-        <a href='#meth_18'>trigger</a>
-      </li>
-      <li>
-        <a href='#meth_19'>unload</a>
+        <a href='#meth_1'>toString</a>
       </li>
     </ul>
     <hr />
@@ -428,409 +373,10 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        returns a jQuery object of the Applications bound element.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      returns a jQuery object of the Applications bound element.
+      </p></div></div>
     <div class='meth' id='meth_1'>
-      <h4>
-        addLogger
-        <span>
-          (
-          <em>logger</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Provide a callback that is invoked every time one of the APP_EVENTS is
-        triggered.
-        </p>
-        <h3>Example</h3>
-        <div class="highlight"><pre>         <span class="c">// Prints log messages to #debug</span>
-         <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-           <span class="nx">app</span><span class="p">.</span><span class="nx">addLogger</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="o">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-             <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#debug&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">([</span><span class="nx">app</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="o">,</span> <span class="nx">app</span><span class="p">.</span><span class="nx">namespace</span><span class="o">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">cleaned_type</span><span class="o">,</span> <span class="nx">data</span><span class="o">,</span> <span class="s1">&#39;&lt;br /&gt;&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">));</span>
-           <span class="p">})</span>
-           <span class="nx">app</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="p">);</span>
-         <span class="p">});</span>
-        
-</pre>
-</div>
-      </div>
-    </div>
-    <div class='meth' id='meth_2'>
-      <h4>
-        after
-        <span>
-          (
-          <em>callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut for binding a callback to be run after a route is executed.
-        After callbacks have no guarunteed order.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_3'>
-      <h4>
-        before
-        <span>
-          (
-          <em>callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Takes a single callback that is pushed on to a stack. Before any route is
-        run, the callbacks are evaluated in order within the current
-        <tt>Sammy.EventContext</tt>
-        </p>
-        <p>
-        If any of the callbacks explicitly return false, execution of any further
-        callbacks and the route itself is halted.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
-      <h4>
-        bind
-        <span>
-          (
-          <em>name, data, callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Works just like <tt>jQuery.bind()</tt> with a couple noteable differences.
-        </p>
-        <ul>
-        <li>It binds all events to the application element
-        
-        </li>
-        <li>All events are bound within the <tt>eventNamespace()</tt>
-        
-        </li>
-        <li>Events are not actually bound until the application is started with
-        <tt>run()</tt>
-        
-        </li>
-        </ul>
-        <p>
-        See <a
-        href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
-        for more info.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
-      <h4>
-        eventNamespace
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A unique event namespace defined per application. All events bound with
-        <tt>bind()</tt> are automatically bound within this space.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
-      <h4>
-        getLocation
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The default behavior is to return the current window&#8217;s location hash.
-        Override this and <tt>setLocation()</tt> to detach the app from the
-        window.location object.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_7'>
-      <h4>
-        helpers
-        <span>
-          (
-          <em>extensions</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Helpers extends the EventContext prototype specific to this app. This
-        allows you to define app specific helper functions that can be used
-        whenever you&#8217;re inside of an event context (templates, routes, bind).
-        </p>
-        <h3>Example</h3>
-        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        
-             <span class="nx">helpers</span><span class="p">({</span>
-               <span class="nx">upcase</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">text</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">toUpperCase</span><span class="p">();</span>
-               <span class="p">}</span>
-             <span class="p">});</span>
-        
-             <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-               <span class="c">// inside of this context I can use the helpers</span>
-               <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">upcase</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
-             <span class="p">}});</span>
-        
-           <span class="p">});</span>
-        
-</pre>
-</div>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>extensions</tt>:</td><td>An object collection of functions to extend the context.
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_8'>
-      <h4>
-        init
-        <span>
-          (
-          <em>app_function</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Initializes a new Sammy.Application. The only argument an
-        &#8216;app_function&#8217; is evaluated within the context of the
-        application.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_9'>
-      <h4>
-        isRunning
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Returns a boolean of weather the current application is running.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_10'>
-      <h4>
-        lookupRoute
-        <span>
-          (
-          <em>verb, path</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Given a verb and a String path, will return either a route object or false
-        if a matching route can be found within the current defined set.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_11'>
-      <h4>
-        notFound
-        <span>
-          (
-          <em>verb, path</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        This thows a &#8216;404 Not Found&#8217; error.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_12'>
-      <h4>
-        route
-        <span>
-          (
-          <em>verb, path, callback</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        <tt>route()</tt> is the main method for defining routes within an
-        application. For great detail on routes, check out: <a
-        href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
-        </p>
-        <p>
-        This method also has aliases for each of the different verbs (eg.
-        <tt>get()</tt>, <tt>post()</tt>, etc.)
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>A String in the set of ROUTE_VERBS
-        
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>A Regexp or a String representing the path to match to invoke this verb.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>callback</tt>:</td><td>A Function that is called/evaluated whent the route is run see:
-        <tt>runRoute()</tt>
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_13'>
-      <h4>
-        run
-        <span>
-          (
-          <em>start_url</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Actually starts the application&#8217;s lifecycle. <tt>run()</tt> should be
-        invoked within a document.ready block to ensure the DOM exists before
-        binding events, etc.
-        </p>
-        <h3>Example</h3>
-        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span> <span class="c">// your application</span>
-           <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c">// document.ready</span>
-               <span class="nx">app</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
-            <span class="p">});</span>
-        
-</pre>
-</div>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>start_url</tt>:</td><td>&#8220;value&#8221;, Optionally, a String can be passed which the App will
-        redirect to after the events/routes have been bound.
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_14'>
-      <h4>
-        runRoute
-        <span>
-          (
-          <em>verb, path, params</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
-        possible URL params and then invokes the route&#8217;s callback within a
-        new <tt>Sammy.EventContext</tt>. If the route can not be found, it calls
-        <tt>notFound()</tt> and raise an error. If <tt>silence_404</tt> is
-        <tt>true</tt> this error will be caught be the internal methods that call
-        <tt>runRoute</tt>.
-        </p>
-        <p>
-        You probably will never have to call this directly.
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>A String for the verb.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>A String path to lookup.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>params</tt>:</td><td>An Object of Params pulled from the URI or passed directly.
-        
-        </td></tr>
-        </table>
-        <h3>Returns</h3>
-        <p>
-        Either returns the value returned by the route callback or raises a 404 Not
-        Found error.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_15'>
-      <h4>
-        setLocation
-        <span>
-          (
-          <em>new_location</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The default behavior is to set the current window&#8217;s location.
-        Override this and <tt>getLocation()</tt> to detach the app from the
-        window.location object.
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>new_location</tt>:</td><td>A new location string (e.g. &#8217;#/&#8217;)
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_16'>
-      <h4>
-        swap
-        <span>
-          (
-          <em>content</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Swaps the content of <tt>$element()</tt> with <tt>content</tt> You can
-        override this method to provide an alternate swap behavior for
-        <tt>EventContext.partial()</tt>.
-        </p>
-        <h3>Example</h3>
-        <div class="highlight"><pre>           <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        
-             <span class="c">// implements a &#39;fade out&#39;/&#39;fade in&#39;</span>
-             <span class="k">this</span><span class="p">.</span><span class="nx">swap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
-               <span class="k">this</span><span class="p">.</span><span class="nx">$element</span><span class="p">().</span><span class="nx">hide</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">content</span><span class="p">).</span><span class="nx">show</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">);</span>
-             <span class="p">}</span>
-        
-             <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-               <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;index.html.erb&#39;</span><span class="p">)</span> <span class="c">// will fade out and in</span>
-             <span class="p">});</span>
-        
-           <span class="p">});</span>
-        
-</pre>
-</div>
-      </div>
-    </div>
-    <div class='meth' id='meth_17'>
       <h4>
         toString
         <span>
@@ -838,43 +384,443 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        //=> Sammy.Application: body
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_18'>
+      </h4><div class='doc'><p>
+      //=> Sammy.Application: body
+      </p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='MyPlugin'>
+    <h2>
+      MyPlugin
+      <span>
+        (
+        <em>app, prepend</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    <tt>use()</tt> is the entry point for including Sammy plugins. The first
+    argument to use should be a function() that is evaluated in the context of
+    the current application, just like the <tt>app_function</tt> argument to
+    the <tt>Sammy.Application</tt> constructor.
+    </p>
+    <p>
+    Any additional arguments are passed to the app function sequentially.
+    </p>
+    <p>
+    For much more detail about plugins, check out: <a
+    href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
+    </p>
+    <h3>Example</h3></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#meth_0'>after</a>
+      </li>
+      <li>
+        <a href='#meth_1'>before</a>
+      </li>
+      <li>
+        <a href='#meth_2'>bind</a>
+      </li>
+      <li>
+        <a href='#meth_3'>bindToAllEvents</a>
+      </li>
+      <li>
+        <a href='#meth_4'>eventNamespace</a>
+      </li>
+      <li>
+        <a href='#meth_5'>getLocation</a>
+      </li>
+      <li>
+        <a href='#meth_6'>helpers</a>
+      </li>
+      <li>
+        <a href='#meth_7'>isRunning</a>
+      </li>
+      <li>
+        <a href='#meth_8'>lookupRoute</a>
+      </li>
+      <li>
+        <a href='#meth_9'>notFound</a>
+      </li>
+      <li>
+        <a href='#meth_10'>routablePath</a>
+      </li>
+      <li>
+        <a href='#meth_11'>route</a>
+      </li>
+      <li>
+        <a href='#meth_12'>run</a>
+      </li>
+      <li>
+        <a href='#meth_13'>runRoute</a>
+      </li>
+      <li>
+        <a href='#meth_14'>setLocation</a>
+      </li>
+      <li>
+        <a href='#meth_15'>swap</a>
+      </li>
+      <li>
+        <a href='#meth_16'>trigger</a>
+      </li>
+      <li>
+        <a href='#meth_17'>unload</a>
+      </li>
+      <li>
+        <a href='#meth_18'>use</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='meth_0'>
+      <h4>
+        after
+        <span>
+          (
+          <em>callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      A shortcut for binding a callback to be run after a route is executed.
+      After callbacks have no guarunteed order.
+      </p></div></div>
+    <div class='meth' id='meth_1'>
+      <h4>
+        before
+        <span>
+          (
+          <em>callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Takes a single callback that is pushed on to a stack. Before any route is
+      run, the callbacks are evaluated in order within the current
+      <tt>Sammy.EventContext</tt>
+      </p>
+      <p>
+      If any of the callbacks explicitly return false, execution of any further
+      callbacks and the route itself is halted.
+      </p></div></div>
+    <div class='meth' id='meth_2'>
+      <h4>
+        bind
+        <span>
+          (
+          <em>name, data, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Works just like <tt>jQuery.fn.bind()</tt> with a couple noteable
+      differences.
+      </p>
+      <ul>
+      <li>It binds all events to the application element
+      
+      </li>
+      <li>All events are bound within the <tt>eventNamespace()</tt>
+      
+      </li>
+      <li>Events are not actually bound until the application is started with
+      <tt>run()</tt>
+      
+      </li>
+      <li>callbacks are evaluated within the context of a Sammy.EventContext
+      
+      </li>
+      </ul>
+      <p>
+      See <a
+      href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
+      for more info.
+      </p></div></div>
+    <div class='meth' id='meth_3'>
+      <h4>
+        bindToAllEvents
+        <span>
+          (
+          <em>callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Will bind a single callback function to every event that is already being
+      listened to in the app. This includes all the <tt>APP_EVENTS</tt> as well
+      as any custom events defined with <tt>bind()</tt>.
+      </p>
+      <p>
+      Used internally for debug logging.
+      </p></div></div>
+    <div class='meth' id='meth_4'>
+      <h4>
+        eventNamespace
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      A unique event namespace defined per application. All events bound with
+      <tt>bind()</tt> are automatically bound within this space.
+      </p></div></div>
+    <div class='meth' id='meth_5'>
+      <h4>
+        getLocation
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      The default behavior is to return the current window&#8217;s location hash.
+      Override this and <tt>setLocation()</tt> to detach the app from the
+      window.location object.
+      </p></div></div>
+    <div class='meth' id='meth_6'>
+      <h4>
+        helpers
+        <span>
+          (
+          <em>extensions</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Helpers extends the EventContext prototype specific to this app. This
+      allows you to define app specific helper functions that can be used
+      whenever you&#8217;re inside of an event context (templates, routes, bind).
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
+      
+         helpers({
+           upcase: function(text) {
+            return text.toString().toUpperCase();
+           }
+         });
+      
+         get('#/', function() { with(this) {
+           // inside of this context I can use the helpers
+           $('#main').html(upcase($('#main').text());
+         }});
+      
+       });
+      {% endhighlight %}
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>extensions</tt>:</td><td>An object collection of functions to extend the context.
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='meth_7'>
+      <h4>
+        isRunning
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns a boolean of weather the current application is running.
+      </p></div></div>
+    <div class='meth' id='meth_8'>
+      <h4>
+        lookupRoute
+        <span>
+          (
+          <em>verb, path</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Given a verb and a String path, will return either a route object or false
+      if a matching route can be found within the current defined set.
+      </p></div></div>
+    <div class='meth' id='meth_9'>
+      <h4>
+        notFound
+        <span>
+          (
+          <em>verb, path</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      This thows a &#8216;404 Not Found&#8217; error.
+      </p></div></div>
+    <div class='meth' id='meth_10'>
+      <h4>
+        routablePath
+        <span>
+          (
+          <em>path</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns a copy of the given path with any query string after the hash
+      removed.
+      </p></div></div>
+    <div class='meth' id='meth_11'>
+      <h4>
+        route
+        <span>
+          (
+          <em>verb, path, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      <tt>route()</tt> is the main method for defining routes within an
+      application. For great detail on routes, check out: <a
+      href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
+      </p>
+      <p>
+      This method also has aliases for each of the different verbs (eg.
+      <tt>get()</tt>, <tt>post()</tt>, etc.)
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>verb</tt>:</td><td>A String in the set of ROUTE_VERBS
+      
+      </td></tr>
+      <tr><td valign="top"><tt>path</tt>:</td><td>A Regexp or a String representing the path to match to invoke this verb.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>callback</tt>:</td><td>A Function that is called/evaluated whent the route is run see:
+      <tt>runRoute()</tt>
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='meth_12'>
+      <h4>
+        run
+        <span>
+          (
+          <em>start_url</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Actually starts the application&#8217;s lifecycle. <tt>run()</tt> should be
+      invoked within a document.ready block to ensure the DOM exists before
+      binding events, etc.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       var app = $.sammy(function() { ... }); // your application
+       $(function() { // document.ready
+           app.run();
+        });
+      {% endhighlight %}
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>start_url</tt>:</td><td>&#8220;value&#8221;, Optionally, a String can be passed which the App will
+      redirect to after the events/routes have been bound.
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='meth_13'>
+      <h4>
+        runRoute
+        <span>
+          (
+          <em>verb, path, params</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
+      possible URL params and then invokes the route&#8217;s callback within a
+      new <tt>Sammy.EventContext</tt>. If the route can not be found, it calls
+      <tt>notFound()</tt> and raise an error. If <tt>silence_404</tt> is
+      <tt>true</tt> this error will be caught be the internal methods that call
+      <tt>runRoute</tt>.
+      </p>
+      <p>
+      You probably will never have to call this directly.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>verb</tt>:</td><td>A String for the verb.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>path</tt>:</td><td>A String path to lookup.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>params</tt>:</td><td>An Object of Params pulled from the URI or passed directly.
+      
+      </td></tr>
+      </table>
+      <h3>Returns</h3>
+      <p>
+      Either returns the value returned by the route callback or raises a 404 Not
+      Found error.
+      </p></div></div>
+    <div class='meth' id='meth_14'>
+      <h4>
+        setLocation
+        <span>
+          (
+          <em>new_location</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      The default behavior is to set the current window&#8217;s location.
+      Override this and <tt>getLocation()</tt> to detach the app from the
+      window.location object.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>new_location</tt>:</td><td>A new location string (e.g. &#8217;#/&#8217;)
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='meth_15'>
+      <h4>
+        swap
+        <span>
+          (
+          <em>content</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Swaps the content of <tt>$element()</tt> with <tt>content</tt> You can
+      override this method to provide an alternate swap behavior for
+      <tt>EventContext.partial()</tt>.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
+      
+         // implements a 'fade out'/'fade in'
+         this.swap = function(content) {
+           this.$element().hide('slow').html(content).show('slow');
+         }
+      
+         get('#/', function() {
+           this.partial('index.html.erb') // will fade out and in
+         });
+      
+       });
+      {% endhighlight %}</div></div>
+    <div class='meth' id='meth_16'>
       <h4>
         trigger
         <span>
           (
-          <em>name, data, context</em>
+          <em>name, data</em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Triggers custom events defined with <tt>bind()</tt>
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>name</tt>:</td><td>The name of the event. Automatically prefixed with the
-        <tt>eventNamespace()</tt>
-        
-        </td></tr>
-        <tr><td valign="top"><tt>data</tt>:</td><td>An optional Object that can be passed to the bound callback.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>context</tt>:</td><td>An optional context/Object in which to execute the bound callback. If no
-        context is supplied a the context is a new <tt>Sammy.EventContext</tt>
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_19'>
+      </h4><div class='doc'><p>
+      Triggers custom events defined with <tt>bind()</tt>
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>name</tt>:</td><td>The name of the event. Automatically prefixed with the
+      <tt>eventNamespace()</tt>
+      
+      </td></tr>
+      <tr><td valign="top"><tt>data</tt>:</td><td>An optional Object that can be passed to the bound callback.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>context</tt>:</td><td>An optional context/Object in which to execute the bound callback. If no
+      context is supplied a the context is a new <tt>Sammy.EventContext</tt>
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='meth_17'>
       <h4>
         unload
         <span>
@@ -882,47 +828,71 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        The opposite of <tt>run()</tt>, un-binds all event listeners and intervals
-        <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
-        when the document is closed.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      The opposite of <tt>run()</tt>, un-binds all event listeners and intervals
+      <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
+      when the document is closed.
+      </p></div></div>
+    <div class='meth' id='meth_18'>
+      <h4>
+        use
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      });
+      </p></div></div>
   </div>
-  <div class='klass'>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.EventContext'>
     <h2>
       Sammy.EventContext
-      &gt;
-      Sammy.Object
-    </h2>
-    <div class='doc'>
-      <h2>Sammy.EventContext</h2>
-      <p>
-      <tt>Sammy.EventContext</tt> objects are created every time a route is run
-      or a bound event is triggered. The callbacks for these events are evaluated
-      within a <tt>Sammy.EventContext</tt> This within these callbacks the
-      special methods of <tt>EventContext</tt> are available.
-      </p>
-      <h3>Example</h3>
-      <div class="highlight"><pre>       <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-         <span class="c">// The context here is this Sammy.Application</span>
-         <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/:name&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-           <span class="c">// The context here is a new Sammy.EventContext</span>
-           <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sammy&#39;</span><span class="p">)</span> <span class="p">{</span>
-             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;name.html.erb&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
-           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-             <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#/somewhere-else&#39;</span><span class="p">)</span>
-           <span class="p">}</span>
-         <span class="p">}});</span>
-       <span class="p">}});</span>
-      
-</pre>
-</div>
-    </div>
-    <h3>Methods</h3>
+      <span>
+        (
+        <em>app, verb, path, params</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    <tt>Sammy.EventContext</tt> objects are created every time a route is run
+    or a bound event is triggered. The callbacks for these events are evaluated
+    within a <tt>Sammy.EventContext</tt> This within these callbacks the
+    special methods of <tt>EventContext</tt> are available.
+    </p>
+    <h3>Example</h3>
+    {% highlight javascript %}
+     $.sammy(function() { with(this) {
+     // The context here is this Sammy.Application
+     get('#/:name', function() { with(this) {
+       // The context here is a new Sammy.EventContext
+       if (params['name'] == 'sammy') {
+         partial('name.html.erb', {name: 'Sammy'});
+       } else {
+         redirect('#/somewhere-else')
+       }
+     }});
+     }});
+    {% endhighlight %}
+    <p>
+    Initialize a new EventContext
+    </p>
+    <h3>Arguments</h3>
+    <table>
+    <tr><td valign="top"><tt>app</tt>:</td><td>The <tt>Sammy.Application</tt> this event is called within.
+    
+    </td></tr>
+    <tr><td valign="top"><tt>verb</tt>:</td><td>The verb invoked to run this context/route.
+    
+    </td></tr>
+    <tr><td valign="top"><tt>path</tt>:</td><td>The string path invoked to run this context/route.
+    
+    </td></tr>
+    <tr><td valign="top"><tt>params</tt>:</td><td>An Object of optional params to pass to the context. Is converted to a
+    <tt>Sammy.Object</tt>.
+    
+    </td></tr>
+    </table></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#meth_0'>$element</a>
@@ -931,22 +901,19 @@
         <a href='#meth_1'>eventNamespace</a>
       </li>
       <li>
-        <a href='#meth_2'>init</a>
+        <a href='#meth_2'>notFound</a>
       </li>
       <li>
-        <a href='#meth_3'>notFound</a>
+        <a href='#meth_3'>partial</a>
       </li>
       <li>
-        <a href='#meth_4'>partial</a>
+        <a href='#meth_4'>redirect</a>
       </li>
       <li>
-        <a href='#meth_5'>redirect</a>
+        <a href='#meth_5'>toString</a>
       </li>
       <li>
-        <a href='#meth_6'>template</a>
-      </li>
-      <li>
-        <a href='#meth_7'>trigger</a>
+        <a href='#meth_6'>trigger</a>
       </li>
     </ul>
     <hr />
@@ -958,13 +925,9 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut to the app&#8217;s <tt>$element()</tt>
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      A shortcut to the app&#8217;s <tt>$element()</tt>
+      </p></div></div>
     <div class='meth' id='meth_1'>
       <h4>
         eventNamespace
@@ -973,45 +936,10 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        A shortcut to app&#8217;s <tt>eventNamespace()</tt>
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      A shortcut to app&#8217;s <tt>eventNamespace()</tt>
+      </p></div></div>
     <div class='meth' id='meth_2'>
-      <h4>
-        init
-        <span>
-          (
-          <em>app, verb, path, params</em>
-          )
-        </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Initialize a new EventContext
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>app</tt>:</td><td>The <tt>Sammy.Application</tt> this event is called within.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>verb</tt>:</td><td>The verb invoked to run this context/route.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>path</tt>:</td><td>The string path invoked to run this context/route.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>params</tt>:</td><td>An Object of optional params to pass to the context. Is converted to a
-        <tt>Sammy.Object</tt>.
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_3'>
       <h4>
         notFound
         <span>
@@ -1019,14 +947,10 @@
           <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Raises a possible <tt>notFound()</tt> error for the current path.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_4'>
+      </h4><div class='doc'><p>
+      Raises a possible <tt>notFound()</tt> error for the current path.
+      </p></div></div>
+    <div class='meth' id='meth_3'>
       <h4>
         partial
         <span>
@@ -1034,78 +958,71 @@
           <em>path, data, callback</em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Used for rendering remote templates or documents within the current
-        application/DOM.
-        </p>
-        <p>
-        There are a couple different ways to use <tt>partial()</tt>:
-        </p>
-        <div class="highlight"><pre>             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html&#39;</span><span class="p">);</span>
-             <span class="c">//=&gt; Replaces $element() with the contents of doc.html</span>
-        
-             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html.erb&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
-             <span class="c">//=&gt; Replaces $element() with the contents of doc.html.erb run through &lt;tt&gt;template()&lt;/tt&gt;</span>
-        
-             <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html.erb&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-               <span class="c">// data is the contents of the template.</span>
-               <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.other-selector&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-             <span class="p">});</span>
-        
-</pre>
-</div>
-      </div>
-    </div>
-    <div class='meth' id='meth_5'>
+      </h4><div class='doc'><p>
+      Used for rendering remote templates or documents within the current
+      application/DOM. By default Sammy and <tt>partial()</tt> know nothing about
+      how your templates should be interpeted/rendered. This is easy to change,
+      though. <tt>partial()</tt> looks for a method in <tt>EventContext</tt> that
+      matches the extension of the file you&#8217;re fetching (e.g.
+      &#8216;myfile.template&#8217; will look for a template() method,
+      &#8216;myfile.haml&#8217; => haml(), etc.) If no matching render method is
+      found it just takes the file contents as is.
+      </p>
+      <h3>Caching</h3>
+      <p>
+      If you use the <tt>Sammy.Cache</tt> plugin, remote requests will be
+      automatically cached unless you explicitly set <tt>cache_partials</tt> to
+      <tt>false</tt>
+      </p>
+      <h3>Examples</h3>
+      <p>
+      There are a couple different ways to use <tt>partial()</tt>:
+      </p>
+      {% highlight javascript %}
+         partial('doc.html');
+         //=> Replaces $element() with the contents of doc.html
+      
+         use(Sammy.Template);
+         //=> includes the template() method
+         partial('doc.template', {name: 'Sammy'});
+         //=> Replaces $element() with the contents of doc.template run through <tt>template()</tt>
+      
+         partial('doc.html', function(data) {
+           // data is the contents of the template.
+           $('.other-selector').html(data);
+         });
+      {% endhighlight %}</div></div>
+    <div class='meth' id='meth_4'>
       <h4>
         redirect
         <span>
           (
-          <em>to</em>
+          <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Changes the location of the current window. If <tt>to</tt> begins with
-        &#8217;#&#8217; it only changes the document&#8217;s hash.
-        </p>
-      </div>
-    </div>
-    <div class='meth' id='meth_6'>
+      </h4><div class='doc'><p>
+      Changes the location of the current window. If <tt>to</tt> begins with
+      &#8217;#&#8217; it only changes the document&#8217;s hash. If passed more
+      than 1 argument redirect will join them together with forward slashes.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+         redirect('#/other/route');
+         // equivilent to
+         redirect('#', 'other', 'route');
+      {% endhighlight %}</div></div>
+    <div class='meth' id='meth_5'>
       <h4>
-        template
+        toString
         <span>
           (
-          <em>template, data, name</em>
+          <em></em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Uses <tt>$.srender</tt> to parse ERB like templates.
-        </p>
-        <h3>Arguments</h3>
-        <table>
-        <tr><td valign="top"><tt>template</tt>:</td><td>A String template. &#8217;<% %>&#8217; tags are evaluated as Javascript and
-        replaced with the elements in data.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>data</tt>:</td><td>An Object containing the replacement values for the template. data is
-        extended with the <tt>EventContext</tt> allowing you to call its methods
-        within the template.
-        
-        </td></tr>
-        <tr><td valign="top"><tt>name</tt>:</td><td>An optional String name to cache the template. Is used in
-        <tt>partial()</tt> to cache remote templates.
-        
-        </td></tr>
-        </table>
-      </div>
-    </div>
-    <div class='meth' id='meth_7'>
+      </h4><div class='doc'><p>
+      //=> Sammy.EventContext: get #/ {}
+      </p></div></div>
+    <div class='meth' id='meth_6'>
       <h4>
         trigger
         <span>
@@ -1113,36 +1030,199 @@
           <em>name, data</em>
           )
         </span>
-      </h4>
-      <div class='doc'>
-        <p>
-        Triggers events on <tt>app</tt> within the current context.
-        </p>
-      </div>
-    </div>
+      </h4><div class='doc'><p>
+      Triggers events on <tt>app</tt> within the current context.
+      </p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.MemoryCacheProxy'>
+    <h2>
+      Sammy.MemoryCacheProxy
+      <span>
+        (
+        <em>initial</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    A simple cache strategy that stores key/values in memory.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.DataCacheProxy'>
+    <h2>
+      Sammy.DataCacheProxy
+      <span>
+        (
+        <em>initial, $element</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    A simple cache strategy that stores key/values <tt>$element.data()</tt>
+    with a <tt>cache.</tt> prefix
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Cache'>
+    <h2>
+      Sammy.Cache
+      <span>
+        (
+        <em>app, proxy</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Cache provides helpers for caching data within the lifecycle of a
+    Sammy app. The plugin provides two main methods on
+    <tt>Sammy.Application&lt;tt&gt;, &lt;tt&gt;cache</tt> and
+    <tt>clearCache</tt>. Each app has its own cache store so that you dont have
+    to worry about collisions. There are currently two different &#8216;cache
+    proxies&#8217; that share the same API but store the data in different
+    ways.
+    </p>
+    <h3>Arguments</h3>
+    <table>
+    <tr><td valign="top"><tt>proxy</tt>:</td><td>decides which caching proxy to use, either &#8216;memory&#8217;(default) or
+    &#8216;data&#8217;
+    
+    </td></tr>
+    </table></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#meth_0'>cache</a>
+      </li>
+      <li>
+        <a href='#meth_1'>cache</a>
+      </li>
+      <li>
+        <a href='#meth_2'>clearCache</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='meth_0'>
+      <h4>
+        cache
+        <span>
+          (
+          <em>name, value</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      cache is the main method for interacting with the cache store. The same
+      method is used for both setting and getting the value. The API is similar
+      to jQuery.fn.attr()
+      </p>
+      <h3>Examples</h3>
+      {% highlight javascript %}
+         // setting a value
+         cache('key', 'value');
+      
+         // getting a value
+         cache('key'); //=> 'value'
+      
+         // setting a value with a callback
+         cache('key', function() {
+           // this is the app
+           return app.element_selector;
+         });
+      {% endhighlight %}</div></div>
+    <div class='meth' id='meth_1'>
+      <h4>
+        cache
+        <span>
+          (
+          <em>name, value</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      a helper shortcut for use in <tt>Sammy.EventContext</tt>
+      </p></div></div>
+    <div class='meth' id='meth_2'>
+      <h4>
+        clearCache
+        <span>
+          (
+          <em>name</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      clears the cached value for <tt>name</tt>
+      </p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Template'>
+    <h2>
+      Sammy.Template
+      <span>
+        (
+        <em>app</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    <tt>Sammy.Template</tt> is a simple plugin that provides a way to create
+    and render client side templates. The rendering code is based on John
+    Resig&#8217;s quick templates and Greg Borenstien&#8217;s srender plugin.
+    This is also a great template/boilerplate for Sammy plugins.
+    </p>
+    <p>
+    Templates use <% %> tags to denote embedded javascript.
+    </p>
+    <h3>Examples</h3>
+    <p>
+    Here is an example template (user.template):
+    </p>
+    {% highlight javascript %}
+       <div class="user">
+         <div class="user-name"><%= user.name %></div>
+         <% if (user.photo_url) { %>
+           <div class="photo"><img src="<%= user.photo_url %>" /></div>
+         <% } %>
+       </div>
+    {% endhighlight %}
+    <p>
+    Given that is a publicly accesible file, you would render it like:
+    </p>
+    {% highlight javascript %}
+        $.sammy(function() {
+          // include the plugin
+          this.use(Sammy.Template);
+    
+          this.get('#/', function() {
+            // the template is rendered in the current context.
+            this.user = {name: 'Aaron Quint'};
+            // partial calls template() because of the file extension
+            this.partial('user.template');
+          })
+        });
+    {% endhighlight %}</div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#meth_0'>template</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='meth_0'>
+      <h4>
+        template
+        <span>
+          (
+          <em>template, data, name</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      <b>Helper:</b> Uses simple templating to parse ERB like templates.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>template</tt>:</td><td>A String template. &#8217;<% %>&#8217; tags are evaluated as Javascript and
+      replaced with the elements in data.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>data</tt>:</td><td>An Object containing the replacement values for the template. data is
+      extended with the <tt>EventContext</tt> allowing you to call its methods
+      within the template.
+      
+      </td></tr>
+      <tr><td valign="top"><tt>name</tt>:</td><td>An optional String name to cache the template.
+      
+      </td></tr>
+      </table></div></div>
   </div>
 </div>
-      </div>
-    </div>
-    <div id="contact">
-      <p>Feel free to email me at aaron at quirkey dot com.</p>
-      <p>Please check out my <a href="http://quirkey.com/blog">blog.</a></p>
-      <p>If you like or use this library &#8211; I don&#8217;t want donations &#8211; but you can <a href="http://www.workingwithrails.com/person/8362-aaron-quint">recommend me on workingwithrails.com</a> or hire me to work on your next project.</p>
-    </div>
-    <div id="footer">
-      <p class="quirkey_links">Quirkey<span>|</span><a href="http://www.quirkey.com" class="q_com">.com</a><span>|</span><a href="http://portfolio.quirkey.com" class="q_portfolio">Portfolio</a><span>|</span><a href="http://code.quirkey.com" class="q_code">Code</a><span>|</span><a href="http://log.quirkey.com" class="q_log">Log</a><span>|</span><a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a></p>
-      <p id="copy">client identity and work property of creators. quirkey logo and identity, &copy; 2005-2009 Quirkey NYC, LLC</p>
-    </div>
-  </div>
-  <script type="text/javascript">
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script>
-  <script type="text/javascript">
-  try {
-    var pageTracker = _gat._getTracker("UA-3763169-2");
-    pageTracker._trackPageview();
-    } catch(err) {}
-    </script>
-</body>
-</html>
