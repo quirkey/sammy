@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - FAQ
 github_name: sammy
-current_version: 0.2.1
+current_version: 0.3.0
 nav:
   - name: Overview
     link: ../index.html
@@ -43,7 +43,7 @@ See "the API":api.html for more details.
 
 h4. How do I load views from other files?
 
-In an @EventContext@ the @partial()@ method can asynchronoulsy load views and enact on the data, appending, replacing or parising it.
+In an @EventContext@ the @partial()@ method can asynchronously load views and enact on the data, appending, replacing or parising it.
 
 h4. Can I run multiple apps in the same document?
 

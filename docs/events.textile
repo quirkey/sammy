@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Events
 github_name: sammy
-current_version: 0.2.1
+current_version: 0.3.0
 nav:
   - name: Overview
     link: ../index.html
@@ -70,13 +70,13 @@ You can also pass a custom data object to trigger. These get passed to the bound
 {% highlight javascript %}
 var app = $.sammy(function() {
   
-  bind('test', function(e, data) { with(this) {
+  bind('test', function(e, data) {
     alert(data['my_data']);
-  }});
+  });
   
-  get('#/', function() { with(this) {
-    trigger('test', {my_data: 'EVENTED!'});
-  }});
+  get('#/', function() {
+    this.trigger('test', {my_data: 'EVENTED!'});
+  });
   
 });
 {% endhighlight%}

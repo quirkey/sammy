@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy
 github_name: sammy
-current_version: 0.2.1 
+current_version: 0.3.0 
 nav:
   - name: Overview 
     link: index.html
@@ -44,13 +44,13 @@ A Sammy application revolves around 'routes'. Routes consist of a verb, a path, 
 You set up a Sammy Application by passing a Function to the @$.sammy@ (which is a shortcut for the Sammy.Application constructor).
 
 {% highlight javascript %}
-$.sammy(function() { with(this) {
+$.sammy(function() {
 
-  get('#/', function() { with(this) {
+  this.get('#/', function() {
     $('#main').text('Welcome!');
-  }});
+  });
 
-}});
+});
 {% endhighlight %}
 
 Inside of the 'app' function() @this@ is the Application. This is where you can configure the application and add routes.

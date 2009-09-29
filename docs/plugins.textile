@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Plugins
 github_name: sammy
-current_version: 0.2.1
+current_version: 0.3.0
 nav:
   - name: Overview
     link: ../index.html
@@ -28,3 +28,147 @@ h2(project_name). Sammy
 h2. Documentation
 
 h3. Plugins
+
+Since version 0.3.0 Sammy has had the ability to bundle resuable application code and helpers and use them on a per-application basis. Plugins keep the Sammy core code base remain small, while allowing the inclusion of desired features and extensions.
+
+h4. Basics
+
+A Sammy plugin is really just a Sammy app definition that isn't evaluated until needed. Since a Sammy app definition is really just a @function()@ we can pass this definition around wherever we want.
+
+{% highlight javascript %}
+var MyPlugin = function(app) {
+  
+  this.helpers({
+    alert: function(message) {
+      this.log("ALERT! " + message);
+    }
+  });
+  
+};
+{% endhighlight %}
+
+This is the simplest type of plugin. It defines a helper method @alert()@ which once included can be used within routes and event bindings. Including this code into a Sammy app is as easy as creating it:
+
+{% highlight javascript %}
+var app = $.sammy(function() {
+  this.use(MyPlugin);
+  
+  this.get('#/', function() {
+    this.alert("I'm home"); //=> logs: ALERT! I'm home
+  });
+  
+});
+{% endhighlight %}
+
+The key method for plugins is @use()@. Use takes the plugin function you defined and evaluates it within the context of the current application. In this case it calls @helpers()@ and defines our @alert()@ method. 
+
+Plugins are not limited to helpers. You can define routes, event bindings, even replace/extend core methods.
+
+Theres one extra nicety to @use@. You can pass extra arguments when using a plugin that get passed to the plugin function.
+
+{% highlight javascript %}
+var MyAdvancedPlugin = function(app, prefix, suffix) {
+  
+  this.helpers({
+    alert: function(message) {
+      this.log(prefix, message, suffix);
+    }
+  });
+  
+};
+
+var app = $.sammy(function() {
+  this.use(MyAdvancedPlugin, 'BEFORE!', 'AFTER!');
+  
+  this.get('#/', function() {
+    this.alert("I'm home"); //=> logs: BEFORE! I'm home AFTER!
+  });
+  
+});
+{% endhighlight %}
+
+Here we defined a slightly more advanced plugin. Notice, the plugin function takes two extra arguments, @prefix@ and @suffix@. These two are evalauted with the function scope and allow us to change the behavior of the code we're including. At include time, we pass a 'BEFORE!', 'AFTER!' to _configure_ the plugin. 
+
+h4. Code Re-use
+
+One of the greatest use-cases for Sammy plugins is refactoring common code out of multiple applications. 
+
+{% highlight javascript %}
+var app1 = $.sammy(function() {
+  this.element_selector = '#div_1';
+  
+  this.get('#/', function() {
+    this.record = this.app.db['#div_1'];
+    this.app.swap(this.record.toHTML());
+  });
+  
+  // ... app specific code ...
+  
+  this.bind('run', function() {
+    this.db = loadDB();
+  });
+});
+
+var app2 = $.sammy(function() {
+  this.element_selector = '#div_2';
+  
+  this.get('#/', function() {
+    this.record = this.app.db['#div_2'];
+    this.app.swap(this.record.toHTML());
+  });
+  
+  // ... app specific code ...
+  
+  this.bind('run', function() {
+    this.db = loadDB();
+  });
+});
+{% endhighlight %}
+
+Obviously, this is a pretty extreme example, but it lends itself well to refactoring. Lets take the common code out into a plugin.
+
+{% highlight javascript %}
+var dbLoadAndDisplay = function(app, element_selector) {
+  this.element_selector = element_selector;
+  
+  this.get('#/', function() {
+    this.record = this.app.db[element_selector];
+    this.app.swap(this.record.toHTML());
+  });
+
+  this.bind('run', function() {
+    this.db = loadDB();
+  });
+};
+
+var app1 = $.sammy(function() {
+  this.use(dbLoadAndDisplay, '#div_1');
+
+  // ... app specific code ...
+
+});
+
+var app2 = $.sammy(function() {
+  this.use(dbLoadAndDisplay, '#div_2');
+
+  // ... app specific code ...
+
+});
+{% endhighlight %}
+
+h4. Public Plugin Repository
+
+On top of refactoring your own code, Sammy includes a growing number of plugins that handle common extensions, like caching and client side templating. These live in the lib/plugins directory of the repository.
+
+* Sammy.Cache: Includes helpers for simple a caching mechanism.
+* Sammy.Template: Extracted from Sammy's core this is a wrapper around John Resig's simple templating engine and Greg Borenstein's $.srender
+
+If you have a plugin that you'd like to be included in the public repository here are some guidlines:
+
+* *All official plugins should extend from the Sammy. namespace (e.g. Sammy.Template, Sammy.Blah, etc.)*. This is not only to ensure uniformity, but also to limit the amount of code that is in the global scope. Sammy itself only adds Sammy. and $.sammy. 
+* *The plugin should be wrapped in a closure and variables should be defined in the closure's scope*. Again, this is to prevent global scope leak and possible collisions.
+* *If possible plugin's should be self contained*. This means if you are writting a template engine plugin, it would be nice, if the license allows, to include the actual engine code with the plugin. This way, only one additional file has to be included at runtime.
+* *TEST TEST TEST.* Sammy has a full test suite and so should you. Currently the tests for all plugins are contained in the single file @test_sammy_plugins.js@
+
+When in doubt ask in irc or on the mailing list.
+

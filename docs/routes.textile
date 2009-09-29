@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - Routes
 github_name: sammy
-current_version: 0.2.1
+current_version: 0.3.0
 nav:
   - name: Overview
     link: ../index.html
@@ -109,9 +109,9 @@ Any string starting with @:@ in a path will be pulled out and converted to a nam
 Given an app with this route:
 
 {% highlight javascript %}
-get('#/by_name/:name', function() { with(this) {
+get('#/by_name/:name', function() {
   alert(params['name']);
-}});
+});
 {% endhighlight %}
 
 Pointing the browser to @#/by_name/quirkey@ would give you the fabulous system prompt reading 'quirkey'. 
@@ -120,9 +120,9 @@ This works with mulitple params in a single path. It does not work if you want t
 
 Given a Regexp route:
 {% highlight javascript %}
-get(/\#\/by_name\/(.*)/, function() { with(this) {
+get(/\#\/by_name\/(.*)/, function() {
   alert(params['splat']);
-}});
+});
 {% endhighlight %}
 
 Going to @#/by_name/quirkey@ will give you that same wonderful alert. However, because the regex is more lenient. @#/by_name/quirkey/boosh@ will also assign
@@ -136,22 +136,15 @@ Inside of the callback, the @this@ is a new @Sammy.EventContext@. Event context 
 
 For example, you can access the @params@, the current path (@path@), etc. More importantly you can run any jQuery methods or methods of the EventContext like @template@, @partial@, @redirect@, etc.
 
-A helpful convention is wrapping the context in @with@ so that you dont have to always refer to @this@ when invoking methods or getting params.
-
+As of Sammy 0.3.0, the context is also the first argument to the callback. This prevents the need to do (Var) this
 These are equivilent:
 
 {% highlight javascript %}
-get('#/by_name/:name', function() { with(this) {
-  redirect('#/' + params['name']);
-}});
-
 get('#/by_name/:name', function() {
-  this.redirect('#/' + this.params['name']);
+  this.redirect('#', params['name']);
+});
+
+get('#/by_name/:name', function(context) {
+  context.redirect('#, this.params['name']);
 });
 {% endhighlight %}
-
-
-
-
-
-
