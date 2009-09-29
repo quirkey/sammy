@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" id="html">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Sammy Test Suite</title>
+    <link rel="stylesheet" media="screen" href="../vendor/jqUnit/testsuite.css"/>
+    <script type="text/javascript" src="../vendor/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="../vendor/jqUnit/jqUnit.js"></script>
+    <script type="text/javascript" src="../vendor/jqunit-spec/jqunit-spec.js"></script>
+   
+    <script type="text/javascript" src="../lib/sammy.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.cache.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
+  </head>
+  <body id="body">
+    <h1 id="header">Sammy.js Test Suite</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+		
+    <!-- Test HTML -->
+    <div id="main" style="display:none;">
+      <div class="get_area"></div>
+      <div id="test_area"></div>
+      <form id="test_form" action="#/test" method="post">
+        <input type="hidden" name="test_input" value="TEST" />
+        <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
+        <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
+      </form>
+    </div>
+    <ol id="tests"></ol>
+    <script type="text/javascript" src="test_sammy_application.js"></script>
+    <script type="text/javascript" src="test_sammy_event_context.js"></script>
+    <script type="text/javascript" src="test_sammy_plugins.js"></script>
+  </body>
+</html>

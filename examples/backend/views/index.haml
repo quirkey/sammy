@@ -1,0 +1,18 @@
+%html{:xmlns=> "http://www.w3.org/1999/xhtml", 'xml:lang' => "en", :lang => "en"}
+  %head
+    %meta{'http-equiv' => "Content-Type", 'content' => "text/html; charset=utf-8"}
+    %title Backended
+    
+    %link{:rel => 'stylesheet', :href => '/stylesheets/app.css', :media => 'screen'}
+    
+    - ['jquery', 'jquery.cloudkit', 'sammy', 'app'].each do |js|
+      %script{:src => "/javascripts/#{js}.js", :type => 'text/javascript', :charset => 'utf-8'}
+  %body
+    #container
+      #header
+        %h1 
+          %a{:href => '#/', :title => 'Home'} Sammy Todo
+      #error{:style => 'display:none'}
+        %span.close x
+      #main              
+      #debug

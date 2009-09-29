@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Location Demo</title>
+	<style type="text/css" media="screen">
+	 #main { background-color: #CCCCCC;  }
+	</style>
+	
+	<script src="../../vendor/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+	
+  <script type="text/javascript" charset="utf-8">
+    ;(function($) {
+      var app = new Sammy.Application(function() { with(this) {
+        debug = true;
+        element_selector = '#main';
+        
+        // overide getLocation
+        this.getLocation = function() {
+          if (this.$element().data('location') == undefined) {
+            this.$element().data('location', '');
+          };
+          return this.$element().data('location');
+        };
+        
+        // overide setLocation
+        this.setLocation = function(new_location) {
+          return this.$element().data('location', new_location);
+        };
+        
+        get('#/', function() { with(this) {
+          $("#output").text("matched: #/");
+        }});
+      
+        get('#/link/:id', function() { with(this) {
+          $("#output").text("matched: #/link/:" + params['id']);
+        }});
+        
+        post('#/form', function() { with(this) {
+          $("#output").text("post matched: #/form - params[field] = " + params['field']);
+          return false;
+        }});
+        
+        put('#/form', function() { with(this) {
+          $("#output").text("put matched: #/form - params[field] = " + params['field']);
+          return false;
+        }});
+
+        bind('run', function() { with(this) {
+          var context = this;
+          var element = context.$element();
+
+          // intercept click events manually
+          // we dont want the url to change for matched routes
+          $('a', element).bind('click', function(e) {
+            var path = $(this).attr('href');
+            if (path.match(/^#/)) {
+              context.redirect(path);
+              return false;
+            } else {
+              return true;
+            }
+          });
+          
+        }});
+        
+      }});
+      
+      $(function() {
+        app.run('#/');
+      });
+    
+    })(jQuery);
+  </script>
+	
+</head>
+
+<body>
+  <div id="container">
+    
+    <div id="main">
+      <ul>
+        <li><a href="data.html">reset</a></li>
+        <li><a href="#/">#/</a></li>
+        <li><a href="#/link/id">#/link/id</a></li>
+      </ul>
+      
+      <form action="#/form" method="put">
+        <p><input type="text" name="field" value="WAS PUT" id="field"/></p>
+        <p><input type="submit" value="Continue &rarr;"/></p>
+      </form>
+      
+      <form action="#/form" method="post">
+        <p><input type="text" name="field" value="WAS POSTED" id="field"/></p>
+        <p><input type="submit" value="Continue &rarr;"/></p>
+      </form>
+    </div>
+    
+    <h1>Results</h1>
+    
+    <div id="output">
+    </div>
+    
+  </div>
+  
+</body>
+</html>
