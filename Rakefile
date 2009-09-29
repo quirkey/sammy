@@ -72,7 +72,7 @@ task :test do
 end
 
 desc 'generate the API documentation'
-task :doc do
+task :api do
   tmp_doc_path = '/tmp/sammy.api.html'
   api_template_path = 'site/docs/api_template.html'
   final_path   = 'site/docs/api.html'
@@ -80,6 +80,13 @@ task :doc do
   sh "ruby vendor/jsdoc/jsdoc.rb lib/sammy.js lib/plugins/ > #{tmp_doc_path}"
   sh "cat #{api_template_path} #{tmp_doc_path} > #{final_path}"
 end
+
+desc 'copy files into the site branch'
+task :copy_test_and_examples do
+  sh "cp -r examples site/examples"
+  sh "cp -r test site/test"
+end
+
 
 desc 'update the current version # in the pages'
 task :update_version => :version do
@@ -93,3 +100,12 @@ task :update_version => :version do
     end
   end
 end
+
+task :push_site do
+  sh "cd site && git add ."
+  sh "cd site && git commit -am 'Updated Site via Rake'"
+  sh "cd site && git push upstream gh-pages"
+end
+
+desc 'Prepare the site'
+task :site => [:api, :copy_test_and_examples, :update_version, :push_site]
