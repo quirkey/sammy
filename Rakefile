@@ -85,6 +85,7 @@ desc 'copy files into the site branch'
 task :copy_test_and_examples do
   sh "cp -r examples site/examples"
   sh "cp -r test site/test"
+  sh "cp -r lib site/lib"
 end
 
 
