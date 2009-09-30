@@ -44,8 +44,9 @@ h3. Blog Posts/Articles
 h3. Open Source Projects that include/use Sammy
 
 * "boom_amazing":http://github.com/langalex/boom_amazing - 	a couchapp that lets you run (and later replay) a presentation by panning, rotating and zooming in an svg file
-* "Swinger":http://github.com/quirkey/swinger - Keynote like tool built with Couchapp and Sammy.js
-* "Sinatra-Sammy":http://github.com/quirkey/sinatra-sammy - Sinatra extension for easily creating single page sinatra apps
+* "processing-js-studio":http://github.com/hpoydar/processing-js-studio Web-based application to store Processing JS sketches and renderings.
+* "swinger":http://github.com/quirkey/swinger - Keynote like tool built with Couchapp and Sammy.js
+* "sinatra-sammy":http://github.com/quirkey/sinatra-sammy - Sinatra extension for easily creating single page sinatra apps
 * "oneforty":http://github.com/quirkey/oneforty/ - entirely client-side twitter client
 
 h3. Sammy in the wild
