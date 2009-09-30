@@ -42,9 +42,6 @@ nav:
       <a href='#Sammy.Application'>Sammy.Application</a>
     </li>
     <li>
-      <a href='#MyPlugin'>MyPlugin</a>
-    </li>
-    <li>
       <a href='#Sammy.EventContext'>Sammy.EventContext</a>
     </li>
     <li>
@@ -299,7 +296,7 @@ nav:
     <div class='attr' id='attr_0'>
       <h4>
         APP_EVENTS
-        \=
+        =
         <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect']</span>
       </h4><div class='doc'><p>
       An array of the default events triggered by the application during its
@@ -308,7 +305,7 @@ nav:
     <div class='attr' id='attr_1'>
       <h4>
         ROUTE_VERBS
-        \=
+        =
         <span>['get','post','put','delete']</span>
       </h4><div class='doc'><p>
       the four route verbs
@@ -316,7 +313,7 @@ nav:
     <div class='attr' id='attr_2'>
       <h4>
         data_store_name
-        \=
+        =
         <span>'sammy-app'</span>
       </h4><div class='doc'><p>
       On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
@@ -325,7 +322,7 @@ nav:
     <div class='attr' id='attr_3'>
       <h4>
         debug
-        \=
+        =
         <span>false</span>
       </h4><div class='doc'><p>
       When set to true, logs all of the default events using <tt>log()</tt>
@@ -333,7 +330,7 @@ nav:
     <div class='attr' id='attr_4'>
       <h4>
         element_selector
-        \=
+        =
         <span>'body'</span>
       </h4><div class='doc'><p>
       Defines what element the application is bound to. Provide a selector
@@ -343,7 +340,7 @@ nav:
     <div class='attr' id='attr_5'>
       <h4>
         run_interval_every
-        \=
+        =
         <span>50</span>
       </h4><div class='doc'><p>
       The time in milliseconds that the URL is queried for changes
@@ -351,7 +348,7 @@ nav:
     <div class='attr' id='attr_6'>
       <h4>
         silence_404
-        \=
+        =
         <span>true</span>
       </h4><div class='doc'><p>
       When set to false, will throw a javascript error when a route is invoked
@@ -363,7 +360,67 @@ nav:
         <a href='#meth_0'>$element</a>
       </li>
       <li>
-        <a href='#meth_1'>toString</a>
+        <a href='#meth_1'>after</a>
+      </li>
+      <li>
+        <a href='#meth_2'>before</a>
+      </li>
+      <li>
+        <a href='#meth_3'>bind</a>
+      </li>
+      <li>
+        <a href='#meth_4'>bindToAllEvents</a>
+      </li>
+      <li>
+        <a href='#meth_5'>eventNamespace</a>
+      </li>
+      <li>
+        <a href='#meth_6'>getLocation</a>
+      </li>
+      <li>
+        <a href='#meth_7'>helpers</a>
+      </li>
+      <li>
+        <a href='#meth_8'>isRunning</a>
+      </li>
+      <li>
+        <a href='#meth_9'>lookupRoute</a>
+      </li>
+      <li>
+        <a href='#meth_10'>notFound</a>
+      </li>
+      <li>
+        <a href='#meth_11'>refresh</a>
+      </li>
+      <li>
+        <a href='#meth_12'>routablePath</a>
+      </li>
+      <li>
+        <a href='#meth_13'>route</a>
+      </li>
+      <li>
+        <a href='#meth_14'>run</a>
+      </li>
+      <li>
+        <a href='#meth_15'>runRoute</a>
+      </li>
+      <li>
+        <a href='#meth_16'>setLocation</a>
+      </li>
+      <li>
+        <a href='#meth_17'>swap</a>
+      </li>
+      <li>
+        <a href='#meth_18'>toString</a>
+      </li>
+      <li>
+        <a href='#meth_19'>trigger</a>
+      </li>
+      <li>
+        <a href='#meth_20'>unload</a>
+      </li>
+      <li>
+        <a href='#meth_21'>use</a>
       </li>
     </ul>
     <hr />
@@ -380,104 +437,6 @@ nav:
       </p></div></div>
     <div class='meth' id='meth_1'>
       <h4>
-        toString
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4><div class='doc'><p>
-      //=> Sammy.Application: body
-      </p></div></div>
-  </div>
-  <!-- its just a function -->
-  <div class='klass' id='MyPlugin'>
-    <h2>
-      MyPlugin
-      <span>
-        (
-        <em>app, prepend</em>
-        )
-      </span>
-    </h2><div class='doc'><p>
-    <tt>use()</tt> is the entry point for including Sammy plugins. The first
-    argument to use should be a function() that is evaluated in the context of
-    the current application, just like the <tt>app_function</tt> argument to
-    the <tt>Sammy.Application</tt> constructor.
-    </p>
-    <p>
-    Any additional arguments are passed to the app function sequentially.
-    </p>
-    <p>
-    For much more detail about plugins, check out: <a
-    href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
-    </p>
-    <h3>Example</h3></div>    <h3>Methods</h3>
-    <ul>
-      <li>
-        <a href='#meth_0'>after</a>
-      </li>
-      <li>
-        <a href='#meth_1'>before</a>
-      </li>
-      <li>
-        <a href='#meth_2'>bind</a>
-      </li>
-      <li>
-        <a href='#meth_3'>bindToAllEvents</a>
-      </li>
-      <li>
-        <a href='#meth_4'>eventNamespace</a>
-      </li>
-      <li>
-        <a href='#meth_5'>getLocation</a>
-      </li>
-      <li>
-        <a href='#meth_6'>helpers</a>
-      </li>
-      <li>
-        <a href='#meth_7'>isRunning</a>
-      </li>
-      <li>
-        <a href='#meth_8'>lookupRoute</a>
-      </li>
-      <li>
-        <a href='#meth_9'>notFound</a>
-      </li>
-      <li>
-        <a href='#meth_10'>refresh</a>
-      </li>
-      <li>
-        <a href='#meth_11'>routablePath</a>
-      </li>
-      <li>
-        <a href='#meth_12'>route</a>
-      </li>
-      <li>
-        <a href='#meth_13'>run</a>
-      </li>
-      <li>
-        <a href='#meth_14'>runRoute</a>
-      </li>
-      <li>
-        <a href='#meth_15'>setLocation</a>
-      </li>
-      <li>
-        <a href='#meth_16'>swap</a>
-      </li>
-      <li>
-        <a href='#meth_17'>trigger</a>
-      </li>
-      <li>
-        <a href='#meth_18'>unload</a>
-      </li>
-      <li>
-        <a href='#meth_19'>use</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='meth' id='meth_0'>
-      <h4>
         after
         <span>
           (
@@ -488,7 +447,7 @@ nav:
       A shortcut for binding a callback to be run after a route is executed.
       After callbacks have no guarunteed order.
       </p></div></div>
-    <div class='meth' id='meth_1'>
+    <div class='meth' id='meth_2'>
       <h4>
         before
         <span>
@@ -505,7 +464,7 @@ nav:
       If any of the callbacks explicitly return false, execution of any further
       callbacks and the route itself is halted.
       </p></div></div>
-    <div class='meth' id='meth_2'>
+    <div class='meth' id='meth_3'>
       <h4>
         bind
         <span>
@@ -537,7 +496,7 @@ nav:
       href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
       for more info.
       </p></div></div>
-    <div class='meth' id='meth_3'>
+    <div class='meth' id='meth_4'>
       <h4>
         bindToAllEvents
         <span>
@@ -553,7 +512,7 @@ nav:
       <p>
       Used internally for debug logging.
       </p></div></div>
-    <div class='meth' id='meth_4'>
+    <div class='meth' id='meth_5'>
       <h4>
         eventNamespace
         <span>
@@ -565,7 +524,7 @@ nav:
       A unique event namespace defined per application. All events bound with
       <tt>bind()</tt> are automatically bound within this space.
       </p></div></div>
-    <div class='meth' id='meth_5'>
+    <div class='meth' id='meth_6'>
       <h4>
         getLocation
         <span>
@@ -578,7 +537,7 @@ nav:
       Override this and <tt>setLocation()</tt> to detach the app from the
       window.location object.
       </p></div></div>
-    <div class='meth' id='meth_6'>
+    <div class='meth' id='meth_7'>
       <h4>
         helpers
         <span>
@@ -614,7 +573,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_7'>
+    <div class='meth' id='meth_8'>
       <h4>
         isRunning
         <span>
@@ -625,7 +584,7 @@ nav:
       </h4><div class='doc'><p>
       Returns a boolean of weather the current application is running.
       </p></div></div>
-    <div class='meth' id='meth_8'>
+    <div class='meth' id='meth_9'>
       <h4>
         lookupRoute
         <span>
@@ -637,7 +596,7 @@ nav:
       Given a verb and a String path, will return either a route object or false
       if a matching route can be found within the current defined set.
       </p></div></div>
-    <div class='meth' id='meth_9'>
+    <div class='meth' id='meth_10'>
       <h4>
         notFound
         <span>
@@ -648,7 +607,7 @@ nav:
       </h4><div class='doc'><p>
       This thows a &#8216;404 Not Found&#8217; error.
       </p></div></div>
-    <div class='meth' id='meth_10'>
+    <div class='meth' id='meth_11'>
       <h4>
         refresh
         <span>
@@ -659,7 +618,7 @@ nav:
       </h4><div class='doc'><p>
       Reruns the current route
       </p></div></div>
-    <div class='meth' id='meth_11'>
+    <div class='meth' id='meth_12'>
       <h4>
         routablePath
         <span>
@@ -671,7 +630,7 @@ nav:
       Returns a copy of the given path with any query string after the hash
       removed.
       </p></div></div>
-    <div class='meth' id='meth_12'>
+    <div class='meth' id='meth_13'>
       <h4>
         route
         <span>
@@ -701,7 +660,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_13'>
+    <div class='meth' id='meth_14'>
       <h4>
         run
         <span>
@@ -728,7 +687,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_14'>
+    <div class='meth' id='meth_15'>
       <h4>
         runRoute
         <span>
@@ -764,7 +723,7 @@ nav:
       Either returns the value returned by the route callback or raises a 404 Not
       Found error.
       </p></div></div>
-    <div class='meth' id='meth_15'>
+    <div class='meth' id='meth_16'>
       <h4>
         setLocation
         <span>
@@ -783,7 +742,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_16'>
+    <div class='meth' id='meth_17'>
       <h4>
         swap
         <span>
@@ -811,7 +770,18 @@ nav:
       
        });
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_17'>
+    <div class='meth' id='meth_18'>
+      <h4>
+        toString
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      //=> Sammy.Application: body
+      </p></div></div>
+    <div class='meth' id='meth_19'>
       <h4>
         trigger
         <span>
@@ -836,7 +806,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_18'>
+    <div class='meth' id='meth_20'>
       <h4>
         unload
         <span>
@@ -849,7 +819,7 @@ nav:
       <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
       when the document is closed.
       </p></div></div>
-    <div class='meth' id='meth_19'>
+    <div class='meth' id='meth_21'>
       <h4>
         use
         <span>
@@ -858,8 +828,41 @@ nav:
           )
         </span>
       </h4><div class='doc'><p>
-      });
-      </p></div></div>
+      <tt>use()</tt> is the entry point for including Sammy plugins. The first
+      argument to use should be a function() that is evaluated in the context of
+      the current application, just like the <tt>app_function</tt> argument to
+      the <tt>Sammy.Application</tt> constructor.
+      </p>
+      <p>
+      Any additional arguments are passed to the app function sequentially.
+      </p>
+      <p>
+      For much more detail about plugins, check out: <a
+      href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+         var MyPlugin = function(app, prepend) {
+      
+           this.helpers({
+             myhelper: function(text) {
+               alert(prepend + " " + text);
+             }
+           });
+      
+         };
+      
+         var app = $.sammy(function() {
+      
+           this.use(MyPlugin, 'This is my plugin');
+      
+           this.get('#/', function() {
+             this.myhelper('and dont you forget it!');
+             //=> Alerts: This is my plugin and dont you forget it!
+           });
+      
+         });
+      {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.EventContext'>
