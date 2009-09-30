@@ -21,6 +21,8 @@ nav:
         link: faq.html
       - name: API
         link: api.html
+  - name: Resources
+    link: resources.html
 ---
 
 h2(project_name). Sammy

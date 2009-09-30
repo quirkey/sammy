@@ -1,0 +1,40 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Resources
+github_name: sammy
+current_version: 0.3.0 
+nav:
+  - name: Overview 
+    link: index.html
+    sub:
+      - name: What
+        link: "#what"
+      - name: Why
+        link: "#why"
+      - name: Basics
+        link: "#usage"
+      - name: More!
+        link: "#more"
+  - name: Installation
+    link: install.html
+  - name: Documentation
+    link: docs/index.html
+  - name: Resources
+    link: resources.html
+---
+
+h2(project_name). Sammy
+
+h2. Resources
+
+This is an ever growing list of resources about Sammy on the web. If you have something to add please DM @sammy_js or fork and add it yourself!
+
+h3. Presentations/Slides
+
+
+
+h3. Blog Posts/Articles
+
+h3. Open Source Projects that include Sammy
+
+h3. Developers/Companies using Sammy
