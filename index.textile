@@ -81,7 +81,7 @@ I've split up the information into a couple different sections.
 * "API":docs/api.html
 * "FAQ":docs/faq.html
 * "Examples":http://github.com/quirkey/sammy/tree/master/examples/
-* "Blog/Screencasts":http://www.quirkey.com/blog/category/sammy/
+* "Resources":resources.html
 
 Ways to stay informed/get in contact:
 

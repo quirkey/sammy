@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" id="html">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Test Title Goes Here</title>
+    <link rel="Stylesheet" media="screen" href="testsuite.css"/>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jqUnit.js"></script>
+    <script>
+var temp = function ($){
+  jqUnit.module('Without local interface');
+  jqUnit.test('test a', function(){
+    jqUnit.ok(true);
+    this.ok(true);
+  });
+	
+with (jqUnit) {
+	module('With local interface');
+	test('test b', function(){
+		ok(true);
+	});
+	
+	
+	module('Example tests');
+	test('Real Click vs False Click', function(){
+		var clicked = false;
+		$('#test-form').click(function(){
+			clicked = true;
+		});
+		
+		//false click
+		$('#test-form input').click();
+		ok(!clicked);
+		
+		//real click
+		triggerEvent($('#test-form input').get(0), 'click');
+		ok(clicked);
+	});
+	
+	test('Waiting', function(){
+		$('#ajax').load('fixtures/1.html');
+		expect(1);//expect 1 assertion, here: fails if ajaxStop is never called
+		stop();//pause: so we can wait with setTimeout,setInterval,...
+		$().ajaxStop(function(){
+			setTimeout(function(){
+				//field is not filled directly after ajaxStop
+				//since DOM traversal comes after stopping to load
+				equals($('#ajax').html(), 1);//!reverted jsUnit order
+				start();//resume: make sure its called or tests will halt! 
+			})
+		});
+	});
+}  
+  //Using TestCase
+  jqUnit.TestCase.prototype.yep = function(val){ this.ok(val);};
+  var t = new jqUnit.TestCase('TestCase',function(){
+      /*setup*/
+      this.yep(1);
+    },function(){
+      /*teardown*/
+      this.ok(1)
+    });
+  //jqUnit is mixed into TestCase, so you can overwrite them & only need 1 with
+  t.test('part 1',function(){ this.ok(1) });
+  t.test('part 2',function(){ with(this){ ok(2);yep(3) } });
+  t.test('part 3',function(){ with(jqUnit){ ok(4); this.yep(5) } });
+}(jQuery);
+    </script>
+  </head>
+  <body id="body">
+    <h1 id="header">Test Title Goes Here</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+		
+    <!-- Test HTML -->
+    <div id="main" style="display: none;">
+      <form id="test-form">
+        <input/>
+      </form>
+      <div id="ajax">
+        
+      </div>
+    </div>
+    <ol id="tests"></ol>
+  </body>
+</html>

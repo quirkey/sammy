@@ -39,6 +39,10 @@ h4. "Events":events.html
 
 Get more advanced by building an event driven application, using custom events and namespaces.
 
+h4. "Plugins":plugins.html
+
+Reusable and configurable code FTW
+
 h4. "FAQ":faq.html
 
 Answers to possibly common questions.
