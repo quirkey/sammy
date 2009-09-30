@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Form Handling</title>
+  
+  <style type="text/css" media="screen">
+    
+  </style>
+	
+	<script src="../../vendor/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+    ;(function($) {
+      var app = new Sammy.Application(function() { with(this) {
+        debug = true;
+        element_selector = '#main';
+        // form_fields = null;
+        
+        this.getLocation = function() {
+          return $('#location').val().toString();
+        };
+        
+        this.setLocation = function(new_location) {
+          return $('#location').val(new_location);
+        }
+        
+        get('/', function() { with(this) {
+          $element().html('Enter a URL in the field above! Try /user/...');
+        }});
+      
+        get('/user/:name', function() { with(this) {
+          $element().html('Youre at ' + params['name'] + "'s page. <a href='/' class='back'>Go Back</a>.");
+        }});
+        
+        bind('back', function() { with(this) {
+          log('back!');
+          redirect('/');
+        }});
+        
+        bind('run', function() {
+          var context = this;
+          $('a').live('click', function() {
+            var href = $(this).attr('href');
+            if (href.match(/^\//)) { // local link
+              context.redirect(href);
+              return false;
+            } else {
+              return true; // execute actual href
+            }
+          });
+        });
+        
+      }});
+      
+      $(function() {
+        app.run('/');
+      });
+    
+    })(jQuery);
+  </script>
+	
+</head>
+
+<body>
+  <div id="container">
+    <input id="location" type="text" />
+    <div id="main">
+
+    </div>
+    <ul>
+      <li><a href="/">Go Home</a></li>
+      <li><a href="/user/blah">Check out this user</a></li>
+  </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<form action="#/pretend/post/url" method="post">
+  <p><label for="name">Name:</label><input type="text" name="name" /></p>
+  <p><label for="email">Email:</label><input type="text" name="email" /></p>
+  <p><label for="role_admin">Admin?</label><input type="checkbox" name="roles[]" value="admin" id="role_admin"/></p>
+  <p><label for="role_author">Author?</label><input type="checkbox" name="roles[]" value="author" id="role_author"/></p>
+  <p><input type="submit" value="Post!" /></p>
+</form>
+
+<h3>Plain old form</h3>
+<form method="post" action="/i_should_submit">
+  <p><input type="submit" value="Dont press me!" /></p>
+</form>
