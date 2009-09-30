@@ -1,3 +1,6 @@
 [submodule "_layouts"]
 	path = _layouts
 	url = git://github.com/quirkey/jekyll_layouts.git
+[submodule "vendor/jqunit-spec"]
+	path = vendor/jqunit-spec
+	url = git://github.com/quirkey/jqunit-spec.git
