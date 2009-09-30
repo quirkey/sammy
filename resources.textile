@@ -31,10 +31,24 @@ This is an ever growing list of resources about Sammy on the web. If you have so
 
 h3. Presentations/Slides
 
-
+* "Sammy.js: Simple Structure for your Sites - jQueryConf 2009":http://c.ixxr.net/swinger/_design/swinger/index.html#/preso/jqcon_09/display/1
+* "All about Sammy - PDX.js":http://www.slideshare.net/joydivider/sammy
+* "Sammy.js - NYC.js June 2009":http://quirkey.com/sammy-presentations/nyc.js_june3/slides.html#0
 
 h3. Blog Posts/Articles
 
-h3. Open Source Projects that include Sammy
+* "Sammy - a jQuery Web Framework":http://dobbscodetalk.com/index.php?option=com_myblog&show=Sammy---A-jQuery-Web-Framework.html&Itemid=29
+* "Practical uses for Sammy":http://blog.joecorcoran.co.uk/past/2009/7/2/practical_uses_for_sammy/
+* "QuirkeyBlog: Sammy":http://www.quirkey.com/blog/category/sammy/
 
-h3. Developers/Companies using Sammy
+h3. Open Source Projects that include/use Sammy
+
+* "boom_amazing":http://github.com/langalex/boom_amazing - 	a couchapp that lets you run (and later replay) a presentation by panning, rotating and zooming in an svg file
+* "Swinger":http://github.com/quirkey/swinger - Keynote like tool built with Couchapp and Sammy.js
+* "Sinatra-Sammy":http://github.com/quirkey/sinatra-sammy - Sinatra extension for easily creating single page sinatra apps
+* "oneforty":http://github.com/quirkey/oneforty/ - entirely client-side twitter client
+
+h3. Sammy in the wild
+
+* "photowall":http://www.photowall.com/
+* "qui.tw":http://qui.tw/
