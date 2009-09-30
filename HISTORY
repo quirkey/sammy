@@ -1,3 +1,27 @@
+== 0.3.0 [09/28/09]
+
+New:
+  - Sammy.Application#use() takes an app function and applies it to the current app. This is the entry point for Sammy Plugins. See docs at: http://code.quirkey.com/sammy/docs/plugins.html
+  - New system for repository structure, minified files are placed in lib/min/ version numbers are appended to minified files
+  - Sammy.EventContext#partial() is template engine agnostic and calls the template engine method based on the extension of the file you're trying to render.
+  - New official Sammy.Cache plugin provides simple client side caching
+  - Sammy.EventContext#redirect() can take any number of arguments that are all joined by '/'
+  - Sammy.Application#refresh() will re-run the current route
+  
+Changes:
+  - Removed John Resig's Class() inheritance code/style in favor of doing prototypical inheritance and using $.extend()
+  - Sammy.Application bind() and trigger() now use jQuery's built in namespacing. This means that a Sammy application can now catch events like clicks and other events that bubble up or are triggered on the Sammy.Application#element() 
+  - Sammy.log and Sammy.addLogger are top level access to logging and adding additional logging paths. Sammy.Application#bindToAllEvents() replaces the functionality for the former addLogger() method
+  - the app functions and route callbacks both take _this_ as the first argument
+  - $.srender and template() are no longer part of the sammy.js and are instead included in the Sammy.Template plugin lib/plugins/sammy.template.js
+  - Routes are saved and looked up in order of definition instead of shortest first (May break existing applications that use RegExp based routing)
+  - Made the parse query more uniform with the rest of the code base
+  - Sammy.Object#toString() wont include functions unless you explicitly want them
+  
+Fixes:
+  - Fixed redirect() handling in post routes
+  - Fixed param parsing for form submission where there were multiple params with the same name
+
 == 0.2.1 [08/28/09]
 
 New:

@@ -51,7 +51,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 * [Intro](http://code.quirkey.com/sammy)
 * [Docs](http://code.quirkey.com/sammy/docs/)
 * [Examples](http://github.com/quirkey/sammy/tree/master/examples/)
-* [Blog/Screencasts](http://www.quirkey.com/blog/category/sammy/)
+* [More Resources](http://code.quirkey.com/sammy/resources.html)
 
 ### Keep informed!
 
