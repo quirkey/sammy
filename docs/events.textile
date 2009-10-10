@@ -22,7 +22,7 @@ nav:
       - name: API
         link: api.html
   - name: Resources
-    link: resources.html
+    link: ../resources.html
 ---
 
 h2(project_name). Sammy
