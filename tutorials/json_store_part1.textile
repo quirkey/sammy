@@ -22,7 +22,7 @@ h2. Tutorials
 
 h3. The JSON Store: A Sammy.js Tutorial, Part I
 
-As promised I'm starting a series of tutorials for getting to know Sammy.js. Instead of starting huge I'm going to start pretty small and slowly build up. However, instead of starting at Hello World (which the documentation pretty well covers), lets jump into a somewhat more realistic use case. Lets party like its 1999 and build ourselves an E-commerce front end! (Don't you love the word E-commerce? Its just like E-mail, but with more $$$.) We'll call our shop The JSON Store (just to confuse people).
+As promised I'm starting a series of tutorials for getting to know Sammy.js. Instead of starting huge I'm going to start pretty small and slowly build up. However, instead of starting at Hello World (which the documentation pretty well covers), lets jump into a somewhat more realistic use case. Lets party like its 1999 and build ourselves an E-commerce front end! (Don't you love the word E-commerce? Its just like E-mail, but with more $$$.) We'll call our shop The JSON Store (_just to confuse people_).
 
 The goal of this little walkthrough is to build a very basic e-commerce front end. It wont do everything yet. We'll get to everything later. What it will do:
 
@@ -32,11 +32,12 @@ The goal of this little walkthrough is to build a very basic e-commerce front en
 
 OK. So its not much. Its going to be a pretty basic run through, but hey! you might learn something.
 
-All the code is on github (of course). You can follow along with the commits. and see the app get built bit by bit.
+"All the code is on github (of course).":http://github.com/quirkey/the_json_store You can follow along with the commits and see the app get built bit by bit.
 
 First things first, lets build a simple directory layout. Right now we're not going to be talking to any services or a backend, just flat files. Heres the structure I created:
 
 {% highlight bash %}
+$ tree the_json_store
 |-data
 |-javascripts
 |---sammy
@@ -101,7 +102,7 @@ The main thing worth noting is the order that which we include the files. First 
 
 data/items.js is an array of 4 items with an identical structure.
 
-Lets dig in and start actually coding our Sammy app. In our app file (javascripts/json_store.js) lets encapsulate our code in !!the module pattern so that we can prevent any scope leak and make use of local functions.
+Lets dig in and start actually coding our Sammy app. In our app file (javascripts/json_store.js) lets encapsulate our code in "the module pattern":http://yuiblog.com/blog/2007/06/12/module-pattern/ so that we can prevent any scope leak and make use of local functions.
 
 {% highlight javascript %}
 (function($) {
@@ -147,7 +148,7 @@ this.get('#/', function(context) {
 });
 {% endhighlight %}
 
-This is the most basic route. When the browser hits '#/' the function that we've defined will be executed and a Sammy.EventContext with additional info will be passed to context (the callback is also evaluated within the context of Sammy.EventContext, read more about routes !!!here). Lets just add a simple call to @log@ to make sure our route is firing.
+This is the most basic route. When the browser hits '#/' the function that we've defined will be executed and a Sammy.EventContext with additional info will be passed to context (the callback is also evaluated within the context of Sammy.EventContext, "read more about routes in the Sammy docs":http://code.quirkey.com/sammy/docs/routes.html). Lets just add a simple call to @log@ to make sure our route is firing.
 
 {% highlight javascript %}
 this.get('#/', function(context) {
@@ -204,7 +205,7 @@ If all goes as plan, we should see our items print in the console:
 
 OKAY! Now that we have our data, we want to actual render it so that our thousands of potential shoppers can see it. 
 
-Lets talk about client side templating. As of Sammy 0.3, templating is not built in, but its very easy to include. The Sammy.Template plugin provides us with a simple method based on "John Resig's templating code" that allows us to render HTML with embedded javascript and variables. _There are a number of Javascript/Client side templating options out there, and I hope to have plugins to support them as soon as possible. Please fork and contribute!_
+Lets talk about client side templating. As of Sammy 0.3, templating is not built in, but its very easy to include. The Sammy.Template plugin provides us with a simple method based on "John Resig's templating code":http://ejohn.org/blog/javascript-micro-templating/ and "Greg Borenstein's $.srender":http://ideasfordozens.com that allows us to render HTML with embedded javascript and variables. _There are a number of Javascript/Client side templating options out there, and I hope to have plugins to support them as soon as possible. Please fork and contribute!_
 
 In order to use Sammy.Template we need to include the plugin in our HTML and then 'use' it in our app.
 
