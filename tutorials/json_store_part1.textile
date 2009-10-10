@@ -89,14 +89,14 @@ Now lets get started by making a basic HTML thats empty except for our script in
 
 The main thing worth noting is the order that which we include the files. First jQuery, then sammy.js, then our app js. One last thing to note before we start coding - since we're not using any sort of backend, I've created a simple JSON file that contains the info about the items in our store. For now, we're selling CD's and an item looks like:
 
-{% highlight json %}
+{% highlight javascript %}
 {
   "title": "The Door",
   "artist": "Religious Knives",
   "image": "http://ecx.images-amazon.com/images/I/51og8BkN8jL._SS250_.jpg",
   "large_image": "http://ecx.images-amazon.com/images/I/51og8BkN8jL._SS500_.jpg",
   "price": 9.98,
-  "url": "http://www.amazon.com/Door-Religious-Knives/dp/B001FGW0UQ/?tag=quirkey-20",
+  "url": "http://www.amazon.com/Door-Religious-Knives/dp/B001FGW0UQ/?tag=quirkey-20"
 }
 {% endhighlight %}
 
