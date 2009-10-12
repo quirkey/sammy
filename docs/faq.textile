@@ -1,6 +1,6 @@
 ---
 layout: quirkey_code_multi
-title: Sammy - Documentation - FAQ
+title: Sammy - Documentation - API
 github_name: sammy
 current_version: 0.3.0
 nav:
@@ -21,6 +21,8 @@ nav:
         link: faq.html
       - name: API
         link: api.html
+  - name: Tutorials
+    link: tutorials/index.html
   - name: Resources
     link: ../resources.html
 ---

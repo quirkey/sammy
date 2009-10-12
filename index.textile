@@ -19,6 +19,8 @@ nav:
     link: install.html
   - name: Documentation
     link: docs/index.html
+  - name: Tutorials
+    link: tutorials/index.html
   - name: Resources
     link: resources.html
   
@@ -76,10 +78,8 @@ h3(#more). More!
 
 I've split up the information into a couple different sections. 
 
-* "Routes":docs/routes.html
-* "Events":docs/events.html
-* "API":docs/api.html
-* "FAQ":docs/faq.html
+* "Documentation":docs/index.html
+* "Tutorials":tutorials/index.html
 * "Examples":http://github.com/quirkey/sammy/tree/master/examples/
 * "Resources":resources.html
 

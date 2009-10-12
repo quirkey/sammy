@@ -19,6 +19,8 @@ nav:
     link: install.html
   - name: Documentation
     link: docs/index.html
+  - name: Tutorials
+    link: tutorials/index.html
   - name: Resources
     link: resources.html
 ---

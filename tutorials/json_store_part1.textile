@@ -1,6 +1,6 @@
 ---
 layout: quirkey_code_multi
-title: Sammy - Documentation - API
+title: Sammy - Tutorials - The JSON Store, Part I
 github_name: sammy
 current_version: 0.3.0
 nav:
@@ -9,7 +9,7 @@ nav:
   - name: Installation
     link: ../install.html
   - name: Documentation
-    link: index.html
+    link: ../docs/index.html
   - name: Tutorials
     link: index.html
   - name: Resources
@@ -158,7 +158,7 @@ this.get('#/', function(context) {
 
 @log@ just logs to our firebug or web inspector console by default. So lets crack open our browser to index.html with firebug open and see if it works.
 
-*OH NOES.* It doesnt. Event if we change the URL to 'index.html#/' it still doesnt send the log message. Quit banging your head. Theres a very good reason. Our Sammy app isnt running! Sammy doesnt run until you tell it to, and usually you want to tell it to run after the DOM has loaded. Lets add a call to @run@ within a jQuery.ready callback. We'll also pass it a 'start_url' which is the route we want it to load if no other route was specified. Our code should look like this:
+Oy, It doesnt. Event if we change the URL to 'index.html#/' it still doesnt send the log message. Quit banging your head. Theres a very good reason. Our Sammy app isnt running! Sammy doesnt run until you tell it to, and usually you want to tell it to run after the DOM has loaded. Lets add a call to @run@ within a jQuery.ready callback. We'll also pass it a 'start_url' which is the route we want it to load if no other route was specified. Our code should look like this:
 
 {% highlight javascript %}
 (function($) {
@@ -243,7 +243,7 @@ $.each(items, function(i, item) {
 });
 {% endhighlight %}
 
-Here we're telling the context to fetch the template at the path we've defined. By using the extension 'template' we're informing Sammy to use the @template()@ method we've defined. Next, we're passing local variables to the template. Here its our our item. Because we're not swapping out the entire content area, we need to define a callback that just appends the rendered item to our $element (which we defined about as @#main@). With our new partial we should see our items displaying! (NOTE: I took a brief but inconsequential interlude to add just a teeny bit of stylesheet so that our page isn't so ugly).
+Here we're telling the context to fetch the template at the path we've defined. By using the extension 'template' we're informing Sammy to use the @template()@ method we've defined. Next, we're passing local variables to the template. Here its our our item. Because we're not swapping out the entire content area, we need to define a callback that just appends the rendered item to our $element (which we defined about as @#main@). With our new partial we should see our items displaying! (_NOTE: I took a brief but inconsequential interlude to add just a "teeny bit of stylesheet":http://github.com/quirkey/the_json_store/blob/master/stylesheets/jsonstore.css so that our page isn't so ugly_).
 
 !http://img.skitch.com/20091010-caw27njugyknrajd67eiwatj2w.jpg!
 
