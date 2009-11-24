@@ -215,29 +215,6 @@
           app.unload();
         }, this, 1, 2);
       })
-      .should('parse params for forms', function() {
-        var app = this.app;
-        app.run('#/');
-        $('form').submit();
-        soon(function() {
-          ok(app.form_params);
-          isObj(app.form_params['check[]'], ['TEST 1', 'TEST 2']);
-          app.unload();
-        }, this, 1, 2);
-      })
-      .should('parse nested params for forms', function() {
-        var app = this.app;
-        app.run('#/');
-        $('form').submit();
-        soon(function() {
-          ok(app.form_params);
-          equals(app.form_params['poll']['options']['1']['id'], 'Ko5Pi');
-          equals(app.form_params['poll']['options']['1']['name'], 'Coffee');
-          equals(app.form_params['poll']['options']['2']['id'], 'Oaj5N');
-          equals(app.form_params['poll']['options']['2']['name'], 'Tea');
-          app.unload();
-        }, this, 1, 5);
-      })
       .should('trigger routes on URL change', function() {
         var app = this.app;
         app.run();
