@@ -66,17 +66,17 @@
         app.unload();
       }, this, 1, 3);
     })
-    // .should('parse arrays in nested hashes in nested arrays xyz', function() {
-    //   var app = this.app;
-    //   app.run('#/');
-    //   $('#nested_params_test_form').submit();
-    //   soon(function() {
-    //     ok(app.form_params);
-    //     equals(app.form_params['pages'][0]['words'][0], 'Woods');
-    //     equals(app.form_params['pages'][1]['words'][0], 'Money');
-    //     app.unload();
-    //   }, this, 1, 3);      
-    // })
+    .should('parse arrays in nested hashes in nested arrays xyz', function() {
+      var app = this.app;
+      app.run('#/');
+      $('#nested_params_test_form').submit();
+      soon(function() {
+        ok(app.form_params);
+        equals(app.form_params['pages'][0]['words'][0], 'Woods');
+        equals(app.form_params['pages'][1]['words'][0], 'Money');
+        app.unload();
+      }, this, 1, 3);      
+    })
     .should('unescape escaped params', function() {
       var app = this.app;
       app.run('#/');
