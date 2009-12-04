@@ -10,7 +10,7 @@
         });
       }
     })
-    .should('use the last value if a key was submitted twice', function() {
+    .should('parse a twice submitted value', function() {
       var app = this.app;
       app.run('#/');
       $('#nested_params_test_form').submit();
@@ -20,17 +20,7 @@
         app.unload();
       }, this, 1, 2);
     })
-    .should('use an empty string if empty value was submitted', function() {
-      var app = this.app;
-      app.run('#/');
-      $('#nested_params_test_form').submit();
-      soon(function() {
-        ok(app.form_params);
-        equals(app.form_params['pages'], '');
-        app.unload();
-      }, this, 1, 2);      
-    })
-    .should('return an array if key has value form', function() {
+    .should('parse basic arrays', function() {
       var app = this.app;
       app.run('#/');
       $('#nested_params_test_form').submit();
@@ -41,7 +31,19 @@
         app.unload();
       }, this, 1, 3);
     })
-    .should('parse nested params for forms', function() {
+    .should('parse basic hashes', function() {
+      var app = this.app;
+      app.run('#/');
+      $('#nested_params_test_form').submit();
+      soon(function() {
+        ok(app.form_params);
+        equals(app.form_params['poll']['name'], 'Which beverage do you like best?');
+        equals(app.form_params['poll']['priority'], '10');
+        console.log(app.form_params);
+        app.unload();
+      }, this, 1, 3);      
+    })
+    .should('parse nested hashes', function() {
       var app = this.app;
       app.run('#/');
       $('#nested_params_test_form').submit();
@@ -54,7 +56,7 @@
         app.unload();
       }, this, 1, 5);
     })
-    .should('parse arrays in nested params', function() {
+    .should('parse arrays in nested hashes', function() {
       var app = this.app;
       app.run('#/');
       $('#nested_params_test_form').submit();
@@ -76,15 +78,6 @@
       }, this, 1, 2);
     });
     
-    //    Rack::Utils.parse_nested_query("x[y][z]=1").
-    //      should.equal "x" => {"y" => {"z" => "1"}}
-    //    Rack::Utils.parse_nested_query("x[y][z][]=1").
-    //      should.equal "x" => {"y" => {"z" => ["1"]}}
-    //    Rack::Utils.parse_nested_query("x[y][z]=1&x[y][z]=2").
-    //      should.equal "x" => {"y" => {"z" => "2"}}
-    //    Rack::Utils.parse_nested_query("x[y][z][]=1&x[y][z][]=2").
-    //      should.equal "x" => {"y" => {"z" => ["1", "2"]}}
-    // 
     //    Rack::Utils.parse_nested_query("x[y][][z]=1").
     //      should.equal "x" => {"y" => [{"z" => "1"}]}
     //    Rack::Utils.parse_nested_query("x[y][][z][]=1").
