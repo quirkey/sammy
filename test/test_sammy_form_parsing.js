@@ -88,6 +88,19 @@
         app.unload();
       }, this, 1, 3);      
     })
+    .should('parse complex hashes in nested arrays in nested hashes', function() {
+      var app = this.app;
+      app.run('#/');
+      $('#nested_params_test_form').submit();
+      soon(function() {
+        ok(app.form_params);
+        equals(app.form_params['music']['instruments'][0]['name'], 'Piano');
+        equals(app.form_params['music']['instruments'][0]['size'], 'big');
+        equals(app.form_params['music']['instruments'][1]['name'], 'Flute');
+        equals(app.form_params['music']['instruments'][1]['size'], 'small');
+        app.unload();
+      }, this, 1, 5);
+    })
     .should('unescape escaped params', function() {
       var app = this.app;
       app.run('#/');
@@ -98,8 +111,5 @@
         app.unload();
       }, this, 1, 2);
     });
-    
-    //    Rack::Utils.parse_nested_query("x[y][][z]=1&x[y][][w]=a&x[y][][z]=2&x[y][][w]=3").
-    //      should.equal "x" => {"y" => [{"z" => "1", "w" => "a"}, {"z" => "2", "w" => "3"}]}
   }
 })(jQuery);
