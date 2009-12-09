@@ -17,13 +17,13 @@ Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are 
 
 You set up a Sammy Application by passing a Function to the `$.sammy` (which is a shortcut for the Sammy.Application constructor).
 
-    $.sammy(function() { with(this) {
+    $.sammy(function() {
       
-      get('#/', function() { with(this) {
+      this.get('#/', function() {
         $('#main').text('Welcome!');
-      }});
+      });
       
-    }});
+    });
 
 Inside the 'app' function() `this` is the Application. This is where you can configure the application and add routes.
 

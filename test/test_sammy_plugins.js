@@ -55,6 +55,11 @@
              this.use(Sammy.Template);
            });
            this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+           
+           this.alias_app = new Sammy.Application(function() {
+             this.use(Sammy.Template, 'tpl');
+           });
+           this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
          }
        })
        .should('add template helper to event context', function() {
@@ -72,6 +77,11 @@
        .should('render templates with a lot of single quotes', function() {
          var rendered = this.context.template("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
          equals(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+       })
+       .should('alias the template method and thus the extension', function() {
+         ok(!$.isFunction(this.alias_context.template));
+         ok($.isFunction(this.alias_context.tpl));
+         ok(this.alias_context.tpl.toString().match(/srender/));
        });
     
     };
