@@ -59,6 +59,20 @@ Get it from: [http://jquery.com](http://jquery.com)
 * [Join the mailing list](http://groups.google.com/group/sammyjs)
 * [Chat with us in #sammy](irc://irc.freenode.net/#sammy)
 
+## Authors
+
+Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> with additional features and fixes contributed by these talented individuals:
+
+endor <fp at notjusthosting.com>
+Scott McMillin <scott at lifesnapz.com>
+ZhangJinzhu <wosmvp at gmail.com>
+Jesse Hallett <hallettj at gmail.com>
+Jonathan Vaught <jonathan.vaught at gmail.com>
+Jesse Hallett <jesse.hallett at jivesoftware.com>
+Jason Davies <jason at jdd.local>
+Russell Jones <spam at codeofficer.com>
+Geoff Longman <glongman at overlay.tv>
+  
 ## License
 
 Sammy is covered by the MIT License. See LICENSE for more information.
