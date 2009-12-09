@@ -162,6 +162,7 @@
     
       context('Sammy.Application','run', {
         before: function () {
+          window.location.hash = ''
           var context = this;
           context.yielded_context = "";
           $('.get_area').text('');

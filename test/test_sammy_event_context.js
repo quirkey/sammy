@@ -73,7 +73,7 @@
         this.context.partial('fixtures/partial.html', function(data) { contents = data; });
         soon(function () {
           equals(contents, '<div class="test_partial">PARTIAL</div>');
-        });
+        }, this, 2);
       })
       .should('not run through template() if Sammy.Template is not present', function() {
         var contents = '';
@@ -82,7 +82,7 @@
         });
         soon(function () {
           equals(contents, '<div class="<%= class_name %>"><%= name %></div>');
-        });
+        }, this, 2);
       })
       .should('run through template() if Sammy.Template _is_ present', function() {
         var contents = '';
@@ -94,7 +94,7 @@
         });
         soon(function () {
           equals(contents, '<div class="test_template">TEMPLATE!</div>');
-        });
+        }, this, 2);
       })
       .should('cache template if cache() is present', function() {
         var contents = '';
