@@ -164,8 +164,9 @@ h4. Public Plugin Repository
 
 On top of refactoring your own code, Sammy includes a growing number of plugins that handle common extensions, like caching and client side templating. These live in the lib/plugins directory of the repository.
 
-* Sammy.Cache: Includes helpers for simple a caching mechanism.
-* Sammy.Template: Extracted from Sammy's core this is a wrapper around John Resig's simple templating engine and Greg Borenstein's $.srender
+* *Sammy.Cache*: Includes helpers for simple a caching mechanism.
+* *Sammy.Template*: Extracted from Sammy's core this is a wrapper around John Resig's simple templating engine and Greg Borenstein's $.srender
+* *Sammy.NestedParams*: Parses form submissions that have nested param style names like Rack/Rails.
 
 If you have a plugin that you'd like to be included in the public repository here are some guidlines:
 
