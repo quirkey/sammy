@@ -208,8 +208,8 @@
       .should('bind events to all forms', function() {
         var app = this.app;
         app.run('#/');
-        $('form').submit();
-        matches(/sammy-app/, $('form')[0].className);
+        $('#main form').submit();
+        matches(/sammy-app/, $('#main form')[0].className);
         soon(function() {
           equals(app.form_was_run, 'YES');
           app.unload();
@@ -552,7 +552,7 @@
         expect(3)
         stop();
         setTimeout(function() {
-          $('form').submit();
+          $('#main form').submit();
           setTimeout(function() {
             ok(context.posted);
             isObj(context.visited, ['blah', 'boosh', 'post', 'boosh'], "was: " + context.visited);
