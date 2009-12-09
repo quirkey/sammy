@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../lib/sammy.js"></script>
     <script type="text/javascript" src="../lib/plugins/sammy.cache.js"></script>
     <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.nested_params.js"></script>
   </head>
   <body id="body">
     <h1 id="header">Sammy.js Test Suite</h1>
@@ -25,10 +26,53 @@
       <div id="test_area"></div>
       <form id="test_form" action="#/test" method="post">
         <input type="hidden" name="test_input" value="TEST" />
+        
         <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
         <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
       </form>
     </div>
+    
+    <div id="form_params" style="display:none;">
+      <form id="nested_params_test_form" action="#/test_nested_params" method="post">
+        <input type="text" name="author" value="Wilde" />
+        <input type="text" name="author" value="Thoreau" />
+        <input type="text" name="title" value="Walden%21" />
+        
+        <input type="text" name="genre[]" value="documentary" />
+        <input type="text" name="genre[]" value="nature" />
+        
+        <input type="text" name="woods[trees][][name]" value="Spruce" />
+        <input type="text" name="woods[trees][][name]" value="Maple" />
+        
+        <input type="text" name="poll[name]" value="Which beverage do you like best?" />
+        <input type="text" name="poll[priority]" value="10" />
+        <input type="hidden" name="poll[options][1][id]" value="Ko5Pi" />
+        <input type="text" name="poll[options][1][name]" value="Coffee" />
+        <input type="hidden" name="poll[options][2][id]" value="Oaj5N" />
+        <input type="text" name="poll[options][2][name]" value="Tea" />
+        
+        <input type="text" name="poll[options][1][ingredients][]" value="Water" />
+        <input type="text" name="poll[options][1][ingredients][]" value="Coffein" />
+        <input type="text" name="pages[][words][]" value="Woods" />
+        <input type="text" name="pages[][words][]" value="Money" />
+        
+        <input type="text" name="music[instruments][][name]" value="Piano" />
+        <input type="text" name="music[instruments][][size]" value="big" />
+        <input type="text" name="music[instruments][][name]" value="Flute" />
+        <input type="text" name="music[instruments][][size]" value="small" />        
+      </form>
+      
+      <form id="bad_nested_params_form" action="#/bad_nested_params" method="post">
+        <!-- these produce bad request errors -->
+        <input type="text" name="woods[trees][]name" value="Oak" />
+        <input type="text" name="softdrinks[]" value="Pepsi" />
+        <input type="text" name="softdrinks[name]" value="Cola" />
+        <input type="text" name="beverages[wine]" value="Cuvee du Vatican" />
+        <input type="text" name="beverages[wine][][name]" value="Fleurie" />       
+      </form>
+    </div>
+    
+    
     <ol id="tests"></ol>
     <script type="text/javascript" src="test_sammy_application.js"></script>
     <script type="text/javascript" src="test_sammy_event_context.js"></script>

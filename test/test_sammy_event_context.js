@@ -73,7 +73,7 @@
         this.context.partial('fixtures/partial.html', function(data) { contents = data; });
         soon(function () {
           equals(contents, '<div class="test_partial">PARTIAL</div>');
-        });
+        }, this, 2);
       })
       .should('not run through template() if Sammy.Template is not present', function() {
         var contents = '';
@@ -82,7 +82,7 @@
         });
         soon(function () {
           equals(contents, '<div class="<%= class_name %>"><%= name %></div>');
-        });
+        }, this, 2);
       })
       .should('run through template() if Sammy.Template _is_ present', function() {
         var contents = '';
@@ -94,7 +94,7 @@
         });
         soon(function () {
           equals(contents, '<div class="test_template">TEMPLATE!</div>');
-        });
+        }, this, 2);
       })
       .should('cache template if cache() is present', function() {
         var contents = '';
@@ -112,7 +112,7 @@
             contents = data;
           });
           equals(contents, '<div class="test_partial">PARTIAL</div>');
-        }, this, 1, 3);
+        }, this, 2, 3);
       })
       .should('not cache template if cache is present and cache_partials: false', function() {
         var contents = '';
@@ -127,7 +127,7 @@
         soon(function () {
           equals(contents, '<div class="test_partial">PARTIAL</div>');
           ok(!app.cache('partial:fixtures/partial.html'));
-        }, this, 1, 2);
+        }, this, 2, 2);
       })
       .should('replace default app element if no callback is passed', function() {
         var contents = '';

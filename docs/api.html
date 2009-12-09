@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.3.0
+current_version: 0.3.1
 nav:
   - name: Overview
     link: ../index.html
@@ -54,6 +54,9 @@ nav:
     </li>
     <li>
       <a href='#Sammy.Cache'>Sammy.Cache</a>
+    </li>
+    <li>
+      <a href='#Sammy.NestedParams'>Sammy.NestedParams</a>
     </li>
     <li>
       <a href='#Sammy.Template'>Sammy.Template</a>
@@ -1168,12 +1171,77 @@ nav:
       </p></div></div>
   </div>
   <!-- its just a function -->
-  <div class='klass' id='Sammy.Template'>
+  <div class='meth' id='Sammy.NestedParams'>
+    <h2>
+      Sammy.NestedParams
+      <span>
+        (
+        <em>app</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    <tt>Sammy.NestedParams</tt> overrides the default form parsing behavior to
+    provide extended functionality for parsing Rack/Rails style form name/value
+    pairs into JS Objects. In fact it passes the same suite of tests as
+    Rack&#8217;s nested query parsing. The code and tests were ported to
+    JavaScript/Sammy by <a href="http://github.com/endor">github.com/endor</a>
+    </p>
+    <p>
+    This allows you to translate a form with properly named inputs into a JSON
+    object.
+    </p>
+    <h3>Example</h3>
+    <p>
+    Given an HTML form like so:
+    </p>
+    {% highlight javascript %}
+      <form action="#/parse_me" method="post">
+        <input type="text" name="obj[first]" />
+        <input type="text" name="obj[second]" />
+        <input type="text" name="obj[hash][first]" />
+        <input type="text" name="obj[hash][second]" />
+      </form>
+    {% endhighlight %}
+    <p>
+    And a Sammy app like:
+    </p>
+    {% highlight javascript %}
+      var app = $.sammy(function(app) {
+        this.use(Sammy.NestedParams);
+    
+        this.post('#/parse_me', function(context) {
+          $.log(this.params);
+        });
+      });
+    {% endhighlight %}
+    <p>
+    If you filled out the form with some values and submitted it, you would see
+    something like this in your log:
+    </p>
+    {% highlight javascript %}
+      {
+        'obj': {
+          'first': 'value',
+          'second': 'value',
+          'hash': {
+            'first': 'value',
+            'second': 'value'
+          }
+        }
+        '$form': .. jQuery ..
+      }
+    {% endhighlight %}
+    <p>
+    It supports creating arrays with [] and other niceities. Check out the
+    tests for full specs.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Template'>
     <h2>
       Sammy.Template
       <span>
         (
-        <em>app</em>
+        <em>app, method_alias</em>
         )
       </span>
     </h2><div class='doc'><p>
@@ -1212,38 +1280,19 @@ nav:
             this.partial('user.template');
           })
         });
-    {% endhighlight %}</div>    <h3>Methods</h3>
-    <ul>
-      <li>
-        <a href='#meth_0'>template</a>
-      </li>
-    </ul>
-    <hr />
-    <div class='meth' id='meth_0'>
-      <h4>
-        template
-        <span>
-          (
-          <em>template, data, name</em>
-          )
-        </span>
-      </h4><div class='doc'><p>
-      <b>Helper:</b> Uses simple templating to parse ERB like templates.
-      </p>
-      <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>template</tt>:</td><td>A String template. &#8217;<% %>&#8217; tags are evaluated as Javascript and
-      replaced with the elements in data.
-      
-      </td></tr>
-      <tr><td valign="top"><tt>data</tt>:</td><td>An Object containing the replacement values for the template. data is
-      extended with the <tt>EventContext</tt> allowing you to call its methods
-      within the template.
-      
-      </td></tr>
-      <tr><td valign="top"><tt>name</tt>:</td><td>An optional String name to cache the template.
-      
-      </td></tr>
-      </table></div></div>
-  </div>
+    {% endhighlight %}
+    <p>
+    You can also pass a second argument to use() that will alias the template
+    method and therefore allow you to use a different extension for template
+    files in <tt>partial()</tt>
+    </p>
+    {% highlight javascript %}
+       // alias to 'tpl'
+       this.use(Sammy.Template, 'tpl');
+    
+       // now .tpl files will be run through srender
+       this.get('#/', function() {
+         this.partial('myfile.tpl');
+       });
+    {% endhighlight %}</div></div>
 </div>
