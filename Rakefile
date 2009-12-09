@@ -109,4 +109,4 @@ task :push_site do
 end
 
 desc 'Prepare the site'
-task :site => [:api, :copy_test_and_examples, :update_version, :push_site]
+task :site => [:minify, :api, :copy_test_and_examples, :update_version, :push_site]
