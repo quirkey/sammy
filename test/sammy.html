@@ -43,14 +43,6 @@
         
         <input type="text" name="woods[trees][][name]" value="Spruce" />
         <input type="text" name="woods[trees][][name]" value="Maple" />
-
-        <!-- these produce bad request errors
-          <input type="text" name="woods[trees][]name" value="Oak" />
-          <input type="text" name="softdrinks[]" value="Pepsi" />
-          <input type="text" name="softdrinks[name]" value="Cola" />
-          <input type="text" name="beverages[wine]" value="Cuvee du Vatican" />
-          <input type="text" name="beverages[wine][][name]" value="Fleurie" />
-        -->
         
         <input type="text" name="poll[name]" value="Which beverage do you like best?" />
         <input type="text" name="poll[priority]" value="10" />
@@ -68,6 +60,15 @@
         <input type="text" name="music[instruments][][size]" value="big" />
         <input type="text" name="music[instruments][][name]" value="Flute" />
         <input type="text" name="music[instruments][][size]" value="small" />        
+      </form>
+      
+      <form id="bad_nested_params_form" action="#/bad_nested_params" method="post">
+        <!-- these produce bad request errors -->
+        <input type="text" name="woods[trees][]name" value="Oak" />
+        <input type="text" name="softdrinks[]" value="Pepsi" />
+        <input type="text" name="softdrinks[name]" value="Cola" />
+        <input type="text" name="beverages[wine]" value="Cuvee du Vatican" />
+        <input type="text" name="beverages[wine][][name]" value="Fleurie" />       
       </form>
     </div>
     

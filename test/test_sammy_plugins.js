@@ -198,6 +198,20 @@
            app.unload();
          }, this, 1, 2);
        });
-    
+       
+       context('Sammy.NestedParams', 'bad fields', {
+         before: function () {
+           this.app = new Sammy.Application(function() {
+             this.element_selector = '#form_params';
+             this.use(Sammy.NestedParams);
+           });
+         }
+       }).should('raise error for bad params', function() {
+         var app = this.app;
+         raised(/400/, function() {
+           app._parseFormParams($('#bad_nested_params_form'));
+         });
+       });
+      
     };
 })(jQuery);
