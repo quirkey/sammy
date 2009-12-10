@@ -1,3 +1,17 @@
+== 0.3.1 [12/09/09]
+
+New: 
+ - Sammy.NestedParams is a new plugin that handles form fields like Rails/Rack's nested params. See the docs for more info [thanks endor!]
+ 
+Changed:
+  - Sammy.Application#_parseFormParams is now a single point of entry that takes a form and should return a set of params. NestedParams hooks into this.
+  - The Sammy.Application constructor no longer requires an app function. This allows you to create multiple apps quickly and assign routes/etc. later.
+  - Sammy.Template takes a second option which is the proxy/extension you want to associate it with.
+  
+Fixed:
+  - Fixed a bug in IE only where with two consecutive routes that contain params, the second set of params will not be filtered properly [thanks Scott McMillin!]
+  
+
 == 0.3.0 [09/28/09]
 
 New:
