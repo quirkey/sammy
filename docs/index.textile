@@ -22,7 +22,7 @@ nav:
       - name: API
         link: api.html
   - name: Tutorials
-    link: tutorials/index.html
+    link: ../tutorials/index.html
   - name: Resources
     link: ../resources.html
 ---
