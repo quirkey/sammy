@@ -63,7 +63,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> with additional features and fixes contributed by these talented individuals:
 
-* endor <fp at notjusthosting.com>
+* Frank Prößdorf (endor) <fp at notjusthosting.com>
 * Scott McMillin <scott at lifesnapz.com>
 * ZhangJinzhu <wosmvp at gmail.com>
 * Jesse Hallett <hallettj at gmail.com>
