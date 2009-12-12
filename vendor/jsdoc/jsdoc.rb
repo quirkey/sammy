@@ -124,7 +124,7 @@ class RDoc::Markup::ToHtml
 
   def accept_verbatim(am, fragment)
     @res << annotate("{% highlight javascript %}") << "\n"
-    @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{2}/,'') }.join("\n")
+    @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
     @res << "\n" << annotate("{% endhighlight %}") << "\n"
   end
 
