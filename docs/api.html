@@ -222,8 +222,8 @@ nav:
       functions. For example. Given this Sammy.Object:
       </p>
       {% highlight javascript %}
-       var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
-       s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
+         var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
+         s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
       {% endhighlight %}</div></div>
     <div class='meth' id='meth_7'>
       <h4>
@@ -560,20 +560,20 @@ nav:
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-       var app = $.sammy(function() {
+         var app = $.sammy(function() {
       
-         helpers({
-           upcase: function(text) {
-            return text.toString().toUpperCase();
-           }
-         });
-      
-         get('#/', function() { with(this) {
-           // inside of this context I can use the helpers
-           $('#main').html(upcase($('#main').text());
-         }});
-      
+       helpers({
+         upcase: function(text) {
+          return text.toString().toUpperCase();
+         }
        });
+      
+       get('#/', function() { with(this) {
+         // inside of this context I can use the helpers
+         $('#main').html(upcase($('#main').text());
+       }});
+      
+         });
       {% endhighlight %}
       <h3>Arguments</h3>
       <table>
@@ -683,10 +683,10 @@ nav:
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-       var app = $.sammy(function() { ... }); // your application
-       $(function() { // document.ready
-           app.run();
-        });
+         var app = $.sammy(function() { ... }); // your application
+         $(function() { // document.ready
+         app.run();
+      });
       {% endhighlight %}
       <h3>Arguments</h3>
       <table>
@@ -765,18 +765,18 @@ nav:
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-       var app = $.sammy(function() {
+         var app = $.sammy(function() {
       
-         // implements a 'fade out'/'fade in'
-         this.swap = function(content) {
-           this.$element().hide('slow').html(content).show('slow');
-         }
+       // implements a 'fade out'/'fade in'
+       this.swap = function(content) {
+         this.$element().hide('slow').html(content).show('slow');
+       }
       
-         get('#/', function() {
-           this.partial('index.html.erb') // will fade out and in
-         });
-      
+       get('#/', function() {
+         this.partial('index.html.erb') // will fade out and in
        });
+      
+         });
       {% endhighlight %}</div></div>
     <div class='meth' id='meth_18'>
       <h4>
@@ -850,26 +850,26 @@ nav:
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-         var MyPlugin = function(app, prepend) {
+       var MyPlugin = function(app, prepend) {
       
-           this.helpers({
-             myhelper: function(text) {
-               alert(prepend + " " + text);
-             }
-           });
-      
-         };
-      
-         var app = $.sammy(function() {
-      
-           this.use(MyPlugin, 'This is my plugin');
-      
-           this.get('#/', function() {
-             this.myhelper('and dont you forget it!');
-             //=> Alerts: This is my plugin and dont you forget it!
-           });
-      
+         this.helpers({
+           myhelper: function(text) {
+             alert(prepend + " " + text);
+           }
          });
+      
+       };
+      
+       var app = $.sammy(function() {
+      
+         this.use(MyPlugin, 'This is my plugin');
+      
+         this.get('#/', function() {
+           this.myhelper('and dont you forget it!');
+           //=> Alerts: This is my plugin and dont you forget it!
+         });
+      
+       });
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -890,15 +890,15 @@ nav:
     <h3>Example</h3>
     {% highlight javascript %}
      $.sammy(function() { with(this) {
-     // The context here is this Sammy.Application
-     get('#/:name', function() { with(this) {
-       // The context here is a new Sammy.EventContext
-       if (params['name'] == 'sammy') {
-         partial('name.html.erb', {name: 'Sammy'});
-       } else {
-         redirect('#/somewhere-else')
-       }
-     }});
+       // The context here is this Sammy.Application
+       get('#/:name', function() { with(this) {
+     // The context here is a new Sammy.EventContext
+     if (params['name'] == 'sammy') {
+       partial('name.html.erb', {name: 'Sammy'});
+     } else {
+       redirect('#/somewhere-else')
+     }
+       }});
      }});
     {% endhighlight %}
     <p>
@@ -1006,18 +1006,18 @@ nav:
       There are a couple different ways to use <tt>partial()</tt>:
       </p>
       {% highlight javascript %}
-         partial('doc.html');
-         //=> Replaces $element() with the contents of doc.html
+       partial('doc.html');
+       //=> Replaces $element() with the contents of doc.html
       
-         use(Sammy.Template);
-         //=> includes the template() method
-         partial('doc.template', {name: 'Sammy'});
-         //=> Replaces $element() with the contents of doc.template run through <tt>template()</tt>
+       use(Sammy.Template);
+       //=> includes the template() method
+       partial('doc.template', {name: 'Sammy'});
+       //=> Replaces $element() with the contents of doc.template run through <tt>template()</tt>
       
-         partial('doc.html', function(data) {
-           // data is the contents of the template.
-           $('.other-selector').html(data);
-         });
+       partial('doc.html', function(data) {
+         // data is the contents of the template.
+         $('.other-selector').html(data);
+       });
       {% endhighlight %}</div></div>
     <div class='meth' id='meth_4'>
       <h4>
@@ -1034,9 +1034,9 @@ nav:
       </p>
       <h3>Example</h3>
       {% highlight javascript %}
-         redirect('#/other/route');
-         // equivilent to
-         redirect('#', 'other', 'route');
+       redirect('#/other/route');
+       // equivilent to
+       redirect('#', 'other', 'route');
       {% endhighlight %}</div></div>
     <div class='meth' id='meth_5'>
       <h4>
@@ -1141,17 +1141,17 @@ nav:
       </p>
       <h3>Examples</h3>
       {% highlight javascript %}
-         // setting a value
-         cache('key', 'value');
+       // setting a value
+       cache('key', 'value');
       
-         // getting a value
-         cache('key'); //=> 'value'
+       // getting a value
+       cache('key'); //=> 'value'
       
-         // setting a value with a callback
-         cache('key', function() {
-           // this is the app
-           return app.element_selector;
-         });
+       // setting a value with a callback
+       cache('key', function() {
+         // this is the app
+         return app.element_selector;
+       });
       {% endhighlight %}</div></div>
     <div class='meth' id='meth_1'>
       <h4>
@@ -1221,36 +1221,36 @@ nav:
     The template (mytemplate.ms):
     </p>
     {% highlight javascript %}
-        <h1>{{title}}<h1>
+      <h1>{{title}}<h1>
     
-        Hey, {{name}}! Welcome to Mustache!
+      Hey, {{name}}! Welcome to Mustache!
     {% endhighlight %}
     <p>
     The app:
     </p>
     {% highlight javascript %}
-        var $.app = $.sammy(function() {
-          // include the plugin and alias mustache() to ms()
-          this.use(Sammy.Mustache, 'ms');
+      var $.app = $.sammy(function() {
+        // include the plugin and alias mustache() to ms()
+        this.use(Sammy.Mustache, 'ms');
     
-          this.get('#/hello/:name', function() {
-            // set local vars
-            this.title = 'Hello!'
-            this.name = this.params.name;
-            // render the template and pass it through mustache
-            this.partial('mytemplate.ms');
-          });
-    
+        this.get('#/hello/:name', function() {
+          // set local vars
+          this.title = 'Hello!'
+          this.name = this.params.name;
+          // render the template and pass it through mustache
+          this.partial('mytemplate.ms');
         });
+    
+      });
     {% endhighlight %}
     <p>
     If I go to #/hello/AQ in the browser, Sammy will render this to the
     <tt>body</tt>:
     </p>
     {% highlight javascript %}
-        <h1>Hello!</h1>
+      <h1>Hello!</h1>
     
-        Hey, AQ! Welcome to Mustache!
+      Hey, AQ! Welcome to Mustache!
     {% endhighlight %}
     <p>
     Note: You dont have to include the mustache.js file on top of the plugin as
@@ -1281,41 +1281,41 @@ nav:
     Given an HTML form like so:
     </p>
     {% highlight javascript %}
-      <form action="#/parse_me" method="post">
-        <input type="text" name="obj[first]" />
-        <input type="text" name="obj[second]" />
-        <input type="text" name="obj[hash][first]" />
-        <input type="text" name="obj[hash][second]" />
-      </form>
+    <form action="#/parse_me" method="post">
+      <input type="text" name="obj[first]" />
+      <input type="text" name="obj[second]" />
+      <input type="text" name="obj[hash][first]" />
+      <input type="text" name="obj[hash][second]" />
+    </form>
     {% endhighlight %}
     <p>
     And a Sammy app like:
     </p>
     {% highlight javascript %}
-      var app = $.sammy(function(app) {
-        this.use(Sammy.NestedParams);
+    var app = $.sammy(function(app) {
+      this.use(Sammy.NestedParams);
     
-        this.post('#/parse_me', function(context) {
-          $.log(this.params);
-        });
+      this.post('#/parse_me', function(context) {
+        $.log(this.params);
       });
+    });
     {% endhighlight %}
     <p>
     If you filled out the form with some values and submitted it, you would see
     something like this in your log:
     </p>
     {% highlight javascript %}
-      {
-        'obj': {
+    {
+      'obj': {
+        'first': 'value',
+        'second': 'value',
+        'hash': {
           'first': 'value',
-          'second': 'value',
-          'hash': {
-            'first': 'value',
-            'second': 'value'
-          }
+          'second': 'value'
         }
-        '$form': .. jQuery ..
       }
+      '$form': .. jQuery ..
+    }
     {% endhighlight %}
     <p>
     It supports creating arrays with [] and other niceities. Check out the
@@ -1344,28 +1344,28 @@ nav:
     Here is an example template (user.template):
     </p>
     {% highlight javascript %}
-       <div class="user">
-         <div class="user-name"><%= user.name %></div>
-         <% if (user.photo_url) { %>
-           <div class="photo"><img src="<%= user.photo_url %>" /></div>
-         <% } %>
-       </div>
+     <div class="user">
+       <div class="user-name"><%= user.name %></div>
+       <% if (user.photo_url) { %>
+         <div class="photo"><img src="<%= user.photo_url %>" /></div>
+       <% } %>
+     </div>
     {% endhighlight %}
     <p>
     Given that is a publicly accesible file, you would render it like:
     </p>
     {% highlight javascript %}
-        $.sammy(function() {
-          // include the plugin
-          this.use(Sammy.Template);
+      $.sammy(function() {
+        // include the plugin
+        this.use(Sammy.Template);
     
-          this.get('#/', function() {
-            // the template is rendered in the current context.
-            this.user = {name: 'Aaron Quint'};
-            // partial calls template() because of the file extension
-            this.partial('user.template');
-          })
-        });
+        this.get('#/', function() {
+          // the template is rendered in the current context.
+          this.user = {name: 'Aaron Quint'};
+          // partial calls template() because of the file extension
+          this.partial('user.template');
+        })
+      });
     {% endhighlight %}
     <p>
     You can also pass a second argument to use() that will alias the template
@@ -1373,12 +1373,12 @@ nav:
     files in <tt>partial()</tt>
     </p>
     {% highlight javascript %}
-       // alias to 'tpl'
-       this.use(Sammy.Template, 'tpl');
+     // alias to 'tpl'
+     this.use(Sammy.Template, 'tpl');
     
-       // now .tpl files will be run through srender
-       this.get('#/', function() {
-         this.partial('myfile.tpl');
-       });
+     // now .tpl files will be run through srender
+     this.get('#/', function() {
+       this.partial('myfile.tpl');
+     });
     {% endhighlight %}</div></div>
 </div>
