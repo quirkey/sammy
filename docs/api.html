@@ -22,7 +22,7 @@ nav:
       - name: API
         link: api.html
   - name: Tutorials
-    link: tutorials/index.html
+    link: ../tutorials/index.html
   - name: Resources
     link: ../resources.html
 ---
@@ -54,6 +54,9 @@ nav:
     </li>
     <li>
       <a href='#Sammy.Cache'>Sammy.Cache</a>
+    </li>
+    <li>
+      <a href='#Sammy.Mustache'>Sammy.Mustache</a>
     </li>
     <li>
       <a href='#Sammy.NestedParams'>Sammy.NestedParams</a>
@@ -1118,6 +1121,9 @@ nav:
       <li>
         <a href='#meth_2'>clearCache</a>
       </li>
+      <li>
+        <a href='#meth_3'>create_context</a>
+      </li>
     </ul>
     <hr />
     <div class='meth' id='meth_0'>
@@ -1169,7 +1175,87 @@ nav:
       </h4><div class='doc'><p>
       clears the cached value for <tt>name</tt>
       </p></div></div>
+    <div class='meth' id='meth_3'>
+      <h4>
+        create_context
+        <span>
+          (
+          <em>_context</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      by @langalex, support for arrays of strings
+      </p></div></div>
   </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Mustache'>
+    <h2>
+      Sammy.Mustache
+      <span>
+        (
+        <em>app, method_alias</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    <tt>Sammy.Mustache</tt> provides a quick way of using mustache style
+    templates in your app. The plugin itself includes the awesome mustache.js
+    lib created and maintained by Jan Lehnardt at <a
+    href="http://github.com/janl/mustache.js">github.com/janl/mustache.js</a>
+    </p>
+    <p>
+    Mustache is a clever templating system that relys on double brackets {{}}
+    for interpolation. For full details on syntax check out the original Ruby
+    implementation created by Chris Wanstrath at <a
+    href="http://github.com/defunkt/mustache">github.com/defunkt/mustache</a>
+    </p>
+    <p>
+    By default using Sammy.Mustache in your app adds the <tt>mustache()</tt>
+    method to the EventContext prototype. However, just like
+    <tt>Sammy.Template</tt> you can change the default name of the method by
+    passing a second argument (e.g. you could use the ms() as the method alias
+    so that all the template files could be in the form file.ms instead of
+    file.mustache)
+    </p>
+    <h3>Example</h3>
+    <p>
+    The template (mytemplate.ms):
+    </p>
+    {% highlight javascript %}
+        <h1>{{title}}<h1>
+    
+        Hey, {{name}}! Welcome to Mustache!
+    {% endhighlight %}
+    <p>
+    The app:
+    </p>
+    {% highlight javascript %}
+        var $.app = $.sammy(function() {
+          // include the plugin and alias mustache() to ms()
+          this.use(Sammy.Mustache, 'ms');
+    
+          this.get('#/hello/:name', function() {
+            // set local vars
+            this.title = 'Hello!'
+            this.name = this.params.name;
+            // render the template and pass it through mustache
+            this.partial('mytemplate.ms');
+          });
+    
+        });
+    {% endhighlight %}
+    <p>
+    If I go to #/hello/AQ in the browser, Sammy will render this to the
+    <tt>body</tt>:
+    </p>
+    {% highlight javascript %}
+        <h1>Hello!</h1>
+    
+        Hey, AQ! Welcome to Mustache!
+    {% endhighlight %}
+    <p>
+    Note: You dont have to include the mustache.js file on top of the plugin as
+    the plugin includes the full source.
+    </p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.NestedParams'>
     <h2>
