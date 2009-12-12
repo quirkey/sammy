@@ -212,6 +212,39 @@
            app._parseFormParams($('#bad_nested_params_form'));
          });
        });
+       
+       
+       // Pretty much a copy of the Template tests
+       context('Sammy', 'Mustache', {
+          before: function() {
+            this.app = new Sammy.Application(function() {
+              this.use(Sammy.Mustache);
+            });
+            this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+
+            this.alias_app = new Sammy.Application(function() {
+              this.use(Sammy.Mustache, 'ms');
+            });
+            this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+          }
+        })
+        .should('add mustache helper to event context', function() {
+          ok($.isFunction(this.context.mustache));
+        })
+        .should('interpolate content', function() {
+          var rendered = this.context.mustache('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
+          equals(rendered, '<div class="test_class">TEXT!</div>');
+        })
+        .should('set the context of the template to the test_context', function() {
+          this.context.blurgh = 'boosh';
+          var rendered = this.context.mustache('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
+          equals(rendered, '<div class="test_class">TEXT! boosh</div>');
+        })
+        .should('alias the mustache method and thus the extension', function() {
+          ok(!$.isFunction(this.alias_context.mustache));
+          ok($.isFunction(this.alias_context.ms));
+          ok(this.alias_context.ms.toString().match(/Mustache/));
+        });
       
     };
 })(jQuery);
