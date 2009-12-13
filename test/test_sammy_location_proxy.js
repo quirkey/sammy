@@ -4,7 +4,7 @@
     context('Sammy', 'HashLocationProxy', {
       before: function() {
         this.app = new Sammy.Application;
-        // this.proxy = new Sammy.HashLocationProxy(this.app);
+        this.proxy = new Sammy.HashLocationProxy(this.app);
         this.has_native = (typeof window.onhashchange != 'undefined');
       }
     })
@@ -45,19 +45,20 @@
       }
     })
     .should('trigger app event when hash changes', function() {
-      window.location = '#'
+      window.location.hash = '';
       var triggered = false, app = this.app;
       app.bind('location-changed', function() {
+        Sammy.log('app location changed');
         triggered = true;
       });
       ok(!triggered);
       app.run('#/');
-      Sammy.log('changing location to #/new');
-      window.location.hash = '#/new'
+      Sammy.log('changing location to #/newhash');
+      window.location.hash = '/newhash';
       soon(function() {
         ok(triggered);
-        // app.unload();
-      }, this, 2, 1);
+        app.unload();
+      }, this, 2, 2);
     })
     .should('return the current location', function() {
       window.location = '#/zuh'

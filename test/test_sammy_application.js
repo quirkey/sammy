@@ -553,7 +553,7 @@
       .should('redirect after a get', function() {
         var context = this;
         context.app.run();
-        window.location.hash = '#/blah';
+        window.location.hash = '/blah';
         expect(3)
         stop();
         setTimeout(function() {
