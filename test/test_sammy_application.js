@@ -551,6 +551,7 @@
         }
       })
       .should('redirect after a get', function() {
+        window.location.hash = '';
         var context = this;
         context.app.run();
         window.location.hash = '/blah';
