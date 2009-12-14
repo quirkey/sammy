@@ -43,37 +43,46 @@
       } else {
         ok(true, 'Native hash change support.')
       }
+    });
+
+    
+    context('Sammy', 'DataLocationProxy', {
+      this.app = new Sammy.Application(function() {
+        this.location_proxy = new Sammy.DataLocationProxy(this);
+      });
     })
-    .should('trigger app event when hash changes', function() {
-      window.location.hash = '';
+    .should('store a pointer to the app', function() {
+      equals(this.app.location_proxy.app, this.app);
+    })
+    .should('be able to configure data name', function() {
+      var proxy = new Sammy.DataLocationProxy(this.app, 'othername');
+      proxy.setLocation('newlocation');
+      equals($('body').data('othername'), 'newlocation');
+    })
+    .should('trigger app event when data changes', function() {
+      $('body').data(this.app.location_proxy.data_name, '');
       var triggered = false, app = this.app;
       app.bind('location-changed', function() {
-        Sammy.log('app location changed');
         triggered = true;
       });
       ok(!triggered);
       app.run('#/');
-      Sammy.log('changing location to #/newhash');
-      window.location.hash = '/newhash';
+      $('body').data(this.app.location_proxy.data_name, '#/newhash');
       soon(function() {
         ok(triggered);
+        equals(this.app.getLocation(), '#/newhash');
         app.unload();
       }, this, 2, 2);
     })
-    .should('return the current location', function() {
-      window.location = '#/zuh'
-      equals(this.proxy.getLocation(), '#/zuh');
+    .should('return the current location from data', function() {
+      $('body').data(this.app.location_proxy.data_name, '#/zuh')
+      equals(this.app.location_proxy.getLocation(), '#/zuh');
     })
-    .should('set the current location', function() {
-      window.location = '#/zuh'
-      equals(this.proxy.getLocation(), '#/zuh');
+    .should('set the current location in data', function() {
+      $('body').data(this.app.location_proxy.data_name, '#/zuh')
+      equals(this.app.location_proxy.getLocation(), '#/zuh');
       this.proxy.setLocation('#/boosh');
       equals('#/boosh', this.proxy.getLocation());
-    });
-    
-    
-    context('Sammy', 'DataLocationProxy', {
-      
     });
 
   }
