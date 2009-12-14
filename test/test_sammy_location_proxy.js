@@ -47,9 +47,11 @@
 
     
     context('Sammy', 'DataLocationProxy', {
-      this.app = new Sammy.Application(function() {
-        this.location_proxy = new Sammy.DataLocationProxy(this);
-      });
+      before: function() {
+        this.app = new Sammy.Application(function() {
+          this.location_proxy = new Sammy.DataLocationProxy(this);
+        });
+      }
     })
     .should('store a pointer to the app', function() {
       equals(this.app.location_proxy.app, this.app);
@@ -72,7 +74,7 @@
         ok(triggered);
         equals(this.app.getLocation(), '#/newhash');
         app.unload();
-      }, this, 2, 2);
+      }, this, 2, 3);
     })
     .should('return the current location from data', function() {
       $('body').data(this.app.location_proxy.data_name, '#/zuh')
@@ -81,8 +83,8 @@
     .should('set the current location in data', function() {
       $('body').data(this.app.location_proxy.data_name, '#/zuh')
       equals(this.app.location_proxy.getLocation(), '#/zuh');
-      this.proxy.setLocation('#/boosh');
-      equals('#/boosh', this.proxy.getLocation());
+      this.app.location_proxy.setLocation('#/boosh');
+      equals('#/boosh', this.app.location_proxy.getLocation());
     });
 
   }
