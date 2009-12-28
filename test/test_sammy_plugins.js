@@ -246,5 +246,27 @@
           ok(this.alias_context.ms.toString().match(/Mustache/));
         });
       
+      context('Sammy', 'JSON', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.JSON);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should('add json helper to event context', function() {
+        ok($.isFunction(this.context.json));
+      })
+      .should('ensure JSON is in the global namespace', function() {
+        ok($.isFunction(JSON.parse));
+        ok($.isFunction(JSON.stringify));
+      })
+      .should('parse JSON if object is a string', function() {
+        equals(this.context.json("{\"test\":\"123\"}").test, "123");
+      })
+      .should('stringify JSON if object is an object', function() {
+        equals(this.context.json({test: "123"}),"{\"test\":\"123\"}");
+      });
+      
     };
 })(jQuery);
