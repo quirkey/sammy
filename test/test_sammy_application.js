@@ -333,6 +333,10 @@
         this.app.runRoute('get', '#/blah/could/be/anything?except=aquerystring');
         equals(this.params['splat'], 'could/be/anything');
       })
+      .should('decode the query string values', function() {
+        this.app.runRoute('get', '#/boosh/farg/wow?encoded=this%20should%20be%20decoded%24%25%5E');
+        equals(this.params['encoded'], "this should be decoded$%^")
+      })
       .should('raise error when route can not be found', function() {
         var app = this.app;
         app.silence_404 = false;
