@@ -581,6 +581,19 @@
           
         }
       })
+      .should('raise error if the plugin is not defined', function() {
+        var app = this.app;
+        raised(/plugin/, function() {
+          app.use(Sammy.Boosh);
+        });
+      })
+      .should('raise error if the plugin is not a function', function() {
+        var app = this.app;
+        var blah = 'whu';
+        raised(/function/, function() {
+          app.use(blah);
+        });
+      })
       .should('evaluate the function within the context of the app', function() {
         equals(this.plugin_this, this.app);
       })
