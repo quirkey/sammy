@@ -470,7 +470,7 @@
           this.app.unload();
         }, this, 2, 2);
       });
-   
+         
       context('Sammy.Application', 'getLocation', {
         before: function() {
           this.app = new Sammy.Application;        
