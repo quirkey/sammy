@@ -76,8 +76,17 @@
         ok(!this.store.exists('blurgh'));
       })
       .should_eventually('fire events on get and set') 
-      .should_eventually('fetch value if set', function() {})
-      .should_eventually('run callback on fetch if not set')
+      .should('fetch value or run callback', function() {
+        ok(!this.store.get('foo'));
+        this.store.fetch('foo', function() {
+          return "bar";
+        });
+        equals(this.store.get('foo'), 'bar');
+        this.store.fetch('foo', function() {
+          return "baz";
+        });
+        equals(this.store.get('foo'), 'bar');
+      })
     }
   });
 })(jQuery);
