@@ -63,7 +63,7 @@
         this.store.set('foo', 'bar');
         this.store.set('blurgh', {boosh: 'blurgh'});
         this.store.set(123, {boosh: 'blurgh'});
-        isObj(this.store.keys(), ['foo', 'blurgh', '123']);
+        isObj(this.store.keys(), ['foo', 'blurgh', '123'], "keys were " + this.store.keys().toString());
         isObj(this.other_store.keys(), []);
       })
       .should('clear all values', function() {
