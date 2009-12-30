@@ -1,5 +1,5 @@
 (function($) {
-  var stores = ['memory', 'data', 'cookie', 'local', 'session'];
+  var stores = ['memory', 'data', 'local', 'session', 'cookie'];
 
   $.each(stores, function(i, store_type) {
     with(jqUnit) {
