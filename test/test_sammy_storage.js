@@ -75,7 +75,17 @@
         equals(this.store.keys().length, 0);
         ok(!this.store.exists('blurgh'));
       })
-      .should_eventually('fire events on get and set') 
+      .should('fire events on get and set', function() {
+        var fired = false;
+        $('#main').bind('set-test_store.foo', function(e, key, value) {
+          fired = value;
+        });
+        this.store.set('foo', 'bar');
+        soon(function() {
+          equals(fired, 'bar');
+          $('#main').unbind('set-test_store.foo');
+        });
+      }) 
       .should('fetch value or run callback', function() {
         ok(!this.store.get('foo'));
         this.store.fetch('foo', function() {
