@@ -1,8 +1,9 @@
 (function($) {
-  var stores = ['memory', 'data', 'local', 'session', 'cookie'];
+  with(jqUnit) {
 
-  $.each(stores, function(i, store_type) {
-    with(jqUnit) {
+    var stores = ['memory', 'data', 'local', 'session', 'cookie'];
+
+    $.each(stores, function(i, store_type) {
       context('Sammy.Store', store_type, {
         before: function() {
           this.store_attributes = {
@@ -11,7 +12,7 @@
             type: store_type
           };
           this.store = new Sammy.Store(this.store_attributes);
-        
+
           this.other_store = new Sammy.Store({
             element: '#main',
             name: 'other_test_store',
@@ -92,11 +93,67 @@
           return "bar";
         });
         equals(this.store.get('foo'), 'bar');
-        this.store.fetch('foo', function() {
+        equals(this.store.fetch('foo', function() {
           return "baz";
-        });
+        }), 'bar');
         equals(this.store.get('foo'), 'bar');
       })
-    }
-  });
+    });
+  
+    context('Sammy.Storage', {
+      before: function() {
+        this.app = new Sammy.Application(function() {
+          this.use(Sammy.Storage);
+        });
+        this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+      }
+    })
+    .should('add the store method to the app', function() {
+      ok($.isFunction(this.app.store));
+    })
+    .should('add the store method to event contexts', function() {
+      ok($.isFunction(this.context.store));
+    });
+    
+    context('Sammy.Storage', 'store', {
+      before: function() {
+        var store = null;
+        this.app = new Sammy.Application(function() {
+          this.use(Sammy.Storage);
+          store = this.store('session');
+        });
+        this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        store.clearAll();
+        this.store = store;
+      }
+    })
+    .should('create a new sammy store if it doesnt exist', function() {
+      ok(this.store);
+      ok($.isFunction(this.store.get));
+    })
+    .should('add the a named method shortcut to the app', function() {
+      ok($.isFunction(this.app.session));
+    })
+    .should('add a named method shortcut to the event contexts', function() {
+      ok($.isFunction(this.context.session));
+    })
+    .should('should set value if value is passed', function() {
+      this.context.session('foo', 'bar')
+      equals(this.store.get('foo'), 'bar');
+    })
+    .should('should get value if no value is passed', function() {
+      this.store.set('foo', 'bar');
+      equals(this.context.session('foo'), 'bar');
+    })
+    .should('call fetch if callback is passed', function() {
+      ok(!this.store.get('foo'));
+      this.context.session('foo', function() {
+        return "bar";
+      });
+      equals(this.store.get('foo'), 'bar');
+      equals(this.context.session('foo', function() {
+        return "baz";
+      }), 'bar');
+    });
+  };
 })(jQuery);
