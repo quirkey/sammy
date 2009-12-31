@@ -470,6 +470,49 @@
           this.app.unload();
         }, this, 2, 2);
       });
+      
+      context('Sammy.Application','helper', {
+        before: function() {
+          var context = this;
+          context.event_context = null;
+          this.app = new Sammy.Application(function() {
+          
+            this.helper(
+              "helpme", function() {
+                return "halp!";
+              }
+            );
+          
+            this.get('#/', function() {
+              this.params['belch'] = 'boosh';
+              context.event_context = this;
+            });
+          
+            this.bind('blurgh', function() {
+              context.event_context = this;
+            });
+          });
+        }
+      })
+      .should('extend event context for routes', function() {
+        var context = this;
+        this.app.run('#/');
+        soon(function() {
+          ok(context['event_context']);
+          isType(context.event_context.helpme, Function);
+          this.app.unload();
+        }, this, 2, 2);
+      })
+      .should('extend event context for bind', function() {
+        var context = this;
+        this.app.run('#/');
+        this.app.trigger('blurgh');
+        soon(function() {
+          ok(context['event_context']);
+          isType(context.event_context.helpme, Function);
+          this.app.unload();
+        }, this, 2, 2);
+      });
    
       context('Sammy.Application', 'getLocation', {
         before: function() {
