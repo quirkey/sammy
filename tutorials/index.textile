@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Tutorials
 github_name: sammy
-current_version: 0.3.1
+current_version: 0.4.0
 nav:
   - name: Overview
     link: ../index.html
@@ -27,3 +27,4 @@ h3. The JSON Store
 The first official tutorial. It walks through the building of an Ecommerce front end using Sammy.
 
 * "Part I":json_store_part1.html
+* "Part II":json_store_part2.html

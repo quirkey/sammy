@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.3.1
+current_version: 0.4.0
 nav:
   - name: Overview
     link: ../index.html
@@ -56,10 +56,40 @@ nav:
       <a href='#Sammy.Cache'>Sammy.Cache</a>
     </li>
     <li>
+      <a href='#Sammy.JSON'>Sammy.JSON</a>
+    </li>
+    <li>
       <a href='#Sammy.Mustache'>Sammy.Mustache</a>
     </li>
     <li>
       <a href='#Sammy.NestedParams'>Sammy.NestedParams</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store'>Sammy.Store</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.isAvailable'>Sammy.Store.isAvailable</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.Memory'>Sammy.Store.Memory</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.Data'>Sammy.Store.Data</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.LocalStorage'>Sammy.Store.LocalStorage</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.SessionStorage'>Sammy.Store.SessionStorage</a>
+    </li>
+    <li>
+      <a href='#Sammy.Store.Cookie'>Sammy.Store.Cookie</a>
+    </li>
+    <li>
+      <a href='#Sammy.Storage'>Sammy.Storage</a>
+    </li>
+    <li>
+      <a href='#Sammy.Session'>Sammy.Session</a>
     </li>
     <li>
       <a href='#Sammy.Template'>Sammy.Template</a>
@@ -107,38 +137,38 @@ nav:
     </p></div>    <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#meth_0'>clone</a>
+        <a href='#Sammy.Object-clone'>clone</a>
       </li>
       <li>
-        <a href='#meth_1'>each</a>
+        <a href='#Sammy.Object-each'>each</a>
       </li>
       <li>
-        <a href='#meth_2'>extend</a>
+        <a href='#Sammy.Object-extend'>extend</a>
       </li>
       <li>
-        <a href='#meth_3'>join</a>
+        <a href='#Sammy.Object-join'>join</a>
       </li>
       <li>
-        <a href='#meth_4'>keys</a>
+        <a href='#Sammy.Object-keys'>keys</a>
       </li>
       <li>
-        <a href='#meth_5'>log</a>
+        <a href='#Sammy.Object-log'>log</a>
       </li>
       <li>
-        <a href='#meth_6'>toHTML</a>
+        <a href='#Sammy.Object-toHTML'>toHTML</a>
       </li>
       <li>
-        <a href='#meth_7'>toHash</a>
+        <a href='#Sammy.Object-toHash'>toHash</a>
       </li>
       <li>
-        <a href='#meth_8'>toString</a>
+        <a href='#Sammy.Object-toString'>toString</a>
       </li>
       <li>
-        <a href='#meth_9'>uuid</a>
+        <a href='#Sammy.Object-uuid'>uuid</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='meth_0'>
+    <div class='meth' id='Sammy.Object-clone'>
       <h4>
         clone
         <span>
@@ -150,7 +180,7 @@ nav:
       If passed an obj, clone the attributes and methods of that object If called
       without arguments, clones the callee.
       </p></div></div>
-    <div class='meth' id='meth_1'>
+    <div class='meth' id='Sammy.Object-each'>
       <h4>
         each
         <span>
@@ -163,7 +193,7 @@ nav:
       v) in the context of this object. If passed just an argument - will
       itterate over the properties of this Sammy.Object
       </p></div></div>
-    <div class='meth' id='meth_2'>
+    <div class='meth' id='Sammy.Object-extend'>
       <h4>
         extend
         <span>
@@ -174,7 +204,7 @@ nav:
       </h4><div class='doc'><p>
       Extend this object with the passed object
       </p></div></div>
-    <div class='meth' id='meth_3'>
+    <div class='meth' id='Sammy.Object-join'>
       <h4>
         join
         <span>
@@ -186,7 +216,7 @@ nav:
       convenience method to join as many arguments as you want by the first
       argument - useful for making paths
       </p></div></div>
-    <div class='meth' id='meth_4'>
+    <div class='meth' id='Sammy.Object-keys'>
       <h4>
         keys
         <span>
@@ -198,7 +228,7 @@ nav:
       Returns an array of keys for this object. If <tt>attributes_only</tt> is
       true will not return keys that map to a <tt>function()</tt>
       </p></div></div>
-    <div class='meth' id='meth_5'>
+    <div class='meth' id='Sammy.Object-log'>
       <h4>
         log
         <span>
@@ -209,7 +239,7 @@ nav:
       </h4><div class='doc'><p>
       Shortcut to Sammy.log
       </p></div></div>
-    <div class='meth' id='meth_6'>
+    <div class='meth' id='Sammy.Object-toHTML'>
       <h4>
         toHTML
         <span>
@@ -225,7 +255,7 @@ nav:
          var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
          s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_7'>
+    <div class='meth' id='Sammy.Object-toHash'>
       <h4>
         toHash
         <span>
@@ -236,7 +266,7 @@ nav:
       </h4><div class='doc'><p>
       Returns a copy of the object with Functions removed.
       </p></div></div>
-    <div class='meth' id='meth_8'>
+    <div class='meth' id='Sammy.Object-toString'>
       <h4>
         toString
         <span>
@@ -249,7 +279,7 @@ nav:
       <tt>include_functions</tt> is true, it will also toString() the methods of
       this object. By default only prints the attributes.
       </p></div></div>
-    <div class='meth' id='meth_9'>
+    <div class='meth' id='Sammy.Object-uuid'>
       <h4>
         uuid
         <span>
@@ -279,29 +309,29 @@ nav:
     </p></div><h3>Attributes</h3>
     <ul>
       <li>
-        <a href='#attr_0'>APP_EVENTS</a>
+        <a href='#Sammy.Application-APP_EVENTS'>APP_EVENTS</a>
       </li>
       <li>
-        <a href='#attr_1'>ROUTE_VERBS</a>
+        <a href='#Sammy.Application-ROUTE_VERBS'>ROUTE_VERBS</a>
       </li>
       <li>
-        <a href='#attr_2'>data_store_name</a>
+        <a href='#Sammy.Application-data_store_name'>data_store_name</a>
       </li>
       <li>
-        <a href='#attr_3'>debug</a>
+        <a href='#Sammy.Application-debug'>debug</a>
       </li>
       <li>
-        <a href='#attr_4'>element_selector</a>
+        <a href='#Sammy.Application-element_selector'>element_selector</a>
       </li>
       <li>
-        <a href='#attr_5'>run_interval_every</a>
+        <a href='#Sammy.Application-run_interval_every'>run_interval_every</a>
       </li>
       <li>
-        <a href='#attr_6'>silence_404</a>
+        <a href='#Sammy.Application-silence_404'>silence_404</a>
       </li>
     </ul>
     <hr />
-    <div class='attr' id='attr_0'>
+    <div class='attr' id='Sammy.Application-APP_EVENTS'>
       <h4>
         APP_EVENTS
         =
@@ -310,7 +340,7 @@ nav:
       An array of the default events triggered by the application during its
       lifecycle
       </p></div></div>
-    <div class='attr' id='attr_1'>
+    <div class='attr' id='Sammy.Application-ROUTE_VERBS'>
       <h4>
         ROUTE_VERBS
         =
@@ -318,7 +348,7 @@ nav:
       </h4><div class='doc'><p>
       the four route verbs
       </p></div></div>
-    <div class='attr' id='attr_2'>
+    <div class='attr' id='Sammy.Application-data_store_name'>
       <h4>
         data_store_name
         =
@@ -327,7 +357,7 @@ nav:
       On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
       entry assocciated with the application&#8217;s <tt>$element()</tt>
       </p></div></div>
-    <div class='attr' id='attr_3'>
+    <div class='attr' id='Sammy.Application-debug'>
       <h4>
         debug
         =
@@ -335,7 +365,7 @@ nav:
       </h4><div class='doc'><p>
       When set to true, logs all of the default events using <tt>log()</tt>
       </p></div></div>
-    <div class='attr' id='attr_4'>
+    <div class='attr' id='Sammy.Application-element_selector'>
       <h4>
         element_selector
         =
@@ -345,7 +375,7 @@ nav:
       (parseable by <tt>jQuery()</tt>) and this will be used by
       <tt>$element()</tt>
       </p></div></div>
-    <div class='attr' id='attr_5'>
+    <div class='attr' id='Sammy.Application-run_interval_every'>
       <h4>
         run_interval_every
         =
@@ -353,7 +383,7 @@ nav:
       </h4><div class='doc'><p>
       The time in milliseconds that the URL is queried for changes
       </p></div></div>
-    <div class='attr' id='attr_6'>
+    <div class='attr' id='Sammy.Application-silence_404'>
       <h4>
         silence_404
         =
@@ -365,74 +395,77 @@ nav:
     <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#meth_0'>$element</a>
+        <a href='#Sammy.Application-$element'>$element</a>
       </li>
       <li>
-        <a href='#meth_1'>after</a>
+        <a href='#Sammy.Application-after'>after</a>
       </li>
       <li>
-        <a href='#meth_2'>before</a>
+        <a href='#Sammy.Application-before'>before</a>
       </li>
       <li>
-        <a href='#meth_3'>bind</a>
+        <a href='#Sammy.Application-bind'>bind</a>
       </li>
       <li>
-        <a href='#meth_4'>bindToAllEvents</a>
+        <a href='#Sammy.Application-bindToAllEvents'>bindToAllEvents</a>
       </li>
       <li>
-        <a href='#meth_5'>eventNamespace</a>
+        <a href='#Sammy.Application-eventNamespace'>eventNamespace</a>
       </li>
       <li>
-        <a href='#meth_6'>getLocation</a>
+        <a href='#Sammy.Application-getLocation'>getLocation</a>
       </li>
       <li>
-        <a href='#meth_7'>helpers</a>
+        <a href='#Sammy.Application-helper'>helper</a>
       </li>
       <li>
-        <a href='#meth_8'>isRunning</a>
+        <a href='#Sammy.Application-helpers'>helpers</a>
       </li>
       <li>
-        <a href='#meth_9'>lookupRoute</a>
+        <a href='#Sammy.Application-isRunning'>isRunning</a>
       </li>
       <li>
-        <a href='#meth_10'>notFound</a>
+        <a href='#Sammy.Application-lookupRoute'>lookupRoute</a>
       </li>
       <li>
-        <a href='#meth_11'>refresh</a>
+        <a href='#Sammy.Application-notFound'>notFound</a>
       </li>
       <li>
-        <a href='#meth_12'>routablePath</a>
+        <a href='#Sammy.Application-refresh'>refresh</a>
       </li>
       <li>
-        <a href='#meth_13'>route</a>
+        <a href='#Sammy.Application-routablePath'>routablePath</a>
       </li>
       <li>
-        <a href='#meth_14'>run</a>
+        <a href='#Sammy.Application-route'>route</a>
       </li>
       <li>
-        <a href='#meth_15'>runRoute</a>
+        <a href='#Sammy.Application-run'>run</a>
       </li>
       <li>
-        <a href='#meth_16'>setLocation</a>
+        <a href='#Sammy.Application-runRoute'>runRoute</a>
       </li>
       <li>
-        <a href='#meth_17'>swap</a>
+        <a href='#Sammy.Application-setLocation'>setLocation</a>
       </li>
       <li>
-        <a href='#meth_18'>toString</a>
+        <a href='#Sammy.Application-swap'>swap</a>
       </li>
       <li>
-        <a href='#meth_19'>trigger</a>
+        <a href='#Sammy.Application-toString'>toString</a>
       </li>
       <li>
-        <a href='#meth_20'>unload</a>
+        <a href='#Sammy.Application-trigger'>trigger</a>
       </li>
       <li>
-        <a href='#meth_21'>use</a>
+        <a href='#Sammy.Application-unload'>unload</a>
+      </li>
+      <li>
+        <a href='#Sammy.Application-use'>use</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='meth_0'>
+    <div class='meth' id='Sammy.Application-$element'>
       <h4>
         $element
         <span>
@@ -443,7 +476,7 @@ nav:
       </h4><div class='doc'><p>
       returns a jQuery object of the Applications bound element.
       </p></div></div>
-    <div class='meth' id='meth_1'>
+    <div class='meth' id='Sammy.Application-after'>
       <h4>
         after
         <span>
@@ -455,7 +488,7 @@ nav:
       A shortcut for binding a callback to be run after a route is executed.
       After callbacks have no guarunteed order.
       </p></div></div>
-    <div class='meth' id='meth_2'>
+    <div class='meth' id='Sammy.Application-before'>
       <h4>
         before
         <span>
@@ -472,7 +505,7 @@ nav:
       If any of the callbacks explicitly return false, execution of any further
       callbacks and the route itself is halted.
       </p></div></div>
-    <div class='meth' id='meth_3'>
+    <div class='meth' id='Sammy.Application-bind'>
       <h4>
         bind
         <span>
@@ -504,7 +537,7 @@ nav:
       href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
       for more info.
       </p></div></div>
-    <div class='meth' id='meth_4'>
+    <div class='meth' id='Sammy.Application-bindToAllEvents'>
       <h4>
         bindToAllEvents
         <span>
@@ -520,7 +553,7 @@ nav:
       <p>
       Used internally for debug logging.
       </p></div></div>
-    <div class='meth' id='meth_5'>
+    <div class='meth' id='Sammy.Application-eventNamespace'>
       <h4>
         eventNamespace
         <span>
@@ -532,7 +565,7 @@ nav:
       A unique event namespace defined per application. All events bound with
       <tt>bind()</tt> are automatically bound within this space.
       </p></div></div>
-    <div class='meth' id='meth_6'>
+    <div class='meth' id='Sammy.Application-getLocation'>
       <h4>
         getLocation
         <span>
@@ -545,7 +578,45 @@ nav:
       Override this and <tt>setLocation()</tt> to detach the app from the
       window.location object.
       </p></div></div>
-    <div class='meth' id='meth_7'>
+    <div class='meth' id='Sammy.Application-helper'>
+      <h4>
+        helper
+        <span>
+          (
+          <em>name, method</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Helper extends the event context just like <tt>helpers()</tt> but does it a
+      single method at a time. This is especially useful for dynamically named
+      helpers
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+      // Trivial example that adds 3 helper methods to the context dynamically
+      var app = $.sammy(function(app) {
+      
+        $.each([1,2,3], function(i, num) {
+          app.helper('helper' + num, function() {
+            this.log("I'm helper number " + num);
+          });
+        });
+      
+        this.get('#/', function() {
+          this.helper2(); //=> I'm helper number 2
+        });
+      });
+      {% endhighlight %}
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>name</tt>:</td><td>The name of the method
+      
+      </td></tr>
+      <tr><td valign="top"><tt>method</tt>:</td><td>The function to be added to the prototype at <tt>name</tt>
+      
+      </td></tr>
+      </table></div></div>
+    <div class='meth' id='Sammy.Application-helpers'>
       <h4>
         helpers
         <span>
@@ -581,7 +652,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_8'>
+    <div class='meth' id='Sammy.Application-isRunning'>
       <h4>
         isRunning
         <span>
@@ -592,7 +663,7 @@ nav:
       </h4><div class='doc'><p>
       Returns a boolean of weather the current application is running.
       </p></div></div>
-    <div class='meth' id='meth_9'>
+    <div class='meth' id='Sammy.Application-lookupRoute'>
       <h4>
         lookupRoute
         <span>
@@ -604,7 +675,7 @@ nav:
       Given a verb and a String path, will return either a route object or false
       if a matching route can be found within the current defined set.
       </p></div></div>
-    <div class='meth' id='meth_10'>
+    <div class='meth' id='Sammy.Application-notFound'>
       <h4>
         notFound
         <span>
@@ -615,7 +686,7 @@ nav:
       </h4><div class='doc'><p>
       This thows a &#8216;404 Not Found&#8217; error.
       </p></div></div>
-    <div class='meth' id='meth_11'>
+    <div class='meth' id='Sammy.Application-refresh'>
       <h4>
         refresh
         <span>
@@ -626,7 +697,7 @@ nav:
       </h4><div class='doc'><p>
       Reruns the current route
       </p></div></div>
-    <div class='meth' id='meth_12'>
+    <div class='meth' id='Sammy.Application-routablePath'>
       <h4>
         routablePath
         <span>
@@ -638,7 +709,7 @@ nav:
       Returns a copy of the given path with any query string after the hash
       removed.
       </p></div></div>
-    <div class='meth' id='meth_13'>
+    <div class='meth' id='Sammy.Application-route'>
       <h4>
         route
         <span>
@@ -668,7 +739,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_14'>
+    <div class='meth' id='Sammy.Application-run'>
       <h4>
         run
         <span>
@@ -695,7 +766,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_15'>
+    <div class='meth' id='Sammy.Application-runRoute'>
       <h4>
         runRoute
         <span>
@@ -731,7 +802,7 @@ nav:
       Either returns the value returned by the route callback or raises a 404 Not
       Found error.
       </p></div></div>
-    <div class='meth' id='meth_16'>
+    <div class='meth' id='Sammy.Application-setLocation'>
       <h4>
         setLocation
         <span>
@@ -750,7 +821,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_17'>
+    <div class='meth' id='Sammy.Application-swap'>
       <h4>
         swap
         <span>
@@ -778,7 +849,7 @@ nav:
       
          });
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_18'>
+    <div class='meth' id='Sammy.Application-toString'>
       <h4>
         toString
         <span>
@@ -789,7 +860,7 @@ nav:
       </h4><div class='doc'><p>
       //=> Sammy.Application: body
       </p></div></div>
-    <div class='meth' id='meth_19'>
+    <div class='meth' id='Sammy.Application-trigger'>
       <h4>
         trigger
         <span>
@@ -814,7 +885,7 @@ nav:
       
       </td></tr>
       </table></div></div>
-    <div class='meth' id='meth_20'>
+    <div class='meth' id='Sammy.Application-unload'>
       <h4>
         unload
         <span>
@@ -827,7 +898,7 @@ nav:
       <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
       when the document is closed.
       </p></div></div>
-    <div class='meth' id='meth_21'>
+    <div class='meth' id='Sammy.Application-use'>
       <h4>
         use
         <span>
@@ -922,29 +993,29 @@ nav:
     </table></div>    <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#meth_0'>$element</a>
+        <a href='#Sammy.EventContext-$element'>$element</a>
       </li>
       <li>
-        <a href='#meth_1'>eventNamespace</a>
+        <a href='#Sammy.EventContext-eventNamespace'>eventNamespace</a>
       </li>
       <li>
-        <a href='#meth_2'>notFound</a>
+        <a href='#Sammy.EventContext-notFound'>notFound</a>
       </li>
       <li>
-        <a href='#meth_3'>partial</a>
+        <a href='#Sammy.EventContext-partial'>partial</a>
       </li>
       <li>
-        <a href='#meth_4'>redirect</a>
+        <a href='#Sammy.EventContext-redirect'>redirect</a>
       </li>
       <li>
-        <a href='#meth_5'>toString</a>
+        <a href='#Sammy.EventContext-toString'>toString</a>
       </li>
       <li>
-        <a href='#meth_6'>trigger</a>
+        <a href='#Sammy.EventContext-trigger'>trigger</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='meth_0'>
+    <div class='meth' id='Sammy.EventContext-$element'>
       <h4>
         $element
         <span>
@@ -955,7 +1026,7 @@ nav:
       </h4><div class='doc'><p>
       A shortcut to the app&#8217;s <tt>$element()</tt>
       </p></div></div>
-    <div class='meth' id='meth_1'>
+    <div class='meth' id='Sammy.EventContext-eventNamespace'>
       <h4>
         eventNamespace
         <span>
@@ -966,7 +1037,7 @@ nav:
       </h4><div class='doc'><p>
       A shortcut to app&#8217;s <tt>eventNamespace()</tt>
       </p></div></div>
-    <div class='meth' id='meth_2'>
+    <div class='meth' id='Sammy.EventContext-notFound'>
       <h4>
         notFound
         <span>
@@ -977,7 +1048,7 @@ nav:
       </h4><div class='doc'><p>
       Raises a possible <tt>notFound()</tt> error for the current path.
       </p></div></div>
-    <div class='meth' id='meth_3'>
+    <div class='meth' id='Sammy.EventContext-partial'>
       <h4>
         partial
         <span>
@@ -1019,7 +1090,7 @@ nav:
          $('.other-selector').html(data);
        });
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_4'>
+    <div class='meth' id='Sammy.EventContext-redirect'>
       <h4>
         redirect
         <span>
@@ -1038,7 +1109,7 @@ nav:
        // equivilent to
        redirect('#', 'other', 'route');
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_5'>
+    <div class='meth' id='Sammy.EventContext-toString'>
       <h4>
         toString
         <span>
@@ -1049,7 +1120,7 @@ nav:
       </h4><div class='doc'><p>
       //=> Sammy.EventContext: get #/ {}
       </p></div></div>
-    <div class='meth' id='meth_6'>
+    <div class='meth' id='Sammy.EventContext-trigger'>
       <h4>
         trigger
         <span>
@@ -1113,20 +1184,17 @@ nav:
     </table></div>    <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#meth_0'>cache</a>
+        <a href='#Sammy.Cache-cache'>cache</a>
       </li>
       <li>
-        <a href='#meth_1'>cache</a>
+        <a href='#Sammy.Cache-cache'>cache</a>
       </li>
       <li>
-        <a href='#meth_2'>clearCache</a>
-      </li>
-      <li>
-        <a href='#meth_3'>create_context</a>
+        <a href='#Sammy.Cache-clearCache'>clearCache</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='meth_0'>
+    <div class='meth' id='Sammy.Cache-cache'>
       <h4>
         cache
         <span>
@@ -1153,7 +1221,7 @@ nav:
          return app.element_selector;
        });
       {% endhighlight %}</div></div>
-    <div class='meth' id='meth_1'>
+    <div class='meth' id='Sammy.Cache-cache'>
       <h4>
         cache
         <span>
@@ -1164,7 +1232,7 @@ nav:
       </h4><div class='doc'><p>
       a helper shortcut for use in <tt>Sammy.EventContext</tt>
       </p></div></div>
-    <div class='meth' id='meth_2'>
+    <div class='meth' id='Sammy.Cache-clearCache'>
       <h4>
         clearCache
         <span>
@@ -1175,7 +1243,34 @@ nav:
       </h4><div class='doc'><p>
       clears the cached value for <tt>name</tt>
       </p></div></div>
-    <div class='meth' id='meth_3'>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.JSON'>
+    <h2>
+      Sammy.JSON
+      <span>
+        (
+        <em>app</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.JSON is a simple wrapper around Douglas Crockford&#8217;s ever-useful
+    json2.js (<a href="http://www.json.org/js.html">www.json.org/js.html</a>])
+    Sammy.JSON includes the top level JSON object if it doesn&#8217;t already
+    exist (a.k.a. does not override the native implementation that some
+    browsers include). It also adds a <tt>json()</tt> helper to a Sammy app
+    when included.
+    </p></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.JSON-create_context'>create_context</a>
+      </li>
+      <li>
+        <a href='#Sammy.JSON-json'>json</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.JSON-create_context'>
       <h4>
         create_context
         <span>
@@ -1186,6 +1281,31 @@ nav:
       </h4><div class='doc'><p>
       by @langalex, support for arrays of strings
       </p></div></div>
+    <div class='meth' id='Sammy.JSON-json'>
+      <h4>
+        json
+        <span>
+          (
+          <em>object</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      json is a polymorphic function that translates objects aback and forth from
+      JSON to JS. If given a string, it will parse into JS, if given a JS object
+      it will stringify into JSON.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
+         this.use(Sammy.JSON);
+      
+         this.get('#/', function() {
+           this.json({user_id: 123}); //=> "{\"user_id\":\"123\"}"
+           this.json("{\"user_id\":\"123\"}"); //=> [object Object]
+           this.json("{\"user_id\":\"123\"}").user_id; //=> "123"
+         });
+       })
+      {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Mustache'>
@@ -1221,7 +1341,7 @@ nav:
     The template (mytemplate.ms):
     </p>
     {% highlight javascript %}
-      <h1>{{title}}<h1>
+      <h1>\{\{title\}\}<h1>
     
       Hey, {{name}}! Welcome to Mustache!
     {% endhighlight %}
@@ -1320,6 +1440,379 @@ nav:
     <p>
     It supports creating arrays with [] and other niceities. Check out the
     tests for full specs.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Store'>
+    <h2>
+      Sammy.Store
+      <span>
+        (
+        <em>options</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Store is an abstract adapter class that wraps the multitude of in
+    browser data storage into a single common set of methods for storing and
+    retreiving data. The JSON library is used (through the inclusion of the
+    Sammy.JSON) plugin, to automatically convert objects back and forth from
+    stored strings.
+    </p>
+    <p>
+    Sammy.Store can be used directly, but within a Sammy.Application it is much
+    easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods.
+    </p>
+    <p>
+    Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
+    a key is set.
+    </p>
+    <h3>Example</h3>
+    {% highlight javascript %}
+     // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage
+     // Note: localStorage only works on browsers that support it
+     var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});
+     store.set('foo', 'bar');
+     store.get('foo'); //=> 'bar'
+     store.set('json', {obj: 'this is an obj'});
+     store.get('json'); //=> {obj: 'this is an obj'}
+     store.keys(); //=> ['foo','json']
+     store.clear('foo');
+     store.keys(); //=> ['json']
+     store.clearAll();
+     store.keys(); //=> []
+    {% endhighlight %}
+    <h3>Arguments</h3>
+    <p>
+    The constructor takes a single argument which is a Object containing these
+    possible options.
+    </p>
+    <table>
+    <tr><td valign="top"><tt>name</tt>:</td><td>The name/namespace of this store. Stores are unique by name/type. (default
+    &#8216;store&#8217;)
+    
+    </td></tr>
+    <tr><td valign="top"><tt>element</tt>:</td><td>A selector for the element that the store is bound to. (default
+    &#8216;body&#8217;)
+    
+    </td></tr>
+    <tr><td valign="top"><tt>type</tt>:</td><td>The type of storage/proxy to use (default &#8216;memory&#8217;)
+    
+    </td></tr>
+    </table>
+    <p>
+    Extra options are passed to the storage constructor. Sammy.Store supports
+    the following methods of storage:
+    </p>
+    <table>
+    <tr><td valign="top"><tt>memory</tt>:</td><td>Basic object storage
+    
+    </td></tr>
+    <tr><td valign="top"><tt>data</tt>:</td><td>jQuery.data DOM Storage
+    
+    </td></tr>
+    <tr><td valign="top"><tt>cookie</tt>:</td><td>Access to document.cookie. Limited to 2K
+    
+    </td></tr>
+    <tr><td valign="top"><tt>local</tt>:</td><td>HTML5 DOM localStorage, browswer support is currently limited.
+    
+    </td></tr>
+    <tr><td valign="top"><tt>session</tt>:</td><td>HTML5 DOM sessionStorage, browswer support is currently limited.
+    
+    </td></tr>
+    </table></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Store-clear'>clear</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-clearAll'>clearAll</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-exists'>exists</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-fetch'>fetch</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-get'>get</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-isAvailable'>isAvailable</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-keys'>keys</a>
+      </li>
+      <li>
+        <a href='#Sammy.Store-set'>set</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.Store-clear'>
+      <h4>
+        clear
+        <span>
+          (
+          <em>key</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Removes the value at <tt>key</tt> from the current store
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-clearAll'>
+      <h4>
+        clearAll
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Clears all the values for the current store.
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-exists'>
+      <h4>
+        exists
+        <span>
+          (
+          <em>key</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Checks for the existance of <tt>key</tt> in the current store. Returns a
+      boolean.
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-fetch'>
+      <h4>
+        fetch
+        <span>
+          (
+          <em>key, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns the value at <tt>key</tt> if set, otherwise, runs the callback and
+      sets the value to the value returned in the callback.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+         var store = new Sammy.Store;
+         store.exists('foo'); //=> false
+         store.fetch('foo', function() {
+       return 'bar!';
+         }); //=> 'bar!'
+         store.get('foo') //=> 'bar!'
+         store.fetch('foo', function() {
+       return 'baz!';
+         }); //=> 'bar!
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.Store-get'>
+      <h4>
+        get
+        <span>
+          (
+          <em>key</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and
+      turning into an object if possible
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-isAvailable'>
+      <h4>
+        isAvailable
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Checks for the availability of the current storage type in the current
+      browser/config.
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-keys'>
+      <h4>
+        keys
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Returns the all the keys set for the current store as an array. Internally
+      Sammy.Store keeps this array in a &#8216;meta_key&#8217; for easy access.
+      </p></div></div>
+    <div class='meth' id='Sammy.Store-set'>
+      <h4>
+        set
+        <span>
+          (
+          <em>key, value</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Sets the value of <tt>key&lt;tt&gt; with &lt;tt&gt;value</tt>. If
+      <tt>value&lt;tt&gt; is an object, it is turned to and stored as a string
+      with &lt;tt&gt;JSON.stringify</tt>. It also tries to conform to the KVO
+      pattern triggering jQuery events on the element that the store is bound to.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       var store = new Sammy.Store({name: 'kvo'});
+       $('body').bind('set-kvo.foo', function() {
+         alert('foo changed!')
+       });
+       store.set('foo', 'bar'); // alerted: foo changed!
+      {% endhighlight %}</div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.isAvailable'>
+    <h2>
+      Sammy.Store.isAvailable
+      <span>
+        (
+        <em>type</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Tests if the type of storage is available/works in the current
+    browser/config. Especially useful for testing the availability of the
+    awesome, but not widely supported HTML5 DOM storage
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.Memory'>
+    <h2>
+      Sammy.Store.Memory
+      <span>
+        (
+        <em>name</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Memory (&#8216;memory&#8217;) is the basic/default store. It stores data in
+    a global JS object. Data is lost on refresh.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.Data'>
+    <h2>
+      Sammy.Store.Data
+      <span>
+        (
+        <em>name, $element</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Data (&#8216;data&#8217;) stores objects using the jQuery.data() methods.
+    This has the advantadge of scoping the data to the specific element. Like
+    the &#8216;memory&#8217; store its data will only last for the length of
+    the current request (data is lost on refresh/etc).
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.LocalStorage'>
+    <h2>
+      Sammy.Store.LocalStorage
+      <span>
+        (
+        <em>name</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    LocalStorage (&#8216;local&#8217;) makes use of HTML5 DOM Storage, and the
+    window.localStorage object. The great advantage of this method is that data
+    will persist beyond the current request. It can be considered a pretty
+    awesome replacement for cookies accessed via JS. The great disadvantage,
+    though, is its only available on the latest and greatest browsers.
+    </p>
+    <p>
+    For more info on DOM Storage: [<a
+    href="https://developer.mozilla.org/en/DOM/Storage">developer.mozilla.org/en/DOM/Storage</a>]
+    [<a
+    href="http://www.w3.org/TR/2009/WD-webstorage-20091222">www.w3.org/TR/2009/WD-webstorage-20091222</a>/]
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.SessionStorage'>
+    <h2>
+      Sammy.Store.SessionStorage
+      <span>
+        (
+        <em>name</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    .SessionStorage (&#8216;session&#8217;) is similar to LocalStorage (part of
+    the same API) and shares similar browser support/availability. The
+    difference is that SessionStorage is only persistant through the current
+    &#8216;session&#8217; which is defined as the length that the current
+    window is open. This means that data will survive refreshes but not
+    close/open or multiple windows/tabs. For more info, check out the
+    <tt>LocalStorage</tt> documentation and links.
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Store.Cookie'>
+    <h2>
+      Sammy.Store.Cookie
+      <span>
+        (
+        <em>name, $element, options</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    .Cookie (&#8216;cookie&#8217;) storage uses browser cookies to store data.
+    JavaScript has access to a single document.cookie variable, which is
+    limited to 2Kb in size. Cookies are also considered &#8216;unsecure&#8217;
+    as the data can be read easily by other sites/JS. Cookies do have the
+    advantage, though, of being widely supported and persistent through refresh
+    and close/open. Where available, HTML5 DOM Storage like LocalStorage and
+    SessionStorage should be used.
+    </p>
+    <p>
+    .Cookie can also take additional options:
+    </p>
+    <table>
+    <tr><td valign="top"><tt>expires_in</tt>:</td><td>Number of seconds to keep the cookie alive (default 2 weeks).
+    
+    </td></tr>
+    <tr><td valign="top"><tt>path</tt>:</td><td>The path to activate the current cookie for (default &#8217;/&#8217;).
+    
+    </td></tr>
+    </table>
+    <p>
+    For more information about document.cookie, check out the pre-eminint
+    article by ppk: [<a
+    href="http://www.quirksmode.org/js/cookies.html">www.quirksmode.org/js/cookies.html</a>]
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Storage'>
+    <h2>
+      Sammy.Storage
+      <span>
+        (
+        <em>app</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Storage is a plugin that provides shortcuts for creating and using
+    Sammy.Store objects. Once included it provides the <tt>store()</tt> app
+    level and helper methods. Depends on Sammy.JSON (or json2.js).
+    </p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Session'>
+    <h2>
+      Sammy.Session
+      <span>
+        (
+        <em>app, options</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Session is an additional plugin for creating a common
+    &#8216;session&#8217; store for the given app. It is a very simple wrapper
+    around <tt>Sammy.Storage</tt> that provides a simple fallback mechanism for
+    trying to provide the best possible storage type for the session. This
+    means, <tt>LocalStorage</tt> if available, otherwise <tt>Cookie</tt>,
+    otherwise <tt>Memory</tt>. It provides the <tt>session()</tt> helper
+    through <tt>Sammy.Storage#store()</tt>.
+    </p>
+    <p>
+    See the <tt>Sammy.Storage</tt> plugin for full documentation.
     </p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Template'>

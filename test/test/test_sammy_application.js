@@ -24,6 +24,10 @@
       })
       .should('yield the app as a argument', function() {
         equals(this.yielded_app, this.app)
+      })
+      .should('set the location proxy to the default hash location proxy', function() {
+        ok(this.app.location_proxy);
+        defined(this.app.location_proxy, 'getLocation');
       });
 
       context('Sammy.Application', 'route', {
@@ -329,6 +333,10 @@
         this.app.runRoute('get', '#/blah/could/be/anything?except=aquerystring');
         equals(this.params['splat'], 'could/be/anything');
       })
+      .should('decode the query string values', function() {
+        this.app.runRoute('get', '#/boosh/farg/wow?encoded=this%20should%20be%20decoded%24%25%5E');
+        equals(this.params['encoded'], "this should be decoded$%^")
+      })
       .should('raise error when route can not be found', function() {
         var app = this.app;
         app.silence_404 = false;
@@ -462,20 +470,53 @@
           this.app.unload();
         }, this, 2, 2);
       });
+      
+      context('Sammy.Application','helper', {
+        before: function() {
+          var context = this;
+          context.event_context = null;
+          this.app = new Sammy.Application(function() {
+          
+            this.helper(
+              "helpme", function() {
+                return "halp!";
+              }
+            );
+          
+            this.get('#/', function() {
+              this.params['belch'] = 'boosh';
+              context.event_context = this;
+            });
+          
+            this.bind('blurgh', function() {
+              context.event_context = this;
+            });
+          });
+        }
+      })
+      .should('extend event context for routes', function() {
+        var context = this;
+        this.app.run('#/');
+        soon(function() {
+          ok(context['event_context']);
+          isType(context.event_context.helpme, Function);
+          this.app.unload();
+        }, this, 2, 2);
+      })
+      .should('extend event context for bind', function() {
+        var context = this;
+        this.app.run('#/');
+        this.app.trigger('blurgh');
+        soon(function() {
+          ok(context['event_context']);
+          isType(context.event_context.helpme, Function);
+          this.app.unload();
+        }, this, 2, 2);
+      });
    
       context('Sammy.Application', 'getLocation', {
         before: function() {
-          this.app = new Sammy.Application(function() {
-          
-          });
-        
-          this.override_app = new Sammy.Application(function() {
-          
-            this.getLocation = function() {
-              return $('body').data('location');
-            }
-          
-          });
+          this.app = new Sammy.Application;        
         }
       })
       .should('return the browsers hash by default', function() {
@@ -483,25 +524,11 @@
         soon(function() {
           equals(this.app.getLocation(), "#/boosh");
         }, this);
-      })
-      .should('return the result of the overridden function', function() {
-        $('body').data('location', '#/blah');
-        equals(this.override_app.getLocation(), '#/blah');
       });
     
       context('Sammy.Application', 'setLocation', {
         before: function() {
-          this.app = new Sammy.Application(function() {
-          
-          });
-        
-          this.override_app = new Sammy.Application(function() {
-          
-            this.setLocation = function(new_location) {
-              return $('body').data('location', new_location);
-            }
-          
-          });
+          this.app = new Sammy.Application;        
         }
       })
       .should('set the browsers hash by default', function() {
@@ -509,14 +536,7 @@
         soon(function() {
           equals(window.location.hash, '#/blurgh');
         })
-      })
-      .should('set using the overridden function', function() {
-        this.override_app.setLocation('#/blargh');
-        soon(function() {
-          equals($('body').data('location'), '#/blargh');
-        })
-      });
-    
+      });    
     
       context('Sammy.Application', 'post routes', {
         before: function() {
@@ -547,9 +567,10 @@
         }
       })
       .should('redirect after a get', function() {
+        window.location.hash = '';
         var context = this;
         context.app.run();
-        window.location.hash = '#/blah';
+        window.location.hash = '/blah';
         expect(3)
         stop();
         setTimeout(function() {
@@ -602,6 +623,19 @@
           });
           
         }
+      })
+      .should('raise error if the plugin is not defined', function() {
+        var app = this.app;
+        raised(/plugin/, function() {
+          app.use(Sammy.Boosh);
+        });
+      })
+      .should('raise error if the plugin is not a function', function() {
+        var app = this.app;
+        var blah = 'whu';
+        raised(/function/, function() {
+          app.use(blah);
+        });
       })
       .should('evaluate the function within the context of the app', function() {
         equals(this.plugin_this, this.app);

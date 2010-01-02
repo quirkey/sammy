@@ -1,0 +1,278 @@
+---
+layout: quirkey_code_multi
+title: Sammy - Tutorials - The JSON Store, Part II
+github_name: sammy
+current_version: 0.4.0
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: ../docs/index.html
+  - name: Tutorials
+    link: index.html
+  - name: Resources
+    link: ../resources.html
+---
+
+h2(project_name). Sammy
+
+h2. Tutorials
+
+h3. The JSON Store: A Sammy.js Tutorial, Part II
+
+_This is part two in a tutorial series introducing the core concepts of Sammy.js, if this is your first time here, may I suggest starting with "Part I":json_store_part1.html_
+
+For this belated Part II, we're going to jump right where we left off last time, and go through another big part of the world of Sammy.js. Last time we got our little JSON store to the point where we:
+
+* loaded a selection of items from JSON
+* displayed the items as list with client side templating
+* were able to jump to individual items and display their details
+
+By the end of part II, I hope to have a slightly more useful store. Here's what well try to tackle:
+
+* Adding items to a cart using a form and post() routes
+* Persisting the cart across requests using the Sammy.Storage plugin
+* Using bind/trigger to add a mini 'items in cart' display
+
+Also, not a _complete_ E-commerce store, but the important thing is were introducing a couple big pieces, so lets not get ahead of ourselves.
+
+Once again, "all the code is on github":http://github.com/quirkey/the_json_store so please follow along at home.
+
+Since Part I, there have been some pretty significant changes in the Sammy codebase. Along with a couple bug-fixes, there was some major work done to re-do the way hash (#) based routing works. There are also some awesome new Sammy plugins that we want to make use of. Fortunately, there are no backwards incompatible changes, so lets just copy the latest and greatest Sammy into our project (At the time of writing this Sammy 0.4 was just released).
+
+If we already have a copy of the Sammy source tree git cloned to our working directory (see Part I), its very easy to update.
+
+{% highlight bash %}
+# change into the place we git cloned sammy
+cd sammy
+# pull the latest changes
+git pull
+# back out and copy the latest lib/ directory into our json store project
+cd ..
+cp -r sammy/lib the_json_store/javascripts/sammy
+{% endhighlight %}
+
+This should upgrade Sammy and all its plugins for us. Now, like Aerosmith, we're living on the edge.
+
+After updating our store should work and look just like it did before. If it doesn't, make sure you're not missing any files. If it _still_ doesn't, please let me know.
+
+Feeling all fresh and clean, lets get started on our next feature. Sure, we can keep selling things through boring old links to Amazon, but what if we want to sell one of these items ourselves? Why let those bigwigs get all the profit. In order to do that, we probably need some sort of thing that lets us collect the things our users want to buy into a single place, so that eventually they can make a transaction and hand over the money for all the items at once. Whether it not the analogy makes sense to you, at some point, the fore-fathers of E-commerce decided to call this _thing_ a *shopping cart*. The usual workflow with a *shopping cart* is to allow the user to browse to the item that they want, enter the _quantity_ they want of the specific item and then hit a button to _add to cart_. I'm sure the "no duh's" are flying, but as simple and commonplace as this is, it might help to think through what we actually _need_ to make this work.
+
+First, the user has to be able to browse to a detail view of the item. OK, *check* we already did that. 
+
+Second, they need to be able to enter a _quantity_ of the item that they want. Entering something probably entails a form, so we'll need to add one to our detail template.
+
+Third, they need to be able to hit a button to _add to cart_. This means that we'll need to capture the action of adding to the cart, and then store a note that the current user has said items in their cart. We'll probably also want to notify the user that the items were successfully added.
+
+_Obviously, in a real E-commerce store, it will probably be a little more complex then all of this. We're not accounting for inventory or any other item specific complexities. In the magical world of the JSON store, we have an unlimited quantity of every item._
+
+Lets create a form to handle the user input of quantity and create a button to let them _add to cart_. Since we're working without a backend system or server, we're going to have our Sammy app handle the posting of the form, and we'll figure out what to do with it in a route. Let's open up our item detail template and add the form. Underneath the item price, lets add this:
+
+{% highlight html %}
+<div class="item-form">
+  <form action="#/cart" method="post">
+    <input type="hidden" name="item_id" value="<%= params['id'] %>" />
+    <p>
+      <label>Quantity:</label>
+      <input type="text" size="2" name="quantity" value="1" />
+    </p>
+    <p><input type="submit" value="Add to Cart" /></p>
+  </form>
+</div>
+{% endhighlight %}
+
+Nothing to complicated in the form body, just a simple text input with a label, a name, and a default value to allow for quantity. Then a submit button that we label with the infamous 'Add to Cart'. The value is insignificant other than to inform the user of what the button does. The only other piece is a hidden input that will allow us to identify which item we're adding to the cart when we submit the form. When we add it and navigate to an item, we should see something like this:
+
+!http://img.skitch.com/20100101-j622xn613b3q6n9r4drqmiy5ai.jpg!
+
+When we try to submit it, we get some possibly unexpected behavior. The browser goes to #/cart and we're left with a blank content area. We could add a @get('#/cart')@ route to our app, but that wont actually get us where we want. What we want, is a way to capture the form submission and have a place to handle the contents of our form. Fortunately, Sammy makes this easy. 
+
+Lets look back at the template and where we defined the form's attributes.
+
+{% highlight html %}
+<form action="#/cart" method="post">
+{% endhighlight %}
+
+We're defining the @method@ as @post@ - within a Sammy app this means that the form will be tied to a @post@ route. If we changed the @method@ to a different HTTP verb, like @put@ or @delete@ our route would have to change accordingly. The @action@ will map to our route's path. This means that in order to capture the form submission we need to define a route that matches our form's attributes. Lets open our @json_store.js@ Sammy app and do just that. Under our last @get@ route lets add:
+
+{% highlight javascript %}
+this.post('#/cart', function(context) {
+  
+});
+{% endhighlight %}
+
+Its a @post@ route to match the form's @method@ and the path is @#/cart@ to match the form's @action@. With that in place, if we go pack to the detail, and submit again, we should see something different happen: nothing. Well, at least nothing we can _see_. What's happening behind the scenes is actually pretty nifty. When the page loads, Sammy begins to observe every form it can find within the app's @$element@ for the @submit@ event. When you click the _add to cart_ button, the @submit@ event is fired and Sammy sees if we've defined a route that matches our form's attributes. If it finds one, like the @post@ route we defined above, it runs the route. If it _doesn't_ find a matching route, it lets the event bubble up to the top level, where the browser will try to submit the form using its built in methods. Just to prove I'm not lying to you, and the route is getting matched, lets try good 'ol logging.
+
+{% highlight javascript %}
+this.post('#/cart', function(context) {
+  this.log("I'm in a post route. Add me to your cart");
+});
+{% endhighlight %}
+
+Once we submit, the proof is there:
+
+!http://img.skitch.com/20100101-mherwtke8cqa8cw2jjxdp8fga.jpg!
+
+Now that we're actually handling the form submission, we need to actually do something with the data. Sammy helps us out by passing the values of the form that was posted inside the @params@ object. This way we can easily get the _quantity_ that the user entered, by accessing @this.params['quantity']@ within our route. The key in the @params@ object matches the @name@ attribute of the HTML form element. Likewise, we'll also have access to @this.params['item_id']@ based on the hidden input above.
+
+In order to make this a _cart_ we need to store the data we're getting somewhere. The easiest way is probably just creating a top level object in our app and storing a hash of item id's and their quantities. In our @post@ route we can inspect this object and add the item and update its corresponding quantity. Heres a basic implementation:
+
+{% highlight javascript %}
+// initialize the cart
+var cart = {};
+
+this.post('#/cart', function(context) {
+  var item_id = this.params['item_id'];
+  if (!cart[item_id]) {
+    // this item is not yet in our cart
+    // initialize its quantity with 0
+    cart[item_id] = 0;
+  }
+  cart[item_id] += parseInt(this.params['quantity']);
+  this.log("The current cart: ", cart);
+});
+{% endhighlight %}
+
+First we initialize our @cart@ object. Then in the route, we use the @params@ we're getting from the form submission to add the item to the @cart@. We're creating a really simple object that has key/value pairs that map to @item_id => quantity@. One small but important line to note here, is we have to use @parseInt@ on the 'quantity' param. All items in the @params@ object that come from the form elements are strings. If we didn't use @parseInt@ on the quantity each time the item was added, we would just be doing string concatenation. So if you hit the _add to cart_ button twice in a row, instead of a quantity of 2, as we would expect, we would see a quantity of @"11"@. Try submitting the form a couple times and look in the log to see the contents of the cart. You should see something like this:
+
+!http://img.skitch.com/20100101-f5bemmb4hp9pb6c3dkrkyryphw.jpg!
+
+You might have already noticed a major flaw with this method, though. Besides there being no display of the cart update (besides the log), if we refresh or navigate away from the page, the contents of our cart are lost! As convenient as the simple variable method is, the data is completely non-persistent. This might be fine for a scenario like a game or a form configuration, but when shopping on the internet we expect - nay, we demand - that the items that we painstakingly arranged into our cart stay there for at least the length of our browsing. In a typical server-side cart implementation we would store the cart in the 'session' which is usually a server stored object linked to a client side cookie or GET parameter. Without the use of a server we cant hope to really create an exact facsimile. However, we can come pretty close.
+
+As of Sammy 0.4, theres a new system for doing just that called @Sammy.Storage@. Part of @Sammy.Storage@ is the @Sammy.Session@ plugin, which does pretty much exactly what we need. @Sammy.Storage@ is actually a lot more than just a way to do 'sessions' its a wrapper around a number of different technologies including HTML5 DOM Storage, Cookies, and jQuery.Data. It provides a unified way of accessing all of these methods as key/value stores. I suggest taking a look at the "API docs":../docs/api.html#Sammy.Store as they contain a lot of info. *Note: @Sammy.Storage@ also depends on @Sammy.JSON@ so we have to make sure to include that as well.*
+
+For our purposes, we just need to include the @sammy.storage.js@ and @sammy.json.js@ files in our index and then include the plugin in our app:
+
+{% highlight javascript %}
+var app = $.sammy(function() {
+  this.element_selector = '#main';    
+  this.use(Sammy.Template);
+  this.use(Sammy.Session);  
+  //....
+{% endhighlight %}
+
+Including this gives us access to a @session()@ helper method that will store whatever we want in a persistent name-spaced object. @Sammy.Session@ automatically tries to use the best possible method for storing the data. First it tries the HTML5 @localStorage@ method. If this isn't available in the current browser (support is limited at the moment), it then tries storing it in a cookie. If cookies aren t available or turned off, it finally resorts to using in-memory storage, like our original implementation. Obviously, this last method isn't ideal, but at least we don't have to make any changes to our app code to support all these different methods. 
+
+Lets make use of our new @session()@ helper in our current code. You'll see we don't have to change much:
+
+{% highlight javascript %}
+this.post('#/cart', function(context) {
+  var item_id = this.params['item_id'];
+  // fetch the current cart
+  var cart  = this.session('cart', function() {
+    return {};
+  });
+  if (!cart[item_id]) {
+    // this item is not yet in our cart
+    // initialize its quantity with 0
+    cart[item_id] = 0;
+  }
+  cart[item_id] += parseInt(this.params['quantity']);
+  // store the cart
+  this.session('cart', cart);
+  this.log("The current cart: ", cart);
+});
+{% endhighlight %}
+
+The only real difference here is that instead of using the top level var cart, we assign @cart@ whatever is in our @session@ in the key @cart@. Then we do exactly what we did before, and then at the end of the route, we store the @cart@ back in our session. If you try this, hit refresh a couple times and see how the items add up. If you're confused about the first use of @session@ its actually very simple:
+
+{% highlight javascript %}
+var cart  = this.session('cart', function() {
+  return {};
+});
+{% endhighlight %}
+
+All this does is call the @fetch()@ method on the current store for the key @cart@. What fetch does is either return the current value if set, or if not set, set the value to whatever is returned from the function/callback.
+
+Now that we're persistent, we should actually let the user know that they have items in their cart. Lets add a little display to the top of the page. In our @index.html@ lets add this to our header:
+
+{% highlight javascript %}
+<div id="header">
+  <h1>The JSON Store</h1>
+  <div class="cart-info">
+    My Cart (<span class="cart-items">0</span> items)
+  </div>
+</div>
+{% endhighlight %}
+
+Note that I also added some simple CSS to make it appear smaller and align right.
+
+!http://img.skitch.com/20100101-xk1wie4bj3rfu58nusxweadt2.jpg!
+
+Updating this display should be straight-forward. Every time an item is added to the cart, we need to update the @cart-items@ element and maybe also highlight the @cart-info@ element so that the user notices the change. We don't really want to create a separate route for this, because a change in the number of items is not something we want to really navigate between. Where adding an item to the cart or navigating to an item detail are good uses of managing 'external state' through routes, changing display of the number of items in the cart is really a change of 'internal state'. Changes to 'internal state' are events we want to observe and react to, but they do not have to be held in the URL or hash. This is the perfect case for using Sammy's @bind()@ and @trigger()@ methods. @bind()@ and @trigger()@ are wrappers around jQuery's DOM event system and make catching and sending events simple from with an application or event context.
+
+We'll create a custom event that will calculate the current number of items and then change the display to reflect the new sum. Within our app, lets add a new event binding:
+
+{% highlight javascript %}
+this.bind('update-cart', function() {
+  
+});
+{% endhighlight %}
+
+You'll notice write away that the format looks a lot like our routes. This is intentional. More than just the look, @this@ inside of a @bind()@ is also an @EventContext@, just like within a route. This means that all our helpers work the same within these event bindings.
+
+Implementing the counting and display shouldn't be too difficult - we'll just iterate over our cart to sum the items and then use jQuery to change the display:
+
+{% highlight javascript %}
+this.bind('update-cart', function() {
+  var sum = 0;
+  $.each(this.session('cart') || {}, function(id, quantity) {
+    sum += quantity;
+  });
+  $('.cart-info')
+      .find('.cart-items').text(sum).end()
+      .animate({paddingTop: '30px'})
+      .animate({paddingTop: '10px'});
+});
+{% endhighlight %}
+
+It might seem like a bit of code, but you'll notice that theres actually very little to it. We sum the quantity of all the items in the cart, then we update the number displayed in the header. Finally, we call @jQuery.animate()@ to add a little flair to the display and to draw attention, so that the user has the feeling of actually _doing_ something. Of course at this point, nothing is doing anything, since this event never gets triggered. Easy enough, lets trigger the update after we post to our cart. At the end of our @post@ route: 
+
+{% highlight javascript %}
+this.trigger('update-cart');
+{% endhighlight %}
+
+This will actually trigger the event and update the display as expected. Just to be clear, our route should look like this:
+
+{% highlight javascript %}
+this.post('#/cart', function(context) {
+  var item_id = this.params['item_id'];
+  // fetch the current cart
+  var cart  = this.session('cart', function() {
+    return {};
+  });
+  if (!cart[item_id]) {
+    // this item is not yet in our cart
+    // initialize its quantity with 0
+    cart[item_id] = 0;
+  }
+  cart[item_id] += parseInt(this.params['quantity']);
+  // store the cart
+  this.session('cart', cart);
+  this.trigger('update-cart');
+});
+{% endhighlight %}
+
+Now when you _add to cart_, you should see the "My Cart" text updated and the little area seem to _bounce_ (and how!). 
+
+Theres just one last thing for this episode. When the page loads, even if we already have items in our cart - it always reads "My Cart (0 items)". Well this just won't do. What we need is to fire the @update-cart@ event when the page loads. Luckily, Sammy provides a series of _life-cycle_ events that we can bind to. The most commonly used event is 'run'. This event is fired after the DOM loads and the app is started when we call @app.run()@. This is where we can put any _initializations_ like we want to do with the cart display.
+
+{% highlight javascript %}
+this.bind('run', function() {
+  // initialize the cart display
+  this.trigger('update-cart');
+});
+{% endhighlight %}
+
+Adding this within our app ensures that the "My Cart" display shows the correct number of items even after we refresh the page or before we add an item to the cart. There are a number of other _life-cycle_ events, and they're all listed in "The API":../docs/api.html#Sammy.Application-APP_EVENTS
+
+That wraps it up for this time. Though we didn't write too much code (not a bad thing), we did learn about a couple important parts of Sammy applications:
+
+* @post@ routes and form handling
+* The new @Sammy.Storage@ and @Sammy.Session@ plugins
+* The @bind@ and @trigger@ methods
+* Life-cycle/App events
+
+Next time we'll refactor some of our code, work on a more interesting cart, and possibly do some server-side integration. If there are specific features/questions you'd like to see me cover, don't hesitate to contact me or the Sammy.js mailing list.
