@@ -76,7 +76,7 @@ task :api do
   tmp_doc_path = '/tmp/sammy.api.html'
   api_template_path = 'site/docs/api_template.html'
   final_path   = 'site/docs/api.html'
-  
+  File.unlink(tmp_doc_path)
   sh "ruby vendor/jsdoc/jsdoc.rb lib/sammy.js lib/plugins/ > #{tmp_doc_path}"
   sh "cat #{api_template_path} #{tmp_doc_path} > #{final_path}"
 end
@@ -108,5 +108,8 @@ task :push_site do
   sh "cd site && git push upstream gh-pages"
 end
 
-desc 'Prepare the site'
-task :site => [:minify, :api, :copy_test_and_examples, :update_version, :push_site]
+desc 'Build the site'
+task :build_site => [:minify, :api, :copy_test_and_examples, :update_version]
+
+desc 'Build the site, then push it to github'
+task :site => [:build_site, :push_site]
