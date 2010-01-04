@@ -41,6 +41,12 @@ nav:
       <a href='#Sammy.Object'>Sammy.Object</a>
     </li>
     <li>
+      <a href='#Sammy.HashLocationProxy'>Sammy.HashLocationProxy</a>
+    </li>
+    <li>
+      <a href='#Sammy.DataLocationProxy'>Sammy.DataLocationProxy</a>
+    </li>
+    <li>
       <a href='#Sammy.Application'>Sammy.Application</a>
     </li>
     <li>
@@ -292,6 +298,110 @@ nav:
       </p></div></div>
   </div>
   <!-- its just a function -->
+  <div class='klass' id='Sammy.HashLocationProxy'>
+    <h2>
+      Sammy.HashLocationProxy
+      <span>
+        (
+        <em>app, run_interval_every</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    The HashLocationProxy is the default location proxy for all Sammy
+    applications. A location proxy is a prototype that conforms to a simple
+    interface. The purpose of a location proxy is to notify the
+    Sammy.Application its bound to when the location or &#8216;external
+    state&#8217; changes. The HashLocationProxy considers the state to be
+    changed when the &#8216;hash&#8217; (window.location.hash /
+    &#8217;#&#8217;) changes. It does this in two different ways depending on
+    what browser you are using. The newest browsers (IE, Safari > 4, FF >= 3.6)
+    support a &#8216;onhashchange&#8217; DOM event, thats fired whenever the
+    location.hash changes. In this situation the HashLocationProxy just binds
+    to this event and delegates it to the application. In the case of older
+    browsers a poller is set up to track changes to the hash. Unlike Sammy 0.3
+    or earlier, the HashLocationProxy allows the poller to be a global object,
+    eliminating the need for multiple pollers even when thier are multiple apps
+    on the page.
+    </p></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.HashLocationProxy-bind'>bind</a>
+      </li>
+      <li>
+        <a href='#Sammy.HashLocationProxy-getLocation'>getLocation</a>
+      </li>
+      <li>
+        <a href='#Sammy.HashLocationProxy-setLocation'>setLocation</a>
+      </li>
+      <li>
+        <a href='#Sammy.HashLocationProxy-unbind'>unbind</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.HashLocationProxy-bind'>
+      <h4>
+        bind
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      bind the proxy events to the current app.
+      </p></div></div>
+    <div class='meth' id='Sammy.HashLocationProxy-getLocation'>
+      <h4>
+        getLocation
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      get the current location from the hash.
+      </p></div></div>
+    <div class='meth' id='Sammy.HashLocationProxy-setLocation'>
+      <h4>
+        setLocation
+        <span>
+          (
+          <em>new_location</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      set the current location to <tt>new_location</tt>
+      </p></div></div>
+    <div class='meth' id='Sammy.HashLocationProxy-unbind'>
+      <h4>
+        unbind
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      unbind the proxy events from the current app
+      </p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.DataLocationProxy'>
+    <h2>
+      Sammy.DataLocationProxy
+      <span>
+        (
+        <em>app, data_name</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    The DataLocationProxy is an optional location proxy prototype. As opposed
+    to the <tt>HashLocationProxy</tt> it gets its location from a jQuery.data
+    attribute tied to the application&#8217;s element. You can set the name of
+    the attribute by passing a string as the second argument to the
+    constructor. The default attribute name is &#8216;sammy-location&#8217;. To
+    read more about location proxies, check out the documentation for
+    <tt>Sammy.HashLocationProxy</tt>
+    </p></div></div>
+  <!-- its just a function -->
   <div class='klass' id='Sammy.Application'>
     <h2>
       Sammy.Application
@@ -322,6 +432,9 @@ nav:
       </li>
       <li>
         <a href='#Sammy.Application-element_selector'>element_selector</a>
+      </li>
+      <li>
+        <a href='#Sammy.Application-location_proxy'>location_proxy</a>
       </li>
       <li>
         <a href='#Sammy.Application-run_interval_every'>run_interval_every</a>
@@ -374,6 +487,17 @@ nav:
       Defines what element the application is bound to. Provide a selector
       (parseable by <tt>jQuery()</tt>) and this will be used by
       <tt>$element()</tt>
+      </p></div></div>
+    <div class='attr' id='Sammy.Application-location_proxy'>
+      <h4>
+        location_proxy
+        =
+        <span>null</span>
+      </h4><div class='doc'><p>
+      The location proxy for the current app. By default this is set to a new
+      <tt>Sammy.HashLocationProxy</tt> on initialization. However, you can set
+      the location_proxy inside you&#8217;re app function to give youre app a
+      custom location mechanism
       </p></div></div>
     <div class='attr' id='Sammy.Application-run_interval_every'>
       <h4>
@@ -574,9 +698,8 @@ nav:
           )
         </span>
       </h4><div class='doc'><p>
-      The default behavior is to return the current window&#8217;s location hash.
-      Override this and <tt>setLocation()</tt> to detach the app from the
-      window.location object.
+      Delegates to the <tt>location_proxy</tt> to get the current location. See
+      <tt>Sammy.HashLocationProxy</tt> for more info on location proxies.
       </p></div></div>
     <div class='meth' id='Sammy.Application-helper'>
       <h4>
@@ -811,9 +934,8 @@ nav:
           )
         </span>
       </h4><div class='doc'><p>
-      The default behavior is to set the current window&#8217;s location.
-      Override this and <tt>getLocation()</tt> to detach the app from the
-      window.location object.
+      Delegates to the <tt>location_proxy</tt> to set the current location. See
+      <tt>Sammy.HashLocationProxy</tt> for more info on location proxies.
       </p>
       <h3>Arguments</h3>
       <table>
