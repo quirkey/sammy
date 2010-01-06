@@ -123,6 +123,7 @@ Pointing the browser to @#/by_name/quirkey@ would give you the fabulous system p
 This works with mulitple params in a single path. It does not work if you want to match strings that contain '/'. If you want that you can use Regexp and 'splat'.
 
 Given a Regexp route:
+
 {% highlight javascript %}
 get(/\#\/by_name\/(.*)/, function() {
   alert(params['splat']);
