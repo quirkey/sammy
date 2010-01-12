@@ -136,8 +136,9 @@
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'});
         soon(function () {
-          equals(app.$element().html(), '<div class="test_template">TEMPLATE!</div>');
-        });
+          equals(app.$element().text(), 'TEMPLATE!');
+          equals(app.$element().children('.test_template').length, 1);
+        }, this, 2, 2);
       })
       .should('trigger changed after the partial callback', function() {
         var changed = false;
