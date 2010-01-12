@@ -1,3 +1,14 @@
+== 0.4.1 [01/11/10]
+
+New:
+- Add rake generate task that builds a simple (server-less) sammy app structure
+
+Fixed:
+- decode all parsed params (thanks jdknezek)
+- Fix Sammy.JSON fails in IE6
+- Fixed test suite in IE8
+- Fixed console.log is not a real function in IE8
+
 == 0.4.0 [01/04/10]
 
 New:
