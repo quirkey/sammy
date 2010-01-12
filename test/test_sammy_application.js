@@ -234,7 +234,7 @@
         window.location.hash = '#';
         app.run('#/yield');
         soon(function() {
-          matches(/EventContext/, this.yielded_context.toString());
+          equals(this.yielded_context.path, '#/yield');
           app.unload();
         }, this);
       })

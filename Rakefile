@@ -170,4 +170,5 @@ EOT
   touch(File.join(path, 'stylesheets', 'style.css'))
   File.open(File.join(path, 'javascripts', "#{name}.js"), 'w') {|f| f << js }
   File.open(File.join(path, "index.html"), 'w') {|f| f << index }
+  puts "Done."
 end
