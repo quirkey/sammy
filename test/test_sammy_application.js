@@ -341,9 +341,9 @@
         this.app.runRoute('get', '#/boosh/farg/wow?encoded=this%20should%20be%20decoded%24%25%5E');
         equals(this.params['encoded'], "this should be decoded$%^")
       })
-      .should('not encode param values', function() {
+      .should('decode param values', function() {
         this.app.runRoute('get', '#/message/hello%20there');
-        equals(this.params['message'], 'hello%20there');
+        equals(this.params['message'], 'hello there');
         this.app.runRoute('get', '#/message/hello there');
         equals(this.params['message'], 'hello there');
       })
