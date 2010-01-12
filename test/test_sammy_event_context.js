@@ -179,7 +179,7 @@
           };
         });
         this.context = new app.context_prototype(app);
-        this.context.partial('fixtures/partial');
+        this.context.partial('fixtures/partial.noengine');
         soon(function () {
           equals(app.$element().text(), '!!!NOENGINE!!!');
         });
