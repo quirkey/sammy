@@ -153,7 +153,37 @@
           ok(changed);
           test_app.unload();
         });
-      });      
+      })
+      .should('use default engine if provided and template doesnt match an engine', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() { 
+          this.element_selector = '#main'; 
+          this.template_engine  = 'template';
+          
+          this.helper('template',  function(template, data) {
+            return "!!!" + template.toString() + "!!!";
+          });
+        });
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial');
+        soon(function () {
+          equals(app.$element().text(), '!!!NOENGINE!!!');
+        });
+      })
+      .should('use default engine as a method if template doesnt match an engine', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() { 
+          this.element_selector = '#main'; 
+          this.template_engine  = function(template, data) {
+            return "!!!" + template.toString() + "!!!";
+          };
+        });
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial');
+        soon(function () {
+          equals(app.$element().text(), '!!!NOENGINE!!!');
+        });
+      });
       
       context('Sammy', 'EventContext', 'trigger', {
         before: function() {
