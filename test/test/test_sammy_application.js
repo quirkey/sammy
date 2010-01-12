@@ -234,7 +234,7 @@
         window.location.hash = '#';
         app.run('#/yield');
         soon(function() {
-          matches(/EventContext/, this.yielded_context.toString());
+          equals(this.yielded_context.path, '#/yield');
           app.unload();
         }, this);
       })
@@ -307,6 +307,10 @@
             this.route('get', '#/boosh/:test/:test2', function() {
               context.params = this.params;
             });
+            
+            this.route('get', '#/message/:message', function() {
+              context.params = this.params;
+            });
           });
         }
       })
@@ -336,6 +340,12 @@
       .should('decode the query string values', function() {
         this.app.runRoute('get', '#/boosh/farg/wow?encoded=this%20should%20be%20decoded%24%25%5E');
         equals(this.params['encoded'], "this should be decoded$%^")
+      })
+      .should('decode param values', function() {
+        this.app.runRoute('get', '#/message/hello%20there');
+        equals(this.params['message'], 'hello there');
+        this.app.runRoute('get', '#/message/hello there');
+        equals(this.params['message'], 'hello there');
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
