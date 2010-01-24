@@ -137,7 +137,7 @@
         isType(route.path, RegExp);
         equals(route.verb, 'get');
         defined(route, 'callback');
-        equals(route.path.toString(), new RegExp("#/$").toString());
+        equals(route.path.toString(), new RegExp("^#/$").toString());
       })
       .should('lookup callback as a string', function() {
         var app = this.app;
@@ -152,7 +152,7 @@
           ok(app.routes[verb], verb + "is set on routes");
           var route = app.routes[verb].pop();
           ok(route, "route exists on " + verb);
-          equals(route.path.toString(), "/\/any$/");
+          equals(route.path.toString(), new RegExp("^/any$").toString());
         });
       });
       
@@ -169,20 +169,23 @@
           context.app = new Sammy.Application(function() {
             this.empty = context.empty_callback;
             
-            this.mapRoutes(context.routes);
+            context.returned = this.mapRoutes(context.routes);
           });
         }
+      })
+      .should('return the app', function() {
+        equals(this.returned, this.app);
       })
       .should('add routes to the app', function() {
         var app = this.app;
         ok(app.routes, "should have routes");
         ok(app.routes['get'], "should have get routes");
-        equals(app.routes['get'][0].path.toString(), "^/#\/get$/")
+        equals(app.routes['get'][0].path.toString(), new RegExp("^#/get$").toString());
       })
       .should('lookup callbacks as strings', function() {
-        var app = this.app, route = app.route['get'].pop();
+        var app = this.app, route = app.routes['get'].pop();
         ok(route);
-        equals(route.path, "^/#\/string$/")
+        equals(route.path, new RegExp("^#/string$").toString());
         equals(route.callback, this.empty_callback);
       });
     
@@ -357,7 +360,7 @@
               $('#main').trigger('click');
             });
 
-            this.route('get', '/boo', function() {
+            this.route('get', '#/boo', function() {
               $('#main').trigger('click');
             });
 
