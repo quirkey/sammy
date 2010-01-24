@@ -91,6 +91,8 @@
             
             this.post('#/post', 'mycallback');
             
+            this.route('#/verbless', function() {});
+            
             this.route('any', '/any', function() {});
             
           });
@@ -132,7 +134,7 @@
       .should('append late and short route to application.routes object', function() {
         var app = this.app;
         ok(app.routes['get']);
-        equals(app.routes['get'].length, 6)
+        equals(app.routes['get'].length, 7)
         var route = app.routes['get'][4];
         isType(route.path, RegExp);
         equals(route.verb, 'get');
