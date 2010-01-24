@@ -78,7 +78,7 @@
             this.route('get', '/boosh/:boosh1/:boosh2', function() {
               $('#testarea').show();
             });
-
+            
             this.get(/blurgh/, function() {
               alert('blurgh');
             });
@@ -86,6 +86,9 @@
             this.get('#/', function() {
               alert('home');
             });
+            
+            this.route('any', '/any', function() {});
+            
           });
         }
       })
@@ -125,12 +128,21 @@
       .should('append late and short route to application.routes object', function() {
         var app = this.app;
         ok(app.routes['get']);
-        equals(5, app.routes['get'].length)
+        equals(app.routes['get'].length, 6)
         var route = app.routes['get'][4];
         isType(route.path, RegExp);
         equals(route.verb, 'get');
         defined(route, 'callback');
         equals(route.path.toString(), new RegExp("#/$").toString());
+      })
+      .should('add an "any" route to every route verb', function() {
+        var app = this.app;
+        $.each(app.ROUTE_VERBS, function(i, verb) {
+          ok(app.routes[verb], verb + "is set on routes");
+          var route = app.routes[verb].pop();
+          ok(route, "route exists on " + verb);
+          equals(route.path.toString(), "/\\/any$/");
+        });
       });
     
       context('Sammy.Application', 'bind', {
