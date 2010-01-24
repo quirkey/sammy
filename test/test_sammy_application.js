@@ -32,8 +32,9 @@
 
       context('Sammy.Application', 'route', {
         before: function() {
+          var context = this;
           this.app = new Sammy.Application(function() {
-            this.route('get', /testing/, function() {
+            context.returned = this.route('get', /testing/, function() {
               $('#main').trigger('click');
             });
 
@@ -54,6 +55,9 @@
             });
           });
         }
+      })
+      .should('return the sammy application instance', function() {
+        equals(this.returned, this.app);
       })
       .should('turn a string path into a regular expression', function() {
         var app = this.app;
@@ -102,7 +106,7 @@
           context.triggered = false;
           this.app = new Sammy.Application(function() {
           
-            this.bind('boosh', function() {
+            context.returned = this.bind('boosh', function() {
               context.triggered = 'boosh';
               context.inner_context = this;
             });
@@ -114,6 +118,9 @@
           
           });
         }
+      })
+      .should('return the sammy application instance', function() {
+        equals(this.returned, this.app);
       })
       .should('add callback to the listeners collection', function() {
         equals(this.app.listeners['boosh'].length, 1);
