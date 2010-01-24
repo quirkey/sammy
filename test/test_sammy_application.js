@@ -70,6 +70,8 @@
             context.returned = this.route('get', /testing/, function() {
               $('#main').trigger('click');
             });
+            
+            this.mycallback = function() { this.redirect('#/'); };
 
             this.route('get', '/blah', function() {
               $('#testarea').show();
@@ -86,6 +88,8 @@
             this.get('#/', function() {
               alert('home');
             });
+            
+            this.post('#/post', 'mycallback');
             
             this.route('any', '/any', function() {});
             
@@ -135,13 +139,20 @@
         defined(route, 'callback');
         equals(route.path.toString(), new RegExp("#/$").toString());
       })
+      .should('lookup callback as a string', function() {
+        var app = this.app;
+        ok(app.routes['post'], "post routes defined");
+        var route = app.routes['post'][0];
+        ok(route, "route exists");
+        equals(route.callback, app.mycallback);
+      })
       .should('add an "any" route to every route verb', function() {
         var app = this.app;
         $.each(app.ROUTE_VERBS, function(i, verb) {
           ok(app.routes[verb], verb + "is set on routes");
           var route = app.routes[verb].pop();
           ok(route, "route exists on " + verb);
-          equals(route.path.toString(), "/\\/any$/");
+          equals(route.path.toString(), "/\/any$/");
         });
       });
     
