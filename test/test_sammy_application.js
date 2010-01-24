@@ -155,6 +155,36 @@
           equals(route.path.toString(), "/\/any$/");
         });
       });
+      
+      context('Sammy.Application', 'mapRoutes', {
+        before: function() {
+          var context = this;
+          context.empty_callback = function() {};
+          context.routes = [
+            ['get', '#/get', context.empty_callback],
+            ['post', '#/post', context.empty_callback],
+            ['any', '#/any', context.empty_callback],
+            ['get', '#/string', 'empty']
+          ]
+          context.app = new Sammy.Application(function() {
+            this.empty = context.empty_callback;
+            
+            this.mapRoutes(context.routes);
+          });
+        }
+      })
+      .should('add routes to the app', function() {
+        var app = this.app;
+        ok(app.routes, "should have routes");
+        ok(app.routes['get'], "should have get routes");
+        equals(app.routes['get'][0].path.toString(), "^/#\/get$/")
+      })
+      .should('lookup callbacks as strings', function() {
+        var app = this.app, route = app.route['get'].pop();
+        ok(route);
+        equals(route.path, "^/#\/string$/")
+        equals(route.callback, this.empty_callback);
+      });
     
       context('Sammy.Application', 'bind', {
         before: function() {
