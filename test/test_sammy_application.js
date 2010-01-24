@@ -1,6 +1,39 @@
 (function($) {
   // $(function() {
     with(jqUnit) {
+      context('Sammy','apps')
+      .should('return a new application if no arguments passed', function() {
+        var app = Sammy();
+        defined(app, 'route');
+      })
+      .should('save the application to Sammy.apps', function() {
+        var app = Sammy();
+        ok(Sammy.apps['body']);
+        equals(Sammy.apps['body'], app);
+      })
+      .should('create a new app and set the element selector', function() {
+        var app = Sammy('#main');
+        equals(app.element_selector, '#main');
+        ok(Sammy.apps['#main']);
+        equals(Sammy.apps['#main'], app);
+      })
+      .should('return the app at selector', function() {
+        Sammy('#main');
+        var app = Sammy('#main')
+        equals(app.element_selector, '#main');
+        ok(Sammy.apps['#main']);
+        equals(Sammy.apps['#main'], app);
+      })
+      .should('extend the app at selector', function() {
+        var app = Sammy('#main', function() {
+          this.extended = true;
+        });
+        equals(app.element_selector, '#main');
+        ok(Sammy.apps['#main']);
+        equals(Sammy.apps['#main'], app);
+        ok(app.extended);
+      });
+      
       context('Sammy.Application', 'init', {
         before: function() {
           var context = this;
