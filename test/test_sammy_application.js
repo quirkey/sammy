@@ -318,9 +318,9 @@
         var app = this.app;
         app.run('#/');
         $('#main form').submit();
-        matches(/sammy-app/, $('#main form')[0].className);
         soon(function() {
           equals(app.form_was_run, 'YES');
+          equals(app.form_params['$form'][0], $('#main form')[0]);
           app.unload();
         }, this, 1, 2);
       })
@@ -332,8 +332,9 @@
         $('#live_form').submit();
         soon(function() {
           equals(app.form_was_run, 'LIVE');
+          equals(app.form_params['$form'][0], $('#live_form')[0])
           app.unload();
-        });
+        }, this, 1, 2);
       })
       .should('trigger routes on URL change', function() {
         var app = this.app;
