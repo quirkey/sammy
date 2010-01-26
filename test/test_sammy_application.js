@@ -279,8 +279,14 @@
               $('.get_area').text('test success');
             });
           
-            this.route('post', /test/, function() {
+            this.route('post', '#/test', function() {
               this.app.form_was_run = 'YES';
+              this.app.form_params = this.params;
+              return false;
+            });
+            
+           this.route('post', '#/live', function() {
+              this.app.form_was_run = 'LIVE';
               this.app.form_params = this.params;
               return false;
             });
@@ -317,6 +323,17 @@
           equals(app.form_was_run, 'YES');
           app.unload();
         }, this, 1, 2);
+      })
+     .should('bind events to all future forms', function () {
+        var app = this.app;
+        app.run('#/');
+        // add a new form to the page
+        $('#main').append('<form id="live_form" action="#/live" method="post"><input name="live_test" type="text" /></form>');
+        $('#live_form').submit();
+        soon(function() {
+          equals(app.form_was_run, 'LIVE');
+          app.unload();
+        });
       })
       .should('trigger routes on URL change', function() {
         var app = this.app;
