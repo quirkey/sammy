@@ -98,6 +98,13 @@
             return "baz";
           }), 'bar');
           equals(this.store.get('foo'), 'bar');
+        })
+        .should('load file into a key', function() {
+          ok(!this.store.get('foo'));
+          this.store.load('foo', 'fixtures/partial');
+          soon(function() {
+            equals(this.store.get('foo'), 'NOENGINE');
+          }, this, 2, 2);
         });
       }
     });
