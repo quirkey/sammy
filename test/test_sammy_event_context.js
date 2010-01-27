@@ -109,8 +109,8 @@
           contents += html;
         });
         soon(function () {
-          equals(expected, $('#main').html());
-          equals(expected, contents);
+          equals($('#main').html(), expected);
+          equals(contents, expected);
         }, this, 2, 2);
       })
       .should('cache template if cache() is present', function(){
