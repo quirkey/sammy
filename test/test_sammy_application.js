@@ -335,8 +335,7 @@
            '<input type="submit" class="submit" />' +
            '</form>'
          );
-        // $('#live_form .submit').click();
-        $('#live_form').submit();
+        $('#live_form .submit').submit();
         soon(function() {
           equals(app.form_was_run, 'LIVE');
           equals(app.form_params['$form'][0], $('#live_form')[0]);
