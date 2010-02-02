@@ -9,13 +9,17 @@ class SammyTest < Sinatra::Application
 
   get '/' do
     content_type 'text/html'
-    File.read(File.join(File.dirname(__FILE__), 'sammy.html'))
+    read_relative_file 'sammy.html'
   end
 
   get /\/(lib|vendor)\/(.*)/ do
     filename = File.join(params['captures'][0],params['captures'][1])
     content_type File.extname(filename)
-    File.read(File.join(File.dirname(__FILE__), '..', filename))
+    read_relative_file '..', filename
+  end
+
+  def read_relative_file(*args)
+    File.read(File.join(File.expand_path(File.dirname(__FILE__)), *args))
   end
 
 end
