@@ -270,6 +270,7 @@
           $('.get_area').text('');
           this.app = new Sammy.Application(function() {
             this.element_selector = '#main';
+            this.form_params = {};
           
             this.route('get', '#/', function() {
               $('.get_area').text('');
@@ -320,7 +321,8 @@
         $('#main form').submit();
         soon(function() {
           equals(app.form_was_run, 'YES');
-          equals(app.form_params['$form'][0], $('#main form')[0]);
+          ok(app.form_params);
+          // equals(app.form_params['$form'][0], $('#main form')[0]);
           app.unload();
         }, this, 1, 2);
       })
@@ -328,11 +330,16 @@
         var app = this.app;
         app.run('#/');
         // add a new form to the page
-        $('#main').append('<form id="live_form" action="#/live" method="post"><input name="live_test" type="text" /></form>');
+        $('#main').append('<form id="live_form" action="#/live" method="post">' +
+           '<input name="live_test" type="text" />' +
+           '<input type="submit" class="submit" />' +
+           '</form>'
+         );
+        // $('#live_form .submit').click();
         $('#live_form').submit();
         soon(function() {
           equals(app.form_was_run, 'LIVE');
-          equals(app.form_params['$form'][0], $('#live_form')[0])
+          equals(app.form_params['$form'][0], $('#live_form')[0]);
           app.unload();
         }, this, 1, 2);
       })
