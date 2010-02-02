@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'sinatra/base'
+require 'vegas'
+
+class SammyTest < Sinatra::Application
+
+  set :public, File.expand_path(File.dirname(__FILE__))
+
+  get '/' do
+    content_type 'text/html'
+    File.read(File.join(File.dirname(__FILE__), 'sammy.html'))
+  end
+
+  get /\/(lib|vendor)\/(.*)/ do
+    filename = File.join(params['captures'][0],params['captures'][1])
+    content_type File.extname(filename)
+    File.read(File.join(File.dirname(__FILE__), '..', filename))
+  end
+
+end
+
+Vegas::Runner.new(SammyTest, 'sammy_test_server')
