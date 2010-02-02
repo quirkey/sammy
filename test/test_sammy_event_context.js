@@ -96,7 +96,24 @@
           equals(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
       })
-      .should('cache template if cache() is present', function() {
+      .should('itterate over data if data is an array', function() {
+        var contents = '',
+            app = new Sammy.Application(function() { this.element_selector = '#main'; }),
+            data = [{name: 'one', class_name: 'it-1'}, {name: 'two', class_name: 'it-2'}],
+            expected = '<div class="it-1">one</div><div class="it-2">two</div>';
+                        
+        app.use(Sammy.Template);
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial.template', data);
+        this.context.partial('fixtures/partial.template', data, function(html) {
+          contents += html;
+        });
+        soon(function () {
+          equals($('#main').html(), expected);
+          equals(contents, expected);
+        }, this, 2, 2);
+      })
+      .should('cache template if cache() is present', function(){
         var contents = '';
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
         app.use(Sammy.Template);
