@@ -5,7 +5,7 @@
         %a{:href => '#' + klass[:klass]}= klass[:klass]
   - doc.each do |klass, klass_methods|
     / its just a function
-    - if klass_methods[:methods].empty? 
+    - if klass_methods[:methods].empty? && klass[:doc].strip != ''
       %div.meth{:id => klass[:klass]}
         %h2
           =klass[:klass] 
@@ -28,12 +28,12 @@
         - unless klass_methods[:attributes].empty?
           %h3 Attributes
           %ul
-            - klass_methods[:attributes].each_with_index do |meth,i|
+            - klass_methods[:attributes].each_with_index do |attribute,i|
               %li
-                %a{:href => "#attr_#{i}"}=meth[:name]
+                %a{:href => "##{klass[:klass]}-#{attribute[:name]}"}=attribute[:name]
           %hr
           - klass_methods[:attributes].each_with_index do |attribute, i|
-            %div.attr{:id => "attr_#{i}"}
+            %div.attr{:id => "#{klass[:klass]}-#{attribute[:name]}"}
               %h4
                 =attribute[:name] 
                 \=
@@ -44,10 +44,10 @@
         %ul
           -klass_methods[:methods].each_with_index do |meth,i|
             %li
-              %a{:href => "#meth_#{i}"}=meth[:name]
+              %a{:href => "##{klass[:klass]}-#{meth[:name]}"}=meth[:name]
         %hr
         -klass_methods[:methods].each_with_index do |meth,i|
-          %div.meth{:id => "meth_#{i}"}
+          %div.meth{:id => "#{klass[:klass]}-#{meth[:name]}"}
             %h4
               =meth[:name] 
               %span

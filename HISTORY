@@ -1,3 +1,28 @@
+== 0.4.1 [01/11/10]
+
+New:
+- Add rake generate task that builds a simple (server-less) sammy app structure
+
+Fixed:
+- decode all parsed params (thanks jdknezek)
+- Fix Sammy.JSON fails in IE6
+- Fixed test suite in IE8
+- Fixed console.log is not a real function in IE8
+
+== 0.4.0 [01/04/10]
+
+New:
+- Sammy.Storage and Sammy.Session are wrappers around a new prototype Sammy.Store, which is an class that abstracts access to the various types of in browser storage, including HTML5 DOM Storage and Cookies. This allows for a unified way of accessing and storing data locally for a Sammy app.
+- Sammy.Mustache is a plugin that adds support for the Mustache template framework through @janl's Mustache.js.
+- Sammy.JSON is simple plugin that includes the json2.js source and also provides a simple helper for doing JSON to/from conversion
+- Sammy.Application#helper() is a shortcut for adding a single helper by name. This allows for more easily defined dynamically named helpers.
+
+Changed:
+- Sammy no longer depends exclusively on polling to determine changes in its location. The work of determining location change was pulled out of Sammy.Application entirely and into LocationProxy prototypes. The new default Sammy.HashLocationProxy will use the native 'onhashchange' event where available, and resort to a single global poller when not. The LocationProxy object can be set for each Sammy.Application. Location proxies can be defined added, and will work as long as they conform to the simple prototype laid out by the HashLocationProxy.
+
+Fixed:
+- URL query params are properly URL decoded. [Thanks  Lee Semel]
+
 == 0.3.1 [12/09/09]
 
 New: 
@@ -59,5 +84,3 @@ Fixed:
   - template() (aka $.srender) handles single quoted attributes now (aka generated HAML)
   - When the app booted up, run() would redirect to the start_url even if another location was present.
   - the _checkLocation() method now sets last_location properly (which fixes continual checking if route isnt found)
-
-

@@ -1,4 +1,3 @@
-gem 'sinatra-sinatra', '>=0.9.1.3'
 require 'sinatra'
 require 'haml'
 require 'sass'
