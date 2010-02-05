@@ -479,6 +479,7 @@
     
       context('Sammy.Application','before', {
         before: function() {
+          window.location.hash = '';
           var context = this;
           context.before  = {};
           context.route   = {};
@@ -536,15 +537,21 @@
         context.app.before({only: '#/'}, function() {
           context.before_run.push('/')
         });
+        window.location.hash = '';
         context.app.run('#/');
-        soon(function() {
-          equals(context.before_run, ['/'])
+        expect(4);
+        stop();
+        setTimeout(function() {
+          ok(context.route);
+          equals(context.route.path, '#/');
+          isObj(context.before_run, ['/'], 'should match /')
           window.location = '#/boosh';
-          soon(function() {
-            equals(context.before_run, ['/', '/boosh']);
-            app.unload();
-          });
-        }, this, 1, 1);
+          setTimeout(function() {
+            isObj(context.before_run, ['/', '/boosh'], "should match ['/', 'boosh']");
+            context.app.unload();
+            start();
+          }, 100);
+        }, 200);
       })
     
       context('Sammy.Application','after', {
@@ -568,10 +575,12 @@
       .should('run after route', function() {
         var context = this;
         this.app.run('#/');
+        window.location.hash = '#/';
         soon(function() {
+          console.log('context', context);
           equals(context.after.params['belch'], 'burp');
           context.app.unload();
-        });
+        }, this, 5, 1);
       })
       .should('set context to event context', function() {
         var context = this;
@@ -751,6 +760,9 @@
             }
           };
         }
+      })
+      .should('match against empty options', function() {
+        ok(this.app.routeMatchesOptions(this.route, {}));
       })
       .should('match against only with path', function() {
         ok(this.app.routeMatchesOptions(this.route, {only: {path: '#/boosh'}}));
