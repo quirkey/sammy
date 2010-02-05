@@ -779,16 +779,16 @@
         ok(!this.app.routeMatchesOptions(this.route, {except: '#/boosh'}));
       })
       .should('match against except with verb', function() {
-        ok(!this.app.routeMatchesOptions(this.route, {only: {verb: 'get'}}));
-        ok(this.app.routeMatchesOptions(this.route, {only: {verb: 'put'}}));
+        ok(!this.app.routeMatchesOptions(this.route, {except: {verb: 'get'}}));
+        ok(this.app.routeMatchesOptions(this.route, {except: {verb: 'put'}}));
       })
       .should('match against just path', function() {
-        ok(this.app.routeMatchesOptions(this.route, '#/boosh'));
-        ok(!this.app.routeMatchesOptions(this.route, '#/boo'));
-        ok(this.app.routeMatchesOptions(this.route, /\#\/boosh/));
-        ok(!this.app.routeMatchesOptions(this.route, /\#\/$/));
+        ok(this.app.routeMatchesOptions(this.route, '#/boosh'), 'should match exact string path');
+        ok(!this.app.routeMatchesOptions(this.route, '#/boo'), 'should not match partial string path');
+        ok(this.app.routeMatchesOptions(this.route, /^\#\/boosh/), 'should match regex');
+        ok(!this.app.routeMatchesOptions(this.route, /^\#\/$/), 'should not match regex');
       })
-      should('match empty options', function() {
+      .should('match empty options', function() {
         ok(this.app.routeMatchesOptions(this.route, {}));
       });
       
