@@ -240,6 +240,11 @@
           var rendered = this.context.mustache('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
           equals(rendered, '<div class="test_class">TEXT! boosh</div>');
         })
+        .should('allow mustache partials by passing partials to data', function() {
+          var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: {what: 'partial'}};
+          var rendered = this.context.mustache('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
+          equals(rendered, '<div class="test_class">a partial boosh</div>');
+        })
         .should('alias the mustache method and thus the extension', function() {
           ok(!$.isFunction(this.alias_context.mustache));
           ok($.isFunction(this.alias_context.ms));
