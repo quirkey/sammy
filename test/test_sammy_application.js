@@ -591,6 +591,70 @@
         });
       });      
     
+      context('Sammy.Application', 'around', {
+        before: function() {
+          window.location.hash = '';
+          var context = this;
+          context.path = [];
+          context.run_route = true;
+          this.app = new Sammy.Application(function() {
+
+            this.around(function(callback) {
+              context.path.push('around1 in');
+              if (context.run_route) {
+                callback();
+              }
+              context.path.push('around1 out');
+            });
+          
+            this.get('#/', function() {
+              context.path.push('route ' + this.path);
+            });
+            
+          });
+        }
+      })
+      .should('run route with callback()', function() {
+        var context = this;
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.path, ['around1 in', 'route #/', 'around1 out']);
+          context.app.unload();
+        });
+      })
+      .should('not run route if callback is never called', function() {
+        var context = this;
+        context.run_route = false;
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.path, ['around1 in', 'around1 out']);
+          context.app.unload();
+        });
+      })
+      .should('run multiple around filters', function() {
+        var context = this;
+        context.app.around(function(callback) {
+          context.path.push('around2 in');
+          callback();
+          context.path.push('around2 out');
+        });
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.path, ['around1 in', 'around2 in', 'route #/', 'around2 out', 'around1 out']);
+          context.app.unload();
+        });
+      })
+      .should('run before filters after around filter', function() {
+        var context = this;
+        context.app.before(function() {
+          context.path.push('before');
+        });
+        context.app.run('#/');
+        soon(function() {
+          isObj(context.path, ['around1 in', 'before', 'route #/', 'around1 out']);
+          context.app.unload();
+        });
+      });
     
       context('Sammy.Application','helpers', {
         before: function() {
