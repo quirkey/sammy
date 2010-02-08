@@ -103,7 +103,7 @@ this.post('#/cart', function(context) {
 });
 {% endhighlight %}
 
-Its a @post@ route to match the form's @method@ and the path is @#/cart@ to match the form's @action@. With that in place, if we go pack to the detail, and submit again, we should see something different happen: nothing. Well, at least nothing we can _see_. What's happening behind the scenes is actually pretty nifty. When the page loads, Sammy begins to observe every form it can find within the app's @$element@ for the @submit@ event. When you click the _add to cart_ button, the @submit@ event is fired and Sammy sees if we've defined a route that matches our form's attributes. If it finds one, like the @post@ route we defined above, it runs the route. If it _doesn't_ find a matching route, it lets the event bubble up to the top level, where the browser will try to submit the form using its built in methods. Just to prove I'm not lying to you, and the route is getting matched, lets try good 'ol logging.
+Its a @post@ route to match the form's @method@ and the path is @#/cart@ to match the form's @action@. With that in place, if we go back to the detail, and submit again, we should see something different happen: nothing. Well, at least nothing we can _see_. What's happening behind the scenes is actually pretty nifty. When the page loads, Sammy begins to observe every form it can find within the app's @$element@ for the @submit@ event. When you click the _add to cart_ button, the @submit@ event is fired and Sammy sees if we've defined a route that matches our form's attributes. If it finds one, like the @post@ route we defined above, it runs the route. If it _doesn't_ find a matching route, it lets the event bubble up to the top level, where the browser will try to submit the form using its built in methods. Just to prove I'm not lying to you, and the route is getting matched, lets try good 'ol logging.
 
 {% highlight javascript %}
 this.post('#/cart', function(context) {
@@ -201,7 +201,7 @@ Note that I also added some simple CSS to make it appear smaller and align right
 
 !http://img.skitch.com/20100101-xk1wie4bj3rfu58nusxweadt2.jpg!
 
-Updating this display should be straight-forward. Every time an item is added to the cart, we need to update the @cart-items@ element and maybe also highlight the @cart-info@ element so that the user notices the change. We don't really want to create a separate route for this, because a change in the number of items is not something we want to really navigate between. Where adding an item to the cart or navigating to an item detail are good uses of managing 'external state' through routes, changing display of the number of items in the cart is really a change of 'internal state'. Changes to 'internal state' are events we want to observe and react to, but they do not have to be held in the URL or hash. This is the perfect case for using Sammy's @bind()@ and @trigger()@ methods. @bind()@ and @trigger()@ are wrappers around jQuery's DOM event system and make catching and sending events simple from with an application or event context.
+Updating this display should be straight-forward. Every time an item is added to the cart, we need to update the @cart-items@ element and maybe also highlight the @cart-info@ element so that the user notices the change. We don't really want to create a separate route for this, because a change in the number of items is not something we want to really navigate between. Where adding an item to the cart or navigating to an item detail are good uses of managing 'external state' through routes, changing display of the number of items in the cart is really a change of 'internal state'. Changes to 'internal state' are events we want to observe and react to, but they do not have to be held in the URL or hash. This is the perfect case for using Sammy's @bind()@ and @trigger()@ methods. @bind()@ and @trigger()@ are wrappers around jQuery's DOM event system and make catching and sending events simple from within an application or event context.
 
 We'll create a custom event that will calculate the current number of items and then change the display to reflect the new sum. Within our app, lets add a new event binding:
 
@@ -211,7 +211,7 @@ this.bind('update-cart', function() {
 });
 {% endhighlight %}
 
-You'll notice write away that the format looks a lot like our routes. This is intentional. More than just the look, @this@ inside of a @bind()@ is also an @EventContext@, just like within a route. This means that all our helpers work the same within these event bindings.
+You'll notice right away that the format looks a lot like our routes. This is intentional. More than just the look, @this@ inside of a @bind()@ is also an @EventContext@, just like within a route. This means that all our helpers work the same within these event bindings.
 
 Implementing the counting and display shouldn't be too difficult - we'll just iterate over our cart to sum the items and then use jQuery to change the display:
 

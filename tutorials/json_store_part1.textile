@@ -158,7 +158,7 @@ this.get('#/', function(context) {
 
 @log@ just logs to our firebug or web inspector console by default. So lets crack open our browser to index.html with firebug open and see if it works.
 
-Oy, It doesnt. Event if we change the URL to 'index.html#/' it still doesnt send the log message. Quit banging your head. Theres a very good reason. Our Sammy app isnt running! Sammy doesnt run until you tell it to, and usually you want to tell it to run after the DOM has loaded. Lets add a call to @run@ within a jQuery.ready callback. We'll also pass it a 'start_url' which is the route we want it to load if no other route was specified. Our code should look like this:
+Oy, It doesn't. Even if we change the URL to 'index.html#/' it still doesn't send the log message. Quit banging your head. Theres a very good reason. Our Sammy app isn't running! Sammy doesn't run until you tell it to, and usually you want to tell it to run after the DOM has loaded. Lets add a call to @run@ within a jQuery.ready callback. We'll also pass it a 'start_url' which is the route we want it to load if no other route was specified. Our code should look like this:
 
 {% highlight javascript %}
 (function($) {
@@ -305,7 +305,7 @@ We're missing one more thing here: A way to access the detail! Thats not entirel
 
 !http://img.skitch.com/20091010-xnbptn8bhu8rnn9xsr5an2ed9e.jpg!
 
-Let's just link up the image in our detail page:
+Let's just link up the image to our detail page:
 
 {% highlight html %}
 <div class="item-image">
@@ -334,4 +334,4 @@ this.get('#/', function(context) {
 });
 {% endhighlight %}
 
-So after writing more HTML then Sammy code, we have a very simple single page app that loads JSON data, renders HTML using client side templating, and lets us link between multiple different routes dynamically. Not too shabby. Next time we'll learn how to use @post()@ routes to handle form submissions and more!
+So after writing more HTML than Sammy code, we have a very simple single page app that loads JSON data, renders HTML using client side templating, and lets us link between multiple different routes dynamically. Not too shabby. Next time we'll learn how to use @post()@ routes to handle form submissions and more!

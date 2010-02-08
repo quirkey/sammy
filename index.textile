@@ -38,7 +38,7 @@ jQuery is probably the fastest, most robust way to abstract basic low-level Java
 
 Working heavily with "Sinatra":http://www.sinatrarb.com, I realized that the simple route definitions and structure it provided could be a great fit with jQuery/JavaScript. Not only does it allow you to respond to specific URLs, but utilizing the URL hash (#) you can create single page applications that still respond to the back button in your browser (ala Gmail).
 
-I started off on this project thinking "It would be cool to implement Sinatra in JavaScript". Sammy has become more then that, I've tried to follow JS and jQuery conventions instead of Ruby and its made for a small (< 20K) library for defining simple to complex applications.
+I started off on this project thinking "It would be cool to implement Sinatra in JavaScript". Sammy has become more than that, I've tried to follow JS and jQuery conventions instead of Ruby and its made for a small (< 20K) library for defining simple to complex applications.
 
 I see Sammy as a great way to build simple to complex applications built upon RESTful data stores like "CouchDB":http://couchdb.apache.org/ or "Cloudkit.":http://getcloudkit.com Theres an example of Cloudkit integration in "examples/backend/":http://github.com/quirkey/sammy/tree/master/examples/backend
 
@@ -72,7 +72,7 @@ $(function() {
 });
 {% endhighlight %}
 
-This will guaruntee that the DOM is loaded before we try to apply functionality to it.
+This will guarantee that the DOM is loaded before we try to apply functionality to it.
 
 h3(#more). More!
 
