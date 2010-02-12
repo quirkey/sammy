@@ -813,7 +813,7 @@
         }, 1000);
       });
       
-      context('Sammy.Application', 'routeMatchesOptions', {
+      context('Sammy.Application', 'contextMatchesOptions', {
         before: function() {
           this.app = $.sammy();
           this.route = {
@@ -826,46 +826,46 @@
         }
       })
       .should('match against empty options', function() {
-        ok(this.app.routeMatchesOptions(this.route, {}));
+        ok(this.app.contextMatchesOptions(this.route, {}));
       })
       .should('match against only with path', function() {
-        ok(this.app.routeMatchesOptions(this.route, {only: {path: '#/boosh'}}));
-        ok(this.app.routeMatchesOptions(this.route, {only: '#/boosh'}));
-        ok(!this.app.routeMatchesOptions(this.route, {only: {path: '#/'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {only: '#/'}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {path: '#/boosh'}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: '#/boosh'}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: '#/'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: '#/'}));
       })
       .should('match against only with path and verb', function() {
-        ok(this.app.routeMatchesOptions(this.route, {only: {path: '#/boosh', verb: 'get'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {only: {path: '#/boosh', verb: 'put'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {only: {path: '#/', verb: 'get'}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {path: '#/boosh', verb: 'get'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: '#/boosh', verb: 'put'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: '#/', verb: 'get'}}));
       })
       .should('match against only with verb', function() {
-        ok(this.app.routeMatchesOptions(this.route, {only: {verb: 'get'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {only: {verb: 'put'}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {verb: 'get'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {verb: 'put'}}));
       })
       .should('match against except with path and verb', function() {
-        ok(this.app.routeMatchesOptions(this.route, {except: {path: '#/', verb: 'get'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {except: {path: '#/boosh', verb: 'get'}}));
-        ok(this.app.routeMatchesOptions(this.route, {except: {path: '#/boosh', verb: 'put'}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: '#/', verb: 'get'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {path: '#/boosh', verb: 'get'}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: '#/boosh', verb: 'put'}}));
       })
       .should('match against except with path', function() {
-        ok(this.app.routeMatchesOptions(this.route, {except: {path: '#/'}}));
-        ok(this.app.routeMatchesOptions(this.route, {except: '#/'}));
-        ok(!this.app.routeMatchesOptions(this.route, {except: {path: '#/boosh'}}));
-        ok(!this.app.routeMatchesOptions(this.route, {except: '#/boosh'}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: '#/'}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: '#/'}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {path: '#/boosh'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: '#/boosh'}));
       })
       .should('match against except with verb', function() {
-        ok(!this.app.routeMatchesOptions(this.route, {except: {verb: 'get'}}));
-        ok(this.app.routeMatchesOptions(this.route, {except: {verb: 'put'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {verb: 'get'}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {verb: 'put'}}));
       })
       .should('match against just path', function() {
-        ok(this.app.routeMatchesOptions(this.route, '#/boosh'), 'should match exact string path');
-        ok(!this.app.routeMatchesOptions(this.route, '#/boo'), 'should not match partial string path');
-        ok(this.app.routeMatchesOptions(this.route, /^\#\/boosh/), 'should match regex');
-        ok(!this.app.routeMatchesOptions(this.route, /^\#\/$/), 'should not match regex');
+        ok(this.app.contextMatchesOptions(this.route, '#/boosh'), 'should match exact string path');
+        ok(!this.app.contextMatchesOptions(this.route, '#/boo'), 'should not match partial string path');
+        ok(this.app.contextMatchesOptions(this.route, /^\#\/boosh/), 'should match regex');
+        ok(!this.app.contextMatchesOptions(this.route, /^\#\/$/), 'should not match regex');
       })
       .should('match empty options', function() {
-        ok(this.app.routeMatchesOptions(this.route, {}));
+        ok(this.app.contextMatchesOptions(this.route, {}));
       });
       
       context('Sammy.Application', 'use', {
