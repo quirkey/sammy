@@ -1,5 +1,5 @@
 (function($) {
-  with(jqUnit) {
+  with(QUnit) {
 
     var stores = ['memory', 'data', 'local', 'session', 'cookie'];
 
@@ -24,13 +24,13 @@
           }
         })
         .should('set store type', function() {
-          equals(this.store.type, store_type);
+          equal(this.store.type, store_type);
         })
         .should('set name', function() {
-          equals(this.store.name, 'test_store');
+          equal(this.store.name, 'test_store');
         })
         .should('set the element', function() {
-          equals(this.store.$element[0], $('#main')[0]);
+          equal(this.store.$element[0], $('#main')[0]);
         })
         .should('check if a key exists', function() {
           ok(!this.store.exists('foo'));
@@ -40,23 +40,23 @@
         })
         .should('set and retrieve value as string', function() {
           ok(this.store.set('foo', 'bar'));
-          equals(this.store.get('foo'), 'bar');
+          equal(this.store.get('foo'), 'bar');
           ok(!this.other_store.get('foo'));
         })
         .should('set and retrieve value as JSON', function() {
           ok(this.store.set('foo', {'obj': 'is json'}));
-          equals(this.store.get('foo').obj,'is json');
+          equal(this.store.get('foo').obj,'is json');
           ok(!this.other_store.get('foo'));
         })
         .should('should store in global space accessible by name', function() {
           this.store.set('foo', 'bar');
           var new_store = new Sammy.Store(this.store_attributes);
-          equals(new_store.get('foo'), 'bar');
+          equal(new_store.get('foo'), 'bar');
         })
         .should('clear value', function() {
           ok(this.store.set('foo', 'bar'));
           ok(this.other_store.set('foo', 'bar'));
-          equals(this.store.get('foo'), 'bar');
+          equal(this.store.get('foo'), 'bar');
           this.store.clear('foo');
           ok(!this.store.exists('foo'));
           ok(this.other_store.get('foo'), 'bar');
@@ -65,16 +65,16 @@
           this.store.set('foo', 'bar');
           this.store.set('blurgh', {boosh: 'blurgh'});
           this.store.set(123, {boosh: 'blurgh'});
-          isObj(this.store.keys(), ['foo', 'blurgh', '123'], "keys were " + this.store.keys().toString());
-          isObj(this.other_store.keys(), []);
+          deepEqual(this.store.keys(), ['foo', 'blurgh', '123'], "keys were " + this.store.keys().toString());
+          deepEqual(this.other_store.keys(), []);
         })
         .should('clear all values', function() {
           this.store.set('foo', 'bar');
           this.store.set('blurgh', {boosh: 'blurgh'});
           this.store.set(123, {boosh: 'blurgh'});
-          equals(this.store.keys().length, 3);
+          equal(this.store.keys().length, 3);
           this.store.clearAll();
-          equals(this.store.keys().length, 0);
+          equal(this.store.keys().length, 0);
           ok(!this.store.exists('blurgh'));
         })
         .should('fire events on get and set', function() {
@@ -84,7 +84,7 @@
           });
           this.store.set('foo', 'bar');
           soon(function() {
-            equals(fired, 'bar');
+            equal(fired, 'bar');
             $('#main').unbind('set-test_store.foo');
           });
         }) 
@@ -93,17 +93,17 @@
           this.store.fetch('foo', function() {
             return "bar";
           });
-          equals(this.store.get('foo'), 'bar');
-          equals(this.store.fetch('foo', function() {
+          equal(this.store.get('foo'), 'bar');
+          equal(this.store.fetch('foo', function() {
             return "baz";
           }), 'bar');
-          equals(this.store.get('foo'), 'bar');
+          equal(this.store.get('foo'), 'bar');
         })
         .should('load file into a key', function() {
           ok(!this.store.get('foo'));
           this.store.load('foo', 'fixtures/partial');
           soon(function() {
-            equals(this.store.get('foo'), 'NOENGINE');
+            equal(this.store.get('foo'), 'NOENGINE');
           }, this, 2, 2);
         });
       }
@@ -148,19 +148,19 @@
       })
       .should('should set value if value is passed', function() {
         this.context.session('foo', 'bar')
-        equals(this.store.get('foo'), 'bar');
+        equal(this.store.get('foo'), 'bar');
       })
       .should('should get value if no value is passed', function() {
         this.store.set('foo', 'bar');
-        equals(this.context.session('foo'), 'bar');
+        equal(this.context.session('foo'), 'bar');
       })
       .should('call fetch if callback is passed', function() {
         ok(!this.store.get('foo'));
         this.context.session('foo', function() {
           return "bar";
         });
-        equals(this.store.get('foo'), 'bar');
-        equals(this.context.session('foo', function() {
+        equal(this.store.get('foo'), 'bar');
+        equal(this.context.session('foo', function() {
           return "baz";
         }), 'bar');
     });
