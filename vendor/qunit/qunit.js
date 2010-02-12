@@ -201,7 +201,7 @@ var QUnit = {
 						text = text.replace(/(^\s*|\s*$)/g, "");
 
 						if ( window.location ) {
-							window.location.href = window.location.href.match(/^(.+?)(\?.*)?$/)[1] + "?" + encodeURIComponent(text);
+							window.location.search = encodeURIComponent(text);
 						}
 					}
 				});

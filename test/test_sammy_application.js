@@ -112,7 +112,7 @@
         ok(app.routes['get']);
         var route = app.routes['get'][2];
         isType(route.path, 'RegExp');
-        deepEqual(route.path, /^\/boosh\/([^\/]+)\/([^\/]+)$/);
+        deepEqual(route.path.toString(), /^\/boosh\/([^\/]+)\/([^\/]+)$/.toString());
         deepEqual(route.param_names, ['boosh1', 'boosh2']);
       })
       .should('append route to application.routes object', function() {
