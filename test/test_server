@@ -9,7 +9,7 @@ class SammyTest < Sinatra::Application
 
   get '/' do
     content_type 'text/html'
-    read_relative_file 'sammy.html'
+    read_relative_file 'index.html'
   end
 
   get /\/(lib|vendor)\/(.*)/ do

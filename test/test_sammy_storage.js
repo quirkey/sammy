@@ -65,7 +65,7 @@
           this.store.set('foo', 'bar');
           this.store.set('blurgh', {boosh: 'blurgh'});
           this.store.set(123, {boosh: 'blurgh'});
-          deepEqual(this.store.keys(), ['foo', 'blurgh', '123'], "keys were " + this.store.keys().toString());
+          deepEqual(this.store.keys(), ['foo', 'blurgh', '123']);
           deepEqual(this.other_store.keys(), []);
         })
         .should('clear all values', function() {
