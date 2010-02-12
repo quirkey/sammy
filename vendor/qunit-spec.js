@@ -1,9 +1,9 @@
 (function($) {
 
-  jqUnit.Spec = function(name) {
+  QUnit.Spec = function(name) {
     this.before = false;
     this.after = false;
-    jqUnit.module(name);
+    QUnit.module(name);
   };
 
 
@@ -15,24 +15,24 @@
     var args = $.makeArray(arguments),
     // configuration function
       config = (args.length > 0 && args[args.length - 1]['before']) ? args.pop() : {},
-      spec = new jqUnit.Spec(args.join(' '));
+      spec = new QUnit.Spec(args.join(' '));
     spec['before'] = config['before'] || config['setup'];
     spec['after']  = config['after'] || config['teardown'];
     return spec;
   }
 
 
-  $.extend(jqUnit.Spec.prototype, {
+  $.extend(QUnit.Spec.prototype, {
     
     // RSpec style test definition
     it: function(name, callback, nowait) {
       var spec = this;
       var spec_context = {};
-      jqUnit.test(name, function() { 
+      QUnit.test(name, function() { 
         if (spec.before) spec.before.apply(spec_context);
         callback.apply(spec_context, [this]); 
         if (spec.after) spec.after.apply(spec_context);
-      }, nowait);
+      });
       return spec;
     },
 
@@ -44,7 +44,7 @@
     
     pending: function(name, callback, nowait) {
       name = '<span style="color: #EB8531;" class="pending">DEFERRED: ' + name + '</span>';
-      jqUnit.test(name, function () { jqUnit.ok(true) }, nowait);
+      QUnit.test(name, function () { QUnit.ok(true) }, nowait);
       return this;
     },
     
@@ -55,24 +55,24 @@
   });
 
 
-  $.extend(jqUnit, {
+  $.extend(QUnit, {
     // aliases for describe
     describe: describe,
     context: describe,
 
     // asserts that the method is defined (like respond_to?)
     defined: function(object, method) {
-      return jqUnit.ok(typeof object[method] == 'function', method + 'is not defined on' + object);
+      return QUnit.ok(QUnit.is('Function', object[method]), method + ' is not defined on ' + object);
     },
 
     // asserts that the object is of a certain type
     isType: function(object, type) {
-      return jqUnit.equals(object.constructor, type);
+      return ok(QUnit.is(type, object), "expected " + object + " to be a " + type);
     },
     
     // assert a string matches a regex
     matches: function(matcher, string, message) {
-      return jqUnit.ok(!!matcher.test(string), "expected: " + string + "match(" + matcher.toString() + ")");
+      return QUnit.ok(!!matcher.test(string), "expected: " + string + "match(" + matcher.toString() + ")");
     },
     
     // assert that a matching error is raised
@@ -86,11 +86,11 @@
       }
       message = "expected error: " + expected_error.toString() + ", actual error:" + error.toString();
       if (expected_error.constructor == RegExp) {
-        return jqUnit.matches(expected_error, error.toString(), message);
+        return QUnit.matches(expected_error, error.toString(), message);
       } else if (expected_error.constructor == String) {
-        return jqUnit.equals(expected_error, error.toString(), message);
+        return QUnit.equals(expected_error, error.toString(), message);
       } else {
-        return jqUnit.equals(expected_error, error, message);
+        return QUnit.equals(expected_error, error, message);
       }
     },
     
@@ -102,23 +102,23 @@
         error = e;
       }
       message = "expected: no errors, actual error: " + error.toString();
-      jqUnit.equals('', error, message);
+      QUnit.equals('', error, message);
     },
     
     soon: function(callback, context, secs, many_expects) {
       if (typeof context == 'undefined') context = this;
       if (typeof secs == 'undefined') secs = 1;
       if (typeof many_expects == 'undefined') many_expects = 1;
-      jqUnit.expect(many_expects);
-      jqUnit.stop();
+      QUnit.expect(many_expects);
+      QUnit.stop();
       setTimeout(function() {
         callback.apply(context);
-        jqUnit.start();
+        QUnit.start();
       }, secs * 500);
     },
     
     flunk: function() {
-      jqUnit.ok(false, 'FLUNK');
+      QUnit.ok(false, 'FLUNK');
     }
 
   });
