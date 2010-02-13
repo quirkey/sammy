@@ -1,3 +1,28 @@
+== 0.5.0(pre) [?]
+
+- Changed: Tests are now on top of qunit (http://github.com/jquery/qunit). jQunit has been unmaintained for a while. Also, removed dependency on external
+jqunit-spec repo.
+- Changed: Updated to latest mustache.js (0.2.2) in Sammy.Mustache
+- Fixed: Only fire KVO once when setting a Sammy.Store key
+- Fixed: Ensure all keys are strings in Sammy.Store.
+- New: Sammy.Mustache can now accept Mustache partials as a third argument or passed as {partials:} in data. (thanks dpree)
+- New: around filters with Sammy.Application#around(). Wraps an entire route execution path in a function()
+- New: Sammy.Application#contextMatchesOptions() as a method for filtering which before() filters to process when running a route.
+- New: test_server is a simple Sinatra/vegas app for running the tests on a local ruby server (allows for testing functionality that requires the http:// protocol)
+- New: Sammy.Store#load(key, path) loads file at path into key
+- New:  partial() will now iterate over an array of data, calling the callback for each element, or appending the collected result.
+- Changed: Removed .extend() and .clone() from Sammy.Object (unused)
+- Changed: Sammy now requires jQuery >= 1.4.1
+- Changed: Forms bound to post/put/delete routes no longer have to be manually re-bound with triggering('changed'). The application listens for 'submit' events on forms within the context of the element_selector instead. (Relies on the submit bubbling in jQuery 1.4.1)
+- New: route() takes the psuedo-verb 'any' which appends the path/callback to all the verbs. Also, added the shortcut method any(). If only a path and callback are supplied to route(), the verb is assumed to be 'any'.
+- New: Passing a string as the callback argument to route() looks up that method on the application.
+- New: Sammy.Application#mapRoutes() takes an array of routes (as arrays of arguments) and adds them to the app.
+- New: Sammy() is a function itself which provides an easy hook for looking up/creating/and extending applications with the element_selector as the unique identifier.
+- Changed: $.sammy is an alias for Sammy() instead of new Sammy.Application
+- New: All application modifying methods return the application instance allowing for jQuery-esque chaining for app creation.
+- Fixed: refesh() with new location proxies (Thanks ZhangJinzhu)
+- New: The application level setting 'template_engine' lets you define a default template engine to fall back on for partial() rendering regardless of extension.
+
 == 0.4.1 [01/11/10]
 
 New:
