@@ -577,7 +577,6 @@
         this.app.run('#/');
         window.location.hash = '#/';
         soon(function() {
-          console.log('context', context);
           equal(context.after.params['belch'], 'burp');
           context.app.unload();
         }, this, 5, 1);
