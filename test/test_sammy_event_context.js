@@ -71,7 +71,7 @@
       })
       .should('pass contents to callback', function() {
         var contents = '';
-        this.context.partial('fixtures/partial.html', function(data) { contents = data; });
+        this.context.partial('fixtures/e.html', function(data) { contents = data; });
         soon(function () {
           equal(contents, '<div class="test_partial">PARTIAL</div>');
         }, this, 2);

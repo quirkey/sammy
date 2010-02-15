@@ -42,7 +42,12 @@ if paths.empty?
   raise 'No paths specified'
 else
   file = ""
-  paths.each {|p| file << File.read(p) }
+  paths.each {|p| 
+    f = File.read(p) 
+    if f !~ /^\/\/\sdeprecated/
+      file << f
+    end
+  }
 end
 
 # klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+([A-Z][\w\d\.]+)\.extend\(/
