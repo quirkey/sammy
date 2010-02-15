@@ -8,6 +8,7 @@
              this.cache('mynumcache', 3);
            });
            this.other_app = new Sammy.Application(function() {
+             this.element_selector = '#main';
              this.use(Sammy.Cache);
              this.cache('mycache', 'not my value');
              this.cache('mynumcache', 7);
@@ -25,26 +26,25 @@
          equal(this.app.cache('mycache'), 'my new value');
        })
        .should('run callback only if value is not set', function() {
-         var context = null;
-         var run     = false;
+         var inner_context = null;
+         var was_run     = false;
          this.app.cache('mycache', function() {
-           run = true;
-           context = this;
+           was_run = true;
            return 'new value';
          });
-         equal(run, false);
-         equal(context, null);
+         equal(was_run, false);
+         equal(inner_context, null);
          this.app.cache('mynewcache', function() {
-           run = true;
-           context = this;
+           was_run = true;
+           inner_context = this;
            return 'new value';
          });
-         equal(run, true);
-         equal(context, this.app);
-         equal(this.app.cache('mynewcache'), 'new value');
+         equal(was_run, true);
+         deepEqual(inner_context, this.app.store('cache'), "The inner context should equal the store");
+         equal(this.app.cache('mynewcache'), 'new value', "Should set the new value");
        })
        .should('clear specific cache value', function() {
-         this.app.clearCache('mycache');
+         this.app.store('cache').clear('mycache');
          equal(typeof this.app.cache('mycache'), 'undefined')
        });
        

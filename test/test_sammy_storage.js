@@ -30,7 +30,7 @@
           equal(this.store.name, 'test_store');
         })
         .should('set the element', function() {
-          equal(this.store.$element[0], $('#main')[0]);
+          equal(this.store.element, '#main');
         })
         .should('check if a key exists', function() {
           ok(!this.store.exists('foo'));

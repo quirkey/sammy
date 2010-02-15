@@ -121,7 +121,7 @@
         app.use(Sammy.Cache);
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.html', function(data) { 
-          contents = data; 
+          contents = data;
         });
         soon(function () {
           equal(contents, '<div class="test_partial">PARTIAL</div>');
