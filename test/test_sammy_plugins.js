@@ -4,12 +4,14 @@
          before: function() {
            this.app = new Sammy.Application(function() {
              this.use(Sammy.Cache);
+             this.clearCache();
              this.cache('mycache', 'my value');
              this.cache('mynumcache', 3);
            });
            this.other_app = new Sammy.Application(function() {
              this.element_selector = '#main';
              this.use(Sammy.Cache);
+             this.clearCache();
              this.cache('mycache', 'not my value');
              this.cache('mynumcache', 7);
            });
@@ -45,7 +47,7 @@
        })
        .should('clear specific cache value', function() {
          this.app.store('cache').clear('mycache');
-         equal(typeof this.app.cache('mycache'), 'undefined')
+         ok(!this.app.cache('mycache'))
        });
        
       

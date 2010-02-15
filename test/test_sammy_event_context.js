@@ -71,7 +71,7 @@
       })
       .should('pass contents to callback', function() {
         var contents = '';
-        this.context.partial('fixtures/e.html', function(data) { contents = data; });
+        this.context.partial('fixtures/partial.html', function(data) { contents = data; });
         soon(function () {
           equal(contents, '<div class="test_partial">PARTIAL</div>');
         }, this, 2);
@@ -119,9 +119,10 @@
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
         app.use(Sammy.Template);
         app.use(Sammy.Cache);
+        app.clearCache();
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.html', function(data) { 
-          contents = data;
+          contents = data; 
         });
         soon(function () {
           equal(contents, '<div class="test_partial">PARTIAL</div>');
@@ -137,6 +138,7 @@
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
         app.use(Sammy.Template);
         app.use(Sammy.Cache);
+        app.clearCache();
         app.cache_partials = false;
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.html', function(data) { 
