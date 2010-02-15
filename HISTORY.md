@@ -1,8 +1,9 @@
-== 0.5.0(pre) [?]
+== 0.5.0 [02/15/10]
 
 New:
 
-- Sammy.Mustache can now accept Mustache partials as a third argument or passed as {partials:} in data. (thanks dpree)
+- Sammy.Haml is a plugin wrapper around haml-js that provides client side rendering of Haml templates (Thanks Tim Caswell!)
+- Sammy.Mustache can now accept Mustache partials as a third argument or passed as {partials:} in data. (thanks dpree!)
 - around filters with Sammy.Application#around(). Wraps an entire route execution path in a function()
 - Sammy.Application#contextMatchesOptions() as a method for filtering which before() filters to process when running a route.
 - test_server is a simple Sinatra/vegas app for running the tests on a local ruby server (allows for testing functionality that requires the http:// protocol)
@@ -17,6 +18,7 @@ New:
 
 Changed:
 
+- the separate Sammy.Cache plugin is now deprecated in favor of one included/built-upon Sammy.Storage. It is still in the repository, but will be removed completely in 1.0
 - Tests are now on top of qunit (http://github.com/jquery/qunit). jQunit has been unmaintained for a while. Also, removed dependency on external jqunit-spec repo.
 - Updated to latest mustache.js (0.2.2) in Sammy.Mustache
 - Removed .extend() and .clone() from Sammy.Object (unused)
@@ -28,7 +30,7 @@ Fixed:
 
 - Only fire KVO once when setting a Sammy.Store key
 - Ensure all keys are strings in Sammy.Store.
-- refesh() with new location proxies (Thanks ZhangJinzhu)
+- refesh() with new location proxies (Thanks ZhangJinzhu!)
 
 
 == 0.4.1 [01/11/10]

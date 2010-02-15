@@ -94,7 +94,7 @@ task :update_version => :version do
   Dir['site/**/*.*'].each do |file|
     File.open(file, 'r+') do |f|
       contents = f.read
-      contents.gsub!(/current_version\: ([\d\.]+)/, "current_version: #{@version}")
+      contents.gsub!(/current_version\: ([\w\d\.]+)/, "current_version: #{@version}")
       f.truncate(0)
       f.rewind
       f << contents
