@@ -275,5 +275,22 @@
         equal(this.context.json({test: "123"}),"{\"test\":\"123\"}");
       });
       
+      
+      context('Sammy', 'Haml', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Haml);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should('add haml helper to context', function() {
+        ok($.isFunction(this.context.haml));
+      })
+      .should('use haml-js to render haml templates', function() {
+        var template = ".mytemplate= title";
+        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!\n</div>");
+      });
+      
     };
 })(jQuery);
