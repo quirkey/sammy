@@ -163,6 +163,13 @@
         equal(this.context.session('foo', function() {
           return "baz";
         }), 'bar');
-    });
+      })
+      .should('add a clear store helper method', function() {
+        ok($.isFunction(this.context.clearSession));
+        this.context.session('foo', 'bar')
+        equal(this.store.get('foo'), 'bar');
+        equal(this.context.clearSession());
+        ok(!this.store.get('foo'));
+      });
   };
 })(jQuery);

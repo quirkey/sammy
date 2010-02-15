@@ -43,7 +43,7 @@ desc "Automatically run something when code is changed"
 task :autotest do
   require 'find'
   files = {}
-  test_path = ENV['TEST'] || File.join(File.dirname(__FILE__), 'test', 'sammy.html')
+  test_path = ENV['TEST'] || File.join(File.dirname(__FILE__), 'test', 'index.html')
   loop do
     changed = false
     Find.find(File.dirname(__FILE__)) do |file|
@@ -68,7 +68,7 @@ end
 
 desc 'launch the test file in the browser' 
 task :test do
-  system "open #{File.join(File.dirname(__FILE__), 'test', 'sammy.html')}"
+  system "open #{File.join(File.dirname(__FILE__), 'test', 'index.html')}"
 end
 
 desc 'generate the API documentation'
