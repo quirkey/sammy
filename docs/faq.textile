@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.4.1
+current_version: 0.5.0
 nav:
   - name: Overview
     link: ../index.html
@@ -47,7 +47,7 @@ See "the API":api.html for more details.
 
 h4. How do I load views from other files?
 
-In an @EventContext@ the @partial()@ method can asynchronously load views and enact on the data, appending, replacing or parising it.
+In an @EventContext@ the @partial()@ method can asynchronously load views and enact on the data, appending, replacing or parsing it.
 
 h4. Can I run multiple apps in the same document?
 
@@ -57,7 +57,7 @@ You can also bind different applications to different elements on the page, basi
 
 {% highlight javascript %}
 
-var menu = $.sammy(function() { with(this) {
+var menu = $.sammy(function() {
   
   element_selector = '#menu';
   
@@ -65,17 +65,17 @@ var menu = $.sammy(function() { with(this) {
   
   get('#/:nav', function() { ...// show the subnav for :nav});
   
-}});
+});
 
-var main = $.sammy(function() { with(this) {
+var main = $.sammy(function() {
   
-  element_selector = '#main';
+  this.element_selector = '#main';
   
-  get('#/', function() { ... //load the index });
+  this.get('#/', function() { ... //load the index });
   
-  get('#/:nav', function() { ...// show the page coresponding to :nav});
+  this.get('#/:nav', function() { ...// show the page coresponding to :nav});
   
-}});
+});
 
 $(function() {
   menu.run();
@@ -83,7 +83,7 @@ $(function() {
 });
 {% endhighlight %}
 
-With this pattern, you can seperate the functionality for the menu and the main element, while responding to the exact same events.
+With this pattern, you can separate the functionality for the menu and the main element, while responding to the exact same events.
 
 h4. I want Sammy to do X!
 

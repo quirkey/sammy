@@ -1,51 +1,53 @@
 (function($) {
-    with(jqUnit) {
+    with(QUnit) {
       context('Sammy.Cache', 'cache', {
          before: function() {
            this.app = new Sammy.Application(function() {
-             this.use(Sammy.Cache, 'memory');
+             this.use(Sammy.Cache);
+             this.clearCache();
              this.cache('mycache', 'my value');
              this.cache('mynumcache', 3);
            });
            this.other_app = new Sammy.Application(function() {
-             this.use(Sammy.Cache, 'data');
+             this.element_selector = '#main';
+             this.use(Sammy.Cache);
+             this.clearCache();
              this.cache('mycache', 'not my value');
              this.cache('mynumcache', 7);
            });
          }
        })
        .should('retrieve values by passing name', function() {
-         equals(this.app.cache('mycache'), 'my value');
-         equals(this.other_app.cache('mycache'), 'not my value');
-         equals(this.app.cache('mynumcache'), 3);
-         equals(this.other_app.cache('mynumcache'), 7);
+         equal(this.app.cache('mycache'), 'my value');
+         equal(this.other_app.cache('mycache'), 'not my value');
+         equal(this.app.cache('mynumcache'), 3);
+         equal(this.other_app.cache('mynumcache'), 7);
        })
        .should('set values by passing value', function() {
          this.app.cache('mycache', 'my new value');
-         equals(this.app.cache('mycache'), 'my new value');
+         equal(this.app.cache('mycache'), 'my new value');
        })
        .should('run callback only if value is not set', function() {
-         var context = null;
-         var run     = false;
+         var inner_context = null;
+         var was_run     = false;
          this.app.cache('mycache', function() {
-           run = true;
-           context = this;
+           was_run = true;
            return 'new value';
          });
-         equals(run, false);
-         equals(context, null);
+         equal(was_run, false);
+         equal(inner_context, null);
          this.app.cache('mynewcache', function() {
-           run = true;
-           context = this;
+           was_run = true;
+           inner_context = this;
            return 'new value';
          });
-         equals(run, true);
-         equals(context, this.app);
-         equals(this.app.cache('mynewcache'), 'new value');
+         equal(was_run, true);
+         deepEqual(inner_context, this.app.store('cache'), "The inner context should equal the store");
+         equal(this.app.cache('mynewcache'), 'new value', "Should set the new value");
        })
        .should('clear specific cache value', function() {
-         this.app.clearCache('mycache');
-         equals(typeof this.app.cache('mycache'), 'undefined')
+         this.app.store('cache').clear('mycache');
+         ok(!this.app.cache('mycache'))
        });
        
       
@@ -67,16 +69,16 @@
        })
        .should('interpolate content', function() {
          var rendered = this.context.template('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
-         equals(rendered, '<div class="test_class">TEXT!</div>');
+         equal(rendered, '<div class="test_class">TEXT!</div>');
        })
        .should('set the context of the template to the test_context', function() {
          this.context.blurgh = 'boosh';
          var rendered = this.context.template('<div class="test_class"><%= text %> <%= blurgh %></div>', {text: 'TEXT!'});
-         equals(rendered, '<div class="test_class">TEXT! boosh</div>');
+         equal(rendered, '<div class="test_class">TEXT! boosh</div>');
        })
        .should('render templates with a lot of single quotes', function() {
          var rendered = this.context.template("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
-         equals(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+         equal(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
        })
        .should('alias the template method and thus the extension', function() {
          ok(!$.isFunction(this.alias_context.template));
@@ -103,7 +105,7 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['author'], 'Thoreau');        
+           equal(app.form_params['author'], 'Thoreau');        
            app.unload();
          }, this, 1, 2);
        })
@@ -113,8 +115,8 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['genre'][0], ['documentary']);
-           equals(app.form_params['genre'][1], ['nature']);
+           equal(app.form_params['genre'][0], ['documentary']);
+           equal(app.form_params['genre'][1], ['nature']);
            app.unload();
          }, this, 1, 3);
        })
@@ -124,8 +126,8 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['poll']['name'], 'Which beverage do you like best?');
-           equals(app.form_params['poll']['priority'], '10');
+           equal(app.form_params['poll']['name'], 'Which beverage do you like best?');
+           equal(app.form_params['poll']['priority'], '10');
            app.unload();
          }, this, 1, 3);      
        })
@@ -135,10 +137,10 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['poll']['options']['1']['id'], 'Ko5Pi');
-           equals(app.form_params['poll']['options']['1']['name'], 'Coffee');
-           equals(app.form_params['poll']['options']['2']['id'], 'Oaj5N');
-           equals(app.form_params['poll']['options']['2']['name'], 'Tea');
+           equal(app.form_params['poll']['options']['1']['id'], 'Ko5Pi');
+           equal(app.form_params['poll']['options']['1']['name'], 'Coffee');
+           equal(app.form_params['poll']['options']['2']['id'], 'Oaj5N');
+           equal(app.form_params['poll']['options']['2']['name'], 'Tea');
            app.unload();
          }, this, 1, 5);
        })
@@ -148,8 +150,8 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['poll']['options']['1']['ingredients'][0], 'Water');
-           equals(app.form_params['poll']['options']['1']['ingredients'][1], 'Coffein');
+           equal(app.form_params['poll']['options']['1']['ingredients'][0], 'Water');
+           equal(app.form_params['poll']['options']['1']['ingredients'][1], 'Coffein');
            app.unload();
          }, this, 1, 3);
        })
@@ -159,8 +161,8 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['woods']['trees'][0]['name'], 'Spruce');
-           equals(app.form_params['woods']['trees'][1]['name'], 'Maple');
+           equal(app.form_params['woods']['trees'][0]['name'], 'Spruce');
+           equal(app.form_params['woods']['trees'][1]['name'], 'Maple');
            app.unload();
          }, this, 1, 3);            
        })
@@ -170,8 +172,8 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['pages'][0]['words'][0], 'Woods');
-           equals(app.form_params['pages'][1]['words'][0], 'Money');
+           equal(app.form_params['pages'][0]['words'][0], 'Woods');
+           equal(app.form_params['pages'][1]['words'][0], 'Money');
            app.unload();
          }, this, 1, 3);      
        })
@@ -181,10 +183,10 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['music']['instruments'][0]['name'], 'Piano');
-           equals(app.form_params['music']['instruments'][0]['size'], 'big');
-           equals(app.form_params['music']['instruments'][1]['name'], 'Flute');
-           equals(app.form_params['music']['instruments'][1]['size'], 'small');
+           equal(app.form_params['music']['instruments'][0]['name'], 'Piano');
+           equal(app.form_params['music']['instruments'][0]['size'], 'big');
+           equal(app.form_params['music']['instruments'][1]['name'], 'Flute');
+           equal(app.form_params['music']['instruments'][1]['size'], 'small');
            app.unload();
          }, this, 1, 5);
        })
@@ -194,7 +196,7 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equals(app.form_params['title'], 'Walden!');
+           equal(app.form_params['title'], 'Walden!');
            app.unload();
          }, this, 1, 2);
        });
@@ -233,12 +235,17 @@
         })
         .should('interpolate content', function() {
           var rendered = this.context.mustache('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
-          equals(rendered, '<div class="test_class">TEXT!</div>');
+          equal(rendered, '<div class="test_class">TEXT!</div>');
         })
         .should('set the context of the template to the test_context', function() {
           this.context.blurgh = 'boosh';
           var rendered = this.context.mustache('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
-          equals(rendered, '<div class="test_class">TEXT! boosh</div>');
+          equal(rendered, '<div class="test_class">TEXT! boosh</div>');
+        })
+        .should('allow mustache partials by passing partials to data', function() {
+          var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: {what: 'partial'}};
+          var rendered = this.context.mustache('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
+          equal(rendered, '<div class="test_class">a partial boosh</div>');
         })
         .should('alias the mustache method and thus the extension', function() {
           ok(!$.isFunction(this.alias_context.mustache));
@@ -262,10 +269,27 @@
         ok($.isFunction(JSON.stringify));
       })
       .should('parse JSON if object is a string', function() {
-        equals(this.context.json("{\"test\":\"123\"}").test, "123");
+        equal(this.context.json("{\"test\":\"123\"}").test, "123");
       })
       .should('stringify JSON if object is an object', function() {
-        equals(this.context.json({test: "123"}),"{\"test\":\"123\"}");
+        equal(this.context.json({test: "123"}),"{\"test\":\"123\"}");
+      });
+      
+      
+      context('Sammy', 'Haml', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Haml);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should('add haml helper to context', function() {
+        ok($.isFunction(this.context.haml));
+      })
+      .should('use haml-js to render haml templates', function() {
+        var template = ".mytemplate= title";
+        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!\n</div>");
       });
       
     };

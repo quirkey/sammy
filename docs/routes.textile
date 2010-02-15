@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.4.1
+current_version: 0.5.0
 nav:
   - name: Overview
     link: ../index.html
@@ -39,7 +39,7 @@ The main building block of a Sammy application is a set of routes. A route is ma
 * A path _(#/, test/path/, #/my_path/:var)_
 * A callback _(function() {...})_
 
-_* delete is not currently supported with shortcuts, but you can still use route('delete', path, callback)_
+_* delete is aliased as @del()@ because delete is a reserved word in JavaScript_
 
 Inside the Sammy.Application block, Routes can be defined in two ways: Using @route@ directly or using the verb shortcuts.
 
@@ -52,7 +52,7 @@ route('get', '#/', function() {
 });
 {% endhighlight %}
 
-Equivilent to:
+Equivalent to:
 
 {% highlight javascript %}
 // verb(path, callback)
@@ -86,7 +86,7 @@ Would be executed when this form is submitted:
 </form>
 {% endhighlight %}
 
-If you don't want to actually sumbit the form (allow its default behavior), you must return @false@ from the matching routes callback.
+If you don't want to actually submit the form (allow its default behavior), you must return @false@ from the matching routes callback.
 
 h4. Paths
 
@@ -106,7 +106,7 @@ get(/^\/test\/123/, function() {
 });
 {% endhighlight %}
 
-Sammy also parses the path for named and un-named params. This means you can pull things like 'id's and 'slug's out of the path for dyamic parsing.
+Sammy also parses the path for named and un-named params. This means you can pull things like 'id's and 'slug's out of the path for dynamic parsing.
 
 Any string starting with @:@ in a path will be pulled out and converted to a named param.
 
@@ -120,7 +120,7 @@ get('#/by_name/:name', function() {
 
 Pointing the browser to @#/by_name/quirkey@ would give you the fabulous system prompt reading 'quirkey'. 
 
-This works with mulitple params in a single path. It does not work if you want to match strings that contain '/'. If you want that you can use Regexp and 'splat'.
+This works with multiple params in a single path. It does not work if you want to match strings that contain '/'. If you want that you can use Regexp and 'splat'.
 
 Given a Regexp route:
 
@@ -130,7 +130,7 @@ get(/\#\/by_name\/(.*)/, function() {
 });
 {% endhighlight %}
 
-Going to @#/by_name/quirkey@ will give you that same wonderful alert. However, because the regex is more lenient. @#/by_name/quirkey/boosh@ will also assign
+Going to @#/by_name/quirkey@ will give you that same wonderful alert. However, because the Regexp is more lenient. @#/by_name/quirkey/boosh@ will also assign
 @quirkey/boosh@ to splat. Using the Regexp in this way is useful for defining routes where you need more control over.
 
 h4. Callbacks
@@ -142,7 +142,7 @@ Inside of the callback, the @this@ is a new @Sammy.EventContext@. Event context 
 For example, you can access the @params@, the current path (@path@), etc. More importantly you can run any jQuery methods or methods of the EventContext like @template@, @partial@, @redirect@, etc.
 
 As of Sammy 0.3.0, the context is also the first argument to the callback. This prevents the need to do (Var) this
-These are equivilent:
+These are equivalent:
 
 {% highlight javascript %}
 get('#/by_name/:name', function() {

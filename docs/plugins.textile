@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.4.1
+current_version: 0.5.0
 nav:
   - name: Overview
     link: ../index.html
@@ -91,7 +91,7 @@ var app = $.sammy(function() {
 });
 {% endhighlight %}
 
-Here we defined a slightly more advanced plugin. Notice, the plugin function takes two extra arguments, @prefix@ and @suffix@. These two are evalauted with the function scope and allow us to change the behavior of the code we're including. At include time, we pass a 'BEFORE!', 'AFTER!' to _configure_ the plugin. 
+Here we defined a slightly more advanced plugin. Notice, the plugin function takes two extra arguments, @prefix@ and @suffix@. These two are evaluated with the function scope and allow us to change the behavior of the code we're including. At include time, we pass a 'BEFORE!', 'AFTER!' to _configure_ the plugin. 
 
 h4. Code Re-use
 
@@ -164,11 +164,13 @@ h4. Public Plugin Repository
 
 On top of refactoring your own code, Sammy includes a growing number of plugins that handle common extensions, like caching and client side templating. These live in the lib/plugins directory of the repository.
 
-* *Sammy.Cache*: Includes helpers for simple a caching mechanism.
 * *Sammy.Template*: Extracted from Sammy's core this is a wrapper around John Resig's simple templating engine and Greg Borenstein's $.srender
 * *Sammy.NestedParams*: Parses form submissions that have nested param style names like Rack/Rails.
+* *Sammy.Storage/Sammy.Session/Sammy.Cache*: Unified client side key/value store with multiple backends, including HTML5 Storage and Cookies
+* *Sammy.Mustache*: Wrapper around "Mustache.js":http://github.com/janl/mustache.js for rendering mustache templates.
+* *Sammy.Haml*: Wrapper around "haml-js":http://github.com/creationix/haml-js for client side rendering of Haml templates.
 
-If you have a plugin that you'd like to be included in the public repository here are some guidlines:
+If you have a plugin that you'd like to be included in the public repository here are some guidelines:
 
 * *All official plugins should extend from the Sammy. namespace (e.g. Sammy.Template, Sammy.Blah, etc.)*. This is not only to ensure uniformity, but also to limit the amount of code that is in the global scope. Sammy itself only adds Sammy. and $.sammy. 
 * *The plugin should be wrapped in a closure and variables should be defined in the closure's scope*. Again, this is to prevent global scope leak and possible collisions.

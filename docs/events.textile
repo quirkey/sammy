@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.4.1
+current_version: 0.5.0
 nav:
   - name: Overview
     link: ../index.html
@@ -54,7 +54,7 @@ h4. Trigger
 
 The other side of events is @trigger()@ which trigger's the custom events you've defined. @trigger()@ works within both the context of the app and other events/routes.
 
-These triggers are equivelent:
+These triggers are equivalent:
 
 {% highlight javascript %}
 var app = $.sammy(function() {
@@ -89,7 +89,7 @@ With this example, taking our browser to @#/@ would fire the event @'test'@ pass
 
 h4. Pre-defined Events
 
-Sammy application has a number of predefined events that are fired throughout an app's life cycle. Its often useful to bind/listen to these existing events in order to invoke functionality at paticular points. 
+Sammy application has a number of predefined events that are fired throughout an app's life cycle. Its often useful to bind/listen to these existing events in order to invoke functionality at particular points. 
 
 The most common use case is listening to @run@. run is the first event fired in the apps lifecycle and can be useful for establishing a connection to a database, build out a list of documents, etc.
 
