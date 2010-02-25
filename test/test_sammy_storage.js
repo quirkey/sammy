@@ -79,8 +79,8 @@
         })
         .should('fire events on get and set', function() {
           var fired = false;
-          $('#main').bind('set-test_store.foo', function(e, key, value) {
-            fired = value;
+          $('#main').bind('set-test_store.foo', function(e, data) {
+            fired = data.value;
           });
           this.store.set('foo', 'bar');
           soon(function() {
