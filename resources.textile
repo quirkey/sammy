@@ -6,15 +6,6 @@ current_version: 0.5.0
 nav:
   - name: Overview 
     link: index.html
-    sub:
-      - name: What
-        link: "#what"
-      - name: Why
-        link: "#why"
-      - name: Basics
-        link: "#usage"
-      - name: More!
-        link: "#more"
   - name: Installation
     link: install.html
   - name: Documentation
