@@ -330,15 +330,11 @@
     
     // An array of the default events triggered by the 
     // application during its lifecycle
-    APP_EVENTS: ['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect'],
+    APP_EVENTS: ['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error','check-form-submission','redirect'],
     
     _last_route: null,
     _running: false,
-    
-    // On <tt>run()</tt> the application object is stored in a <tt>$.data</tt> entry
-    // assocciated with the application's <tt>$element()</tt>
-    data_store_name: 'sammy-app',
-    
+        
     // Defines what element the application is bound to. Provide a selector 
     // (parseable by <tt>jQuery()</tt>) and this will be used by <tt>$element()</tt>
     element_selector: 'body',
@@ -346,9 +342,9 @@
     // When set to true, logs all of the default events using <tt>log()</tt>
     debug: false,
     
-    // When set to false, will throw a javascript error when a route is invoked
-    // and can not be found.
-    silence_404: true,
+    // When set to true, and the error() handler is not overriden, will actually
+    // raise JS errors in routes (500) and when routes can't be found (404)
+    raise_errors: false,
     
     // The time in milliseconds that the URL is queried for changes
     run_interval_every: 50, 
@@ -420,11 +416,11 @@
         plugin.apply(this, args);
       } catch(e) {
         if (typeof plugin == 'undefined') {
-          throw("Error: called use() but plugin is not defined");
+          this.error("Plugin Error: called use() but plugin is not defined", e);
         } else if (!$.isFunction(plugin)) {
-          throw("Error: called use() but '" + plugin.toString() + "' is not a function");
+          this.error("Plugin Error: called use() but '" + plugin.toString() + "' is not a function", e);
         } else {
-          throw(e);
+          this.error("Plugin Error", e);
         }
       }
       return this;
@@ -540,7 +536,7 @@
     // A unique event namespace defined per application.
     // All events bound with <tt>bind()</tt> are automatically bound within this space.
     eventNamespace: function() {
-      return [this.data_store_name, this.namespace].join('-');
+      return ['sammy-app', this.namespace].join('-');
     },
     
     // Works just like <tt>jQuery.fn.bind()</tt> with a couple noteable differences.
@@ -794,8 +790,6 @@
       
       this.trigger('run', {start_url: start_url});
       this._running = true;
-      // set data for app
-      this.$element().data(this.data_store_name, this);
       // set last location
       this.last_location = null;
       if (this.getLocation() == '' && typeof start_url != 'undefined') {
@@ -834,8 +828,6 @@
       this.location_proxy.unbind();
       // unbind form submits
       this.$element().unbind('submit').removeClass(app.eventNamespace());
-      // clear data
-      this.$element().removeData(this.data_store_name);
       // unbind all events
       $.each(this.listeners.toHash() , function(name, listeners) {
         $.each(listeners, function(i, listener_callback) {
@@ -891,8 +883,9 @@
     // First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the 
     // possible URL params and then invokes the route's callback within a new
     // <tt>Sammy.EventContext</tt>. If the route can not be found, it calls 
-    // <tt>notFound()</tt> and raise an error. If <tt>silence_404</tt> is <tt>true</tt>
-    // this error will be caught be the internal methods that call <tt>runRoute</tt>.
+    // <tt>notFound()</tt>. If <tt>raise_errors</tt> is set to <tt>true</tt> and 
+    // the <tt>error()</tt> has not been overriden, it will throw an actual JS
+    // error. 
     //
     // You probably will never have to call this directly.
     //
@@ -909,7 +902,14 @@
     runRoute: function(verb, path, params) {
       var app = this, 
           route = this.lookupRoute(verb, path),
-          context, wrapped_route, arounds, around, befores, before, callback_args;
+          context, 
+          wrapped_route, 
+          arounds, 
+          around, 
+          befores, 
+          before, 
+          callback_args, 
+          final_returned;
 
       this.log('runRoute', [verb, path].join(' '));
       this.trigger('run-route', {verb: verb, path: path, params: params});
@@ -965,7 +965,12 @@
           var last_wrapped_route = wrapped_route;
           wrapped_route = function() { return around.apply(context, [last_wrapped_route]); };
         });
-        return wrapped_route();
+        try {
+          final_returned = wrapped_route();
+        } catch(e) {
+          this.error(['500 Error', verb, path].join(' '), e);
+        }
+        return final_returned;
       } else {
         this.notFound(verb, path);
       }
@@ -1075,35 +1080,41 @@
       return this.$element().html(content);
     },
     
-    // This thows a '404 Not Found' error. Override this method to provide custom
+    // This thows a '404 Not Found' error by invoking <tt>error()</tt>. 
+    // Override this method or <tt>error()</tt> to provide custom
     // 404 behavior (i.e redirecting to / or showing a warning)
     notFound: function(verb, path) {
-      this.trigger('error-404', {verb: verb, path: path});
-      throw('404 Not Found ' + verb + ' ' + path);
+      return this.error(['404 Not Found', verb, path].join(' '));
+    },
+    
+    // The base error handler takes a string <tt>message</tt> and an <tt>Error</tt>
+    // object. If <tt>raise_errors</tt> is set to <tt>true</tt> on the app level,
+    // this will re-throw the error to the browser. Otherwise it will send the error
+    // to <tt>log()</tt>. Override this method to provide custom error handling
+    // e.g logging to a server side component or displaying some feedback to the
+    // user.
+    error: function(message, original_error) {
+      if (!original_error) { original_error = new Error(); }
+      original_error.message = [message, original_error.message].join(' ');
+      this.trigger('error', {message: original_error.message, error: original_error});
+      if (this.raise_errors) {
+        throw(original_error);
+      } else {
+        this.log(original_error.message, original_error);
+      }
     },
     
     _checkLocation: function() {
       var location, returned;
-      try { // try, catch 404s
-        // get current location
-        location = this.getLocation();
-        // compare to see if hash has changed
-        if (location != this.last_location) {
-          // lookup route for current hash
-          returned = this.runRoute('get', location);
-        }
-        // reset last location
-        this.last_location = location;
-      } catch(e) {
-        // reset last location
-        this.last_location = location;
-        // unless the error is a 404 and 404s are silenced
-        if (e.toString().match(/^404/) && this.silence_404) {
-          return returned;
-        } else {
-          throw(e);
-        }
+      // get current location
+      location = this.getLocation();
+      // compare to see if hash has changed
+      if (location != this.last_location) {
+        // lookup route for current hash
+        returned = this.runRoute('get', location);
       }
+      // reset last location
+      this.last_location = location;
       return returned;
     },
     
@@ -1116,15 +1127,7 @@
       if (!verb || verb == '') { verb = 'get'; }
       this.log('_checkFormSubmission', $form, path, verb);
       params = $.extend({}, this._parseFormParams($form), {'$form': $form});
-      try { // catch 404s
-        returned = this.runRoute(verb, path, params);
-      } catch(e) {
-        if (e.toString().match(/^404/) && this.silence_404) {
-          return true;
-        } else {
-          throw(e);
-        }
-      }
+      returned = this.runRoute(verb, path, params);
       return (typeof returned == 'undefined') ? false : returned;
     },
     

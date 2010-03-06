@@ -1,5 +1,6 @@
 ;(function($) {
   var app = $.sammy('#main', function() {
+    this.debug = true;
     this.use(Sammy.Cache);
     this.use(Sammy.Template, 'erb');
     
