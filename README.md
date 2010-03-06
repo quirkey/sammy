@@ -41,7 +41,7 @@ This will guarantee that the DOM is loaded before we try to apply functionality 
 
 ## Dependencies
 
-Sammy requires jQuery >= 1.3.2
+Sammy requires jQuery >= 1.4.1
 Get it from: [http://jquery.com](http://jquery.com)
 
 ## More!
@@ -72,6 +72,10 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * Jason Davies / jasondavies
 * Russell Jones / CodeOfficer
 * Geoff Longman 
+* Jens Bissinger / dpree
+* Tim Caswell / creationix
+* Mark Needham 
+* SamDeLaGarza
   
 ## License
 
