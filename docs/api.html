@@ -1,82 +1,32 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-  <title>.:  Sammy - Documentation - API :: Quirkey.com :: Code :: :: Quirkey NYC, LLC :: Aaron Quint :: Web Developer :: Brooklyn, NY :.</title>
-  <link rel="stylesheet" href="/stylesheets/quirkey.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/pages.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/api.css" type="text/css" media="screen" charset="utf-8" />
-  <script src="/javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/quirkey.js" type="text/javascript" charset="utf-8"></script>
-</head>
-
-<body>
-  <a href="http://github.com/quirkey/sammy"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:50;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub" /></a>
-  <div id="container">
-    <div id="header_holder">
-      <div id="header">
-        <div id="logo" class="quirkey_nav_open"><img src="/images/logo.png" width="224" height="215" alt="Logo"/></div>
-        <h1>Quirkey<a href="/" class="q_code">Code</a></h1>
-        <div id="quirkey_nav" style="display: none;">
-          <h1 class="quirkey_portfolio">Quirkey<a href="http://portfolio.quirkey.com/" class="q_portfolio">Portfolio</a><span class="description">Selected work.</span></h1>
-          <h1 class="quirkey_log">Quirkey<a href="http://log.quirkey.com/" class="q_log">Log</a><span class="description">Up-to-the-minute updates from the interweb.</span></h1>
-          <h1 class="quirkey_blog">Quirkey<a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a><span class="description">Articles, Tutorials, etc.</span></h1>
-          <h1 class="quirkey_com">Quirkey<a href="http://www.quirkey.com" class="q_com">.com</a><span class="description">The Lobby; General Information.</span></h1>
-        </div>
-      </div>
-      <div class="quirkey_nav_close" style="display:none;"><a href="#">^</a></div>
-    </div>
-    <div id="main">
-      
-      <div id="latest_version"><a href="#installing">0.5.0</a></div>
-      
-      
-      <ul id="pagenav">
-        
-        <li>
-            <a href="../index.html">Overview</a>
-            
-        </li>
-        
-        <li>
-            <a href="../install.html">Installation</a>
-            
-        </li>
-        
-        <li>
-            <a href="index.html">Documentation</a>
-            
-            <ul>
-              
-                <li><a href="routes.html">Routes</a></li>
-              
-                <li><a href="events.html">Events</a></li>
-              
-                <li><a href="plugins.html">Plugins</a></li>
-              
-                <li><a href="faq.html">FAQ</a></li>
-              
-                <li><a href="api.html">API</a></li>
-              
-            </ul>
-            
-        </li>
-        
-        <li>
-            <a href="../tutorials/index.html">Tutorials</a>
-            
-        </li>
-        
-        <li>
-            <a href="../resources.html">Resources</a>
-            
-        </li>
-        
-      </ul>
-      
-      <div id="content">
-        <h2 class="project_name">Sammy</h2>
+---
+layout: quirkey_code_multi
+title: Sammy - Documentation - API
+github_name: sammy
+current_version: 0.5.1
+nav:
+  - name: Overview
+    link: ../index.html
+  - name: Installation
+    link: ../install.html
+  - name: Documentation
+    link: index.html
+    sub:
+      - name: Routes
+        link: routes.html
+      - name: Events
+        link: events.html
+      - name: Plugins
+        link: plugins.html
+      - name: FAQ
+        link: faq.html
+      - name: API
+        link: api.html
+  - name: Tutorials
+    link: ../tutorials/index.html
+  - name: Resources
+    link: ../resources.html
+---
+<h2 class="project_name">Sammy</h2>
 <h2>Documentation</h2>
 <h3>API</h3>
 <div class='api'>
@@ -174,18 +124,17 @@
     added to that selector.
     </p>
     <h3>Example</h3>
-    <div class="highlight"><pre><code class="javascript">     <span class="c">// returns the app at #main or a new app</span>
-     <span class="nx">Sammy</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">)</span>
+    {% highlight javascript %}
+     // returns the app at #main or a new app
+     Sammy('#main')
     
-     <span class="c">// equivilent to &quot;new Sammy.Application&quot;, except appends to apps</span>
-     <span class="nx">Sammy</span><span class="p">();</span>
-     <span class="nx">Sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+     // equivilent to "new Sammy.Application", except appends to apps
+     Sammy();
+     Sammy(function() { ... });
     
-     <span class="c">// extends the app at &#39;#main&#39; with function.</span>
-     <span class="nx">Sammy</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-    
-</code></pre>
-</div></div></div>
+     // extends the app at '#main' with function.
+     Sammy('#main', function() { ... });
+    {% endhighlight %}</div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.addLogger'>
     <h2>
@@ -312,11 +261,10 @@
       Renders a simple HTML version of this Objects attributes. Does not render
       functions. For example. Given this Sammy.Object:
       </p>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nb">Object</span><span class="p">({</span><span class="nx">first_name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="o">,</span> <span class="nx">last_name</span><span class="o">:</span> <span class="s1">&#39;Davis Jr.&#39;</span><span class="p">});</span>
-         <span class="nx">s</span><span class="p">.</span><span class="nx">toHTML</span><span class="p">()</span> <span class="c">//=&gt; &#39;&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;&#39;</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+         var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
+         s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Object-toHash'>
       <h4>
         toHash
@@ -484,9 +432,6 @@
         <a href='#Sammy.Application-any'>any</a>
       </li>
       <li>
-        <a href='#Sammy.Application-data_store_name'>data_store_name</a>
-      </li>
-      <li>
         <a href='#Sammy.Application-debug'>debug</a>
       </li>
       <li>
@@ -508,10 +453,10 @@
         <a href='#Sammy.Application-put'>put</a>
       </li>
       <li>
-        <a href='#Sammy.Application-run_interval_every'>run_interval_every</a>
+        <a href='#Sammy.Application-raise_errors'>raise_errors</a>
       </li>
       <li>
-        <a href='#Sammy.Application-silence_404'>silence_404</a>
+        <a href='#Sammy.Application-run_interval_every'>run_interval_every</a>
       </li>
       <li>
         <a href='#Sammy.Application-template_engine'>template_engine</a>
@@ -522,7 +467,7 @@
       <h4>
         APP_EVENTS
         =
-        <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error-404','check-form-submission','redirect']</span>
+        <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error','check-form-submission','redirect']</span>
       </h4><div class='doc'><p>
       An array of the default events triggered by the application during its
       lifecycle
@@ -542,15 +487,6 @@
         <span>_routeWrapper('any')</span>
       </h4><div class='doc'><p>
       Alias for route(&#8216;any&#8217;, &#8230;)
-      </p></div></div>
-    <div class='attr' id='Sammy.Application-data_store_name'>
-      <h4>
-        data_store_name
-        =
-        <span>'sammy-app'</span>
-      </h4><div class='doc'><p>
-      On <tt>run()</tt> the application object is stored in a <tt>$.data</tt>
-      entry assocciated with the application&#8217;s <tt>$element()</tt>
       </p></div></div>
     <div class='attr' id='Sammy.Application-debug'>
       <h4>
@@ -613,6 +549,15 @@
       </h4><div class='doc'><p>
       Alias for route(&#8216;put&#8217;, &#8230;)
       </p></div></div>
+    <div class='attr' id='Sammy.Application-raise_errors'>
+      <h4>
+        raise_errors
+        =
+        <span>false</span>
+      </h4><div class='doc'><p>
+      When set to true, and the error() handler is not overriden, will actually
+      raise JS errors in routes (500) and when routes can&#8217;t be found (404)
+      </p></div></div>
     <div class='attr' id='Sammy.Application-run_interval_every'>
       <h4>
         run_interval_every
@@ -620,15 +565,6 @@
         <span>50</span>
       </h4><div class='doc'><p>
       The time in milliseconds that the URL is queried for changes
-      </p></div></div>
-    <div class='attr' id='Sammy.Application-silence_404'>
-      <h4>
-        silence_404
-        =
-        <span>true</span>
-      </h4><div class='doc'><p>
-      When set to false, will throw a javascript error when a route is invoked
-      and can not be found.
       </p></div></div>
     <div class='attr' id='Sammy.Application-template_engine'>
       <h4>
@@ -666,6 +602,9 @@
       </li>
       <li>
         <a href='#Sammy.Application-contextMatchesOptions'>contextMatchesOptions</a>
+      </li>
+      <li>
+        <a href='#Sammy.Application-error'>error</a>
       </li>
       <li>
         <a href='#Sammy.Application-eventNamespace'>eventNamespace</a>
@@ -769,39 +708,38 @@
       The most common use case for around() is calling a <em>possibly</em> async
       function and executing the route within the functions callback:
       </p>
-      <div class="highlight"><pre><code class="javascript">       <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
       
-         <span class="kd">var</span> <span class="nx">current_user</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+         var current_user = false;
       
-         <span class="kd">function</span> <span class="nx">checkLoggedIn</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-           <span class="c">// /session returns a JSON representation of the logged in user</span>
-           <span class="c">// or an empty object</span>
-           <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">current_user</span><span class="p">)</span> <span class="p">{</span>
-             <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;/session&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
-               <span class="k">if</span> <span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">login</span><span class="p">)</span> <span class="p">{</span>
-                 <span class="c">// show the user as logged in</span>
-                 <span class="nx">current_user</span> <span class="o">=</span> <span class="nx">json</span><span class="o">;</span>
-                 <span class="c">// execute the route path</span>
-                 <span class="nx">callback</span><span class="p">();</span>
-               <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                 <span class="c">// show the user as not logged in</span>
-                 <span class="nx">current_user</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-                 <span class="c">// the context of aroundFilters is an EventContext</span>
-                 <span class="k">this</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#/login&#39;</span><span class="p">);</span>
-               <span class="p">}</span>
-             <span class="p">});</span>
-           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-             <span class="c">// execute the route path</span>
-             <span class="nx">callback</span><span class="p">();</span>
-           <span class="p">}</span>
-         <span class="p">};</span>
+         function checkLoggedIn(callback) {
+           // /session returns a JSON representation of the logged in user
+           // or an empty object
+           if (!current_user) {
+             $.getJSON('/session', function(json) {
+               if (json.login) {
+                 // show the user as logged in
+                 current_user = json;
+                 // execute the route path
+                 callback();
+               } else {
+                 // show the user as not logged in
+                 current_user = false;
+                 // the context of aroundFilters is an EventContext
+                 this.redirect('#/login');
+               }
+             });
+           } else {
+             // execute the route path
+             callback();
+           }
+         };
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">around</span><span class="p">(</span><span class="nx">checkLoggedIn</span><span class="p">);</span>
+         this.around(checkLoggedIn);
       
-       <span class="p">});</span>
-      
-</code></pre>
-</div></div></div>
+       });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-before'>
       <h4>
         before
@@ -824,26 +762,26 @@
       before based on the route it proceeds.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">       <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
       
-         <span class="c">// will run at #/route but not at #/</span>
-         <span class="k">this</span><span class="p">.</span><span class="nx">before</span><span class="p">(</span><span class="s1">&#39;#/route&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-           <span class="c">//...</span>
-         <span class="p">});</span>
+         // will run at #/route but not at #/
+         this.before('#/route', function() {
+           //...
+         });
       
-         <span class="c">// will run at #/ but not at #/route</span>
-         <span class="k">this</span><span class="p">.</span><span class="nx">before</span><span class="p">({</span><span class="nx">except</span><span class="o">:</span> <span class="p">{</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;#/route&#39;</span><span class="p">}}</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-           <span class="k">this</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;not before #/route&#39;</span><span class="p">);</span>
-         <span class="p">});</span>
+         // will run at #/ but not at #/route
+         this.before({except: {path: '#/route'}}, function() {
+           this.log('not before #/route');
+         });
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+         this.get('#/', function() {});
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/route&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+         this.get('#/route', function() {});
       
-       <span class="p">});</span>
-      
-</code></pre>
-</div><p>
+       });
+      {% endhighlight %}
+      <p>
       See <tt>contextMatchesOptions()</tt> for a full list of supported options
       </p></div></div>
     <div class='meth' id='Sammy.Application-bind'>
@@ -910,30 +848,45 @@
       match all paths or verbs <em>except</em> those that match the options.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">      <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">()</span><span class="o">,</span>
-          <span class="nx">context</span> <span class="o">=</span> <span class="p">{</span><span class="nx">verb</span><span class="o">:</span> <span class="s1">&#39;get&#39;</span><span class="o">,</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;#/mypath&#39;</span><span class="p">};</span>
+      {% highlight javascript %}
+      var app = $.sammy(),
+          context = {verb: 'get', path: '#/mypath'};
       
-      <span class="c">// match against a path string</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="s1">&#39;#/mypath&#39;</span><span class="p">);</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="s1">&#39;#/otherpath&#39;</span><span class="p">);</span> <span class="c">//=&gt; false</span>
-      <span class="c">// equivilent to</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">only</span><span class="o">:</span> <span class="p">{</span><span class="nx">path</span><span class="o">:</span><span class="s1">&#39;#/mypath&#39;</span><span class="p">}});</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">only</span><span class="o">:</span> <span class="p">{</span><span class="nx">path</span><span class="o">:</span><span class="s1">&#39;#/otherpath&#39;</span><span class="p">}});</span> <span class="c">//=&gt; false</span>
-      <span class="c">// match against a path regexp</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="sr">/path/</span><span class="p">);</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="sr">/^path/</span><span class="p">);</span> <span class="c">//=&gt; false</span>
-      <span class="c">// match only a verb</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">only</span><span class="o">:</span> <span class="p">{</span><span class="nx">verb</span><span class="o">:</span><span class="s1">&#39;get&#39;</span><span class="p">}});</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">only</span><span class="o">:</span> <span class="p">{</span><span class="nx">verb</span><span class="o">:</span><span class="s1">&#39;post&#39;</span><span class="p">}});</span> <span class="c">//=&gt; false</span>
-      <span class="c">// match all except a verb</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">except</span><span class="o">:</span> <span class="p">{</span><span class="nx">verb</span><span class="o">:</span><span class="s1">&#39;post&#39;</span><span class="p">}});</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">except</span><span class="o">:</span> <span class="p">{</span><span class="nx">verb</span><span class="o">:</span><span class="s1">&#39;get&#39;</span><span class="p">}});</span> <span class="c">//=&gt; false</span>
-      <span class="c">// match all except a path</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">except</span><span class="o">:</span> <span class="p">{</span><span class="nx">path</span><span class="o">:</span><span class="s1">&#39;#/otherpath&#39;</span><span class="p">}});</span> <span class="c">//=&gt; true</span>
-      <span class="nx">app</span><span class="p">.</span><span class="nx">contextMatchesOptions</span><span class="p">(</span><span class="nx">context</span><span class="o">,</span> <span class="p">{</span><span class="nx">except</span><span class="o">:</span> <span class="p">{</span><span class="nx">path</span><span class="o">:</span><span class="s1">&#39;#/mypath&#39;</span><span class="p">}});</span> <span class="c">//=&gt; false</span>
-      
-</code></pre>
-</div></div></div>
+      // match against a path string
+      app.contextMatchesOptions(context, '#/mypath'); //=> true
+      app.contextMatchesOptions(context, '#/otherpath'); //=> false
+      // equivilent to
+      app.contextMatchesOptions(context, {only: {path:'#/mypath'}}); //=> true
+      app.contextMatchesOptions(context, {only: {path:'#/otherpath'}}); //=> false
+      // match against a path regexp
+      app.contextMatchesOptions(context, /path/); //=> true
+      app.contextMatchesOptions(context, /^path/); //=> false
+      // match only a verb
+      app.contextMatchesOptions(context, {only: {verb:'get'}}); //=> true
+      app.contextMatchesOptions(context, {only: {verb:'post'}}); //=> false
+      // match all except a verb
+      app.contextMatchesOptions(context, {except: {verb:'post'}}); //=> true
+      app.contextMatchesOptions(context, {except: {verb:'get'}}); //=> false
+      // match all except a path
+      app.contextMatchesOptions(context, {except: {path:'#/otherpath'}}); //=> true
+      app.contextMatchesOptions(context, {except: {path:'#/mypath'}}); //=> false
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.Application-error'>
+      <h4>
+        error
+        <span>
+          (
+          <em>message, original_error</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      The base error handler takes a string <tt>message</tt> and an
+      <tt>Error</tt> object. If <tt>raise_errors</tt> is set to <tt>true</tt> on
+      the app level, this will re-throw the error to the browser. Otherwise it
+      will send the error to <tt>log()</tt>. Override this method to provide
+      custom error handling e.g logging to a server side component or displaying
+      some feedback to the user.
+      </p></div></div>
     <div class='meth' id='Sammy.Application-eventNamespace'>
       <h4>
         eventNamespace
@@ -972,22 +925,22 @@
       helpers
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">      <span class="c">// Trivial example that adds 3 helper methods to the context dynamically</span>
-      <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+      {% highlight javascript %}
+      // Trivial example that adds 3 helper methods to the context dynamically
+      var app = $.sammy(function(app) {
       
-        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">([</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="p">]</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="o">,</span> <span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">app</span><span class="p">.</span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;helper&#39;</span> <span class="o">+</span> <span class="nx">num</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I&#39;m helper number &quot;</span> <span class="o">+</span> <span class="nx">num</span><span class="p">);</span>
-          <span class="p">});</span>
-        <span class="p">});</span>
+        $.each([1,2,3], function(i, num) {
+          app.helper('helper' + num, function() {
+            this.log("I'm helper number " + num);
+          });
+        });
       
-        <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">helper2</span><span class="p">();</span> <span class="c">//=&gt; I&#39;m helper number 2</span>
-        <span class="p">});</span>
-      <span class="p">});</span>
-      
-</code></pre>
-</div><h3>Arguments</h3>
+        this.get('#/', function() {
+          this.helper2(); //=> I'm helper number 2
+        });
+      });
+      {% endhighlight %}
+      <h3>Arguments</h3>
       <table>
       <tr><td valign="top"><tt>name</tt>:</td><td>The name of the method
       
@@ -1010,23 +963,23 @@
       whenever you&#8217;re inside of an event context (templates, routes, bind).
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      {% highlight javascript %}
+         var app = $.sammy(function() {
       
-       <span class="nx">helpers</span><span class="p">({</span>
-         <span class="nx">upcase</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
-          <span class="k">return</span> <span class="nx">text</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">toUpperCase</span><span class="p">();</span>
-         <span class="p">}</span>
-       <span class="p">});</span>
+       helpers({
+         upcase: function(text) {
+          return text.toString().toUpperCase();
+         }
+       });
       
-       <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-         <span class="c">// inside of this context I can use the helpers</span>
-         <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">upcase</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#main&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
-       <span class="p">}});</span>
+       get('#/', function() { with(this) {
+         // inside of this context I can use the helpers
+         $('#main').html(upcase($('#main').text());
+       }});
       
-         <span class="p">});</span>
-      
-</code></pre>
-</div><h3>Arguments</h3>
+         });
+      {% endhighlight %}
+      <h3>Arguments</h3>
       <table>
       <tr><td valign="top"><tt>extensions</tt>:</td><td>An object collection of functions to extend the context.
       
@@ -1069,19 +1022,18 @@
       benefit is this makes it possible/easier to load routes via remote JSON.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      {% highlight javascript %}
+         var app = $.sammy(function() {
       
-       <span class="k">this</span><span class="p">.</span><span class="nx">mapRoutes</span><span class="p">([</span>
-           <span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="o">,</span> <span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">);</span> <span class="p">}]</span><span class="o">,</span>
-           <span class="c">// strings in callbacks are looked up as methods on the app</span>
-           <span class="p">[</span><span class="s1">&#39;post&#39;</span><span class="o">,</span> <span class="s1">&#39;#/create&#39;</span><span class="o">,</span> <span class="s1">&#39;addUser&#39;</span><span class="p">]</span><span class="o">,</span>
-           <span class="c">// No verb assumes &#39;any&#39; as the verb</span>
-           <span class="p">[</span><span class="sr">/dowhatever/</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">verb</span><span class="o">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">path</span><span class="p">)}];</span>
-         <span class="p">]);</span>
-         <span class="p">})</span>
-      
-</code></pre>
-</div></div></div>
+       this.mapRoutes([
+           ['get', '#/', function() { this.log('index'); }],
+           // strings in callbacks are looked up as methods on the app
+           ['post', '#/create', 'addUser'],
+           // No verb assumes 'any' as the verb
+           [/dowhatever/, function() { this.log(this.verb, this.path)}];
+         ]);
+         })
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-notFound'>
       <h4>
         notFound
@@ -1091,8 +1043,9 @@
           )
         </span>
       </h4><div class='doc'><p>
-      This thows a &#8216;404 Not Found&#8217; error. Override this method to
-      provide custom 404 behavior (i.e redirecting to / or showing a warning)
+      This thows a &#8216;404 Not Found&#8217; error by invoking
+      <tt>error()</tt>. Override this method or <tt>error()</tt> to provide
+      custom 404 behavior (i.e redirecting to / or showing a warning)
       </p></div></div>
     <div class='meth' id='Sammy.Application-refresh'>
       <h4>
@@ -1165,13 +1118,13 @@
       binding events, etc.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span> <span class="c">// your application</span>
-         <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c">// document.ready</span>
-         <span class="nx">app</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
-      <span class="p">});</span>
-      
-</code></pre>
-</div><h3>Arguments</h3>
+      {% highlight javascript %}
+         var app = $.sammy(function() { ... }); // your application
+         $(function() { // document.ready
+         app.run();
+      });
+      {% endhighlight %}
+      <h3>Arguments</h3>
       <table>
       <tr><td valign="top"><tt>start_url</tt>:</td><td>&#8220;value&#8221;, Optionally, a String can be passed which the App will
       redirect to after the events/routes have been bound.
@@ -1190,9 +1143,9 @@
       First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
       possible URL params and then invokes the route&#8217;s callback within a
       new <tt>Sammy.EventContext</tt>. If the route can not be found, it calls
-      <tt>notFound()</tt> and raise an error. If <tt>silence_404</tt> is
-      <tt>true</tt> this error will be caught be the internal methods that call
-      <tt>runRoute</tt>.
+      <tt>notFound()</tt>. If <tt>raise_errors</tt> is set to <tt>true</tt> and
+      the <tt>error()</tt> has not been overriden, it will throw an actual JS
+      error.
       </p>
       <p>
       You probably will never have to call this directly.
@@ -1246,21 +1199,20 @@
       <tt>EventContext.partial()</tt>.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      {% highlight javascript %}
+         var app = $.sammy(function() {
       
-       <span class="c">// implements a &#39;fade out&#39;/&#39;fade in&#39;</span>
-       <span class="k">this</span><span class="p">.</span><span class="nx">swap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
-         <span class="k">this</span><span class="p">.</span><span class="nx">$element</span><span class="p">().</span><span class="nx">hide</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">content</span><span class="p">).</span><span class="nx">show</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">);</span>
-       <span class="p">}</span>
+       // implements a 'fade out'/'fade in'
+       this.swap = function(content) {
+         this.$element().hide('slow').html(content).show('slow');
+       }
       
-       <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;index.html.erb&#39;</span><span class="p">)</span> <span class="c">// will fade out and in</span>
-       <span class="p">});</span>
+       get('#/', function() {
+         this.partial('index.html.erb') // will fade out and in
+       });
       
-         <span class="p">});</span>
-      
-</code></pre>
-</div></div></div>
+         });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-toString'>
       <h4>
         toString
@@ -1332,29 +1284,28 @@
       href="http://code.quirkey.com/sammy/doc/plugins.html">code.quirkey.com/sammy/doc/plugins.html</a>
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">       <span class="kd">var</span> <span class="nx">MyPlugin</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="o">,</span> <span class="nx">prepend</span><span class="p">)</span> <span class="p">{</span>
+      {% highlight javascript %}
+       var MyPlugin = function(app, prepend) {
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
-           <span class="nx">myhelper</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
-             <span class="nx">alert</span><span class="p">(</span><span class="nx">prepend</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">text</span><span class="p">);</span>
-           <span class="p">}</span>
-         <span class="p">});</span>
+         this.helpers({
+           myhelper: function(text) {
+             alert(prepend + " " + text);
+           }
+         });
       
-       <span class="p">};</span>
+       };
       
-       <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+       var app = $.sammy(function() {
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">MyPlugin</span><span class="o">,</span> <span class="s1">&#39;This is my plugin&#39;</span><span class="p">);</span>
+         this.use(MyPlugin, 'This is my plugin');
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-           <span class="k">this</span><span class="p">.</span><span class="nx">myhelper</span><span class="p">(</span><span class="s1">&#39;and dont you forget it!&#39;</span><span class="p">);</span>
-           <span class="c">//=&gt; Alerts: This is my plugin and dont you forget it!</span>
-         <span class="p">});</span>
+         this.get('#/', function() {
+           this.myhelper('and dont you forget it!');
+           //=> Alerts: This is my plugin and dont you forget it!
+         });
       
-       <span class="p">});</span>
-      
-</code></pre>
-</div></div></div>
+       });
+      {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.EventContext'>
@@ -1372,20 +1323,20 @@
     special methods of <tt>EventContext</tt> are available.
     </p>
     <h3>Example</h3>
-    <div class="highlight"><pre><code class="javascript">     <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-       <span class="c">// The context here is this Sammy.Application</span>
-       <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/:name&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="kd">with</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-     <span class="c">// The context here is a new Sammy.EventContext</span>
-     <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sammy&#39;</span><span class="p">)</span> <span class="p">{</span>
-       <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;name.html.erb&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
-     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-       <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#/somewhere-else&#39;</span><span class="p">)</span>
-     <span class="p">}</span>
-       <span class="p">}});</span>
-     <span class="p">}});</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+     $.sammy(function() { with(this) {
+       // The context here is this Sammy.Application
+       get('#/:name', function() { with(this) {
+     // The context here is a new Sammy.EventContext
+     if (params['name'] == 'sammy') {
+       partial('name.html.erb', {name: 'Sammy'});
+     } else {
+       redirect('#/somewhere-else')
+     }
+       }});
+     }});
+    {% endhighlight %}
+    <p>
     Initialize a new EventContext
     </p>
     <h3>Arguments</h3>
@@ -1425,6 +1376,9 @@
       </li>
       <li>
         <a href='#Sammy.EventContext-redirect'>redirect</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-swap'>swap</a>
       </li>
       <li>
         <a href='#Sammy.EventContext-toString'>toString</a>
@@ -1524,39 +1478,38 @@
       <p>
       There are a couple different ways to use <tt>partial()</tt>:
       </p>
-      <div class="highlight"><pre><code class="javascript">       <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html&#39;</span><span class="p">);</span>
-       <span class="c">//=&gt; Replaces $element() with the contents of doc.html</span>
+      {% highlight javascript %}
+       partial('doc.html');
+       //=> Replaces $element() with the contents of doc.html
       
-       <span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Template</span><span class="p">);</span>
-       <span class="c">//=&gt; includes the template() method</span>
-       <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.template&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Sammy&#39;</span><span class="p">});</span>
-       <span class="c">//=&gt; Replaces $element() with the contents of doc.template run through &lt;tt&gt;template()&lt;/tt&gt;</span>
+       use(Sammy.Template);
+       //=> includes the template() method
+       partial('doc.template', {name: 'Sammy'});
+       //=> Replaces $element() with the contents of doc.template run through <tt>template()</tt>
       
-       <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;doc.html&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-         <span class="c">// data is the contents of the template.</span>
-         <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.other-selector&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-       <span class="p">});</span>
-      
-</code></pre>
-</div><h3>Iteration/Arrays</h3>
+       partial('doc.html', function(data) {
+         // data is the contents of the template.
+         $('.other-selector').html(data);
+       });
+      {% endhighlight %}
+      <h3>Iteration/Arrays</h3>
       <p>
       If the data object passed to <tt>partial()</tt> is an Array,
       <tt>partial()</tt> will itterate over each element in data calling the
       callback with the results of interpolation and the index of the element in
       the array.
       </p>
-      <div class="highlight"><pre><code class="javascript">         <span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Template</span><span class="p">);</span>
-         <span class="c">// item.template =&gt; &quot;&lt;li&gt;I&#39;m an item named &lt;%= name %&gt;&lt;/li&gt;&quot;</span>
-         <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;item.template&#39;</span><span class="o">,</span> <span class="p">[{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Item 1&quot;</span><span class="p">}</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Item 2&quot;</span><span class="p">}])</span>
-         <span class="c">//=&gt; Replaces $element() with:</span>
-         <span class="c">// &lt;li&gt;I&#39;m an item named Item 1&lt;/li&gt;&lt;li&gt;I&#39;m an item named Item 2&lt;/li&gt;</span>
-         <span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;item.template&#39;</span><span class="o">,</span> <span class="p">[{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Item 1&quot;</span><span class="p">}</span><span class="o">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Item 2&quot;</span><span class="p">}]</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">rendered</span><span class="o">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-       <span class="nx">rendered</span><span class="o">;</span> <span class="c">//=&gt; &lt;li&gt;I&#39;m an item named Item 1&lt;/li&gt; // for each element in the Array</span>
-       <span class="nx">i</span><span class="o">;</span> <span class="c">// the 0 based index of the itteration</span>
-         <span class="p">});</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+         use(Sammy.Template);
+         // item.template => "<li>I'm an item named <%= name %></li>"
+         partial('item.template', [{name: "Item 1"}, {name: "Item 2"}])
+         //=> Replaces $element() with:
+         // <li>I'm an item named Item 1</li><li>I'm an item named Item 2</li>
+         partial('item.template', [{name: "Item 1"}, {name: "Item 2"}], function(rendered, i) {
+       rendered; //=> <li>I'm an item named Item 1</li> // for each element in the Array
+       i; // the 0 based index of the itteration
+         });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.EventContext-redirect'>
       <h4>
         redirect
@@ -1571,12 +1524,22 @@
       than 1 argument redirect will join them together with forward slashes.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">       <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#/other/route&#39;</span><span class="p">);</span>
-       <span class="c">// equivilent to</span>
-       <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">,</span> <span class="s1">&#39;other&#39;</span><span class="o">,</span> <span class="s1">&#39;route&#39;</span><span class="p">);</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+       redirect('#/other/route');
+       // equivilent to
+       redirect('#', 'other', 'route');
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.EventContext-swap'>
+      <h4>
+        swap
+        <span>
+          (
+          <em>contents</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      A shortcut to app&#8217;s <tt>swap()</tt>
+      </p></div></div>
     <div class='meth' id='Sammy.EventContext-toString'>
       <h4>
         toString
@@ -1630,39 +1593,39 @@
     <p>
     The template (mytemplate.haml):
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="o">%</span><span class="nx">h1</span><span class="o">&amp;=</span> <span class="nx">title</span>
+    {% highlight javascript %}
+      %h1&= title
     
-      <span class="nx">Hey</span><span class="o">,</span> <span class="err">#</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">!</span> <span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">Haml</span><span class="o">!</span>
-    
-</code></pre>
-</div><p>
+      Hey, #{name}! Welcome to Haml!
+    {% endhighlight %}
+    <p>
     The app:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="kd">var</span> <span class="nx">$</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// include the plugin</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Haml</span><span class="p">);</span>
+    {% highlight javascript %}
+      var $.app = $.sammy(function() {
+        // include the plugin
+        this.use(Sammy.Haml);
     
-        <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/hello/:name&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="c">// set local vars</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="s1">&#39;Hello!&#39;</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">name</span><span class="o">;</span>
-          <span class="c">// render the template and pass it through mustache</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;mytemplate.haml&#39;</span><span class="p">);</span>
-        <span class="p">});</span>
+        this.get('#/hello/:name', function() {
+          // set local vars
+          this.title = 'Hello!'
+          this.name = this.params.name;
+          // render the template and pass it through mustache
+          this.partial('mytemplate.haml');
+        });
     
-      <span class="p">});</span>
-    
-</code></pre>
-</div><p>
+      });
+    {% endhighlight %}
+    <p>
     If I go to #/hello/AQ in the browser, Sammy will render this to the
     <tt>body</tt>:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="o">!&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+    {% highlight javascript %}
+      <h1>Hello!</h1>
     
-      <span class="nx">Hey</span><span class="o">,</span> <span class="nx">AQ</span><span class="o">!</span> <span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">HAML</span><span class="o">!</span>
-    
-</code></pre>
-</div><p>
+      Hey, AQ! Welcome to HAML!
+    {% endhighlight %}
+    <p>
     Note: You dont have to include the haml.js file on top of the plugin as the
     plugin includes the full source.
     </p></div></div>
@@ -1717,18 +1680,17 @@
       it will stringify into JSON.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">       <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
+      {% highlight javascript %}
+       var app = $.sammy(function() {
+         this.use(Sammy.JSON);
       
-         <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-           <span class="k">this</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="nx">user_id</span><span class="o">:</span> <span class="mi">123</span><span class="p">});</span> <span class="c">//=&gt; &quot;{\&quot;user_id\&quot;:\&quot;123\&quot;}&quot;</span>
-           <span class="k">this</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s2">&quot;{\&quot;user_id\&quot;:\&quot;123\&quot;}&quot;</span><span class="p">);</span> <span class="c">//=&gt; [object Object]</span>
-           <span class="k">this</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s2">&quot;{\&quot;user_id\&quot;:\&quot;123\&quot;}&quot;</span><span class="p">).</span><span class="nx">user_id</span><span class="o">;</span> <span class="c">//=&gt; &quot;123&quot;</span>
-         <span class="p">});</span>
-       <span class="p">})</span>
-      
-</code></pre>
-</div></div></div>
+         this.get('#/', function() {
+           this.json({user_id: 123}); //=> "{\"user_id\":\"123\"}"
+           this.json("{\"user_id\":\"123\"}"); //=> [object Object]
+           this.json("{\"user_id\":\"123\"}").user_id; //=> "123"
+         });
+       })
+      {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Mustache'>
@@ -1746,7 +1708,7 @@
     href="http://github.com/janl/mustache.js">github.com/janl/mustache.js</a>
     </p>
     <p>
-    Mustache is a clever templating system that relys on double brackets 
+    Mustache is a clever templating system that relys on double brackets {{}}
     for interpolation. For full details on syntax check out the original Ruby
     implementation created by Chris Wanstrath at <a
     href="http://github.com/defunkt/mustache">github.com/defunkt/mustache</a>
@@ -1763,85 +1725,85 @@
     <p>
     The template (mytemplate.ms):
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;\</span><span class="p">{</span><span class="o">\</span><span class="p">{</span><span class="nx">title</span><span class="o">\</span><span class="p">}</span><span class="o">\</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span>
+    {% highlight javascript %}
+      <h1>\{\{title\}\}<h1>
     
-      <span class="nx">Hey</span><span class="o">,</span> <span class="o">!</span> <span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">Mustache</span><span class="o">!</span>
-    
-</code></pre>
-</div><p>
+      Hey, {{name}}! Welcome to Mustache!
+    {% endhighlight %}
+    <p>
     The app:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="kd">var</span> <span class="nx">$</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// include the plugin and alias mustache() to ms()</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Mustache</span><span class="o">,</span> <span class="s1">&#39;ms&#39;</span><span class="p">);</span>
+    {% highlight javascript %}
+      var $.app = $.sammy(function() {
+        // include the plugin and alias mustache() to ms()
+        this.use(Sammy.Mustache, 'ms');
     
-        <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/hello/:name&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="c">// set local vars</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="s1">&#39;Hello!&#39;</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">name</span><span class="o">;</span>
-          <span class="c">// render the template and pass it through mustache</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;mytemplate.ms&#39;</span><span class="p">);</span>
-        <span class="p">});</span>
+        this.get('#/hello/:name', function() {
+          // set local vars
+          this.title = 'Hello!'
+          this.name = this.params.name;
+          // render the template and pass it through mustache
+          this.partial('mytemplate.ms');
+        });
     
-      <span class="p">});</span>
-    
-</code></pre>
-</div><p>
+      });
+    {% endhighlight %}
+    <p>
     If I go to #/hello/AQ in the browser, Sammy will render this to the
     <tt>body</tt>:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="o">!&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+    {% highlight javascript %}
+      <h1>Hello!</h1>
     
-      <span class="nx">Hey</span><span class="o">,</span> <span class="nx">AQ</span><span class="o">!</span> <span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">Mustache</span><span class="o">!</span>
-    
-</code></pre>
-</div><h3>Example #2 - Mustache partials</h3>
+      Hey, AQ! Welcome to Mustache!
+    {% endhighlight %}
+    <h3>Example #2 - Mustache partials</h3>
     <p>
     The template (mytemplate.ms)
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="nx">Hey</span><span class="o">,</span> <span class="o">!</span> 
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+      Hey, {{name}}! {{>hello_friend}}
+    {% endhighlight %}
+    <p>
     The partial (mypartial.ms)
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="nx">Say</span> <span class="nx">hello</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">friend</span> <span class="o">!</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+      Say hello to your friend {{friend}}!
+    {% endhighlight %}
+    <p>
     The app:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="kd">var</span> <span class="nx">$</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// include the plugin and alias mustache() to ms()</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Mustache</span><span class="o">,</span> <span class="s1">&#39;ms&#39;</span><span class="p">);</span>
+    {% highlight javascript %}
+      var $.app = $.sammy(function() {
+        // include the plugin and alias mustache() to ms()
+        this.use(Sammy.Mustache, 'ms');
     
-        <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/hello/:name/to/:friend&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        this.get('#/hello/:name/to/:friend', function() {
+          var context = this;
     
-          <span class="c">// fetch mustache-partial first</span>
-          <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;mypartial.ms&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">){</span>
-            <span class="nx">context</span><span class="p">.</span><span class="nx">partials</span> <span class="o">=</span> <span class="nx">response</span><span class="o">;</span>
+          // fetch mustache-partial first
+          $.get('mypartial.ms', function(response){
+            context.partials = response;
     
-            <span class="c">// set local vars</span>
-            <span class="nx">context</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">name</span><span class="o">;</span>
-            <span class="nx">context</span><span class="p">.</span><span class="nx">hello_friend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">friend</span><span class="p">};</span>
+            // set local vars
+            context.name = this.params.name;
+            context.hello_friend = {name: this.params.friend};
     
-            <span class="c">// render the template and pass it through mustache</span>
-            <span class="nx">context</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;mytemplate.ms&#39;</span><span class="p">);</span>
-          <span class="p">});</span>
-        <span class="p">});</span>
+            // render the template and pass it through mustache
+            context.partial('mytemplate.ms');
+          });
+        });
     
-      <span class="p">});</span>
-    
-</code></pre>
-</div><p>
+      });
+    {% endhighlight %}
+    <p>
     If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the
     <tt>body</tt>:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="nx">Hey</span><span class="o">,</span> <span class="nx">AQ</span><span class="o">!</span> <span class="nx">Say</span> <span class="nx">hello</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">friend</span> <span class="nx">dP</span><span class="o">!</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+      Hey, AQ! Say hello to your friend dP!
+    {% endhighlight %}
+    <p>
     Note: You dont have to include the mustache.js file on top of the plugin as
     the plugin includes the full source.
     </p></div></div>
@@ -1869,44 +1831,44 @@
     <p>
     Given an HTML form like so:
     </p>
-    <div class="highlight"><pre><code class="javascript">    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;#/parse_me&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;obj[first]&quot;</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;obj[second]&quot;</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;obj[hash][first]&quot;</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;obj[hash][second]&quot;</span> <span class="o">/&gt;</span>
-    <span class="o">&lt;/</span><span class="nx">form</span><span class="o">&gt;</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+    <form action="#/parse_me" method="post">
+      <input type="text" name="obj[first]" />
+      <input type="text" name="obj[second]" />
+      <input type="text" name="obj[hash][first]" />
+      <input type="text" name="obj[hash][second]" />
+    </form>
+    {% endhighlight %}
+    <p>
     And a Sammy app like:
     </p>
-    <div class="highlight"><pre><code class="javascript">    <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">NestedParams</span><span class="p">);</span>
+    {% highlight javascript %}
+    var app = $.sammy(function(app) {
+      this.use(Sammy.NestedParams);
     
-      <span class="k">this</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;#/parse_me&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">);</span>
-      <span class="p">});</span>
-    <span class="p">});</span>
-    
-</code></pre>
-</div><p>
+      this.post('#/parse_me', function(context) {
+        $.log(this.params);
+      });
+    });
+    {% endhighlight %}
+    <p>
     If you filled out the form with some values and submitted it, you would see
     something like this in your log:
     </p>
-    <div class="highlight"><pre><code class="javascript">    <span class="p">{</span>
-      <span class="s1">&#39;obj&#39;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s1">&#39;first&#39;</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span><span class="o">,</span>
-        <span class="s1">&#39;second&#39;</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span><span class="o">,</span>
-        <span class="s1">&#39;hash&#39;</span><span class="o">:</span> <span class="p">{</span>
-          <span class="s1">&#39;first&#39;</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span><span class="o">,</span>
-          <span class="s1">&#39;second&#39;</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-      <span class="s1">&#39;$form&#39;</span><span class="o">:</span> <span class="p">..</span> <span class="nx">jQuery</span> <span class="p">..</span>
-    <span class="p">}</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+    {
+      'obj': {
+        'first': 'value',
+        'second': 'value',
+        'hash': {
+          'first': 'value',
+          'second': 'value'
+        }
+      }
+      '$form': .. jQuery ..
+    }
+    {% endhighlight %}
+    <p>
     It supports creating arrays with [] and other niceities. Check out the
     tests for full specs.
     </p></div></div>
@@ -1935,21 +1897,21 @@
     a key is set.
     </p>
     <h3>Example</h3>
-    <div class="highlight"><pre><code class="javascript">     <span class="c">// create a new store named &#39;mystore&#39;, tied to the #main element, using HTML5 localStorage</span>
-     <span class="c">// Note: localStorage only works on browsers that support it</span>
-     <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;mystore&#39;</span><span class="o">,</span> <span class="nx">element</span><span class="o">:</span> <span class="s1">&#39;#element&#39;</span><span class="o">,</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;local&#39;</span><span class="p">});</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="o">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c">//=&gt; &#39;bar&#39;</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="o">,</span> <span class="p">{</span><span class="nx">obj</span><span class="o">:</span> <span class="s1">&#39;this is an obj&#39;</span><span class="p">});</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">);</span> <span class="c">//=&gt; {obj: &#39;this is an obj&#39;}</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span> <span class="c">//=&gt; [&#39;foo&#39;,&#39;json&#39;]</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span> <span class="c">//=&gt; [&#39;json&#39;]</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">clearAll</span><span class="p">();</span>
-     <span class="nx">store</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span> <span class="c">//=&gt; []</span>
-    
-</code></pre>
-</div><h3>Arguments</h3>
+    {% highlight javascript %}
+     // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage
+     // Note: localStorage only works on browsers that support it
+     var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});
+     store.set('foo', 'bar');
+     store.get('foo'); //=> 'bar'
+     store.set('json', {obj: 'this is an obj'});
+     store.get('json'); //=> {obj: 'this is an obj'}
+     store.keys(); //=> ['foo','json']
+     store.clear('foo');
+     store.keys(); //=> ['json']
+     store.clearAll();
+     store.keys(); //=> []
+    {% endhighlight %}
+    <h3>Arguments</h3>
     <p>
     The constructor takes a single argument which is a Object containing these
     possible options.
@@ -2065,18 +2027,17 @@
       sets the value to the value returned in the callback.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nx">Store</span><span class="o">;</span>
-         <span class="nx">store</span><span class="p">.</span><span class="nx">exists</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c">//=&gt; false</span>
-         <span class="nx">store</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-       <span class="k">return</span> <span class="s1">&#39;bar!&#39;</span><span class="o">;</span>
-         <span class="p">});</span> <span class="c">//=&gt; &#39;bar!&#39;</span>
-         <span class="nx">store</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="c">//=&gt; &#39;bar!&#39;</span>
-         <span class="nx">store</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-       <span class="k">return</span> <span class="s1">&#39;baz!&#39;</span><span class="o">;</span>
-         <span class="p">});</span> <span class="c">//=&gt; &#39;bar!</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+         var store = new Sammy.Store;
+         store.exists('foo'); //=> false
+         store.fetch('foo', function() {
+       return 'bar!';
+         }); //=> 'bar!'
+         store.get('foo') //=> 'bar!'
+         store.fetch('foo', function() {
+       return 'baz!';
+         }); //=> 'bar!
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Store-get'>
       <h4>
         get
@@ -2128,19 +2089,18 @@
       <p>
       In /mytemplate.tpl:
       </p>
-      <div class="highlight"><pre><code class="javascript">         <span class="nx">My</span> <span class="nx">Template</span>
-      
-</code></pre>
-</div><p>
+      {% highlight javascript %}
+         My Template
+      {% endhighlight %}
+      <p>
       In app.js:
       </p>
-      <div class="highlight"><pre><code class="javascript">         <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nx">Store</span><span class="o">;</span>
-         <span class="nx">store</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;mytemplate&#39;</span><span class="o">,</span> <span class="s1">&#39;/mytemplate.tpl&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-       <span class="nx">s</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;mytemplate&#39;</span><span class="p">)</span> <span class="c">//=&gt; My Template</span>
-         <span class="p">});</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+         var store = new Sammy.Store;
+         store.load('mytemplate', '/mytemplate.tpl', function() {
+       s.get('mytemplate') //=> My Template
+         });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Store-set'>
       <h4>
         set
@@ -2156,14 +2116,13 @@
       pattern triggering jQuery events on the element that the store is bound to.
       </p>
       <h3>Example</h3>
-      <div class="highlight"><pre><code class="javascript">       <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sammy</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;kvo&#39;</span><span class="p">});</span>
-       <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;set-kvo.foo&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;foo changed!&#39;</span><span class="p">)</span>
-       <span class="p">});</span>
-       <span class="nx">store</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="o">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span> <span class="c">// alerted: foo changed!</span>
-      
-</code></pre>
-</div></div></div>
+      {% highlight javascript %}
+       var store = new Sammy.Store({name: 'kvo'});
+       $('body').bind('set-kvo.foo', function(e, data) {
+         Sammy.log(data.key + ' changed to ' + data.value);
+       });
+       store.set('foo', 'bar'); // logged: foo changed to bar
+      {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.isAvailable'>
@@ -2359,68 +2318,42 @@
     <p>
     Here is an example template (user.template):
     </p>
-    <div class="highlight"><pre><code class="javascript">     <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="o">&gt;</span>
-       <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;user-name&quot;</span><span class="o">&gt;&lt;%=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">%&gt;&lt;/</span><span class="nx">div</span><span class="o">&gt;</span>
-       <span class="o">&lt;%</span> <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">photo_url</span><span class="p">)</span> <span class="p">{</span> <span class="o">%&gt;</span>
-         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;photo&quot;</span><span class="o">&gt;&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;&lt;%= user.photo_url %&gt;&quot;</span> <span class="o">/&gt;&lt;/</span><span class="nx">div</span><span class="o">&gt;</span>
-       <span class="o">&lt;%</span> <span class="p">}</span> <span class="o">%&gt;</span>
-     <span class="o">&lt;/</span><span class="nx">div</span><span class="o">&gt;</span>
-    
-</code></pre>
-</div><p>
+    {% highlight javascript %}
+     <div class="user">
+       <div class="user-name"><%= user.name %></div>
+       <% if (user.photo_url) { %>
+         <div class="photo"><img src="<%= user.photo_url %>" /></div>
+       <% } %>
+     </div>
+    {% endhighlight %}
+    <p>
     Given that is a publicly accesible file, you would render it like:
     </p>
-    <div class="highlight"><pre><code class="javascript">      <span class="nx">$</span><span class="p">.</span><span class="nx">sammy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// include the plugin</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Template</span><span class="p">);</span>
+    {% highlight javascript %}
+      $.sammy(function() {
+        // include the plugin
+        this.use(Sammy.Template);
     
-        <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="c">// the template is rendered in the current context.</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Aaron Quint&#39;</span><span class="p">};</span>
-          <span class="c">// partial calls template() because of the file extension</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;user.template&#39;</span><span class="p">);</span>
-        <span class="p">})</span>
-      <span class="p">});</span>
-    
-</code></pre>
-</div><p>
+        this.get('#/', function() {
+          // the template is rendered in the current context.
+          this.user = {name: 'Aaron Quint'};
+          // partial calls template() because of the file extension
+          this.partial('user.template');
+        })
+      });
+    {% endhighlight %}
+    <p>
     You can also pass a second argument to use() that will alias the template
     method and therefore allow you to use a different extension for template
     files in <tt>partial()</tt>
     </p>
-    <div class="highlight"><pre><code class="javascript">     <span class="c">// alias to &#39;tpl&#39;</span>
-     <span class="k">this</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Sammy</span><span class="p">.</span><span class="nx">Template</span><span class="o">,</span> <span class="s1">&#39;tpl&#39;</span><span class="p">);</span>
+    {% highlight javascript %}
+     // alias to 'tpl'
+     this.use(Sammy.Template, 'tpl');
     
-     <span class="c">// now .tpl files will be run through srender</span>
-     <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;#/&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-       <span class="k">this</span><span class="p">.</span><span class="nx">partial</span><span class="p">(</span><span class="s1">&#39;myfile.tpl&#39;</span><span class="p">);</span>
-     <span class="p">});</span>
-    
-</code></pre>
-</div></div></div>
+     // now .tpl files will be run through srender
+     this.get('#/', function() {
+       this.partial('myfile.tpl');
+     });
+    {% endhighlight %}</div></div>
 </div>
-
-      </div>
-    </div>
-    <div id="contact">
-      <p>Feel free to email me at aaron at quirkey dot com.</p>
-      <p>Please check out my <a href="http://quirkey.com/blog">blog.</a></p>
-      <p>If you like or use this library &#8211; I don&#8217;t want donations &#8211; but you can <a href="http://www.workingwithrails.com/person/8362-aaron-quint">recommend me on workingwithrails.com</a> or hire me to work on your next project.</p>
-    </div>
-    <div id="footer">
-      <p class="quirkey_links">Quirkey<span>|</span><a href="http://www.quirkey.com" class="q_com">.com</a><span>|</span><a href="http://portfolio.quirkey.com" class="q_portfolio">Portfolio</a><span>|</span><a href="http://code.quirkey.com" class="q_code">Code</a><span>|</span><a href="http://log.quirkey.com" class="q_log">Log</a><span>|</span><a href="http://www.quirkey.com/blog/" class="q_blog">Blog</a></p>
-      <p id="copy">client identity and work property of creators. quirkey logo and identity, &copy; 2005-2009 Quirkey NYC, LLC</p>
-    </div>
-  </div>
-  <script type="text/javascript">
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script>
-  <script type="text/javascript">
-  try {
-    var pageTracker = _gat._getTracker("UA-3763169-2");
-    pageTracker._trackPageview();
-    } catch(err) {}
-    </script>
-</body>
-</html>

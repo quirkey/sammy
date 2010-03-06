@@ -44,7 +44,8 @@
           ok(!this.other_store.get('foo'));
         })
         .should('set and retrieve value as JSON', function() {
-          ok(this.store.set('foo', {'obj': 'is json'}));
+          var obj = {'obj': 'is json'};
+          equal(this.store.set('foo', obj), obj);
           equal(this.store.get('foo').obj,'is json');
           ok(!this.other_store.get('foo'));
         })
@@ -79,8 +80,8 @@
         })
         .should('fire events on get and set', function() {
           var fired = false;
-          $('#main').bind('set-test_store.foo', function(e, key, value) {
-            fired = value;
+          $('#main').bind('set-test_store.foo', function(e, data) {
+            fired = data.value;
           });
           this.store.set('foo', 'bar');
           soon(function() {

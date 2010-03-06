@@ -2,7 +2,7 @@
     with(QUnit) {
       
       var test_app = new Sammy.Application(function() {
-        this.silence_404 = true;
+        this.raise_errors = false;
         this.element_selector = '#main';
       });
       var test_context = new Sammy.EventContext(test_app, 'get', '#/test/:test', {test: 'hooray'});
@@ -58,6 +58,7 @@
       })
       .should('throw 404 error', function() {
         var context = this.context;
+        context.app.raise_errors = true;
         raised(/404/, function() {
           context.notFound();
         });
@@ -66,6 +67,7 @@
       context('Sammy', 'EventContext', 'partial', {
         before: function() {
           this.app     = test_app;
+          this.app.raise_errors = false;
           this.context = test_context;
         }
       })

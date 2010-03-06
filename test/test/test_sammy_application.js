@@ -302,11 +302,6 @@
           });
         }
       })
-      .should('attach application instance to element', function() {
-        this.app.run();
-        deepEqual($('#main').data('sammy-app'), this.app);
-        this.app.unload();
-      })
       .should('set the location to the start url', function() {
         var app = this.app;
         app.run('#/');
@@ -371,7 +366,7 @@
       })
       .should('die silently if route is not found and 404s are off', function() {
         var app = this.app;
-        app.silence_404 = true;
+        app.raise_errors = false;
         app.run();
         notRaised(function() {
           window.location.hash = '#/no-route-for-me'
@@ -425,6 +420,13 @@
             this.route('get', /\/blah\/(.+)/, function() {
               context.params = this.params;
             });
+            
+            this.route('get', /\/forward\/([^\/]+)\/([^\/]+)/, function(c, part1, part2) {
+              context.inner_context = this;
+              context.context_arg = c;
+              context.part1 = part1;
+              context.part2 = part2;
+            });
 
             this.route('get', '#/boosh/:test/:test2', function() {
               context.params = this.params;
@@ -444,6 +446,12 @@
       .should('set unnamed params from a regex route in "splat"', function() {
         this.app.runRoute('get', '#/blah/could/be/anything');
         equal(this.params['splat'], 'could/be/anything');
+      })
+      .should('forward unnamed params to the callback as arguments', function() {
+        this.app.runRoute('get', '#/forward/to/route');
+        deepEqual(this.context_arg, this.inner_context);
+        equal(this.part1, 'to');
+        equal(this.part2, 'route');
       })
       .should('set additional params from a query string after the hash', function() {
         this.app.runRoute('get', '#/boosh/farg/wow?with=some&nifty=params');
@@ -471,7 +479,7 @@
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
-        app.silence_404 = false;
+        app.raise_errors = true;
         raised(/404/, function() {
           app.runRoute('get','/blurgh');
         });
@@ -908,6 +916,7 @@
       })
       .should('raise error if the plugin is not defined', function() {
         var app = this.app;
+        app.raise_errors = true;
         raised(/plugin/, function() {
           app.use(Sammy.Boosh);
         });
@@ -915,6 +924,7 @@
       .should('raise error if the plugin is not a function', function() {
         var app = this.app;
         var blah = 'whu';
+        app.raise_errors = true;
         raised(/function/, function() {
           app.use(blah);
         });
