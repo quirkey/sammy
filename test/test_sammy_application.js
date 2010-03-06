@@ -302,11 +302,6 @@
           });
         }
       })
-      .should('attach application instance to element', function() {
-        this.app.run();
-        deepEqual($('#main').data('sammy-app'), this.app);
-        this.app.unload();
-      })
       .should('set the location to the start url', function() {
         var app = this.app;
         app.run('#/');
