@@ -1,3 +1,26 @@
+== 0.5.1 [03/06/2010]
+
+New:
+
+- EventContext#swap is a shortcut to Application#swap (used within `partial`)
+- The contents of a regexp route match are now forwarded to the route callback as args.
+
+Changed: 
+
+- Error handling has been refactored. All errors are now sent through #error() which will raise or just log errors based on the `raise_errors` setting. the  `silence_404` setting has been removed.
+- use() now sends errors through error()
+- The Sammy.Application no longer adds the app to the elements .data()
+- The Sammy.Store KVO better conforms to Sammy.Application#bind() [Thanks dpree!]
+
+Fixed:
+
+- The unload bindings have been updated to correctly unload on window.onbeforeunload
+- Sammy core now passes JSLint (basic settings).
+- Sammy.Store#set() should return the original value, not the stringified one [Thanks Mark Needham]
+- Updated all the examples (especially the backend example to work with latest sammy. [Thanks to SamDeLaGarza]
+- SessionStorage in Firefox does not completely conform to the HTML5 Storage spec, added workaround for Sammy.Storage [Thanks dpree!]
+
+
 == 0.5.0 [02/15/10]
 
 New:
