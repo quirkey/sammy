@@ -1,11 +1,13 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'haml'
 require 'sass'
 require 'cloudkit'
 
-class Tasks < Sinatra::Default
+class Tasks < Sinatra::Application
   
   use CloudKit::Service, :collections => [:tasks]
+
+  set :public, File.join(File.dirname(__FILE__), 'public')
   
   get '/' do
     haml :index
@@ -14,4 +16,5 @@ class Tasks < Sinatra::Default
   get '/stylesheets/:sheet.css' do
     sass :"#{params['sheet']}"
   end
+
 end

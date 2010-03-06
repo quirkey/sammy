@@ -5,8 +5,6 @@
     
     %link{:rel => 'stylesheet', :href => '/stylesheets/app.css', :media => 'screen'}
     
-    - ['jquery', 'jquery.cloudkit', 'sammy', 'app'].each do |js|
-      %script{:src => "/javascripts/#{js}.js", :type => 'text/javascript', :charset => 'utf-8'}
   %body
     #container
       #header
@@ -16,3 +14,5 @@
         %span.close x
       #main              
       #debug
+    - ['jquery', 'jquery.cloudkit', 'sammy', 'sammy.json', 'sammy.storage', 'sammy.template', 'app'].each do |js|
+      %script{:src => "/javascripts/#{js}.js", :type => 'text/javascript', :charset => 'utf-8'}
