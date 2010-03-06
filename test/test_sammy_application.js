@@ -371,7 +371,7 @@
       })
       .should('die silently if route is not found and 404s are off', function() {
         var app = this.app;
-        app.silence_404 = true;
+        app.raise_errors = false;
         app.run();
         notRaised(function() {
           window.location.hash = '#/no-route-for-me'
@@ -484,7 +484,7 @@
       })
       .should('raise error when route can not be found', function() {
         var app = this.app;
-        app.silence_404 = false;
+        app.raise_errors = true;
         raised(/404/, function() {
           app.runRoute('get','/blurgh');
         });
