@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Tutorials - The JSON Store, Part I
 github_name: sammy
-current_version: 0.5.1
+current_version: 0.5.2
 nav:
   - name: Overview
     link: ../index.html
