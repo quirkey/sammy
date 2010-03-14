@@ -292,5 +292,73 @@
         deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!\n</div>");
       });
       
+      context('Sammy', 'Form', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Form);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should("return simple string element with simple_element", function() {
+        equal(this.context.simple_element('div', {'class': 'test'}, "test"), "<div class='test'>test</div>\n");
+      })
+      .should("create self closing if no content is passed", function() {
+        equal(this.context.simple_element('div', {'class': 'test'}), "<div class='test' />\n");
+      })
+      .should("evaluate attributes that are functions", function() {
+        equal(this.context.simple_element('div', {id: function() { return 'test'; }}), "<div id='test' />\n");
+      });
+      
+      context('Sammy', 'Form', 'FormBuilder', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Form);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+          
+          // test item
+          this.item = {
+            name: 'Item Name',
+            price: '$10.00',
+            quantity: 5,
+            color: function() {
+              return 'red';
+            },
+            meta: {
+              url: 'http://www.quirkey.com'
+            },
+            related_items: [
+              {name: 'Related 1'},
+              {name: 'Related 2'}
+            ]
+          };
+          this.builder = new Sammy.FormBuilder('item', this.item);
+        }
+      })
+      .should("create form builder with name and object", function() {
+        ok(this.builder);
+        equal(this.builder.name, 'item');
+        deepEqual(this.builder.object, this.item);
+      })
+      .should("return text field for attribute with simple keypath", function() {
+        equal(this.builder.textField('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />\n")
+      })
+      .should("return text field with additional attributes", function() {
+        equal(this.builder.textField('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />\n")
+      })
+      .should("return text field when the attribute doesnt exist", function() {
+        equal(this.builder.textField('none'), "<input type='text' name='item[none]' value='' class='item-none' />\n")
+      })
+      .should("return text field for an attribute with a deep keypath", function() {
+        equal(this.builder.textField('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />\n")
+      })
+      .should("return text field for an attribute with an array keypath", function() {
+        
+      })
+      .should("return a select tag with options and selection", function() {
+        
+      });
+      
     };
 })(jQuery);
