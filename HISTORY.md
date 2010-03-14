@@ -1,3 +1,13 @@
+== 0.5.2 [03/14/2010]
+
+Fixed: 
+
+- Error handling changed from 0.5.1 killed forms that weren't supposed to be caught by sammy.
+
+New: 
+
+- New package.json file for easy install support with Jim. Also places some project meta-data in a universal place.
+
 == 0.5.1 [03/06/2010]
 
 New:
