@@ -298,16 +298,19 @@
             this.use(Sammy.Form);
           });
           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+          this.item = {
+            name: 'Test Item'
+          };
         }
       })
       .should("return simple string element with simple_element", function() {
-        equal(this.context.simple_element('div', {'class': 'test'}, "test"), "<div class='test'>test</div>\n");
+        equal(this.context.simple_element('div', {'class': 'test'}, "test"), "<div class='test'>test</div>");
       })
       .should("create self closing if no content is passed", function() {
-        equal(this.context.simple_element('div', {'class': 'test'}), "<div class='test' />\n");
+        equal(this.context.simple_element('div', {'class': 'test'}), "<div class='test' />");
       })
       .should("evaluate attributes that are functions", function() {
-        equal(this.context.simple_element('div', {id: function() { return 'test'; }}), "<div id='test' />\n");
+        equal(this.context.simple_element('div', {id: function() { return 'test'; }}), "<div id='test' />");
       });
       
       context('Sammy', 'Form', 'FormBuilder', {
@@ -322,13 +325,14 @@
             name: 'Item Name',
             price: '$10.00',
             quantity: 5,
+            description: "This is a long\ndescription",
             color: function() {
               return 'red';
             },
             meta: {
               url: 'http://www.quirkey.com'
             },
-            related_items: [
+            related: [
               {name: 'Related 1'},
               {name: 'Related 2'}
             ]
@@ -342,23 +346,29 @@
         deepEqual(this.builder.object, this.item);
       })
       .should("return text field for attribute with simple keypath", function() {
-        equal(this.builder.textField('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />\n")
+        equal(this.builder.textField('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />")
       })
       .should("return text field with additional attributes", function() {
-        equal(this.builder.textField('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />\n")
+        equal(this.builder.textField('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />")
       })
       .should("return text field when the attribute doesnt exist", function() {
-        equal(this.builder.textField('none'), "<input type='text' name='item[none]' value='' class='item-none' />\n")
+        equal(this.builder.textField('none'), "<input type='text' name='item[none]' value='' class='item-none' />")
       })
       .should("return text field for an attribute with a deep keypath", function() {
-        equal(this.builder.textField('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />\n")
+        equal(this.builder.textField('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
+        equal(this.builder.textField(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
       })
       .should("return text field for an attribute with an array keypath", function() {
-        
+        equal(this.builder.textField('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />")
       })
       .should("return a select tag with options and selection", function() {
-        
+        equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>")
+      })
+      .should("return a textarea", function() {
+        equal(this.builder.textArea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
       });
+      
+      
       
     };
 })(jQuery);
