@@ -63,16 +63,19 @@
     })
     .should('trigger app event when data changes', function() {
       $('body').data(this.app.location_proxy.data_name, '');
-      var triggered = false, app = this.app;
+      var triggered = false, 
+          location = false,
+          app = this.app;
       app.bind('location-changed', function() {
         triggered = true;
+        location = this.app.getLocation();
       });
       ok(!triggered);
       app.run('#/');
       $('body').data(this.app.location_proxy.data_name, '#/newhash');
       soon(function() {
         ok(triggered);
-        equal(this.app.getLocation(), '#/newhash');
+        equal(location, '#/newhash');
         app.unload();
       }, this, 2, 3);
     })

@@ -78,15 +78,26 @@
           equal(this.store.keys().length, 0);
           ok(!this.store.exists('blurgh'));
         })
-        .should('fire events on get and set', function() {
+        .should('fire specific key event on set', function() {
           var fired = false;
-          $('#main').bind('set-test_store.foo', function(e, data) {
+          $('#main').bind('set-test_store-foo', function(e, data) {
             fired = data.value;
           });
           this.store.set('foo', 'bar');
           soon(function() {
             equal(fired, 'bar');
-            $('#main').unbind('set-test_store.foo');
+            $('#main').unbind('set-test_store-foo');
+          });
+        }) 
+        .should('fire store event on set', function() {
+          var fired = false;
+          $('#main').bind('set-test_store', function(e, data) {
+            fired = data.key;
+          });
+          this.store.set('foo', 'bar');
+          soon(function() {
+            equal(fired, 'foo');
+            $('#main').unbind('set-test_store');
           });
         }) 
         .should('fetch value or run callback', function() {
