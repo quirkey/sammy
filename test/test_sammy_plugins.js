@@ -317,6 +317,7 @@
         before: function() {
           this.app = new Sammy.Application(function() {
             this.use(Sammy.Form);
+            this.use(Sammy.Template);
           });
           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
           
@@ -332,6 +333,7 @@
             meta: {
               url: 'http://www.quirkey.com'
             },
+            is_private: false,
             related: [
               {name: 'Related 1'},
               {name: 'Related 2'}
@@ -366,9 +368,26 @@
       })
       .should("return a textarea", function() {
         equal(this.builder.textArea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
+      })
+      .should("return a checkbox", function() {
+        equal(this.builder.checkboxField('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
+        this.item.is_private = true;
+        this.builder.object = this.item;
+        equal(this.builder.checkboxField('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+      })
+      .should("return a radio button", function() {
+        equal(this.builder.radioField('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
+      })
+      .should("build a form with form in a template", function() {
+        var template = "<% formFor('item', item, function(f) { %>" +
+                       "<%= f.open() %>" +
+                       "<p><label>Name:</label><%= f.textField('name') %></p>" +
+                       "<%= f.close() %>" +
+                       "<% }); %>";
+        var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>"
+        this.context.item = this.item;
+        equals(this.context.template(template), rendered);
       });
-      
-      
       
     };
 })(jQuery);
