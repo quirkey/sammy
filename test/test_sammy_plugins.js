@@ -348,40 +348,39 @@
         deepEqual(this.builder.object, this.item);
       })
       .should("return text field for attribute with simple keypath", function() {
-        equal(this.builder.textField('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />")
+        equal(this.builder.text('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />")
       })
       .should("return text field with additional attributes", function() {
-        equal(this.builder.textField('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />")
+        equal(this.builder.text('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />")
       })
       .should("return text field when the attribute doesnt exist", function() {
-        equal(this.builder.textField('none'), "<input type='text' name='item[none]' value='' class='item-none' />")
+        equal(this.builder.text('none'), "<input type='text' name='item[none]' value='' class='item-none' />")
       })
       .should("return text field for an attribute with a deep keypath", function() {
-        equal(this.builder.textField('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
-        equal(this.builder.textField(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
+        equal(this.builder.text('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
+        equal(this.builder.text(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
       })
       .should("return text field for an attribute with an array keypath", function() {
-        equal(this.builder.textField('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />")
+        equal(this.builder.text('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />")
       })
       .should("return a select tag with options and selection", function() {
         equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>")
       })
       .should("return a textarea", function() {
-        equal(this.builder.textArea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
+        equal(this.builder.textarea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
       })
       .should("return a checkbox", function() {
-        equal(this.builder.checkboxField('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
+        equal(this.builder.checkbox('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
         this.item.is_private = true;
-        this.builder.object = this.item;
-        equal(this.builder.checkboxField('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+        equal(this.builder.checkbox('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
       })
       .should("return a radio button", function() {
-        equal(this.builder.radioField('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
+        equal(this.builder.radio('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
       })
       .should("build a form with form in a template", function() {
         var template = "<% formFor('item', item, function(f) { %>" +
                        "<%= f.open() %>" +
-                       "<p><label>Name:</label><%= f.textField('name') %></p>" +
+                       "<p><label>Name:</label><%= f.text('name') %></p>" +
                        "<%= f.close() %>" +
                        "<% }); %>";
         var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>"
