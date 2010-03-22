@@ -378,7 +378,7 @@
         equal(this.builder.radio('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
       })
       .should("build a form with form in a template", function() {
-        var template = "<% formFor('item', item, function(f) { %>" +
+        var template = "<% formFor('item', function(f) { %>" +
                        "<%= f.open() %>" +
                        "<p><label>Name:</label><%= f.text('name') %></p>" +
                        "<%= f.close() %>" +
