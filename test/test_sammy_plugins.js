@@ -105,9 +105,20 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equal(app.form_params['author'], 'Thoreau');        
+           equal(app.form_params['author'], 'Thoreau', 'takes the last value');        
            app.unload();
          }, this, 1, 2);
+       })
+       .should('parse true and false values as true and false literals', function() {
+         var app = this.app;
+         app.run('#/');
+         $('#nested_params_test_form').submit();
+         soon(function() {
+           ok(app.form_params);
+           equal(app.form_params['falsevalue'], false);
+           equal(app.form_params['truevalue'], true);
+           app.unload();
+         }, this, 1, 3);
        })
        .should('parse basic arrays', function() {
          var app = this.app;
