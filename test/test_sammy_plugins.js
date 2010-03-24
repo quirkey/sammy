@@ -334,6 +334,7 @@
           
           // test item
           this.item = {
+            id: "1234",
             name: 'Item Name',
             price: '$10.00',
             quantity: 5,
@@ -377,14 +378,25 @@
       .should("return a select tag with options and selection", function() {
         equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>")
       })
+      .should("return a label with key as for", function() {
+        equal(this.builder.label('name', 'Name'), "<label for='item[name]'>Name</label>");
+      })
+      .should("return a hidden input", function() {
+        equal(this.builder.hidden('id'), "<input type='hidden' name='item[id]' value='1234' class='item-id' />");
+      })
       .should("return a textarea", function() {
         equal(this.builder.textarea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
       })
       .should("return a checkbox", function() {
-        equal(this.builder.checkbox('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
+        equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
         this.item.is_private = true;
-        equal(this.builder.checkbox('is_private', 'true'), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+        equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
       })
+       .should("return a checkbox with no hidden element", function() {
+          equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
+          this.item.is_private = true;
+          equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+        })
       .should("return a radio button", function() {
         equal(this.builder.radio('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
       })
