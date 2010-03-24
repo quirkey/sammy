@@ -44,8 +44,7 @@
     
     pending: function(name, callback, nowait) {
       name = '<span style="color: #EB8531;" class="pending">DEFERRED: ' + name + '</span>';
-      QUnit.test(name, function () { QUnit.ok(true) }, nowait);
-      return this;
+      return this.it.apply(this, [name, function () { QUnit.ok(true) }, nowait]);
     },
     
     should_eventually: function(name, callback, nowait) {
