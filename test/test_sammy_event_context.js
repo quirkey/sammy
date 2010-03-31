@@ -112,7 +112,7 @@
           contents += html;
         });
         soon(function () {
-          equal($('#main').html(), expected);
+          equal($('#main').html().toString(), expected.toString());
           equal(contents, expected);
         }, this, 2, 2);
       })
