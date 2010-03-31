@@ -13,8 +13,14 @@
     })
     .should('set is_native true if onhashchange exists in window', function() {
       if (this.has_native) {
+        window.location.hash = '';
         var proxy = new Sammy.HashLocationProxy(this.app)
-        ok(proxy.is_native)
+        proxy.bind();
+        window.location.hash = '#/testing';
+        soon(function() {
+          ok(proxy.is_native, "Has native hash change");
+          proxy.unbind();
+        }, this, 3, 1);
       } else {
         ok(true, 'No native hash change support.')
       }
@@ -22,7 +28,14 @@
     .should('set is_native to false if onhashchange does not exist in window', function() {
       if (!this.has_native) {
         var proxy = new Sammy.HashLocationProxy(this.app)
-        ok(!proxy.is_native)
+        proxy.bind();
+        window.location.hash = '#/testing'
+        soon(function() {
+          ok(!proxy.is_native, "does not have native hash change");
+          window.location.hash = '';
+          proxy.unbind();
+        }, this, 3, 1);
+        window.location.hash = '';
       } else {
         ok(true, 'Native hash change support.')
       }
