@@ -72,25 +72,26 @@
     
     // assert a string matches a regex
     matches: function(matcher, string, message) {
-      return QUnit.ok(!!matcher.test(string), "expected: " + string + "match(" + matcher.toString() + ")");
+      return QUnit.ok(!!matcher.test(string), message || "expected: " + string + "match(" + matcher.toString() + ")");
     },
     
     // assert that a matching error is raised
     // expected can be a regex, a string, or an object
     raised: function(expected_error, callback) {
-      var error = '';
+      var error = null;
       try {
         callback.apply(this);
       } catch(e) {
         error = e;
       }
-      message = "expected error: " + expected_error.toString() + ", actual error:" + error.toString();
+      error_message = error && error.message ? error.message.toString() : error.toString();
+      message = "expected error: " + expected_error.toString() + ", actual error:" + error_message;
       if (expected_error.constructor == RegExp) {
-        return QUnit.matches(expected_error, error.toString(), message);
+        return QUnit.matches(expected_error, error_message, message);
       } else if (expected_error.constructor == String) {
-        return QUnit.equals(expected_error, error.toString(), message);
+        return QUnit.equal(expected_error, error_message, message);
       } else {
-        return QUnit.equals(expected_error, error, message);
+        return QUnit.deepEqual(expected_error, error, message);
       }
     },
     
@@ -102,7 +103,7 @@
         error = e;
       }
       message = "expected: no errors, actual error: " + error.toString();
-      QUnit.equals('', error, message);
+      QUnit.equal('', error, message);
     },
     
     soon: function(callback, context, secs, many_expects) {
