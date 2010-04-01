@@ -300,7 +300,7 @@
       })
       .should('use haml-js to render haml templates', function() {
         var template = ".mytemplate= title";
-        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!\n</div>");
+        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
       });
       
       context('Sammy', 'Form', {
