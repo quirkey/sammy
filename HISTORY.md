@@ -1,3 +1,25 @@
+== 0.5.3 [04/02/2010]
+
+Fixed:
+
+- Fix hashchange events in IE8 when compatibility mode is turned on. [Thanks binary42, yeungda]
+- Fixes for qunit-spec [Thanks Rich Manalang]
+- Fix broken DataLocationProxy because of change in the way jQuery fires setData 
+- Use unbind instead of die in location proxies [Thanks Mickael Bailly]
+- Fix double extension of partial() data [Thanks Jens Bissinger]
+- Sammy.Store's KVO events fire two events, one for the store and one for the specific key.
+
+New:
+
+- Sammy.Title plugin for managing document.title
+- Sammy.Form plugin for creating reusable forms based on objects
+- Sammy.Store can take an array of types. Each type is checked in order for availability and the first available type is used.
+
+Changed:
+
+- Sammy.Haml Updated to latest haml-js [Thanks Tim Caswell]
+- NestedParams should parse true and false values to literals
+
 == 0.5.2 [03/14/2010]
 
 Fixed: 

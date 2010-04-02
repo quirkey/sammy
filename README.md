@@ -76,6 +76,9 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * Tim Caswell / creationix
 * Mark Needham 
 * SamDeLaGarza
+* Mickael Bailly / dready92
+* Rich Manalang / manalang
+* Brian Mitchell / binary42
   
 ## License
 
