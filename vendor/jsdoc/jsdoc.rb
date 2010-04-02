@@ -42,11 +42,16 @@ if paths.empty?
   raise 'No paths specified'
 else
   file = ""
-  paths.each {|p| file << File.read(p) }
+  paths.each {|p| 
+    f = File.read(p) 
+    if f !~ /^\/\/\sdeprecated/
+      file << f
+    end
+  }
 end
 
 # klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+([A-Z][\w\d\.]+)\.extend\(/
-klass_regexp     = /\s*([A-Z][\w\d\.]+)\s+=\s+function\s*\(([^\)]+)?\)/
+klass_regexp     = /^\s*([A-Z][\w\d\.]+)\s+=\s+function\s*\(([^\)]+)?\)/
 function_regexp  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*function\s*\(([\w\d\s,]+)?\))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
 attribute_regexp = /^\s+([\w\d_\$]+)\:\s+(.*)\,\s+/i
 
@@ -117,6 +122,9 @@ end
 docs.each do |klass, klass_methods|
   docs[klass][:attributes] = klass_methods[:attributes].sort {|a,b| a[:name] <=> b[:name] }
   docs[klass][:methods] = klass_methods[:methods].sort {|a,b| a[:name] <=> b[:name] }
+end.reject! do |klass, klass_methods|
+  # get rid of undocumented classes
+  klass[:doc].nil? || klass[:doc].to_s.strip == ''
 end
 
 
@@ -124,7 +132,7 @@ class RDoc::Markup::ToHtml
 
   def accept_verbatim(am, fragment)
     @res << annotate("{% highlight javascript %}") << "\n"
-    @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{2}/,'') }.join("\n")
+    @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
     @res << "\n" << annotate("{% endhighlight %}") << "\n"
   end
 
