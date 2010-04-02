@@ -14,6 +14,8 @@
   <script type="text/javascript" src="../lib/plugins/sammy.mustache.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.json.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.haml.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.form.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.title.js"></script>
 </head>
 <body>
 	<h1 id="qunit-header">Sammy Test Suite</h1>
@@ -43,6 +45,9 @@
       
       <input type="text" name="genre[]" value="documentary" />
       <input type="text" name="genre[]" value="nature" />
+            
+      <input type="checkbox" name="truevalue" value="true" checked="checked" />
+      <input type="checkbox" name="falsevalue" value="false" checked="checked" />    
       
       <input type="text" name="woods[trees][][name]" value="Spruce" />
       <input type="text" name="woods[trees][][name]" value="Maple" />

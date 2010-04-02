@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.5.2
+current_version: 0.5.3
 nav:
   - name: Overview
     link: ../index.html
@@ -56,6 +56,12 @@ nav:
       <a href='#Sammy.EventContext'>Sammy.EventContext</a>
     </li>
     <li>
+      <a href='#Sammy.FormBuilder'>Sammy.FormBuilder</a>
+    </li>
+    <li>
+      <a href='#Sammy.Form'>Sammy.Form</a>
+    </li>
+    <li>
       <a href='#Sammy.Haml'>Sammy.Haml</a>
     </li>
     <li>
@@ -99,6 +105,9 @@ nav:
     </li>
     <li>
       <a href='#Sammy.Template'>Sammy.Template</a>
+    </li>
+    <li>
+      <a href='#Sammy.Title'>Sammy.Title</a>
     </li>
   </ul>
   <!-- its just a function -->
@@ -1357,12 +1366,6 @@ nav:
     </table></div>    <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#Sammy.EventContext-'></a>
-      </li>
-      <li>
-        <a href='#Sammy.EventContext-'></a>
-      </li>
-      <li>
         <a href='#Sammy.EventContext-$element'>$element</a>
       </li>
       <li>
@@ -1388,28 +1391,6 @@ nav:
       </li>
     </ul>
     <hr />
-    <div class='meth' id='Sammy.EventContext-'>
-      <h4>
-        
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4><div class='doc'><p>
-      Split interpolated strings into an array of literals and code fragments.
-      </p></div></div>
-    <div class='meth' id='Sammy.EventContext-'>
-      <h4>
-        
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4><div class='doc'><p>
-      Parse the attribute block using a state machine
-      </p></div></div>
     <div class='meth' id='Sammy.EventContext-$element'>
       <h4>
         $element
@@ -1564,6 +1545,344 @@ nav:
       </p></div></div>
   </div>
   <!-- its just a function -->
+  <div class='klass' id='Sammy.FormBuilder'>
+    <h2>
+      Sammy.FormBuilder
+      <span>
+        (
+        <em>name, object</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.FormBuilder is based very closely on the Rails FormBuilder classes.
+    Its goal is to make it easy to create HTML forms for creating and editing
+    JavaScript objects. It eases the process by auto-populating existing values
+    into form inputs and creating input names suitable for parsing by
+    Sammy.NestedParams and other backend frameworks.
+    </p>
+    <p>
+    You initialize a Sammy.FormBuilder by passing the &#8216;name&#8217; of the
+    object and the object itself. Once initialized you create form elements
+    with the object&#8217;s prototype methods. Each of these methods returns a
+    string of HTML suitable for appending through a template or directly with
+    jQuery.
+    </p>
+    <h3>Example</h3>
+    {% highlight javascript %}
+     var item = {
+       name: 'My Item',
+       price: '$25.50',
+       meta: {
+         id: '123'
+       }
+     };
+     var form = new Sammy.FormBuilder('item', item);
+     form.text('name');
+     //=> <input type='text' name='item[form]' value='My Item' />
+    {% endhighlight %}
+    <p>
+    Nested attributes can be accessed/referred to by a &#8216;keypath&#8217;
+    which is basically a string representation of the dot notation.
+    </p>
+    {% highlight javascript %}
+     form.hidden('meta.id');
+     //=> <input type='hidden' name='item[meta][id]' value='123' />
+    {% endhighlight %}</div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.FormBuilder-checkbox'>checkbox</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-close'>close</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-hidden'>hidden</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-label'>label</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-open'>open</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-password'>password</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-radio'>radio</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-select'>select</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-submit'>submit</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-text'>text</a>
+      </li>
+      <li>
+        <a href='#Sammy.FormBuilder-textarea'>textarea</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.FormBuilder-checkbox'>
+      <h4>
+        checkbox
+        <span>
+          (
+          <em>keypath, value, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a checkbox <input> for keypath with the value @value@. Multiple
+      checkboxes can be created with different value, if @value@ equals the
+      current value of the key of the form builder&#8217;s object the attribute
+      checked=&#8217;checked&#8217; will be added.
+      </p>
+      <p>
+      By default @checkbox()@ also generates a hidden element whose value is the
+      inverse of the value given. This is known hack to get around a common
+      gotcha where browsers and jQuery itself does not include
+      &#8216;unchecked&#8217; elements in the list of submittable inputs. This
+      ensures that a value should always be passed to Sammy and hence the server.
+      You can disable the creation of the hidden element by setting the
+      @hidden_element@ attribute to @false@
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-close'>
+      <h4>
+        close
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      closes the <form>
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-hidden'>
+      <h4>
+        hidden
+        <span>
+          (
+          <em>keypath, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a hidden <input> for @keypath@ with an optional @attributes@ object
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-label'>
+      <h4>
+        label
+        <span>
+          (
+          <em>keypath, content, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a label for @keypath@ with the text @content with an optional
+      @attributes@ object
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-open'>
+      <h4>
+        open
+        <span>
+          (
+          <em>attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates the open <form> tag with the object attributes
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-password'>
+      <h4>
+        password
+        <span>
+          (
+          <em>keypath, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a password <input> for @keypath@ with an optional @attributes@
+      object
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-radio'>
+      <h4>
+        radio
+        <span>
+          (
+          <em>keypath, value, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a radio <input> for keypath with the value @value@. Multiple radios
+      can be created with different value, if @value@ equals the current value of
+      the key of the form builder&#8217;s object the attribute
+      checked=&#8217;checked&#8217; will be added.
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-select'>
+      <h4>
+        select
+        <span>
+          (
+          <em>keypath, options, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a <select> element for @keypath@ with the <option> elements
+      specified by an array in @options@. If @options@ is an array of arrays, the
+      first element in each subarray becomes the text of the option and the
+      second becomes the value.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+      var options = [
+        ['Small', 's'],
+        ['Medium', 'm'],
+        ['Large', 'l']
+      ];
+      form.select('size', options);
+      //=> <select name='item[size]'><option value='s'>Small</option> ...
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.FormBuilder-submit'>
+      <h4>
+        submit
+        <span>
+          (
+          <em>attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a submit <input> for @keypath@ with an optional @attributes@ object
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-text'>
+      <h4>
+        text
+        <span>
+          (
+          <em>keypath, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a text <input> for @keypath@ with an optional @attributes@ object
+      </p></div></div>
+    <div class='meth' id='Sammy.FormBuilder-textarea'>
+      <h4>
+        textarea
+        <span>
+          (
+          <em>keypath, attributes</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      creates a <textarea> for @keypath@ with an optional @attributes@ object
+      </p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Form'>
+    <h2>
+      Sammy.Form
+      <span>
+        (
+        <em>app</em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Form is a Sammy plugin that adds form building helpers to a
+    Sammy.Application
+    </p></div><h3>Attributes</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Form-simple_element'>simple_element</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='attr' id='Sammy.Form-simple_element'>
+      <h4>
+        simple_element
+        =
+        <span>simple_element</span>
+      </h4><div class='doc'><p>
+      simple_element is a simple helper for creating HTML tags.
+      </p>
+      <h3>Arguments</h3>
+      <table>
+      <tr><td valign="top"><tt>tag</tt>:</td><td>the HTML tag to generate e.g. input, p, etc/
+      
+      </td></tr>
+      <tr><td valign="top"><tt>attributes</tt>:</td><td>an object representing the attributes of the element as key value pairs.
+      e.g. {class: &#8216;element-class&#8217;}
+      
+      </td></tr>
+      <tr><td valign="top"><tt>content</tt>:</td><td>an optional string representing the content for the the element. If
+      ommited, the element becomes self closing
+      
+      </td></tr>
+      </table></div></div>
+    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Form-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Form-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Form-formFor'>formFor</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.Form-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Split interpolated strings into an array of literals and code fragments.
+      </p></div></div>
+    <div class='meth' id='Sammy.Form-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      Parse the attribute block using a state machine
+      </p></div></div>
+    <div class='meth' id='Sammy.Form-formFor'>
+      <h4>
+        formFor
+        <span>
+          (
+          <em>name, object, content_callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p>
+      formFor creates a Sammy.Form builder object with the passed @name@ and
+      @object@ and passes it as an argument to the @content_callback@. This is a
+      shortcut for creating FormBuilder objects for use within templates.
+      </p>
+      <h3>Example</h3>
+      {% highlight javascript %}
+       // in item_form.template
+      
+       <% formFor('item', item, function(f) { %>
+         <%= f.open({action: '#/items'}) %>
+         <p>
+           <%= f.label('name') %>
+           <%= f.text('name') %>
+         </p>
+         <p>
+           <%= f.submit() %>
+         </p>
+         <%= f.close() %>
+       <% }); %>
+      {% endhighlight %}</div></div>
+  </div>
+  <!-- its just a function -->
   <div class='meth' id='Sammy.Haml'>
     <h2>
       Sammy.Haml
@@ -1610,7 +1929,7 @@ nav:
           // set local vars
           this.title = 'Hello!'
           this.name = this.params.name;
-          // render the template and pass it through mustache
+          // render the template and pass it through haml
           this.partial('mytemplate.haml');
         });
     
@@ -2118,7 +2437,7 @@ nav:
       <h3>Example</h3>
       {% highlight javascript %}
        var store = new Sammy.Store({name: 'kvo'});
-       $('body').bind('set-kvo.foo', function(e, data) {
+       $('body').bind('set-kvo-foo', function(e, data) {
          Sammy.log(data.key + ' changed to ' + data.value);
        });
        store.set('foo', 'bar'); // logged: foo changed to bar
@@ -2356,4 +2675,18 @@ nav:
        this.partial('myfile.tpl');
      });
     {% endhighlight %}</div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Title'>
+    <h2>
+      Sammy.Title
+      <span>
+        (
+        <em></em>
+        )
+      </span>
+    </h2><div class='doc'><p>
+    Sammy.Title is a very simple plugin to easily set the document&#8217;s
+    title. It supplies a helper for setting the title (@title()@) within
+    routes, and an app level method for setting the global title (@setTitle()@)
+    </p></div></div>
 </div>
