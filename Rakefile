@@ -83,9 +83,11 @@ end
 
 desc 'copy files into the site branch'
 task :copy_test_and_examples do
-  sh "cp -r examples site/examples"
-  sh "cp -r test site/test"
-  sh "cp -r lib site/lib"
+  sh "mkdir -p site/examples site/test site/lib site/vendor"
+  sh "cp -r examples/* site/examples/"
+  sh "cp -r test/* site/test/"
+  sh "cp -r lib/* site/lib/"
+  sh "cp -r vendor/* site/vendor/"
 end
 
 
