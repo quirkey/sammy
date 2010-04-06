@@ -21,7 +21,7 @@ task :minify => :version do
     
     dir             = 'lib/min'
     min_path        = File.join(dir, path.gsub(/\.js$/, "-#{@version}.min.js"))
-    latest_min_path = File.join(dir, path.gsub(/\.js$/, "-lastest.min.js"))
+    latest_min_path = File.join(dir, path.gsub(/\.js$/, "-latest.min.js"))
     
     sh "#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}"
     minified = File.read(min_path)
