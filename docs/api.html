@@ -118,30 +118,30 @@ nav:
         
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy</tt> (also aliased as $.sammy) is not only the namespace for a
-    number of prototypes, its also a top level method that allows for easy
-    creation/management of <tt>Sammy.Application</tt> instances. There are a
-    number of different forms for <tt>Sammy()</tt> but each returns an instance
-    of <tt>Sammy.Application</tt>. When a new instance is created using
-    <tt>Sammy</tt> it is added to an Object called <tt>Sammy.apps</tt>. This
-    provides for an easy way to get at existing Sammy applications. Only one
-    instance is allowed per <tt>element_selector</tt> so when calling
-    <tt>Sammy('selector')</tt> multiple times, the first time will create the
-    application and the following times will extend the application already
-    added to that selector.
-    </p>
+    </h2><div class='doc'><p> <code>Sammy</code> (also aliased as $.sammy) is not only the namespace for a
+     number of prototypes, its also a top level method that allows for easy
+     creation/management of <code>Sammy.Application</code> instances. There are a
+     number of different forms for <code>Sammy()</code> but each returns an instance
+     of <code>Sammy.Application</code>. When a new instance is created using
+     <code>Sammy</code> it is added to an Object called <code>Sammy.apps</code>. This
+     provides for an easy way to get at existing Sammy applications. Only one
+     instance is allowed per <code>element_selector</code> so when calling
+     <code>Sammy('selector')</code> multiple times, the first time will create
+     the application and the following times will extend the application
+     already added to that selector.</p>
+    
     <h3>Example</h3>
+    
     {% highlight javascript %}
-     // returns the app at #main or a new app
-     Sammy('#main')
+      // returns the app at #main or a new app
+      Sammy('#main') 
     
-     // equivilent to "new Sammy.Application", except appends to apps
-     Sammy();
-     Sammy(function() { ... });
+      // equivilent to "new Sammy.Application", except appends to apps
+      Sammy();
+      Sammy(function() { ... }); 
     
-     // extends the app at '#main' with function.
-     Sammy('#main', function() { ... });
+      // extends the app at '#main' with function.
+      Sammy('#main', function() { ... });
     {% endhighlight %}</div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.addLogger'>
@@ -152,11 +152,9 @@ nav:
         logger
         )
       </span>
-    </h2><div class='doc'><p>
-    Add to the global logger pool. Takes a function that accepts an unknown
-    number of arguments and should print them or send them somewhere The first
-    argument is always a timestamp.
-    </p></div></div>
+    </h2><div class='doc'><p> Add to the global logger pool. Takes a function that accepts an
+     unknown number of arguments and should print them or send them somewhere
+     The first argument is always a timestamp.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.log'>
     <h2>
@@ -166,10 +164,9 @@ nav:
         
         )
       </span>
-    </h2><div class='doc'><p>
-    Sends a log message to each logger listed in the global loggers pool. Can
-    take any number of arguments. Also prefixes the arguments with a timestamp.
-    </p></div></div>
+    </h2><div class='doc'><p> Sends a log message to each logger listed in the global
+     loggers pool. Can take any number of arguments.
+     Also prefixes the arguments with a timestamp.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.Object'>
     <h2>
@@ -179,10 +176,8 @@ nav:
         obj
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Object is the base for all other Sammy classes. It provides some
-    useful functionality, including cloning, iterating, etc.
-    </p></div>    <h3>Methods</h3>
+    </h2><div class='doc'><p> Sammy.Object is the base for all other Sammy classes. It provides some useful
+     functionality, including cloning, iterating, etc.</p></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.Object-has'>has</a>
@@ -218,10 +213,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Checks if the object has a value at <tt>key</tt> and that the value is not
-      empty
-      </p></div></div>
+      </h4><div class='doc'><p> Checks if the object has a value at <code>key</code> and that the value is not empty</p></div></div>
     <div class='meth' id='Sammy.Object-join'>
       <h4>
         join
@@ -230,10 +222,8 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      convenience method to join as many arguments as you want by the first
-      argument - useful for making paths
-      </p></div></div>
+      </h4><div class='doc'><p> convenience method to join as many arguments as you want
+       by the first argument - useful for making paths</p></div></div>
     <div class='meth' id='Sammy.Object-keys'>
       <h4>
         keys
@@ -242,10 +232,8 @@ nav:
           <em>attributes_only</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns an array of keys for this object. If <tt>attributes_only</tt> is
-      true will not return keys that map to a <tt>function()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> Returns an array of keys for this object. If <code>attributes_only</code>
+       is true will not return keys that map to a <code>function()</code></p></div></div>
     <div class='meth' id='Sammy.Object-log'>
       <h4>
         log
@@ -254,9 +242,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Shortcut to Sammy.log
-      </p></div></div>
+      </h4><div class='doc'><p> Shortcut to Sammy.log</p></div></div>
     <div class='meth' id='Sammy.Object-toHTML'>
       <h4>
         toHTML
@@ -265,13 +251,13 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Renders a simple HTML version of this Objects attributes. Does not render
-      functions. For example. Given this Sammy.Object:
-      </p>
+      </h4><div class='doc'><p> Renders a simple HTML version of this Objects attributes.
+       Does not render functions.
+       For example. Given this Sammy.Object:</p>
+      
       {% highlight javascript %}
-         var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
-         s.toHTML() //=> '<strong>first_name</strong> Sammy<br /><strong>last_name</strong> Davis Jr.<br />'
+      var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
+      s.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Object-toHash'>
       <h4>
@@ -281,9 +267,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns a copy of the object with Functions removed.
-      </p></div></div>
+      </h4><div class='doc'><p> Returns a copy of the object with Functions removed.</p></div></div>
     <div class='meth' id='Sammy.Object-toString'>
       <h4>
         toString
@@ -292,11 +276,9 @@ nav:
           <em>include_functions</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns a string representation of this object. if
-      <tt>include_functions</tt> is true, it will also toString() the methods of
-      this object. By default only prints the attributes.
-      </p></div></div>
+      </h4><div class='doc'><p> Returns a string representation of this object.
+       if <code>include_functions</code> is true, it will also toString() the
+       methods of this object. By default only prints the attributes.</p></div></div>
     <div class='meth' id='Sammy.Object-uuid'>
       <h4>
         uuid
@@ -305,9 +287,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Generates a unique identifing string. Used for application namespaceing.
-      </p></div></div>
+      </h4><div class='doc'><p> Generates a unique identifing string. Used for application namespaceing.</p></div></div>
   </div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.HashLocationProxy'>
@@ -318,23 +298,18 @@ nav:
         app, run_interval_every
         )
       </span>
-    </h2><div class='doc'><p>
-    The HashLocationProxy is the default location proxy for all Sammy
-    applications. A location proxy is a prototype that conforms to a simple
-    interface. The purpose of a location proxy is to notify the
-    Sammy.Application its bound to when the location or &#8216;external
-    state&#8217; changes. The HashLocationProxy considers the state to be
-    changed when the &#8216;hash&#8217; (window.location.hash /
-    &#8217;#&#8217;) changes. It does this in two different ways depending on
-    what browser you are using. The newest browsers (IE, Safari > 4, FF >= 3.6)
-    support a &#8216;onhashchange&#8217; DOM event, thats fired whenever the
-    location.hash changes. In this situation the HashLocationProxy just binds
-    to this event and delegates it to the application. In the case of older
-    browsers a poller is set up to track changes to the hash. Unlike Sammy 0.3
-    or earlier, the HashLocationProxy allows the poller to be a global object,
-    eliminating the need for multiple pollers even when thier are multiple apps
-    on the page.
-    </p></div>    <h3>Methods</h3>
+    </h2><div class='doc'><p> The HashLocationProxy is the default location proxy for all Sammy applications.
+     A location proxy is a prototype that conforms to a simple interface. The purpose
+     of a location proxy is to notify the Sammy.Application its bound to when the location
+     or 'external state' changes. The HashLocationProxy considers the state to be
+     changed when the 'hash' (window.location.hash / '#') changes. It does this in two
+     different ways depending on what browser you are using. The newest browsers
+     (IE, Safari > 4, FF >= 3.6) support a 'onhashchange' DOM event, thats fired whenever
+     the location.hash changes. In this situation the HashLocationProxy just binds
+     to this event and delegates it to the application. In the case of older browsers
+     a poller is set up to track changes to the hash. Unlike Sammy 0.3 or earlier,
+     the HashLocationProxy allows the poller to be a global object, eliminating the
+     need for multiple pollers even when thier are multiple apps on the page.</p></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.HashLocationProxy-bind'>bind</a>
@@ -358,9 +333,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      bind the proxy events to the current app.
-      </p></div></div>
+      </h4><div class='doc'><p> bind the proxy events to the current app.</p></div></div>
     <div class='meth' id='Sammy.HashLocationProxy-getLocation'>
       <h4>
         getLocation
@@ -369,9 +342,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      get the current location from the hash.
-      </p></div></div>
+      </h4><div class='doc'><p> get the current location from the hash.</p></div></div>
     <div class='meth' id='Sammy.HashLocationProxy-setLocation'>
       <h4>
         setLocation
@@ -380,9 +351,7 @@ nav:
           <em>new_location</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      set the current location to <tt>new_location</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> set the current location to <code>new_location</code></p></div></div>
     <div class='meth' id='Sammy.HashLocationProxy-unbind'>
       <h4>
         unbind
@@ -391,9 +360,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      unbind the proxy events from the current app
-      </p></div></div>
+      </h4><div class='doc'><p> unbind the proxy events from the current app</p></div></div>
   </div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.DataLocationProxy'>
@@ -404,15 +371,12 @@ nav:
         app, data_name
         )
       </span>
-    </h2><div class='doc'><p>
-    The DataLocationProxy is an optional location proxy prototype. As opposed
-    to the <tt>HashLocationProxy</tt> it gets its location from a jQuery.data
-    attribute tied to the application&#8217;s element. You can set the name of
-    the attribute by passing a string as the second argument to the
-    constructor. The default attribute name is &#8216;sammy-location&#8217;. To
-    read more about location proxies, check out the documentation for
-    <tt>Sammy.HashLocationProxy</tt>
-    </p></div></div>
+    </h2><div class='doc'><p> The DataLocationProxy is an optional location proxy prototype. As opposed to
+     the <code>HashLocationProxy</code> it gets its location from a jQuery.data attribute
+     tied to the application's element. You can set the name of the attribute by
+     passing a string as the second argument to the constructor. The default attribute
+     name is 'sammy-location'. To read more about location proxies, check out the
+     documentation for <code>Sammy.HashLocationProxy</code></p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.Application'>
     <h2>
@@ -422,13 +386,10 @@ nav:
         app_function
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Application is the Base prototype for defining
-    &#8216;applications&#8217;. An &#8216;application&#8217; is a collection of
-    &#8216;routes&#8217; and bound events that is attached to an element when
-    <tt>run()</tt> is called. The only argument an &#8216;app_function&#8217;
-    is evaluated within the context of the application.
-    </p></div><h3>Attributes</h3>
+    </h2><div class='doc'><p> Sammy.Application is the Base prototype for defining 'applications'.
+     An 'application' is a collection of 'routes' and bound events that is
+     attached to an element when <code>run()</code> is called.
+     The only argument an 'app_function' is evaluated within the context of the application.</p></div><h3>Attributes</h3>
     <ul>
       <li>
         <a href='#Sammy.Application-APP_EVENTS'>APP_EVENTS</a>
@@ -476,118 +437,91 @@ nav:
         APP_EVENTS
         =
         <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error','check-form-submission','redirect']</span>
-      </h4><div class='doc'><p>
-      An array of the default events triggered by the application during its
-      lifecycle
-      </p></div></div>
+      </h4><div class='doc'><p> An array of the default events triggered by the
+       application during its lifecycle</p></div></div>
     <div class='attr' id='Sammy.Application-ROUTE_VERBS'>
       <h4>
         ROUTE_VERBS
         =
         <span>['get','post','put','delete']</span>
-      </h4><div class='doc'><p>
-      the four route verbs
-      </p></div></div>
+      </h4><div class='doc'><p> the four route verbs</p></div></div>
     <div class='attr' id='Sammy.Application-any'>
       <h4>
         any
         =
         <span>_routeWrapper('any')</span>
-      </h4><div class='doc'><p>
-      Alias for route(&#8216;any&#8217;, &#8230;)
-      </p></div></div>
+      </h4><div class='doc'><p> Alias for route('any', ...)</p></div></div>
     <div class='attr' id='Sammy.Application-debug'>
       <h4>
         debug
         =
         <span>false</span>
-      </h4><div class='doc'><p>
-      When set to true, logs all of the default events using <tt>log()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> When set to true, logs all of the default events using <code>log()</code></p></div></div>
     <div class='attr' id='Sammy.Application-del'>
       <h4>
         del
         =
         <span>_routeWrapper('delete')</span>
-      </h4><div class='doc'><p>
-      Alias for route(&#8216;delete&#8217;, &#8230;)
-      </p></div></div>
+      </h4><div class='doc'><p> Alias for route('delete', ...)</p></div></div>
     <div class='attr' id='Sammy.Application-element_selector'>
       <h4>
         element_selector
         =
         <span>'body'</span>
-      </h4><div class='doc'><p>
-      Defines what element the application is bound to. Provide a selector
-      (parseable by <tt>jQuery()</tt>) and this will be used by
-      <tt>$element()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> Defines what element the application is bound to. Provide a selector
+       (parseable by <code>jQuery()</code>) and this will be used by <code>$element()</code></p></div></div>
     <div class='attr' id='Sammy.Application-get'>
       <h4>
         get
         =
         <span>_routeWrapper('get')</span>
-      </h4><div class='doc'><p>
-      Alias for route(&#8216;get&#8217;, &#8230;)
-      </p></div></div>
+      </h4><div class='doc'><p> Alias for route('get', ...)</p></div></div>
     <div class='attr' id='Sammy.Application-location_proxy'>
       <h4>
         location_proxy
         =
         <span>null</span>
-      </h4><div class='doc'><p>
-      The location proxy for the current app. By default this is set to a new
-      <tt>Sammy.HashLocationProxy</tt> on initialization. However, you can set
-      the location_proxy inside you&#8217;re app function to give youre app a
-      custom location mechanism
-      </p></div></div>
+      </h4><div class='doc'><p> The location proxy for the current app. By default this is set to a new
+       <code>Sammy.HashLocationProxy</code> on initialization. However, you can set
+       the location_proxy inside you're app function to give youre app a custom
+       location mechanism</p></div></div>
     <div class='attr' id='Sammy.Application-post'>
       <h4>
         post
         =
         <span>_routeWrapper('post')</span>
-      </h4><div class='doc'><p>
-      Alias for route(&#8216;post&#8217;, &#8230;)
-      </p></div></div>
+      </h4><div class='doc'><p> Alias for route('post', ...)</p></div></div>
     <div class='attr' id='Sammy.Application-put'>
       <h4>
         put
         =
         <span>_routeWrapper('put')</span>
-      </h4><div class='doc'><p>
-      Alias for route(&#8216;put&#8217;, &#8230;)
-      </p></div></div>
+      </h4><div class='doc'><p> Alias for route('put', ...)</p></div></div>
     <div class='attr' id='Sammy.Application-raise_errors'>
       <h4>
         raise_errors
         =
         <span>false</span>
-      </h4><div class='doc'><p>
-      When set to true, and the error() handler is not overriden, will actually
-      raise JS errors in routes (500) and when routes can&#8217;t be found (404)
-      </p></div></div>
+      </h4><div class='doc'><p> When set to true, and the error() handler is not overriden, will actually
+       raise JS errors in routes (500) and when routes can't be found (404)</p></div></div>
     <div class='attr' id='Sammy.Application-run_interval_every'>
       <h4>
         run_interval_every
         =
         <span>50</span>
-      </h4><div class='doc'><p>
-      The time in milliseconds that the URL is queried for changes
-      </p></div></div>
+      </h4><div class='doc'><p> The time in milliseconds that the URL is queried for changes</p></div></div>
     <div class='attr' id='Sammy.Application-template_engine'>
       <h4>
         template_engine
         =
         <span>null</span>
-      </h4><div class='doc'><p>
-      The default template engine to use when using <tt>partial()</tt> in an
-      <tt>EventContext</tt>. <tt>template_engine</tt> can either be a string that
-      corresponds to the name of a method/helper on EventContext or it can be a
-      function that takes two arguments, the content of the unrendered partial
-      and an optional JS object that contains interpolation data. Template engine
-      is only called/refered to if the extension of the partial is null or
-      unknown. See <tt>partial()</tt> for more information
-      </p></div></div>
+      </h4><div class='doc'><p> The default template engine to use when using <code>partial()</code> in an
+       <code>EventContext</code>. <code>template_engine</code> can either be a string that
+       corresponds to the name of a method/helper on EventContext or it can be a function
+       that takes two arguments, the content of the unrendered partial and an optional
+       JS object that contains interpolation data. Template engine is only called/refered
+       to if the extension of the partial is null or unknown. See <code>partial()</code>
+       for more information</p></div></div>
     <h3>Methods</h3>
     <ul>
       <li>
@@ -681,9 +615,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      returns a jQuery object of the Applications bound element.
-      </p></div></div>
+      </h4><div class='doc'><p> returns a jQuery object of the Applications bound element.</p></div></div>
     <div class='meth' id='Sammy.Application-after'>
       <h4>
         after
@@ -692,10 +624,8 @@ nav:
           <em>callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      A shortcut for binding a callback to be run after a route is executed.
-      After callbacks have no guarunteed order.
-      </p></div></div>
+      </h4><div class='doc'><p> A shortcut for binding a callback to be run after a route is executed.
+       After callbacks have no guarunteed order.</p></div></div>
     <div class='meth' id='Sammy.Application-around'>
       <h4>
         around
@@ -704,49 +634,48 @@ nav:
           <em>callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Adds an around filter to the application. around filters are functions that
-      take a single argument <tt>callback</tt> which is the entire route
-      execution path wrapped up in a closure. This means you can decide whether
-      or not to proceed with execution by not invoking <tt>callback</tt> or, more
-      usefuly wrapping callback inside the result of an asynchronous execution.
-      </p>
+      </h4><div class='doc'><p> Adds an around filter to the application. around filters are functions
+       that take a single argument <code>callback</code> which is the entire route
+       execution path wrapped up in a closure. This means you can decide whether
+       or not to proceed with execution by not invoking <code>callback</code> or,
+       more usefuly wrapping callback inside the result of an asynchronous execution.</p>
+      
       <h3>Example</h3>
-      <p>
-      The most common use case for around() is calling a <em>possibly</em> async
-      function and executing the route within the functions callback:
-      </p>
+      
+      <p> The most common use case for around() is calling a <em>possibly</em> async function
+       and executing the route within the functions callback:</p>
+      
       {% highlight javascript %}
-       var app = $.sammy(function() {
+        var app = $.sammy(function() {
       
-         var current_user = false;
+          var current_user = false;
       
-         function checkLoggedIn(callback) {
-           // /session returns a JSON representation of the logged in user
-           // or an empty object
-           if (!current_user) {
-             $.getJSON('/session', function(json) {
-               if (json.login) {
-                 // show the user as logged in
-                 current_user = json;
-                 // execute the route path
-                 callback();
-               } else {
-                 // show the user as not logged in
-                 current_user = false;
-                 // the context of aroundFilters is an EventContext
-                 this.redirect('#/login');
-               }
-             });
-           } else {
-             // execute the route path
-             callback();
-           }
-         };
+          function checkLoggedIn(callback) {
+            // /session returns a JSON representation of the logged in user 
+            // or an empty object
+            if (!current_user) {
+              $.getJSON('/session', function(json) {
+                if (json.login) {
+                  // show the user as logged in
+                  current_user = json;
+                  // execute the route path
+                  callback();
+                } else {
+                  // show the user as not logged in
+                  current_user = false;
+                  // the context of aroundFilters is an EventContext
+                  this.redirect('#/login');
+                }
+              });
+            } else {
+              // execute the route path
+              callback();
+            }
+          };
       
-         this.around(checkLoggedIn);
+          this.around(checkLoggedIn);
       
-       });
+        });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-before'>
       <h4>
@@ -756,42 +685,40 @@ nav:
           <em>options, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Takes a single callback that is pushed on to a stack. Before any route is
-      run, the callbacks are evaluated in order within the current
-      <tt>Sammy.EventContext</tt>
-      </p>
-      <p>
-      If any of the callbacks explicitly return false, execution of any further
-      callbacks and the route itself is halted.
-      </p>
-      <p>
-      You can also provide a set of options that will define when to run this
-      before based on the route it proceeds.
-      </p>
+      </h4><div class='doc'><p> Takes a single callback that is pushed on to a stack.
+       Before any route is run, the callbacks are evaluated in order within
+       the current <code>Sammy.EventContext</code></p>
+      
+      <p> If any of the callbacks explicitly return false, execution of any
+       further callbacks and the route itself is halted.</p>
+      
+      <p> You can also provide a set of options that will define when to run this
+       before based on the route it proceeds.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-       var app = $.sammy(function() {
+        var app = $.sammy(function() {
       
-         // will run at #/route but not at #/
-         this.before('#/route', function() {
-           //...
-         });
+          // will run at #/route but not at #/
+          this.before('#/route', function() {
+            //...
+          });
       
-         // will run at #/ but not at #/route
-         this.before({except: {path: '#/route'}}, function() {
-           this.log('not before #/route');
-         });
+          // will run at #/ but not at #/route
+          this.before({except: {path: '#/route'}}, function() {
+            this.log('not before #/route');
+          });
       
-         this.get('#/', function() {});
+          this.get('#/', function() {});
       
-         this.get('#/route', function() {});
+          this.get('#/route', function() {});
       
-       });
+        });
       {% endhighlight %}
-      <p>
-      See <tt>contextMatchesOptions()</tt> for a full list of supported options
-      </p></div></div>
+      
+      
+      <p> See <code>contextMatchesOptions()</code> for a full list of supported options</p></div></div>
     <div class='meth' id='Sammy.Application-bind'>
       <h4>
         bind
@@ -800,30 +727,17 @@ nav:
           <em>name, data, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Works just like <tt>jQuery.fn.bind()</tt> with a couple noteable
-      differences.
-      </p>
+      </h4><div class='doc'><p> Works just like <code>jQuery.fn.bind()</code> with a couple noteable differences.</p>
+      
       <ul>
-      <li>It binds all events to the application element
-      
-      </li>
-      <li>All events are bound within the <tt>eventNamespace()</tt>
-      
-      </li>
-      <li>Events are not actually bound until the application is started with
-      <tt>run()</tt>
-      
-      </li>
-      <li>callbacks are evaluated within the context of a Sammy.EventContext
-      
-      </li>
+      <li>It binds all events to the application element</li>
+      <li>All events are bound within the <code>eventNamespace()</code></li>
+      <li>Events are not actually bound until the application is started with <code>run()</code></li>
+      <li>callbacks are evaluated within the context of a Sammy.EventContext</li>
       </ul>
-      <p>
-      See <a
-      href="http://code.quirkey.com/sammy/docs/events.html">code.quirkey.com/sammy/docs/events.html</a>
-      for more info.
-      </p></div></div>
+      
+      
+      <p> See http://code.quirkey.com/sammy/docs/events.html for more info.</p></div></div>
     <div class='meth' id='Sammy.Application-bindToAllEvents'>
       <h4>
         bindToAllEvents
@@ -832,14 +746,11 @@ nav:
           <em>callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Will bind a single callback function to every event that is already being
-      listened to in the app. This includes all the <tt>APP_EVENTS</tt> as well
-      as any custom events defined with <tt>bind()</tt>.
-      </p>
-      <p>
-      Used internally for debug logging.
-      </p></div></div>
+      </h4><div class='doc'><p> Will bind a single callback function to every event that is already
+       being listened to in the app. This includes all the <code>APP_EVENTS</code>
+       as well as any custom events defined with <code>bind()</code>.</p>
+      
+      <p> Used internally for debug logging.</p></div></div>
     <div class='meth' id='Sammy.Application-contextMatchesOptions'>
       <h4>
         contextMatchesOptions
@@ -848,36 +759,36 @@ nav:
           <em>context, match_options, positive</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Matches an object of options against an <tt>EventContext</tt> like object
-      that contains <tt>path</tt> and <tt>verb</tt> attributes. Internally Sammy
-      uses this for matching <tt>before()</tt> filters against specific options.
-      You can set the object to <em>only</em> match certain paths or verbs, or
-      match all paths or verbs <em>except</em> those that match the options.
-      </p>
-      <h3>Example</h3>
-      {% highlight javascript %}
-      var app = $.sammy(),
-          context = {verb: 'get', path: '#/mypath'};
+      </h4><div class='doc'><p> Matches an object of options against an <code>EventContext</code> like object that
+       contains <code>path</code> and <code>verb</code> attributes. Internally Sammy uses this
+       for matching <code>before()</code> filters against specific options. You can set the
+       object to <em>only</em> match certain paths or verbs, or match all paths or verbs <em>except</em>
+       those that match the options.</p>
       
-      // match against a path string
-      app.contextMatchesOptions(context, '#/mypath'); //=> true
-      app.contextMatchesOptions(context, '#/otherpath'); //=> false
-      // equivilent to
-      app.contextMatchesOptions(context, {only: {path:'#/mypath'}}); //=> true
-      app.contextMatchesOptions(context, {only: {path:'#/otherpath'}}); //=> false
-      // match against a path regexp
-      app.contextMatchesOptions(context, /path/); //=> true
-      app.contextMatchesOptions(context, /^path/); //=> false
-      // match only a verb
-      app.contextMatchesOptions(context, {only: {verb:'get'}}); //=> true
-      app.contextMatchesOptions(context, {only: {verb:'post'}}); //=> false
-      // match all except a verb
-      app.contextMatchesOptions(context, {except: {verb:'post'}}); //=> true
-      app.contextMatchesOptions(context, {except: {verb:'get'}}); //=> false
-      // match all except a path
-      app.contextMatchesOptions(context, {except: {path:'#/otherpath'}}); //=> true
-      app.contextMatchesOptions(context, {except: {path:'#/mypath'}}); //=> false
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+       var app = $.sammy(),
+           context = {verb: 'get', path: '#/mypath'};
+      
+       // match against a path string
+       app.contextMatchesOptions(context, '#/mypath'); //=&gt; true
+       app.contextMatchesOptions(context, '#/otherpath'); //=&gt; false
+       // equivilent to
+       app.contextMatchesOptions(context, {only: {path:'#/mypath'}}); //=&gt; true
+       app.contextMatchesOptions(context, {only: {path:'#/otherpath'}}); //=&gt; false
+       // match against a path regexp
+       app.contextMatchesOptions(context, /path/); //=&gt; true
+       app.contextMatchesOptions(context, /^path/); //=&gt; false
+       // match only a verb
+       app.contextMatchesOptions(context, {only: {verb:'get'}}); //=&gt; true
+       app.contextMatchesOptions(context, {only: {verb:'post'}}); //=&gt; false
+       // match all except a verb
+       app.contextMatchesOptions(context, {except: {verb:'post'}}); //=&gt; true
+       app.contextMatchesOptions(context, {except: {verb:'get'}}); //=&gt; false
+       // match all except a path
+       app.contextMatchesOptions(context, {except: {path:'#/otherpath'}}); //=&gt; true
+       app.contextMatchesOptions(context, {except: {path:'#/mypath'}}); //=&gt; false
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-error'>
       <h4>
@@ -887,14 +798,12 @@ nav:
           <em>message, original_error</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      The base error handler takes a string <tt>message</tt> and an
-      <tt>Error</tt> object. If <tt>raise_errors</tt> is set to <tt>true</tt> on
-      the app level, this will re-throw the error to the browser. Otherwise it
-      will send the error to <tt>log()</tt>. Override this method to provide
-      custom error handling e.g logging to a server side component or displaying
-      some feedback to the user.
-      </p></div></div>
+      </h4><div class='doc'><p> The base error handler takes a string <code>message</code> and an <code>Error</code>
+       object. If <code>raise_errors</code> is set to <code>true</code> on the app level,
+       this will re-throw the error to the browser. Otherwise it will send the error
+       to <code>log()</code>. Override this method to provide custom error handling
+       e.g logging to a server side component or displaying some feedback to the
+       user.</p></div></div>
     <div class='meth' id='Sammy.Application-eventNamespace'>
       <h4>
         eventNamespace
@@ -903,10 +812,8 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      A unique event namespace defined per application. All events bound with
-      <tt>bind()</tt> are automatically bound within this space.
-      </p></div></div>
+      </h4><div class='doc'><p> A unique event namespace defined per application.
+       All events bound with <code>bind()</code> are automatically bound within this space.</p></div></div>
     <div class='meth' id='Sammy.Application-getLocation'>
       <h4>
         getLocation
@@ -915,10 +822,8 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Delegates to the <tt>location_proxy</tt> to get the current location. See
-      <tt>Sammy.HashLocationProxy</tt> for more info on location proxies.
-      </p></div></div>
+      </h4><div class='doc'><p> Delegates to the <code>location_proxy</code> to get the current location.
+       See <code>Sammy.HashLocationProxy</code> for more info on location proxies.</p></div></div>
     <div class='meth' id='Sammy.Application-helper'>
       <h4>
         helper
@@ -927,36 +832,35 @@ nav:
           <em>name, method</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Helper extends the event context just like <tt>helpers()</tt> but does it a
-      single method at a time. This is especially useful for dynamically named
-      helpers
-      </p>
+      </h4><div class='doc'><p> Helper extends the event context just like <code>helpers()</code> but does it
+       a single method at a time. This is especially useful for dynamically named
+       helpers</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-      // Trivial example that adds 3 helper methods to the context dynamically
-      var app = $.sammy(function(app) {
+       // Trivial example that adds 3 helper methods to the context dynamically
+       var app = $.sammy(function(app) {
       
-        $.each([1,2,3], function(i, num) {
-          app.helper('helper' + num, function() {
-            this.log("I'm helper number " + num);
-          });
-        });
+         $.each([1,2,3], function(i, num) {
+           app.helper('helper' + num, function() {
+             this.log("I'm helper number " + num);
+           }); 
+         });
       
-        this.get('#/', function() {
-          this.helper2(); //=> I'm helper number 2
-        });
-      });
+         this.get('#/', function() {
+           this.helper2(); //=&gt; I'm helper number 2
+         });
+       });
       {% endhighlight %}
+      
+      
       <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>name</tt>:</td><td>The name of the method
       
-      </td></tr>
-      <tr><td valign="top"><tt>method</tt>:</td><td>The function to be added to the prototype at <tt>name</tt>
-      
-      </td></tr>
-      </table></div></div>
+      <ul>
+      <li><code>name</code> The name of the method</li>
+      <li><code>method</code> The function to be added to the prototype at <code>name</code></li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-helpers'>
       <h4>
         helpers
@@ -965,34 +869,35 @@ nav:
           <em>extensions</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Helpers extends the EventContext prototype specific to this app. This
-      allows you to define app specific helper functions that can be used
-      whenever you&#8217;re inside of an event context (templates, routes, bind).
-      </p>
+      </h4><div class='doc'><p> Helpers extends the EventContext prototype specific to this app.
+       This allows you to define app specific helper functions that can be used
+       whenever you're inside of an event context (templates, routes, bind).</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-         var app = $.sammy(function() {
+      var app = $.sammy(function() {
       
-       helpers({
-         upcase: function(text) {
-          return text.toString().toUpperCase();
-         }
-       });
+        helpers({
+          upcase: function(text) {
+           return text.toString().toUpperCase();
+          }
+        });
       
-       get('#/', function() { with(this) {
-         // inside of this context I can use the helpers
-         $('#main').html(upcase($('#main').text());
-       }});
+        get('#/', function() { with(this) {
+          // inside of this context I can use the helpers
+          $('#main').html(upcase($('#main').text());
+        }});
       
-         });
+      });
       {% endhighlight %}
-      <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>extensions</tt>:</td><td>An object collection of functions to extend the context.
       
-      </td></tr>
-      </table></div></div>
+      
+      <h3>Arguments</h3>
+      
+      <ul>
+      <li><code>extensions</code> An object collection of functions to extend the context.</li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-isRunning'>
       <h4>
         isRunning
@@ -1001,9 +906,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns a boolean of weather the current application is running.
-      </p></div></div>
+      </h4><div class='doc'><p> Returns a boolean of weather the current application is running.</p></div></div>
     <div class='meth' id='Sammy.Application-lookupRoute'>
       <h4>
         lookupRoute
@@ -1012,10 +915,8 @@ nav:
           <em>verb, path</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Given a verb and a String path, will return either a route object or false
-      if a matching route can be found within the current defined set.
-      </p></div></div>
+      </h4><div class='doc'><p> Given a verb and a String path, will return either a route object or false
+       if a matching route can be found within the current defined set.</p></div></div>
     <div class='meth' id='Sammy.Application-mapRoutes'>
       <h4>
         mapRoutes
@@ -1024,23 +925,23 @@ nav:
           <em>route_array</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      <tt>mapRoutes</tt> takes an array of arrays, each array being passed to
-      route() as arguments, this allows for mass definition of routes. Another
-      benefit is this makes it possible/easier to load routes via remote JSON.
-      </p>
-      <h3>Example</h3>
-      {% highlight javascript %}
-         var app = $.sammy(function() {
+      </h4><div class='doc'><p> <code>mapRoutes</code> takes an array of arrays, each array being passed to route()
+       as arguments, this allows for mass definition of routes. Another benefit is
+       this makes it possible/easier to load routes via remote JSON.</p>
       
-       this.mapRoutes([
-           ['get', '#/', function() { this.log('index'); }],
-           // strings in callbacks are looked up as methods on the app
-           ['post', '#/create', 'addUser'],
-           // No verb assumes 'any' as the verb
-           [/dowhatever/, function() { this.log(this.verb, this.path)}];
-         ]);
-         })
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+      var app = $.sammy(function() {
+      
+        this.mapRoutes([
+            ['get', '#/', function() { this.log('index'); }],
+            // strings in callbacks are looked up as methods on the app
+            ['post', '#/create', 'addUser'],
+            // No verb assumes 'any' as the verb
+            [/dowhatever/, function() { this.log(this.verb, this.path)}];
+          ]);
+      })
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-notFound'>
       <h4>
@@ -1050,11 +951,9 @@ nav:
           <em>verb, path</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      This thows a &#8216;404 Not Found&#8217; error by invoking
-      <tt>error()</tt>. Override this method or <tt>error()</tt> to provide
-      custom 404 behavior (i.e redirecting to / or showing a warning)
-      </p></div></div>
+      </h4><div class='doc'><p> This thows a '404 Not Found' error by invoking <code>error()</code>.
+       Override this method or <code>error()</code> to provide custom
+       404 behavior (i.e redirecting to / or showing a warning)</p></div></div>
     <div class='meth' id='Sammy.Application-refresh'>
       <h4>
         refresh
@@ -1063,9 +962,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Reruns the current route
-      </p></div></div>
+      </h4><div class='doc'><p> Reruns the current route</p></div></div>
     <div class='meth' id='Sammy.Application-routablePath'>
       <h4>
         routablePath
@@ -1074,10 +971,8 @@ nav:
           <em>path</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns a copy of the given path with any query string after the hash
-      removed.
-      </p></div></div>
+      </h4><div class='doc'><p> Returns a copy of the given path with any query string after the hash
+       removed.</p></div></div>
     <div class='meth' id='Sammy.Application-route'>
       <h4>
         route
@@ -1086,32 +981,23 @@ nav:
           <em>verb, path, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      <tt>route()</tt> is the main method for defining routes within an
-      application. For great detail on routes, check out: <a
-      href="http://code.quirkey.com/sammy/doc/routes.html">code.quirkey.com/sammy/doc/routes.html</a>
-      </p>
-      <p>
-      This method also has aliases for each of the different verbs (eg.
-      <tt>get()</tt>, <tt>post()</tt>, etc.)
-      </p>
+      </h4><div class='doc'><p> <code>route()</code> is the main method for defining routes within an application.
+       For great detail on routes, check out: http://code.quirkey.com/sammy/doc/routes.html</p>
+      
+      <p> This method also has aliases for each of the different verbs (eg. <code>get()</code>, <code>post()</code>, etc.)</p>
+      
       <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>verb</tt>:</td><td>A String in the set of ROUTE_VERBS or &#8216;any&#8217;. &#8216;any&#8217;
-      will add routes for each of the ROUTE_VERBS. If only two arguments are
-      passed, the first argument is the path, the second is the callback and the
-      verb is assumed to be &#8216;any&#8217;.
       
-      </td></tr>
-      <tr><td valign="top"><tt>path</tt>:</td><td>A Regexp or a String representing the path to match to invoke this verb.
-      
-      </td></tr>
-      <tr><td valign="top"><tt>callback</tt>:</td><td>A Function that is called/evaluated whent the route is run see:
-      <tt>runRoute()</tt>. It is also possible to pass a string as the callback,
-      which is looked up as the name of a method on the application.
-      
-      </td></tr>
-      </table></div></div>
+      <ul>
+      <li><code>verb</code> A String in the set of ROUTE_VERBS or 'any'. 'any' will add routes for each
+       of the ROUTE_VERBS. If only two arguments are passed,
+       the first argument is the path, the second is the callback and the verb
+       is assumed to be 'any'.</li>
+      <li><code>path</code> A Regexp or a String representing the path to match to invoke this verb.</li>
+      <li><code>callback</code> A Function that is called/evaluated whent the route is run see: <code>runRoute()</code>.
+       It is also possible to pass a string as the callback, which is looked up as the name
+       of a method on the application.</li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-run'>
       <h4>
         run
@@ -1120,25 +1006,25 @@ nav:
           <em>start_url</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Actually starts the application&#8217;s lifecycle. <tt>run()</tt> should be
-      invoked within a document.ready block to ensure the DOM exists before
-      binding events, etc.
-      </p>
-      <h3>Example</h3>
-      {% highlight javascript %}
-         var app = $.sammy(function() { ... }); // your application
-         $(function() { // document.ready
-         app.run();
-      });
-      {% endhighlight %}
-      <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>start_url</tt>:</td><td>&#8220;value&#8221;, Optionally, a String can be passed which the App will
-      redirect to after the events/routes have been bound.
+      </h4><div class='doc'><p> Actually starts the application's lifecycle. <code>run()</code> should be invoked
+       within a document.ready block to ensure the DOM exists before binding events, etc.</p>
       
-      </td></tr>
-      </table></div></div>
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+      var app = $.sammy(function() { ... }); // your application
+      $(function() { // document.ready
+          app.run();
+       });
+      {% endhighlight %}
+      
+      
+      <h3>Arguments</h3>
+      
+      <ul>
+      <li><code>start_url</code> Optionally, a String can be passed which the App will redirect to
+      after the events/routes have been bound.</li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-runRoute'>
       <h4>
         runRoute
@@ -1147,34 +1033,27 @@ nav:
           <em>verb, path, params</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      First, invokes <tt>lookupRoute()</tt> and if a route is found, parses the
-      possible URL params and then invokes the route&#8217;s callback within a
-      new <tt>Sammy.EventContext</tt>. If the route can not be found, it calls
-      <tt>notFound()</tt>. If <tt>raise_errors</tt> is set to <tt>true</tt> and
-      the <tt>error()</tt> has not been overriden, it will throw an actual JS
-      error.
-      </p>
-      <p>
-      You probably will never have to call this directly.
-      </p>
+      </h4><div class='doc'><p> First, invokes <code>lookupRoute()</code> and if a route is found, parses the
+       possible URL params and then invokes the route's callback within a new
+       <code>Sammy.EventContext</code>. If the route can not be found, it calls
+       <code>notFound()</code>. If <code>raise_errors</code> is set to <code>true</code> and
+       the <code>error()</code> has not been overriden, it will throw an actual JS
+       error.</p>
+      
+      <p> You probably will never have to call this directly.</p>
+      
       <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>verb</tt>:</td><td>A String for the verb.
       
-      </td></tr>
-      <tr><td valign="top"><tt>path</tt>:</td><td>A String path to lookup.
+      <ul>
+      <li><code>verb</code> A String for the verb.</li>
+      <li><code>path</code> A String path to lookup.</li>
+      <li><code>params</code> An Object of Params pulled from the URI or passed directly.</li>
+      </ul>
       
-      </td></tr>
-      <tr><td valign="top"><tt>params</tt>:</td><td>An Object of Params pulled from the URI or passed directly.
       
-      </td></tr>
-      </table>
       <h3>Returns</h3>
-      <p>
-      Either returns the value returned by the route callback or raises a 404 Not
-      Found error.
-      </p></div></div>
+      
+      <p> Either returns the value returned by the route callback or raises a 404 Not Found error.</p></div></div>
     <div class='meth' id='Sammy.Application-setLocation'>
       <h4>
         setLocation
@@ -1183,16 +1062,14 @@ nav:
           <em>new_location</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Delegates to the <tt>location_proxy</tt> to set the current location. See
-      <tt>Sammy.HashLocationProxy</tt> for more info on location proxies.
-      </p>
-      <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>new_location</tt>:</td><td>A new location string (e.g. &#8217;#/&#8217;)
+      </h4><div class='doc'><p> Delegates to the <code>location_proxy</code> to set the current location.
+       See <code>Sammy.HashLocationProxy</code> for more info on location proxies.</p>
       
-      </td></tr>
-      </table></div></div>
+      <h3>Arguments</h3>
+      
+      <ul>
+      <li><code>new_location</code> A new location string (e.g. '#/')</li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-swap'>
       <h4>
         swap
@@ -1201,25 +1078,25 @@ nav:
           <em>content</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Swaps the content of <tt>$element()</tt> with <tt>content</tt> You can
-      override this method to provide an alternate swap behavior for
-      <tt>EventContext.partial()</tt>.
-      </p>
+      </h4><div class='doc'><p> Swaps the content of <code>$element()</code> with <code>content</code>
+       You can override this method to provide an alternate swap behavior
+       for <code>EventContext.partial()</code>.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-         var app = $.sammy(function() {
+      var app = $.sammy(function() {
       
-       // implements a 'fade out'/'fade in'
-       this.swap = function(content) {
-         this.$element().hide('slow').html(content).show('slow');
-       }
+        // implements a 'fade out'/'fade in'
+        this.swap = function(content) {
+          this.$element().hide('slow').html(content).show('slow');
+        }
       
-       get('#/', function() {
-         this.partial('index.html.erb') // will fade out and in
-       });
+        get('#/', function() {
+          this.partial('index.html.erb') // will fade out and in
+        });
       
-         });
+      });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-toString'>
       <h4>
@@ -1229,9 +1106,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      //=> Sammy.Application: body
-      </p></div></div>
+      </h4><div class='doc'><p> //=> Sammy.Application: body</p></div></div>
     <div class='meth' id='Sammy.Application-trigger'>
       <h4>
         trigger
@@ -1240,23 +1115,16 @@ nav:
           <em>name, data</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Triggers custom events defined with <tt>bind()</tt>
-      </p>
+      </h4><div class='doc'><p> Triggers custom events defined with <code>bind()</code></p>
+      
       <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>name</tt>:</td><td>The name of the event. Automatically prefixed with the
-      <tt>eventNamespace()</tt>
       
-      </td></tr>
-      <tr><td valign="top"><tt>data</tt>:</td><td>An optional Object that can be passed to the bound callback.
-      
-      </td></tr>
-      <tr><td valign="top"><tt>context</tt>:</td><td>An optional context/Object in which to execute the bound callback. If no
-      context is supplied a the context is a new <tt>Sammy.EventContext</tt>
-      
-      </td></tr>
-      </table></div></div>
+      <ul>
+      <li><code>name</code> The name of the event. Automatically prefixed with the <code>eventNamespace()</code></li>
+      <li><code>data</code> An optional Object that can be passed to the bound callback.</li>
+      <li><code>context</code> An optional context/Object in which to execute the bound callback.
+      If no context is supplied a the context is a new <code>Sammy.EventContext</code></li>
+      </ul></div></div>
     <div class='meth' id='Sammy.Application-unload'>
       <h4>
         unload
@@ -1265,11 +1133,9 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      The opposite of <tt>run()</tt>, un-binds all event listeners and intervals
-      <tt>run()</tt> Automaticaly binds a <tt>onunload</tt> event to run this
-      when the document is closed.
-      </p></div></div>
+      </h4><div class='doc'><p> The opposite of <code>run()</code>, un-binds all event listeners and intervals
+       <code>run()</code> Automaticaly binds a <code>onunload</code> event to run this when
+       the document is closed.</p></div></div>
     <div class='meth' id='Sammy.Application-use'>
       <h4>
         use
@@ -1278,41 +1144,39 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      <tt>use()</tt> is the entry point for including Sammy plugins. The first
-      argument to use should be a function() that is evaluated in the context of
-      the current application, just like the <tt>app_function</tt> argument to
-      the <tt>Sammy.Application</tt> constructor.
-      </p>
-      <p>
-      Any additional arguments are passed to the app function sequentially.
-      </p>
-      <p>
-      For much more detail about plugins, check out: <a
-      href="http://code.quirkey.com/sammy/doc/plugins.html">code.quirkey.com/sammy/doc/plugins.html</a>
-      </p>
+      </h4><div class='doc'><p> <code>use()</code> is the entry point for including Sammy plugins.
+       The first argument to use should be a function() that is evaluated
+       in the context of the current application, just like the <code>app_function</code>
+       argument to the <code>Sammy.Application</code> constructor.</p>
+      
+      <p> Any additional arguments are passed to the app function sequentially.</p>
+      
+      <p> For much more detail about plugins, check out:
+       http://code.quirkey.com/sammy/doc/plugins.html</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-       var MyPlugin = function(app, prepend) {
+        var MyPlugin = function(app, prepend) {
       
-         this.helpers({
-           myhelper: function(text) {
-             alert(prepend + " " + text);
-           }
-         });
+          this.helpers({
+            myhelper: function(text) {
+              alert(prepend + " " + text);
+            }
+          });
       
-       };
+        };
       
-       var app = $.sammy(function() {
+        var app = $.sammy(function() {
       
-         this.use(MyPlugin, 'This is my plugin');
+          this.use(MyPlugin, 'This is my plugin');
       
-         this.get('#/', function() {
-           this.myhelper('and dont you forget it!');
-           //=> Alerts: This is my plugin and dont you forget it!
-         });
+          this.get('#/', function() {
+            this.myhelper('and dont you forget it!'); 
+            //=&gt; Alerts: This is my plugin and dont you forget it!
+          });
       
-       });
+        });
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -1324,45 +1188,40 @@ nav:
         app, verb, path, params
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy.EventContext</tt> objects are created every time a route is run
-    or a bound event is triggered. The callbacks for these events are evaluated
-    within a <tt>Sammy.EventContext</tt> This within these callbacks the
-    special methods of <tt>EventContext</tt> are available.
-    </p>
+    </h2><div class='doc'><p> <code>Sammy.EventContext</code> objects are created every time a route is run or a
+     bound event is triggered. The callbacks for these events are evaluated within a <code>Sammy.EventContext</code>
+     This within these callbacks the special methods of <code>EventContext</code> are available.</p>
+    
     <h3>Example</h3>
+    
+    <p>  $.sammy(function() { with(this) {</p>
+    
     {% highlight javascript %}
-     $.sammy(function() { with(this) {
-       // The context here is this Sammy.Application
-       get('#/:name', function() { with(this) {
-     // The context here is a new Sammy.EventContext
-     if (params['name'] == 'sammy') {
-       partial('name.html.erb', {name: 'Sammy'});
-     } else {
-       redirect('#/somewhere-else')
-     }
-       }});
-     }});
+    // The context here is this Sammy.Application
+    get('#/:name', function() { with(this) {
+      // The context here is a new Sammy.EventContext
+      if (params['name'] == 'sammy') {
+        partial('name.html.erb', {name: 'Sammy'});
+      } else {
+        redirect('#/somewhere-else')
+      }
+    }});
     {% endhighlight %}
-    <p>
-    Initialize a new EventContext
-    </p>
+    
+    
+    <p>  }});</p>
+    
+    <p> Initialize a new EventContext</p>
+    
     <h3>Arguments</h3>
-    <table>
-    <tr><td valign="top"><tt>app</tt>:</td><td>The <tt>Sammy.Application</tt> this event is called within.
     
-    </td></tr>
-    <tr><td valign="top"><tt>verb</tt>:</td><td>The verb invoked to run this context/route.
-    
-    </td></tr>
-    <tr><td valign="top"><tt>path</tt>:</td><td>The string path invoked to run this context/route.
-    
-    </td></tr>
-    <tr><td valign="top"><tt>params</tt>:</td><td>An Object of optional params to pass to the context. Is converted to a
-    <tt>Sammy.Object</tt>.
-    
-    </td></tr>
-    </table></div>    <h3>Methods</h3>
+    <ul>
+    <li><code>app</code> The <code>Sammy.Application</code> this event is called within.</li>
+    <li><code>verb</code> The verb invoked to run this context/route.</li>
+    <li><code>path</code> The string path invoked to run this context/route.</li>
+    <li><code>params</code> An Object of optional params to pass to the context. Is converted
+    to a <code>Sammy.Object</code>.</li>
+    </ul></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.EventContext-$element'>$element</a>
@@ -1398,9 +1257,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      A shortcut to the app&#8217;s <tt>$element()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> A shortcut to the app's <code>$element()</code></p></div></div>
     <div class='meth' id='Sammy.EventContext-eventNamespace'>
       <h4>
         eventNamespace
@@ -1409,9 +1266,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      A shortcut to app&#8217;s <tt>eventNamespace()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> A shortcut to app's <code>eventNamespace()</code></p></div></div>
     <div class='meth' id='Sammy.EventContext-notFound'>
       <h4>
         notFound
@@ -1420,9 +1275,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Raises a possible <tt>notFound()</tt> error for the current path.
-      </p></div></div>
+      </h4><div class='doc'><p> Raises a possible <code>notFound()</code> error for the current path.</p></div></div>
     <div class='meth' id='Sammy.EventContext-partial'>
       <h4>
         partial
@@ -1431,64 +1284,58 @@ nav:
           <em>path, data, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Used for rendering remote templates or documents within the current
-      application/DOM. By default Sammy and <tt>partial()</tt> know nothing about
-      how your templates should be interpeted/rendered. This is easy to change,
-      though. <tt>partial()</tt> looks for a method in <tt>EventContext</tt> that
-      matches the extension of the file you&#8217;re fetching (e.g.
-      &#8216;myfile.template&#8217; will look for a template() method,
-      &#8216;myfile.haml&#8217; => haml(), etc.) If no matching render method is
-      found it just takes the file contents as is.
-      </p>
-      <p>
-      If you&#8217;re templates have different (or no) extensions, and you want
-      to render them all through the same engine, you can set the
-      default/fallback template engine on the app level by setting
-      <tt>app.template_engine</tt> to the name of the engine or a <tt>function()
-      {}</tt>
-      </p>
+      </h4><div class='doc'><p> Used for rendering remote templates or documents within the current application/DOM.
+       By default Sammy and <code>partial()</code> know nothing about how your templates
+       should be interpeted/rendered. This is easy to change, though. <code>partial()</code> looks
+       for a method in <code>EventContext</code> that matches the extension of the file you're
+       fetching (e.g. 'myfile.template' will look for a template() method, 'myfile.haml' => haml(), etc.)
+       If no matching render method is found it just takes the file contents as is.</p>
+      
+      <p> If you're templates have different (or no) extensions, and you want to render them all
+       through the same engine, you can set the default/fallback template engine on the app level
+       by setting <code>app.template_engine</code> to the name of the engine or a <code>function() {}</code></p>
+      
       <h3>Caching</h3>
-      <p>
-      If you use the <tt>Sammy.Cache</tt> plugin, remote requests will be
-      automatically cached unless you explicitly set <tt>cache_partials</tt> to
-      <tt>false</tt>
-      </p>
+      
+      <p> If you use the <code>Sammy.Cache</code> plugin, remote requests will be automatically cached unless
+       you explicitly set <code>cache_partials</code> to <code>false</code></p>
+      
       <h3>Example</h3>
-      <p>
-      There are a couple different ways to use <tt>partial()</tt>:
-      </p>
+      
+      <p> There are a couple different ways to use <code>partial()</code>:</p>
+      
       {% highlight javascript %}
-       partial('doc.html');
-       //=> Replaces $element() with the contents of doc.html
+        partial('doc.html');
+        //=&gt; Replaces $element() with the contents of doc.html
       
-       use(Sammy.Template);
-       //=> includes the template() method
-       partial('doc.template', {name: 'Sammy'});
-       //=> Replaces $element() with the contents of doc.template run through <tt>template()</tt>
+        use(Sammy.Template); 
+        //=&gt; includes the template() method
+        partial('doc.template', {name: 'Sammy'}); 
+        //=&gt; Replaces $element() with the contents of doc.template run through `template()`
       
-       partial('doc.html', function(data) {
-         // data is the contents of the template.
-         $('.other-selector').html(data);
-       });
+        partial('doc.html', function(data) {
+          // data is the contents of the template.
+          $('.other-selector').html(data); 
+        });
       {% endhighlight %}
+      
+      
       <h3>Iteration/Arrays</h3>
-      <p>
-      If the data object passed to <tt>partial()</tt> is an Array,
-      <tt>partial()</tt> will itterate over each element in data calling the
-      callback with the results of interpolation and the index of the element in
-      the array.
-      </p>
+      
+      <p> If the data object passed to <code>partial()</code> is an Array, <code>partial()</code>
+       will itterate over each element in data calling the callback with the
+       results of interpolation and the index of the element in the array.</p>
+      
       {% highlight javascript %}
-         use(Sammy.Template);
-         // item.template => "<li>I'm an item named <%= name %></li>"
-         partial('item.template', [{name: "Item 1"}, {name: "Item 2"}])
-         //=> Replaces $element() with:
-         // <li>I'm an item named Item 1</li><li>I'm an item named Item 2</li>
-         partial('item.template', [{name: "Item 1"}, {name: "Item 2"}], function(rendered, i) {
-       rendered; //=> <li>I'm an item named Item 1</li> // for each element in the Array
-       i; // the 0 based index of the itteration
-         });
+      use(Sammy.Template);
+      // item.template =&gt; "&lt;li&gt;I'm an item named &lt;%= name %&gt;&lt;/li&gt;"
+      partial('item.template', [{name: "Item 1"}, {name: "Item 2"}])
+      //=&gt; Replaces $element() with: 
+      // &lt;li&gt;I'm an item named Item 1&lt;/li&gt;&lt;li&gt;I'm an item named Item 2&lt;/li&gt;
+      partial('item.template', [{name: "Item 1"}, {name: "Item 2"}], function(rendered, i) {
+        rendered; //=&gt; &lt;li&gt;I'm an item named Item 1&lt;/li&gt; // for each element in the Array
+        i; // the 0 based index of the itteration
+      });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.EventContext-redirect'>
       <h4>
@@ -1498,16 +1345,16 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Changes the location of the current window. If <tt>to</tt> begins with
-      &#8217;#&#8217; it only changes the document&#8217;s hash. If passed more
-      than 1 argument redirect will join them together with forward slashes.
-      </p>
+      </h4><div class='doc'><p> Changes the location of the current window. If <code>to</code> begins with
+       '#' it only changes the document's hash. If passed more than 1 argument
+       redirect will join them together with forward slashes.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-       redirect('#/other/route');
-       // equivilent to
-       redirect('#', 'other', 'route');
+        redirect('#/other/route');
+        // equivilent to
+        redirect('#', 'other', 'route');
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.EventContext-swap'>
       <h4>
@@ -1517,9 +1364,7 @@ nav:
           <em>contents</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      A shortcut to app&#8217;s <tt>swap()</tt>
-      </p></div></div>
+      </h4><div class='doc'><p> A shortcut to app's <code>swap()</code></p></div></div>
     <div class='meth' id='Sammy.EventContext-toString'>
       <h4>
         toString
@@ -1528,9 +1373,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      //=> Sammy.EventContext: get #/ {}
-      </p></div></div>
+      </h4><div class='doc'><p> //=> Sammy.EventContext: get #/ {}</p></div></div>
     <div class='meth' id='Sammy.EventContext-trigger'>
       <h4>
         trigger
@@ -1539,9 +1382,7 @@ nav:
           <em>name, data</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Triggers events on <tt>app</tt> within the current context.
-      </p></div></div>
+      </h4><div class='doc'><p> Triggers events on <code>app</code> within the current context.</p></div></div>
   </div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.FormBuilder'>
@@ -1552,40 +1393,39 @@ nav:
         name, object
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.FormBuilder is based very closely on the Rails FormBuilder classes.
-    Its goal is to make it easy to create HTML forms for creating and editing
-    JavaScript objects. It eases the process by auto-populating existing values
-    into form inputs and creating input names suitable for parsing by
-    Sammy.NestedParams and other backend frameworks.
-    </p>
-    <p>
-    You initialize a Sammy.FormBuilder by passing the &#8216;name&#8217; of the
-    object and the object itself. Once initialized you create form elements
-    with the object&#8217;s prototype methods. Each of these methods returns a
-    string of HTML suitable for appending through a template or directly with
-    jQuery.
-    </p>
+    </h2><div class='doc'><p> Sammy.FormBuilder is based very closely on the Rails FormBuilder classes.
+     Its goal is to make it easy to create HTML forms for creating and editing
+     JavaScript objects. It eases the process by auto-populating existing values
+     into form inputs and creating input names suitable for parsing by
+     Sammy.NestedParams and other backend frameworks.</p>
+    
+    <p> You initialize a Sammy.FormBuilder by passing the 'name' of the object and
+     the object itself. Once initialized you create form elements with the object's
+     prototype methods. Each of these methods returns a string of HTML suitable for
+     appending through a template or directly with jQuery.</p>
+    
     <h3>Example</h3>
+    
     {% highlight javascript %}
-     var item = {
-       name: 'My Item',
-       price: '$25.50',
-       meta: {
-         id: '123'
-       }
-     };
-     var form = new Sammy.FormBuilder('item', item);
-     form.text('name');
-     //=> <input type='text' name='item[form]' value='My Item' />
+      var item = {
+        name: 'My Item',
+        price: '$25.50',
+        meta: {
+          id: '123'
+        }
+      };
+      var form = new Sammy.FormBuilder('item', item);
+      form.text('name'); 
+      //=&gt; &lt;input type='text' name='item[form]' value='My Item' /&gt;
     {% endhighlight %}
-    <p>
-    Nested attributes can be accessed/referred to by a &#8216;keypath&#8217;
-    which is basically a string representation of the dot notation.
-    </p>
+    
+    
+    <p> Nested attributes can be accessed/referred to by a 'keypath' which is
+     basically a string representation of the dot notation.</p>
+    
     {% highlight javascript %}
-     form.hidden('meta.id');
-     //=> <input type='hidden' name='item[meta][id]' value='123' />
+      form.hidden('meta.id'); 
+      //=&gt; &lt;input type='hidden' name='item[meta][id]' value='123' /&gt;
     {% endhighlight %}</div>    <h3>Methods</h3>
     <ul>
       <li>
@@ -1631,21 +1471,18 @@ nav:
           <em>keypath, value, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a checkbox input for keypath with the value @value@. Multiple
-      checkboxes can be created with different value, if @value@ equals the
-      current value of the key of the form builder&#8217;s object the attribute
-      checked=&#8217;checked&#8217; will be added.
-      </p>
-      <p>
-      By default @checkbox()@ also generates a hidden element whose value is the
-      inverse of the value given. This is known hack to get around a common
-      gotcha where browsers and jQuery itself does not include
-      &#8216;unchecked&#8217; elements in the list of submittable inputs. This
-      ensures that a value should always be passed to Sammy and hence the server.
-      You can disable the creation of the hidden element by setting the
-      @hidden_element@ attribute to @false@
-      </p></div></div>
+      </h4><div class='doc'><p> creates a checkbox input for keypath with the value <code>value</code>. Multiple
+       checkboxes can be created with different value, if <code>value</code> equals the
+       current value of the key of the form builder's object the attribute
+       checked='checked' will be added.</p>
+      
+      <p> By default <code>checkbox()</code> also generates a hidden element whose value is
+       the inverse of the value given. This is known hack to get around a common
+       gotcha where browsers and jQuery itself does not include 'unchecked'
+       elements in the list of submittable inputs. This ensures that a value
+       should always be passed to Sammy and hence the server. You can disable
+       the creation of the hidden element by setting the <code>hidden_element</code> attribute
+       to <code>false</code></p></div></div>
     <div class='meth' id='Sammy.FormBuilder-close'>
       <h4>
         close
@@ -1654,9 +1491,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      closes the form
-      </p></div></div>
+      </h4><div class='doc'><p> closes the form</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-hidden'>
       <h4>
         hidden
@@ -1665,9 +1500,7 @@ nav:
           <em>keypath, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a hidden input for @keypath@ with an optional @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a hidden input for <code>keypath</code> with an optional <code>attributes</code> object</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-label'>
       <h4>
         label
@@ -1676,10 +1509,8 @@ nav:
           <em>keypath, content, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a label for @keypath@ with the text @content with an optional
-      @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a label for <code>keypath</code> with the text <code>content
+       with an optional</code>attributes` object</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-open'>
       <h4>
         open
@@ -1688,9 +1519,7 @@ nav:
           <em>attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates the open form tag with the object attributes
-      </p></div></div>
+      </h4><div class='doc'><p> creates the open form tag with the object attributes</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-password'>
       <h4>
         password
@@ -1699,9 +1528,7 @@ nav:
           <em>keypath, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a password input for @keypath@ with an optional @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a password input for <code>keypath</code> with an optional <code>attributes</code> object</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-radio'>
       <h4>
         radio
@@ -1710,12 +1537,10 @@ nav:
           <em>keypath, value, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a radio input for keypath with the value @value@. Multiple radios
-      can be created with different value, if @value@ equals the current value of
-      the key of the form builder&#8217;s object the attribute
-      checked=&#8217;checked&#8217; will be added.
-      </p></div></div>
+      </h4><div class='doc'><p> creates a radio input for keypath with the value <code>value</code>. Multiple
+       radios can be created with different value, if <code>value</code> equals the
+       current value of the key of the form builder's object the attribute
+       checked='checked' will be added.</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-select'>
       <h4>
         select
@@ -1724,21 +1549,21 @@ nav:
           <em>keypath, options, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a select element for @keypath@ with the option elements specified
-      by an array in @options@. If @options@ is an array of arrays, the first
-      element in each subarray becomes the text of the option and the second
-      becomes the value.
-      </p>
+      </h4><div class='doc'><p> creates a select element for <code>keypath</code> with the option elements
+       specified by an array in <code>options</code>. If <code>options</code> is an array of arrays,
+       the first element in each subarray becomes the text of the option and the
+       second becomes the value.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-      var options = [
-        ['Small', 's'],
-        ['Medium', 'm'],
-        ['Large', 'l']
-      ];
-      form.select('size', options);
-      //=> <select name='item[size]'><option value='s'>Small</option> ...
+       var options = [
+         ['Small', 's'],
+         ['Medium', 'm'],
+         ['Large', 'l']
+       ];
+       form.select('size', options);
+       //=&gt; &lt;select name='item[size]'&gt;&lt;option value='s'&gt;Small&lt;/option&gt; ...
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.FormBuilder-submit'>
       <h4>
@@ -1748,9 +1573,7 @@ nav:
           <em>attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a submit input for @keypath@ with an optional @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a submit input for <code>keypath</code> with an optional <code>attributes</code> object</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-text'>
       <h4>
         text
@@ -1759,9 +1582,7 @@ nav:
           <em>keypath, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a text input for @keypath@ with an optional @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a text input for <code>keypath</code> with an optional <code>attributes</code> object</p></div></div>
     <div class='meth' id='Sammy.FormBuilder-textarea'>
       <h4>
         textarea
@@ -1770,9 +1591,7 @@ nav:
           <em>keypath, attributes</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      creates a textarea for @keypath@ with an optional @attributes@ object
-      </p></div></div>
+      </h4><div class='doc'><p> creates a textarea for <code>keypath</code> with an optional <code>attributes</code> object</p></div></div>
   </div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.Form'>
@@ -1783,10 +1602,8 @@ nav:
         app
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Form is a Sammy plugin that adds form building helpers to a
-    Sammy.Application
-    </p></div><h3>Attributes</h3>
+    </h2><div class='doc'><p> Sammy.Form is a Sammy plugin that adds form building helpers to a
+     Sammy.Application</p></div><h3>Attributes</h3>
     <ul>
       <li>
         <a href='#Sammy.Form-simple_element'>simple_element</a>
@@ -1798,23 +1615,17 @@ nav:
         simple_element
         =
         <span>simple_element</span>
-      </h4><div class='doc'><p>
-      simple_element is a simple helper for creating HTML tags.
-      </p>
+      </h4><div class='doc'><p> simple_element is a simple helper for creating HTML tags.</p>
+      
       <h3>Arguments</h3>
-      <table>
-      <tr><td valign="top"><tt>tag</tt>:</td><td>the HTML tag to generate e.g. input, p, etc/
       
-      </td></tr>
-      <tr><td valign="top"><tt>attributes</tt>:</td><td>an object representing the attributes of the element as key value pairs.
-      e.g. {class: &#8216;element-class&#8217;}
-      
-      </td></tr>
-      <tr><td valign="top"><tt>content</tt>:</td><td>an optional string representing the content for the the element. If
-      ommited, the element becomes self closing
-      
-      </td></tr>
-      </table></div></div>
+      <ul>
+      <li><code>tag</code> the HTML tag to generate e.g. input, p, etc/</li>
+      <li><code>attributes</code> an object representing the attributes of the element as
+      key value pairs. e.g. {class: 'element-class'}</li>
+      <li><code>content</code> an optional string representing the content for the
+      the element. If ommited, the element becomes self closing</li>
+      </ul></div></div>
     <h3>Methods</h3>
     <ul>
       <li>
@@ -1836,9 +1647,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Split interpolated strings into an array of literals and code fragments.
-      </p></div></div>
+      </h4><div class='doc'><p> Split interpolated strings into an array of literals and code fragments.</p></div></div>
     <div class='meth' id='Sammy.Form-'>
       <h4>
         
@@ -1847,9 +1656,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Parse the attribute block using a state machine
-      </p></div></div>
+      </h4><div class='doc'><p> Parse the attribute block using a state machine</p></div></div>
     <div class='meth' id='Sammy.Form-formFor'>
       <h4>
         formFor
@@ -1858,26 +1665,27 @@ nav:
           <em>name, object, content_callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      formFor creates a Sammy.Form builder object with the passed @name@ and
-      @object@ and passes it as an argument to the @content_callback@. This is a
-      shortcut for creating FormBuilder objects for use within templates.
-      </p>
-      <h3>Example</h3>
-      {% highlight javascript %}
-       // in item_form.template
+      </h4><div class='doc'><p> formFor creates a Sammy.Form builder object with the passed <code>name</code>
+       and <code>object</code> and passes it as an argument to the <code>content_callback</code>.
+       This is a shortcut for creating FormBuilder objects for use within
+       templates.</p>
       
-       <% formFor('item', item, function(f) { %>
-         <%= f.open({action: '#/items'}) %>
-         <p>
-           <%= f.label('name') %>
-           <%= f.text('name') %>
-         </p>
-         <p>
-           <%= f.submit() %>
-         </p>
-         <%= f.close() %>
-       <% }); %>
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        // in item_form.template
+      
+        &lt;% formFor('item', item, function(f) { %&gt;
+          &lt;%= f.open({action: '#/items'}) %&gt;
+          &lt;p&gt;
+            &lt;%= f.label('name') %&gt;
+            &lt;%= f.text('name') %&gt;
+          &lt;/p&gt;
+          &lt;p&gt;
+            &lt;%= f.submit() %&gt;
+          &lt;/p&gt;
+          &lt;%= f.close() %&gt;
+        &lt;% }); %&gt;
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -1889,63 +1697,59 @@ nav:
         app, method_alias
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy.Haml</tt> provides a quick way of using haml style templates in
-    your app. The plugin itself includes the haml-js library created by Tim
-    Caswell at at <a
-    href="http://github.com/creationix/haml-js">github.com/creationix/haml-js</a>
-    </p>
-    <p>
-    Haml is an alternative HTML syntax that is really great for describing the
-    structure of HTML documents.
-    </p>
-    <p>
-    By default using Sammy.Haml in your app adds the <tt>haml()</tt> method to
-    the EventContext prototype. However, just like <tt>Sammy.Template</tt> you
-    can change the default name of the method by passing a second argument
-    (e.g. you could use the hml() as the method alias so that all the template
-    files could be in the form file.hml instead of file.haml)
-    </p>
+    </h2><div class='doc'><p> <tt>Sammy.Haml</tt> provides a quick way of using haml style templates in your app.
+     The plugin itself includes the haml-js library created by Tim Caswell at
+     at http://github.com/creationix/haml-js</p>
+    
+    <p> Haml is an alternative HTML syntax that is really great for describing
+     the structure of HTML documents.</p>
+    
+    <p> By default using Sammy.Haml in your app adds the <tt>haml()</tt> method to the EventContext
+     prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
+     by passing a second argument (e.g. you could use the hml() as the method alias so that all the template
+     files could be in the form file.hml instead of file.haml)</p>
+    
     <h3>Example</h3>
-    <p>
-    The template (mytemplate.haml):
-    </p>
+    
+    <p> The template (mytemplate.haml):</p>
+    
     {% highlight javascript %}
-      %h1&= title
+       %h1&amp;= title
     
-      Hey, #{name}! Welcome to Haml!
+       Hey, #{name}! Welcome to Haml!
     {% endhighlight %}
-    <p>
-    The app:
-    </p>
+    
+    
+    <p> The app:</p>
+    
     {% highlight javascript %}
-      var $.app = $.sammy(function() {
-        // include the plugin
-        this.use(Sammy.Haml);
+       var $.app = $.sammy(function() {
+         // include the plugin
+         this.use(Sammy.Haml);
     
-        this.get('#/hello/:name', function() {
-          // set local vars
-          this.title = 'Hello!'
-          this.name = this.params.name;
-          // render the template and pass it through haml
-          this.partial('mytemplate.haml');
-        });
+         this.get('#/hello/:name', function() {
+           // set local vars
+           this.title = 'Hello!'
+           this.name = this.params.name;
+           // render the template and pass it through haml
+           this.partial('mytemplate.haml');
+         });
     
-      });
+       });
     {% endhighlight %}
-    <p>
-    If I go to #/hello/AQ in the browser, Sammy will render this to the
-    <tt>body</tt>:
-    </p>
+    
+    
+    <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
+    
     {% highlight javascript %}
-      <h1>Hello!</h1>
+       &lt;h1&gt;Hello!&lt;/h1&gt;
     
-      Hey, AQ! Welcome to HAML!
+       Hey, AQ! Welcome to HAML!
     {% endhighlight %}
-    <p>
-    Note: You dont have to include the haml.js file on top of the plugin as the
-    plugin includes the full source.
-    </p></div></div>
+    
+    
+    <p> Note: You dont have to include the haml.js file on top of the plugin as the plugin
+     includes the full source.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.JSON'>
     <h2>
@@ -1955,14 +1759,11 @@ nav:
         app
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.JSON is a simple wrapper around Douglas Crockford&#8217;s ever-useful
-    json2.js (<a href="http://www.json.org/js.html">www.json.org/js.html</a>])
-    Sammy.JSON includes the top level JSON object if it doesn&#8217;t already
-    exist (a.k.a. does not override the native implementation that some
-    browsers include). It also adds a <tt>json()</tt> helper to a Sammy app
-    when included.
-    </p></div>    <h3>Methods</h3>
+    </h2><div class='doc'><p> Sammy.JSON is a simple wrapper around Douglas Crockford's ever-useful json2.js
+     (http://www.json.org/js.html]) Sammy.JSON includes the top level JSON object if
+     it doesn't already exist (a.k.a. does not override the native implementation that
+     some browsers include). It also adds a <tt>json()</tt> helper to a Sammy app when
+     included.</p></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.JSON-create_context'>create_context</a>
@@ -1980,9 +1781,7 @@ nav:
           <em>_context</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      by @langalex, support for arrays of strings
-      </p></div></div>
+      </h4><div class='doc'><p> by @langalex, support for arrays of strings</p></div></div>
     <div class='meth' id='Sammy.JSON-json'>
       <h4>
         json
@@ -1991,22 +1790,22 @@ nav:
           <em>object</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      json is a polymorphic function that translates objects aback and forth from
-      JSON to JS. If given a string, it will parse into JS, if given a JS object
-      it will stringify into JSON.
-      </p>
-      <h3>Example</h3>
-      {% highlight javascript %}
-       var app = $.sammy(function() {
-         this.use(Sammy.JSON);
+      </h4><div class='doc'><p> json is a polymorphic function that translates objects aback and forth
+       from JSON to JS. If given a string, it will parse into JS, if given a JS
+       object it will stringify into JSON.</p>
       
-         this.get('#/', function() {
-           this.json({user_id: 123}); //=> "{\"user_id\":\"123\"}"
-           this.json("{\"user_id\":\"123\"}"); //=> [object Object]
-           this.json("{\"user_id\":\"123\"}").user_id; //=> "123"
-         });
-       })
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        var app = $.sammy(function() {
+          this.use(Sammy.JSON);
+      
+          this.get('#/', function() {
+            this.json({user_id: 123}); //=&gt; "{\"user_id\":\"123\"}"
+            this.json("{\"user_id\":\"123\"}"); //=&gt; [object Object]
+            this.json("{\"user_id\":\"123\"}").user_id; //=&gt; "123"
+          });
+        })
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -2018,112 +1817,110 @@ nav:
         app, method_alias
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy.Mustache</tt> provides a quick way of using mustache style
-    templates in your app. The plugin itself includes the awesome mustache.js
-    lib created and maintained by Jan Lehnardt at <a
-    href="http://github.com/janl/mustache.js">github.com/janl/mustache.js</a>
-    </p>
-    <p>
-    Mustache is a clever templating system that relys on double brackets {{}}
-    for interpolation. For full details on syntax check out the original Ruby
-    implementation created by Chris Wanstrath at <a
-    href="http://github.com/defunkt/mustache">github.com/defunkt/mustache</a>
-    </p>
-    <p>
-    By default using Sammy.Mustache in your app adds the <tt>mustache()</tt>
-    method to the EventContext prototype. However, just like
-    <tt>Sammy.Template</tt> you can change the default name of the method by
-    passing a second argument (e.g. you could use the ms() as the method alias
-    so that all the template files could be in the form file.ms instead of
-    file.mustache)
-    </p>
+    </h2><div class='doc'><p> <tt>Sammy.Mustache</tt> provides a quick way of using mustache style templates in your app.
+     The plugin itself includes the awesome mustache.js lib created and maintained by Jan Lehnardt
+     at http://github.com/janl/mustache.js</p>
+    
+    <p> Mustache is a clever templating system that relys on double brackets {{}} for interpolation.
+     For full details on syntax check out the original Ruby implementation created by Chris Wanstrath at
+     http://github.com/defunkt/mustache</p>
+    
+    <p> By default using Sammy.Mustache in your app adds the <tt>mustache()</tt> method to the EventContext
+     prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
+     by passing a second argument (e.g. you could use the ms() as the method alias so that all the template
+     files could be in the form file.ms instead of file.mustache)</p>
+    
     <h3>Example #1</h3>
-    <p>
-    The template (mytemplate.ms):
-    </p>
+    
+    <p> The template (mytemplate.ms):</p>
+    
     {% highlight javascript %}
-      <h1>\{\{title\}\}<h1>
+       &lt;h1&gt;\{\{title\}\}&lt;h1&gt;
     
-      Hey, {{name}}! Welcome to Mustache!
+       Hey, {{name}}! Welcome to Mustache!
     {% endhighlight %}
-    <p>
-    The app:
-    </p>
+    
+    
+    <p> The app:</p>
+    
     {% highlight javascript %}
-      var $.app = $.sammy(function() {
-        // include the plugin and alias mustache() to ms()
-        this.use(Sammy.Mustache, 'ms');
+       var $.app = $.sammy(function() {
+         // include the plugin and alias mustache() to ms()
+         this.use(Sammy.Mustache, 'ms');
     
-        this.get('#/hello/:name', function() {
-          // set local vars
-          this.title = 'Hello!'
-          this.name = this.params.name;
-          // render the template and pass it through mustache
-          this.partial('mytemplate.ms');
-        });
+         this.get('#/hello/:name', function() {
+           // set local vars
+           this.title = 'Hello!'
+           this.name = this.params.name;
+           // render the template and pass it through mustache
+           this.partial('mytemplate.ms'); 
+         });
     
-      });
+       });
     {% endhighlight %}
-    <p>
-    If I go to #/hello/AQ in the browser, Sammy will render this to the
-    <tt>body</tt>:
-    </p>
+    
+    
+    <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
+    
     {% highlight javascript %}
-      <h1>Hello!</h1>
+       &lt;h1&gt;Hello!&lt;/h1&gt;
     
-      Hey, AQ! Welcome to Mustache!
+       Hey, AQ! Welcome to Mustache!
     {% endhighlight %}
+    
+    
     <h3>Example #2 - Mustache partials</h3>
-    <p>
-    The template (mytemplate.ms)
-    </p>
+    
+    <p> The template (mytemplate.ms)</p>
+    
     {% highlight javascript %}
-      Hey, {{name}}! {{>hello_friend}}
+       Hey, {{name}}! {{&gt;hello_friend}}
     {% endhighlight %}
-    <p>
-    The partial (mypartial.ms)
-    </p>
+    
+    
+    <p> The partial (mypartial.ms)</p>
+    
     {% highlight javascript %}
-      Say hello to your friend {{friend}}!
+       Say hello to your friend {{friend}}!
     {% endhighlight %}
-    <p>
-    The app:
-    </p>
+    
+    
+    <p> The app:</p>
+    
     {% highlight javascript %}
-      var $.app = $.sammy(function() {
-        // include the plugin and alias mustache() to ms()
-        this.use(Sammy.Mustache, 'ms');
+       var $.app = $.sammy(function() {
+         // include the plugin and alias mustache() to ms()
+         this.use(Sammy.Mustache, 'ms');
     
-        this.get('#/hello/:name/to/:friend', function() {
-          var context = this;
+         this.get('#/hello/:name/to/:friend', function() {
+           var context = this;
     
-          // fetch mustache-partial first
-          $.get('mypartial.ms', function(response){
-            context.partials = response;
+           // fetch mustache-partial first
+           $.get('mypartial.ms', function(response){
+             context.partials = response;
     
-            // set local vars
-            context.name = this.params.name;
-            context.hello_friend = {name: this.params.friend};
+             // set local vars
+             context.name = this.params.name;
+             context.hello_friend = {name: this.params.friend};
     
-            // render the template and pass it through mustache
-            context.partial('mytemplate.ms');
-          });
-        });
+             // render the template and pass it through mustache
+             context.partial('mytemplate.ms'); 
+           });
+         });
     
-      });
+       });
     {% endhighlight %}
-    <p>
-    If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the
-    <tt>body</tt>:
-    </p>
+    
+    
+    <p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>
+    
     {% highlight javascript %}
-      Hey, AQ! Say hello to your friend dP!
+       Hey, AQ! Say hello to your friend dP!
     {% endhighlight %}
-    <p>
-    Note: You dont have to include the mustache.js file on top of the plugin as
-    the plugin includes the full source.
-    </p></div></div>
+    
+    
+    <p> Note: You dont have to include the mustache.js file on top of the plugin as the plugin
+     includes the full source.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.NestedParams'>
     <h2>
@@ -2133,62 +1930,60 @@ nav:
         app
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy.NestedParams</tt> overrides the default form parsing behavior to
-    provide extended functionality for parsing Rack/Rails style form name/value
-    pairs into JS Objects. In fact it passes the same suite of tests as
-    Rack&#8217;s nested query parsing. The code and tests were ported to
-    JavaScript/Sammy by <a href="http://github.com/endor">github.com/endor</a>
-    </p>
-    <p>
-    This allows you to translate a form with properly named inputs into a JSON
-    object.
-    </p>
-    <h3>Example</h3>
-    <p>
-    Given an HTML form like so:
-    </p>
-    {% highlight javascript %}
-    <form action="#/parse_me" method="post">
-      <input type="text" name="obj[first]" />
-      <input type="text" name="obj[second]" />
-      <input type="text" name="obj[hash][first]" />
-      <input type="text" name="obj[hash][second]" />
-    </form>
-    {% endhighlight %}
-    <p>
-    And a Sammy app like:
-    </p>
-    {% highlight javascript %}
-    var app = $.sammy(function(app) {
-      this.use(Sammy.NestedParams);
+    </h2><div class='doc'><p> <tt>Sammy.NestedParams</tt> overrides the default form parsing behavior to provide
+     extended functionality for parsing Rack/Rails style form name/value pairs into JS
+     Objects. In fact it passes the same suite of tests as Rack's nested query parsing.
+     The code and tests were ported to JavaScript/Sammy by http://github.com/endor</p>
     
-      this.post('#/parse_me', function(context) {
-        $.log(this.params);
-      });
-    });
-    {% endhighlight %}
-    <p>
-    If you filled out the form with some values and submitted it, you would see
-    something like this in your log:
-    </p>
+    <p> This allows you to translate a form with properly named inputs into a JSON object.</p>
+    
+    <h3>Example</h3>
+    
+    <p> Given an HTML form like so:</p>
+    
     {% highlight javascript %}
-    {
-      'obj': {
-        'first': 'value',
-        'second': 'value',
-        'hash': {
-          'first': 'value',
-          'second': 'value'
-        }
-      }
-      '$form': .. jQuery ..
-    }
+     &lt;form action="#/parse_me" method="post"&gt;
+       &lt;input type="text" name="obj[first]" /&gt;
+       &lt;input type="text" name="obj[second]" /&gt;
+       &lt;input type="text" name="obj[hash][first]" /&gt;
+       &lt;input type="text" name="obj[hash][second]" /&gt;
+     &lt;/form&gt;
     {% endhighlight %}
-    <p>
-    It supports creating arrays with [] and other niceities. Check out the
-    tests for full specs.
-    </p></div></div>
+    
+    
+    <p> And a Sammy app like:</p>
+    
+    {% highlight javascript %}
+     var app = $.sammy(function(app) {
+       this.use(Sammy.NestedParams);
+    
+       this.post('#/parse_me', function(context) {
+         $.log(this.params);
+       });
+     });
+    {% endhighlight %}
+    
+    
+    <p> If you filled out the form with some values and submitted it, you would see something
+     like this in your log:</p>
+    
+    {% highlight javascript %}
+     {
+       'obj': {
+         'first': 'value',
+         'second': 'value',
+         'hash': {
+           'first': 'value',
+           'second': 'value'
+         }
+       }
+       '$form': .. jQuery ..
+     }
+    {% endhighlight %}
+    
+    
+    <p> It supports creating arrays with [] and other niceities. Check out the tests for
+     full specs.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.Store'>
     <h2>
@@ -2198,75 +1993,57 @@ nav:
         options
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Store is an abstract adapter class that wraps the multitude of in
-    browser data storage into a single common set of methods for storing and
-    retreiving data. The JSON library is used (through the inclusion of the
-    Sammy.JSON) plugin, to automatically convert objects back and forth from
-    stored strings.
-    </p>
-    <p>
-    Sammy.Store can be used directly, but within a Sammy.Application it is much
-    easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods.
-    </p>
-    <p>
-    Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
-    a key is set.
-    </p>
+    </h2><div class='doc'><p> Sammy.Store is an abstract adapter class that wraps the multitude of in
+     browser data storage into a single common set of methods for storing and
+     retreiving data. The JSON library is used (through the inclusion of the
+     Sammy.JSON) plugin, to automatically convert objects back and forth from
+     stored strings.</p>
+    
+    <p> Sammy.Store can be used directly, but within a Sammy.Application it is much
+     easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods.</p>
+    
+    <p> Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
+     a key is set.</p>
+    
     <h3>Example</h3>
+    
     {% highlight javascript %}
-     // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage
-     // Note: localStorage only works on browsers that support it
-     var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});
-     store.set('foo', 'bar');
-     store.get('foo'); //=> 'bar'
-     store.set('json', {obj: 'this is an obj'});
-     store.get('json'); //=> {obj: 'this is an obj'}
-     store.keys(); //=> ['foo','json']
-     store.clear('foo');
-     store.keys(); //=> ['json']
-     store.clearAll();
-     store.keys(); //=> []
+      // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage
+      // Note: localStorage only works on browsers that support it
+      var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});
+      store.set('foo', 'bar');
+      store.get('foo'); //=&gt; 'bar'
+      store.set('json', {obj: 'this is an obj'});
+      store.get('json'); //=&gt; {obj: 'this is an obj'}
+      store.keys(); //=&gt; ['foo','json']
+      store.clear('foo');
+      store.keys(); //=&gt; ['json']
+      store.clearAll();
+      store.keys(); //=&gt; []
     {% endhighlight %}
+    
+    
     <h3>Arguments</h3>
-    <p>
-    The constructor takes a single argument which is a Object containing these
-    possible options.
-    </p>
-    <table>
-    <tr><td valign="top"><tt>name</tt>:</td><td>The name/namespace of this store. Stores are unique by name/type. (default
-    &#8216;store&#8217;)
     
-    </td></tr>
-    <tr><td valign="top"><tt>element</tt>:</td><td>A selector for the element that the store is bound to. (default
-    &#8216;body&#8217;)
+    <p> The constructor takes a single argument which is a Object containing these possible options.</p>
     
-    </td></tr>
-    <tr><td valign="top"><tt>type</tt>:</td><td>The type of storage/proxy to use (default &#8216;memory&#8217;)
+    <ul>
+    <li><code>name</code> The name/namespace of this store. Stores are unique by name/type. (default 'store')</li>
+    <li><code>element</code> A selector for the element that the store is bound to. (default 'body')</li>
+    <li><code>type</code> The type of storage/proxy to use (default 'memory')</li>
+    </ul>
     
-    </td></tr>
-    </table>
-    <p>
-    Extra options are passed to the storage constructor. Sammy.Store supports
-    the following methods of storage:
-    </p>
-    <table>
-    <tr><td valign="top"><tt>memory</tt>:</td><td>Basic object storage
     
-    </td></tr>
-    <tr><td valign="top"><tt>data</tt>:</td><td>jQuery.data DOM Storage
+    <p> Extra options are passed to the storage constructor.
+     Sammy.Store supports the following methods of storage:</p>
     
-    </td></tr>
-    <tr><td valign="top"><tt>cookie</tt>:</td><td>Access to document.cookie. Limited to 2K
-    
-    </td></tr>
-    <tr><td valign="top"><tt>local</tt>:</td><td>HTML5 DOM localStorage, browswer support is currently limited.
-    
-    </td></tr>
-    <tr><td valign="top"><tt>session</tt>:</td><td>HTML5 DOM sessionStorage, browswer support is currently limited.
-    
-    </td></tr>
-    </table></div>    <h3>Methods</h3>
+    <ul>
+    <li><code>memory</code> Basic object storage</li>
+    <li><code>data</code> jQuery.data DOM Storage</li>
+    <li><code>cookie</code> Access to document.cookie. Limited to 2K</li>
+    <li><code>local</code> HTML5 DOM localStorage, browswer support is currently limited.</li>
+    <li><code>session</code> HTML5 DOM sessionStorage, browswer support is currently limited.</li>
+    </ul></div>    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.Store-clear'>clear</a>
@@ -2305,9 +2082,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Removes the value at <tt>key</tt> from the current store
-      </p></div></div>
+      </h4><div class='doc'><p> Removes the value at <tt>key</tt> from the current store</p></div></div>
     <div class='meth' id='Sammy.Store-clearAll'>
       <h4>
         clearAll
@@ -2316,9 +2091,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Clears all the values for the current store.
-      </p></div></div>
+      </h4><div class='doc'><p> Clears all the values for the current store.</p></div></div>
     <div class='meth' id='Sammy.Store-exists'>
       <h4>
         exists
@@ -2327,10 +2100,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Checks for the existance of <tt>key</tt> in the current store. Returns a
-      boolean.
-      </p></div></div>
+      </h4><div class='doc'><p> Checks for the existance of <tt>key</tt> in the current store. Returns a boolean.</p></div></div>
     <div class='meth' id='Sammy.Store-fetch'>
       <h4>
         fetch
@@ -2339,21 +2109,21 @@ nav:
           <em>key, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns the value at <tt>key</tt> if set, otherwise, runs the callback and
-      sets the value to the value returned in the callback.
-      </p>
+      </h4><div class='doc'><p> Returns the value at <tt>key</tt> if set, otherwise, runs the callback
+       and sets the value to the value returned in the callback.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-         var store = new Sammy.Store;
-         store.exists('foo'); //=> false
-         store.fetch('foo', function() {
-       return 'bar!';
-         }); //=> 'bar!'
-         store.get('foo') //=> 'bar!'
-         store.fetch('foo', function() {
-       return 'baz!';
-         }); //=> 'bar!
+      var store = new Sammy.Store;
+      store.exists('foo'); //=&gt; false
+      store.fetch('foo', function() {
+        return 'bar!';
+      }); //=&gt; 'bar!'
+      store.get('foo') //=&gt; 'bar!'
+      store.fetch('foo', function() {
+        return 'baz!';
+      }); //=&gt; 'bar!
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Store-get'>
       <h4>
@@ -2363,10 +2133,8 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and
-      turning into an object if possible
-      </p></div></div>
+      </h4><div class='doc'><p> Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and
+       turning into an object if possible</p></div></div>
     <div class='meth' id='Sammy.Store-isAvailable'>
       <h4>
         isAvailable
@@ -2375,10 +2143,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Checks for the availability of the current storage type in the current
-      browser/config.
-      </p></div></div>
+      </h4><div class='doc'><p> Checks for the availability of the current storage type in the current browser/config.</p></div></div>
     <div class='meth' id='Sammy.Store-keys'>
       <h4>
         keys
@@ -2387,10 +2152,8 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Returns the all the keys set for the current store as an array. Internally
-      Sammy.Store keeps this array in a &#8216;meta_key&#8217; for easy access.
-      </p></div></div>
+      </h4><div class='doc'><p> Returns the all the keys set for the current store as an array.
+       Internally Sammy.Store keeps this array in a 'meta_key' for easy access.</p></div></div>
     <div class='meth' id='Sammy.Store-load'>
       <h4>
         load
@@ -2399,24 +2162,24 @@ nav:
           <em>key, path, callback</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      loads the response of a request to <tt>path</tt> into <tt>key</tt>.
-      </p>
+      </h4><div class='doc'><p> loads the response of a request to <tt>path</tt> into <tt>key</tt>.</p>
+      
       <h3>Example</h3>
-      <p>
-      In /mytemplate.tpl:
-      </p>
+      
+      <p> In /mytemplate.tpl:</p>
+      
       {% highlight javascript %}
-         My Template
+      My Template
       {% endhighlight %}
-      <p>
-      In app.js:
-      </p>
+      
+      
+      <p> In app.js:</p>
+      
       {% highlight javascript %}
-         var store = new Sammy.Store;
-         store.load('mytemplate', '/mytemplate.tpl', function() {
-       s.get('mytemplate') //=> My Template
-         });
+      var store = new Sammy.Store;
+      store.load('mytemplate', '/mytemplate.tpl', function() {
+        s.get('mytemplate') //=&gt; My Template
+      });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Store-set'>
       <h4>
@@ -2426,19 +2189,19 @@ nav:
           <em>key, value</em>
           )
         </span>
-      </h4><div class='doc'><p>
-      Sets the value of <tt>key&lt;tt&gt; with &lt;tt&gt;value</tt>. If
-      <tt>value&lt;tt&gt; is an object, it is turned to and stored as a string
-      with &lt;tt&gt;JSON.stringify</tt>. It also tries to conform to the KVO
-      pattern triggering jQuery events on the element that the store is bound to.
-      </p>
+      </h4><div class='doc'><p> Sets the value of <tt>key<tt> with <tt>value</tt>. If <tt>value<tt> is an
+       object, it is turned to and stored as a string with <tt>JSON.stringify</tt>.
+       It also tries to conform to the KVO pattern triggering jQuery events on the
+       element that the store is bound to.</p>
+      
       <h3>Example</h3>
+      
       {% highlight javascript %}
-       var store = new Sammy.Store({name: 'kvo'});
-       $('body').bind('set-kvo-foo', function(e, data) {
-         Sammy.log(data.key + ' changed to ' + data.value);
-       });
-       store.set('foo', 'bar'); // logged: foo changed to bar
+        var store = new Sammy.Store({name: 'kvo'});
+        $('body').bind('set-kvo-foo', function(e, data) { 
+          Sammy.log(data.key + ' changed to ' + data.value);
+        });
+        store.set('foo', 'bar'); // logged: foo changed to bar
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -2450,11 +2213,9 @@ nav:
         type
         )
       </span>
-    </h2><div class='doc'><p>
-    Tests if the type of storage is available/works in the current
-    browser/config. Especially useful for testing the availability of the
-    awesome, but not widely supported HTML5 DOM storage
-    </p></div></div>
+    </h2><div class='doc'><p> Tests if the type of storage is available/works in the current browser/config.
+     Especially useful for testing the availability of the awesome, but not widely
+     supported HTML5 DOM storage</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.Memory'>
     <h2>
@@ -2464,10 +2225,8 @@ nav:
         name, element
         )
       </span>
-    </h2><div class='doc'><p>
-    Memory (&#8216;memory&#8217;) is the basic/default store. It stores data in
-    a global JS object. Data is lost on refresh.
-    </p></div></div>
+    </h2><div class='doc'><p> Memory ('memory') is the basic/default store. It stores data in a global
+     JS object. Data is lost on refresh.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.Data'>
     <h2>
@@ -2477,12 +2236,9 @@ nav:
         name, element
         )
       </span>
-    </h2><div class='doc'><p>
-    Data (&#8216;data&#8217;) stores objects using the jQuery.data() methods.
-    This has the advantadge of scoping the data to the specific element. Like
-    the &#8216;memory&#8217; store its data will only last for the length of
-    the current request (data is lost on refresh/etc).
-    </p></div></div>
+    </h2><div class='doc'><p> Data ('data') stores objects using the jQuery.data() methods. This has the advantadge
+     of scoping the data to the specific element. Like the 'memory' store its data
+     will only last for the length of the current request (data is lost on refresh/etc).</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.LocalStorage'>
     <h2>
@@ -2492,19 +2248,15 @@ nav:
         name, element
         )
       </span>
-    </h2><div class='doc'><p>
-    LocalStorage (&#8216;local&#8217;) makes use of HTML5 DOM Storage, and the
-    window.localStorage object. The great advantage of this method is that data
-    will persist beyond the current request. It can be considered a pretty
-    awesome replacement for cookies accessed via JS. The great disadvantage,
-    though, is its only available on the latest and greatest browsers.
-    </p>
-    <p>
-    For more info on DOM Storage: [<a
-    href="https://developer.mozilla.org/en/DOM/Storage">developer.mozilla.org/en/DOM/Storage</a>]
-    [<a
-    href="http://www.w3.org/TR/2009/WD-webstorage-20091222">www.w3.org/TR/2009/WD-webstorage-20091222</a>/]
-    </p></div></div>
+    </h2><div class='doc'><p> LocalStorage ('local') makes use of HTML5 DOM Storage, and the window.localStorage
+     object. The great advantage of this method is that data will persist beyond
+     the current request. It can be considered a pretty awesome replacement for
+     cookies accessed via JS. The great disadvantage, though, is its only available
+     on the latest and greatest browsers.</p>
+    
+    <p> For more info on DOM Storage:
+     [https://developer.mozilla.org/en/DOM/Storage]
+     [http://www.w3.org/TR/2009/WD-webstorage-20091222/]</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.SessionStorage'>
     <h2>
@@ -2514,15 +2266,12 @@ nav:
         name, element
         )
       </span>
-    </h2><div class='doc'><p>
-    .SessionStorage (&#8216;session&#8217;) is similar to LocalStorage (part of
-    the same API) and shares similar browser support/availability. The
-    difference is that SessionStorage is only persistant through the current
-    &#8216;session&#8217; which is defined as the length that the current
-    window is open. This means that data will survive refreshes but not
-    close/open or multiple windows/tabs. For more info, check out the
-    <tt>LocalStorage</tt> documentation and links.
-    </p></div></div>
+    </h2><div class='doc'><p> .SessionStorage ('session') is similar to LocalStorage (part of the same API)
+     and shares similar browser support/availability. The difference is that
+     SessionStorage is only persistant through the current 'session' which is defined
+     as the length that the current window is open. This means that data will survive
+     refreshes but not close/open or multiple windows/tabs. For more info, check out
+     the <tt>LocalStorage</tt> documentation and links.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.Cookie'>
     <h2>
@@ -2532,31 +2281,23 @@ nav:
         name, element, options
         )
       </span>
-    </h2><div class='doc'><p>
-    .Cookie (&#8216;cookie&#8217;) storage uses browser cookies to store data.
-    JavaScript has access to a single document.cookie variable, which is
-    limited to 2Kb in size. Cookies are also considered &#8216;unsecure&#8217;
-    as the data can be read easily by other sites/JS. Cookies do have the
-    advantage, though, of being widely supported and persistent through refresh
-    and close/open. Where available, HTML5 DOM Storage like LocalStorage and
-    SessionStorage should be used.
-    </p>
-    <p>
-    .Cookie can also take additional options:
-    </p>
-    <table>
-    <tr><td valign="top"><tt>expires_in</tt>:</td><td>Number of seconds to keep the cookie alive (default 2 weeks).
+    </h2><div class='doc'><p> .Cookie ('cookie') storage uses browser cookies to store data. JavaScript
+     has access to a single document.cookie variable, which is limited to 2Kb in
+     size. Cookies are also considered 'unsecure' as the data can be read easily
+     by other sites/JS. Cookies do have the advantage, though, of being widely
+     supported and persistent through refresh and close/open. Where available,
+     HTML5 DOM Storage like LocalStorage and SessionStorage should be used.</p>
     
-    </td></tr>
-    <tr><td valign="top"><tt>path</tt>:</td><td>The path to activate the current cookie for (default &#8217;/&#8217;).
+    <p> .Cookie can also take additional options:</p>
     
-    </td></tr>
-    </table>
-    <p>
-    For more information about document.cookie, check out the pre-eminint
-    article by ppk: [<a
-    href="http://www.quirksmode.org/js/cookies.html">www.quirksmode.org/js/cookies.html</a>]
-    </p></div></div>
+    <ul>
+    <li><code>expires_in</code> Number of seconds to keep the cookie alive (default 2 weeks).</li>
+    <li><code>path</code> The path to activate the current cookie for (default '/').</li>
+    </ul>
+    
+    
+    <p> For more information about document.cookie, check out the pre-eminint article
+     by ppk: [http://www.quirksmode.org/js/cookies.html]</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Storage'>
     <h2>
@@ -2566,11 +2307,9 @@ nav:
         app
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Storage is a plugin that provides shortcuts for creating and using
-    Sammy.Store objects. Once included it provides the <tt>store()</tt> app
-    level and helper methods. Depends on Sammy.JSON (or json2.js).
-    </p></div></div>
+    </h2><div class='doc'><p> Sammy.Storage is a plugin that provides shortcuts for creating and using
+     Sammy.Store objects. Once included it provides the <tt>store()</tt> app level
+     and helper methods. Depends on Sammy.JSON (or json2.js).</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Session'>
     <h2>
@@ -2580,18 +2319,14 @@ nav:
         app, options
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Session is an additional plugin for creating a common
-    &#8216;session&#8217; store for the given app. It is a very simple wrapper
-    around <tt>Sammy.Storage</tt> that provides a simple fallback mechanism for
-    trying to provide the best possible storage type for the session. This
-    means, <tt>LocalStorage</tt> if available, otherwise <tt>Cookie</tt>,
-    otherwise <tt>Memory</tt>. It provides the <tt>session()</tt> helper
-    through <tt>Sammy.Storage#store()</tt>.
-    </p>
-    <p>
-    See the <tt>Sammy.Storage</tt> plugin for full documentation.
-    </p></div></div>
+    </h2><div class='doc'><p> Sammy.Session is an additional plugin for creating a common 'session' store
+     for the given app. It is a very simple wrapper around <tt>Sammy.Storage</tt>
+     that provides a simple fallback mechanism for trying to provide the best
+     possible storage type for the session. This means, <tt>LocalStorage</tt>
+     if available, otherwise <tt>Cookie</tt>, otherwise <tt>Memory</tt>.
+     It provides the <tt>session()</tt> helper through <tt>Sammy.Storage#store()</tt>.</p>
+    
+    <p> See the <tt>Sammy.Storage</tt> plugin for full documentation.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Cache'>
     <h2>
@@ -2601,18 +2336,14 @@ nav:
         app, options
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Cache provides helpers for caching data within the lifecycle of a
-    Sammy app. The plugin provides two main methods on
-    <tt>Sammy.Application&lt;tt&gt;, &lt;tt&gt;cache</tt> and
-    <tt>clearCache</tt>. Each app has its own cache store so that you dont have
-    to worry about collisions. As of 0.5 the original Sammy.Cache module has
-    been deprecated in favor of this one based on Sammy.Storage. The exposed
-    API is almost identical, but Sammy.Storage provides additional backends
-    including HTML5 Storage. <tt>Sammy.Cache</tt> will try to use these
-    backends when available (in this order) <tt>LocalStorage</tt>,
-    <tt>SessionStorage</tt>, and <tt>Memory</tt>
-    </p></div></div>
+    </h2><div class='doc'><p> Sammy.Cache provides helpers for caching data within the lifecycle of a
+     Sammy app. The plugin provides two main methods on <tt>Sammy.Application<tt>,
+     <tt>cache</tt> and <tt>clearCache</tt>. Each app has its own cache store so that
+     you dont have to worry about collisions. As of 0.5 the original Sammy.Cache module
+     has been deprecated in favor of this one based on Sammy.Storage. The exposed
+     API is almost identical, but Sammy.Storage provides additional backends including
+     HTML5 Storage. <tt>Sammy.Cache</tt> will try to use these backends when available
+     (in this order) <tt>LocalStorage</tt>, <tt>SessionStorage</tt>, and <tt>Memory</tt></p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Template'>
     <h2>
@@ -2622,56 +2353,56 @@ nav:
         app, method_alias
         )
       </span>
-    </h2><div class='doc'><p>
-    <tt>Sammy.Template</tt> is a simple plugin that provides a way to create
-    and render client side templates. The rendering code is based on John
-    Resig&#8217;s quick templates and Greg Borenstien&#8217;s srender plugin.
-    This is also a great template/boilerplate for Sammy plugins.
-    </p>
-    <p>
-    Templates use <% %> tags to denote embedded javascript.
-    </p>
+    </h2><div class='doc'><p> <tt>Sammy.Template</tt> is a simple plugin that provides a way to create
+     and render client side templates. The rendering code is based on John Resig's
+     quick templates and Greg Borenstien's srender plugin.
+     This is also a great template/boilerplate for Sammy plugins.</p>
+    
+    <p> Templates use &lt;% %> tags to denote embedded javascript.</p>
+    
     <h3>Examples</h3>
-    <p>
-    Here is an example template (user.template):
-    </p>
-    {% highlight javascript %}
-     <div class="user">
-       <div class="user-name"><%= user.name %></div>
-       <% if (user.photo_url) { %>
-         <div class="photo"><img src="<%= user.photo_url %>" /></div>
-       <% } %>
-     </div>
-    {% endhighlight %}
-    <p>
-    Given that is a publicly accesible file, you would render it like:
-    </p>
-    {% highlight javascript %}
-      $.sammy(function() {
-        // include the plugin
-        this.use(Sammy.Template);
     
-        this.get('#/', function() {
-          // the template is rendered in the current context.
-          this.user = {name: 'Aaron Quint'};
-          // partial calls template() because of the file extension
-          this.partial('user.template');
-        })
+    <p> Here is an example template (user.template):</p>
+    
+    {% highlight javascript %}
+      &lt;div class="user"&gt;
+        &lt;div class="user-name"&gt;&lt;%= user.name %&gt;&lt;/div&gt;
+        &lt;% if (user.photo_url) { %&gt;
+          &lt;div class="photo"&gt;&lt;img src="&lt;%= user.photo_url %&gt;" /&gt;&lt;/div&gt;
+        &lt;% } %&gt;
+      &lt;/div&gt;
+    {% endhighlight %}
+    
+    
+    <p> Given that is a publicly accesible file, you would render it like:</p>
+    
+    {% highlight javascript %}
+       $.sammy(function() {
+         // include the plugin
+         this.use(Sammy.Template);
+    
+         this.get('#/', function() {
+           // the template is rendered in the current context.
+           this.user = {name: 'Aaron Quint'};
+           // partial calls template() because of the file extension
+           this.partial('user.template');
+         })
+       });
+    {% endhighlight %}
+    
+    
+    <p> You can also pass a second argument to use() that will alias the template
+     method and therefore allow you to use a different extension for template files
+     in <tt>partial()</tt></p>
+    
+    {% highlight javascript %}
+      // alias to 'tpl'
+      this.use(Sammy.Template, 'tpl');
+    
+      // now .tpl files will be run through srender
+      this.get('#/', function() {
+        this.partial('myfile.tpl');
       });
-    {% endhighlight %}
-    <p>
-    You can also pass a second argument to use() that will alias the template
-    method and therefore allow you to use a different extension for template
-    files in <tt>partial()</tt>
-    </p>
-    {% highlight javascript %}
-     // alias to 'tpl'
-     this.use(Sammy.Template, 'tpl');
-    
-     // now .tpl files will be run through srender
-     this.get('#/', function() {
-       this.partial('myfile.tpl');
-     });
     {% endhighlight %}</div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Title'>
@@ -2682,9 +2413,7 @@ nav:
         
         )
       </span>
-    </h2><div class='doc'><p>
-    Sammy.Title is a very simple plugin to easily set the document&#8217;s
-    title. It supplies a helper for setting the title (@title()@) within
-    routes, and an app level method for setting the global title (@setTitle()@)
-    </p></div></div>
+    </h2><div class='doc'><p> Sammy.Title is a very simple plugin to easily set the document's title.
+     It supplies a helper for setting the title (<code>title()</code>) within routes,
+     and an app level method for setting the global title (<code>setTitle()</code>)</p></div></div>
 </div>
