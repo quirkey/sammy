@@ -29,6 +29,7 @@
         
         this.post('#/pretend/post/url', function() { 
           form_fields = this.params;
+          this.log($.param(form_fields.toHash()));
           this.redirect('#/display');
         });
         
