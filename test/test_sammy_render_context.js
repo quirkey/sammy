@@ -110,29 +110,36 @@
             equal($('#test_area').html(), '<ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul>', "render contents");
           });
         })
-        .should('load a file then render with the loaded contents', function() {
+        .should('chain multiple renders', function() {
           var callback = function(context) {
-            this.load('fixtures/list.html')
-              .render('fixtures/partial.template', {name: 'my name', class_name: 'class'}, function(data) {
-                $(this.contents).append(data).appendTo('#test_area');
-                return data;
-              })
-              .then(function(data) {
-                $(data).addClass('blah').appendTo('#test_area ul');
-              })
-              .then(function(data) {
-                $(data).addClass('blah2').appendTo('#test_area ul');
-              });
+            this.render('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'}).replace('#test_area')
+                .render('fixtures/other_partial.template', {'name': 'other name'}).appendTo('.class-name');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<ul><div class="class">my name</div><div class="class blah">my name</div><div class="class blah2">my name</div></ul>', "render contents");
+            equal($('#test_area').html(), '<div class="class-name">name<span>other name</span></div>');
           });
         })
-        .pending('chain multiple renders', function() {
+        .should('iterate with each', function() {
           var callback = function(context) {
-            this.render('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'})
-                .render('fixtures/partial.template').appendTo('.class-name');
+            this.load('fixtures/list.html').replace('#test_area')
+                .each([{'name': 'first'}, {'name': 'second'}], function(i, item) {
+                  return "<li>" + item.name + "</li>";
+                })
+                .appendTo('#test_area ul')
           };
+          this.runRouteAndAssert(callback, function() {
+            equal($('#test_area').html(), '<ul><li>first</li><li>second</li></ul>');
+          });
+        })
+        .should('renderEach with a collection', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html').replace('#test_area')
+                .renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}])
+                .appendTo('#test_area ul')
+          };
+          this.runRouteAndAssert(callback, function() {
+            equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });
         })
         .pending('swap data with partial', function() {
           var callback = function(context) {
