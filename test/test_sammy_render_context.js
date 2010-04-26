@@ -119,10 +119,10 @@
             equal($('#test_area').html(), '<div class="class-name">name<span>other name</span></div>');
           });
         })
-        .should('iterate with each', function() {
+        .should('iterate and collect with each', function() {
           var callback = function(context) {
             this.load('fixtures/list.html').replace('#test_area')
-                .each([{'name': 'first'}, {'name': 'second'}], function(i, item) {
+                .collect([{'name': 'first'}, {'name': 'second'}], function(i, item) {
                   return "<li>" + item.name + "</li>";
                 })
                 .appendTo('#test_area ul')
