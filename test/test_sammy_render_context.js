@@ -22,7 +22,6 @@
             context.name = 'test';
             context.class_name = 'class';
             this.render('fixtures/partial.template').then(function(data) {
-              Sammy.log('render then', data);
               rdata = data;
             });
           };
@@ -70,7 +69,6 @@
             this.load('fixtures/partial.html')
               .appendTo('#test_area')
               .then(function(data) {
-                Sammy.log('this', this, 'data', data);
                 $(data).addClass('blah').appendTo('#test_area');
               });
           };
@@ -133,7 +131,8 @@
         })
         .should('renderEach with a collection', function() {
           var callback = function(context) {
-            this.load('fixtures/list.html').replace('#test_area')
+            this.load('fixtures/list.html')
+                .replace('#test_area')
                 .renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}])
                 .appendTo('#test_area ul')
           };
@@ -141,10 +140,13 @@
             equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         })
-        .pending('swap data with partial', function() {
+        .should('swap data with partial', function() {
           var callback = function(context) {
             this.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
           };
+          this.runRouteAndAssert(callback, function() {
+            equal($('#main').html(), '<div class="class-name">name</div>', "render contents");
+          });
         });
         
       
