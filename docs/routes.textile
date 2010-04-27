@@ -150,6 +150,6 @@ get('#/by_name/:name', function() {
 });
 
 get('#/by_name/:name', function(context) {
-  context.redirect('#, this.params['name']);
+  context.redirect('#', this.params['name']);
 });
 {% endhighlight %}
