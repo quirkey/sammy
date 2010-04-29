@@ -86,7 +86,36 @@
          ok(this.alias_context.tpl.toString().match(/srender/));
        });
 
-
+      context('Sammy', 'EJS', {
+         before: function() {
+           this.app = new Sammy.Application(function() {
+             this.use(Sammy.EJS);
+           });
+           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+           
+           this.alias_app = new Sammy.Application(function() {
+             this.use(Sammy.EJS, 'ejs');
+           });
+           this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+         }
+       })
+       .should('add template helper to event context', function() {
+         ok($.isFunction(this.context.ejs));
+       })
+       .should('interpolate content', function() {
+         var rendered = this.context.ejs('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
+         equal(rendered, '<div class="test_class">TEXT!</div>');
+       })
+       .should('render templates with a lot of single quotes', function() {
+         var rendered = this.context.ejs("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
+         equal(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+       })
+       .should('alias the template method and thus the extension', function() {
+         ok(!$.isFunction(this.alias_context.template));
+         ok($.isFunction(this.alias_context.ejs));
+         ok(this.alias_context.ejs.toString().match(/render/));
+       });
+    
        context('Sammy.NestedParams', 'parsing', {
          before: function () {
            this.app = new Sammy.Application(function() {
