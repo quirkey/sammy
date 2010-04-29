@@ -283,12 +283,14 @@
             this.route('post', '#/test', function() {
               this.app.form_was_run = 'YES';
               this.app.form_params = this.params;
+              this.app.form_target = this.target;
               return false;
             });
             
            this.route('post', '#/live', function() {
               this.app.form_was_run = 'LIVE';
               this.app.form_params = this.params;
+              this.app.form_target = this.target;
               return false;
             });
           
@@ -317,9 +319,9 @@
         soon(function() {
           equal(app.form_was_run, 'YES');
           ok(app.form_params);
-          // equal(app.form_params['$form'][0], $('#main form')[0]);
+          equal(app.form_target, $('#main form').get(0));
           app.unload();
-        }, this, 1, 2);
+        }, this, 1, 3);
       })
      .should('bind events to all future forms', function () {
         var app = this.app;
@@ -333,9 +335,24 @@
         $('#live_form .submit').submit();
         soon(function() {
           equal(app.form_was_run, 'LIVE');
-          equal(app.form_params['$form'][0], $('#live_form')[0]);
+          equal(app.form_target, $('#live_form').get(0));
           app.unload();
         }, this, 1, 2);
+      })
+      .should('change the hash when submitting get forms', function() {
+        var app = this.app;
+        app.route('get', '#/live', function() {});
+        app.run('#/');
+        $('#main').append('<form id="live_form" action="#/live" method="get">' +
+           '<input name="live_test" type="text" value="live_value"/>' +
+           '<input type="submit" class="submit"/>' +
+           '</form>'
+         );
+        $('#live_form .submit').submit();
+        soon(function() {
+          equal(window.location.hash, '#/live?live_test=live_value');
+          app.unload();
+        });
       })
       .should('trigger routes on URL change', function() {
         var app = this.app;

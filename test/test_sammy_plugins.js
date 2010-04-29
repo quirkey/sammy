@@ -49,8 +49,8 @@
          this.app.store('cache').clear('mycache');
          ok(!this.app.cache('mycache'))
        });
-       
-      
+
+
        context('Sammy', 'Template', {
          before: function() {
            this.app = new Sammy.Application(function() {
@@ -85,7 +85,36 @@
          ok($.isFunction(this.alias_context.tpl));
          ok(this.alias_context.tpl.toString().match(/srender/));
        });
-    
+
+      context('Sammy', 'EJS', {
+         before: function() {
+           this.app = new Sammy.Application(function() {
+             this.use(Sammy.EJS);
+           });
+           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+           
+           this.alias_app = new Sammy.Application(function() {
+             this.use(Sammy.EJS, 'ejs');
+           });
+           this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+         }
+       })
+       .should('add template helper to event context', function() {
+         ok($.isFunction(this.context.ejs));
+       })
+       .should('interpolate content', function() {
+         var rendered = this.context.ejs('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
+         equal(rendered, '<div class="test_class">TEXT!</div>');
+       })
+       .should('render templates with a lot of single quotes', function() {
+         var rendered = this.context.ejs("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
+         equal(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+       })
+       .should('alias the template method and thus the extension', function() {
+         ok(!$.isFunction(this.alias_context.template));
+         ok($.isFunction(this.alias_context.ejs));
+         ok(this.alias_context.ejs.toString().match(/render/));
+       });
     
        context('Sammy.NestedParams', 'parsing', {
          before: function () {
@@ -210,6 +239,21 @@
            equal(app.form_params['title'], 'Walden!');
            app.unload();
          }, this, 1, 2);
+       })
+       .should('parse the query string', function() {
+         var app = this.app;
+         app.get('#/get_form', function() {
+           app.form_params = this.params;
+         });
+         
+         app.run('#/');
+         window.location.href = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature'
+         soon(function() {
+           ok(app.form_params);
+           equal(app.form_params['genre'][0], ['documentary']);
+           equal(app.form_params['genre'][1], ['nature']);
+           app.unload();
+         }, this, 1, 3);
        });
        
        context('Sammy.NestedParams', 'bad fields', {
@@ -226,7 +270,6 @@
          });
        });
        
-       
        // Pretty much a copy of the Template tests
        context('Sammy', 'Mustache', {
           before: function() {
@@ -234,7 +277,7 @@
               this.use(Sammy.Mustache);
             });
             this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-
+      
             this.alias_app = new Sammy.Application(function() {
               this.use(Sammy.Mustache, 'ms');
             });
@@ -410,6 +453,5 @@
         this.context.item = this.item;
         equals(this.context.template(template), rendered);
       });
-      
     };
 })(jQuery);
