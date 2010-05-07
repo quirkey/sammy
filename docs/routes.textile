@@ -114,7 +114,7 @@ Given an app with this route:
 
 {% highlight javascript %}
 get('#/by_name/:name', function() {
-  alert(params['name']);
+  alert(this.params['name']);
 });
 {% endhighlight %}
 
@@ -126,7 +126,7 @@ Given a Regexp route:
 
 {% highlight javascript %}
 get(/\#\/by_name\/(.*)/, function() {
-  alert(params['splat']);
+  alert(this.params['splat']);
 });
 {% endhighlight %}
 
@@ -146,7 +146,7 @@ These are equivalent:
 
 {% highlight javascript %}
 get('#/by_name/:name', function() {
-  this.redirect('#', params['name']);
+  this.redirect('#', this.params['name']);
 });
 
 get('#/by_name/:name', function(context) {
