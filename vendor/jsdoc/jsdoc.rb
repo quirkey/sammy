@@ -23,8 +23,8 @@
 
 require 'rubygems'
 require 'haml'
+require 'rdiscount'
 require 'active_support/ordered_hash'
-require 'rdoc/markup/to_html'
 
 paths = []
 while !ARGV.empty?
@@ -128,16 +128,32 @@ end.reject! do |klass, klass_methods|
 end
 
 
-class RDoc::Markup::ToHtml
+# class RDoc::Markup::ToHtml
+# 
+#   def accept_verbatim(am, fragment)
+#     @res << annotate("{% highlight javascript %}") << "\n"
+#     @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
+#     @res << "\n" << annotate("{% endhighlight %}") << "\n"
+#   end
+# 
+# end
 
-  def accept_verbatim(am, fragment)
-    @res << annotate("{% highlight javascript %}") << "\n"
-    @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
-    @res << "\n" << annotate("{% endhighlight %}") << "\n"
+module Helper
+  extend self
+  
+  def convert(text)
+    final_text = ""
+    text.each_line do |l|
+      final_text << l.gsub(/^\ #/,'#')
+    end
+    final_text = RDiscount.new(final_text).to_html
+    final_text.gsub!('<pre><code>', "{% highlight javascript %}\n")
+    final_text.gsub!('</code></pre>', "{% endhighlight %}\n")
+    final_text
   end
-
+  
 end
 
-rdoc = RDoc::Markup::ToHtml.new
+# rdoc = RDoc::Markup::ToHtml.new
 template = File.read(File.join(File.dirname(__FILE__), 'doc.haml'))
-puts Haml::Engine.new(template).to_html(rdoc, {:doc => docs})
+puts Haml::Engine.new(template).to_html(Helper, {:doc => docs})

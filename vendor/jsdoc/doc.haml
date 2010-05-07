@@ -11,7 +11,7 @@
           =klass[:klass] 
           %span
             (
-            %em=klass[:args].join(', ')
+            =klass[:args].join(', ')
             )
         %div.doc><
           =convert(klass[:doc])
@@ -21,7 +21,7 @@
           =klass[:klass]
           %span
             (
-            %em=klass[:args].join(', ')
+            =klass[:args].join(', ')
             )
         %div.doc><
           = convert(klass[:doc] || "")
