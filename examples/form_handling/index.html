@@ -22,6 +22,10 @@
         this.get('#/', function() { 
           this.app.swap('Click form!');
         });
+        
+        this.get('#/redirect', function() {
+          this.redirect('#/');
+        });
       
         this.get('#/form', function() {
           this.partial('files/form.html');
@@ -58,6 +62,7 @@
     </div>
     <ul id="link">
       <li><a href="#/form">Form!</a></li>
+      <li><a href="#/redirect">Redirect!</a></li>
       <li><a href="#/">Back</a></li>
     </ul>
   </div>
