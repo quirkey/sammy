@@ -38,30 +38,30 @@
             equal(rdata, '<div class="class">test</div>', "render contents");
           });
         })
-        .should('load the contents from a jQuery object', function() {
+        .should('load the contents from inside a jQuery object', function() {
           var callback = function(context) {
             this.load($('.inline-template-1'))
                 .then(function(content) {
-                  content.find('.name').text('Sammy');
+                  return $(content).text('Sammy');
                 })
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="inline-template-1"><div class="name">Sammy</div></div>', "render contents");
-            equal($('.inline-template-1 div').length, 2, "copied, not destroyed the element");
+            equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
+            equal($('#main div.name').length, 2, "copied, not destroyed the element");
           }, 2);
         })
         .should('load the contents from inside a DOM element', function() {
           var callback = function(context) {
             this.load($('.inline-template-1')[0])
                 .then(function(content) {
-                  $(content).text('Sammy');
+                  return $(content).text('Sammy');
                 })
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
-            equal($('.inline-template-1 div').length, 1, "copied, not destroyed the element");
+            equal($('#main div.name').length, 2, "copied, not destroyed the element");
           }, 2);
         })
         .should('load the contents from the inside of a script tag', function() {
@@ -71,20 +71,20 @@
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="name">Sammy Davis</div>', "render contents");
+            equal($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
         .should('load an element and not clone the element if clone: false', function() {
           var callback = function(context) {
             this.load($('.inline-template-1'), {clone: false})
                 .then(function(content) {
-                  content.find('.name').text('Sammy');
+                  return $(content).find('.name').text('Sammy');
                 })
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="inline-template-1"><div class="name">Sammy</div></div>', "render contents");
-            equal($('.inline-template-1 div').length, 1, "removed the original element");
+            equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
+            equal($('#main div.name').length, 1, "removed the original element");
           }, 2);
         })
         .should('get the engine from the data-engine attribute', function() {
@@ -92,7 +92,7 @@
             this.render($('#script-template'), {name: 'Sammy Davis'}).replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="name">Sammy Davis</div>', "render contents");
+            equal($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
         .should('only fetch the template once', function() {
