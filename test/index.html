@@ -36,6 +36,12 @@
       <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
       <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
     </form>
+    
+    <div class="inline-template-1"><div class="name"></div></div>
+
+    <script id="script-template" type="text/html" charset="utf-8" data-engine="template">
+      <div class="name"><%= name %></div>
+    </script>
   </div>
 
   <div id="form_params" style="display:none;">
