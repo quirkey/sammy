@@ -2,12 +2,12 @@
     with(QUnit) {
             
       // wrap jQuery get so that we can count how many times its called
-      jQuery.getcount = 0;
+      jQuery.ajaxcount = 0;
       
-      var original_get = jQuery.get;
-      jQuery.get = function() {
-        jQuery.getcount++;
-        original_get.apply(this, arguments);
+      var original_ajax = jQuery.ajax;
+      jQuery.ajax = function() {
+        jQuery.ajaxcount++;
+        original_ajax.apply(this, arguments);
       };
             
       context('Sammy', 'RenderContext', {
@@ -20,9 +20,9 @@
             var test_context = new test_app.context_prototype(test_app, 'get', '#/test/:test', {test: 'hooray'});
             this.runRouteAndAssert = function(callback, test_callback, expects) {
               callback.apply(test_context, [test_context]);
-              soon(test_callback, 1, expects);
+              soon(test_callback, this, 1, expects);
             };
-            $('#test_area').html('');            
+            $('#test_area').html('');         
           }
         })        
         .should('pass rendered data to callback', function() {
@@ -49,7 +49,7 @@
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="inline-template-1"><div class="name">Sammy</div></div>', "render contents");
             equal($('.inline-template-1 div').length, 2, "copied, not destroyed the element");
-          });
+          }, 2);
         })
         .should('load the contents from inside a DOM element', function() {
           var callback = function(context) {
@@ -62,7 +62,7 @@
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
             equal($('.inline-template-1 div').length, 1, "copied, not destroyed the element");
-          });
+          }, 2);
         })
         .should('load the contents from the inside of a script tag', function() {
           var callback = function(context) {
@@ -85,7 +85,7 @@
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="inline-template-1"><div class="name">Sammy</div></div>', "render contents");
             equal($('.inline-template-1 div').length, 1, "removed the original element");
-          });
+          }, 2);
         })
         .should('get the engine from the data-engine attribute', function() {
           var callback = function(context) {
@@ -96,7 +96,7 @@
           });
         })
         .should('only fetch the template once', function() {
-          jQuery.getcount = 0;
+          jQuery.ajaxcount = 0;
           var callback = function(context) {
             this.load('fixtures/partial.html')
                 .appendTo('#test_area')
@@ -105,11 +105,11 @@
           };
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
-            equal(jQuery.getcount, 1);
-          });
+            equal(jQuery.ajaxcount, 1);
+          }, 2);
         })
         .should('not cache the template if cache: false', function() {
-          jQuery.getcount = 0;
+          jQuery.ajaxcount = 0;
           var callback = function(context) {
             this.load('fixtures/partial.html', {cache: false})
                 .appendTo('#test_area')
@@ -118,8 +118,8 @@
           };
           this.runRouteAndAssert(callback, function() {
             equal($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
-            equal(jQuery.getcount, 2);
-          });
+            equal(jQuery.ajaxcount, 2);
+          }, 2);
         })
         .should('swap the rendered contents', function() {
           var callback = function(context) {
