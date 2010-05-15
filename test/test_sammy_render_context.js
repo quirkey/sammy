@@ -78,7 +78,7 @@
           var callback = function(context) {
             this.load($('.inline-template-1'), {clone: false})
                 .then(function(content) {
-                  return $(content).find('.name').text('Sammy');
+                  return $(content).text('Sammy');
                 })
                 .replace('#test_area');
           };
@@ -113,7 +113,7 @@
           var callback = function(context) {
             this.load('fixtures/partial.html', {cache: false})
                 .appendTo('#test_area')
-                .load('fixtures/partial.html')
+                .load('fixtures/partial.html', {cache: false})
                 .appendTo('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
