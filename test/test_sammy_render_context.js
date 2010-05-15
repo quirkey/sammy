@@ -147,6 +147,19 @@
           this.runRouteAndAssert(callback, function() {
             equal($('#main').html(), '<div class="class-name">name</div>', "render contents");
           });
+        })
+        .should('run commands within a render function as if they were chained', function() {
+          var callback = function(context) {
+            this.render(function() {
+              this.load('fixtures/list.html');
+              this.replace('#test_area');
+              this.renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}]);
+              this.appendTo('#test_area ul');
+            });
+          };
+          this.runRouteAndAssert(callback, function() {
+            equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });
         });
         
       
