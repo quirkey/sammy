@@ -17,8 +17,19 @@
   <body>
     <div id="main"></div>    
     <script type="text/javascript" charset="utf-8">
-      function isSameHTML(actual, expected) {
-        return ($(actual).wrap('<div></div>')[0].innerHTML === $(expected).wrap('<div></div>')[0].innerHTML);
+      function cleanHTMLWhitespace(html) {
+        return html.toString().replace(/(>)(\s*)(<)/g, "><");
+      }
+      
+      function assertSameHTML(expected, actual) {
+        var actual = cleanHTMLWhitespace($(actual).wrap('<div></div>').parent().html()),
+            expected = cleanHTMLWhitespace($(expected).wrap('<div></div>').parent().html()),
+            assert = (actual == expected);
+            
+        if (!assert) {
+          console.error(['HTML doesnt match: expected', expected, "\n\ngot", actual].join(' '));
+        }
+        return assert;
       };
     
       var data = {
@@ -44,17 +55,18 @@
       '</div>';
       
       $.each(['Template', 'Mustache', 'EJS', 'Meld'], function(i, plugin) {
-        var app, 
-            context, 
+        var createContext,
             template = '', 
             meth = plugin.toLowerCase(), 
             render_test;
-        app = new Sammy.Application(function() {
-          this.raise_errors = false;
-          this.element_selector = '#main';
-          this.use(Sammy[plugin], 'template');
-        });
-        context = new app.context_prototype(app, 'get', '#/blurgh', {});
+        createContext = function() { 
+          var app = new Sammy.Application(function() {
+            this.raise_errors = false;
+            this.element_selector = '#main';
+            this.use(Sammy[plugin], 'template');
+          });
+          return new app.context_prototype(app, 'get', '#/blurgh', {}) 
+        };
         $.ajax({
           url: 'template.' + meth,
           async: false,
@@ -62,13 +74,11 @@
             template = response;
           }
         });
-        render_test = context.template(template, data);
-        console.log(plugin, template, render_test);
-        if (!isSameHTML(render_test, result)) {
-          console.error(['Error generating HTML with plugin', plugin, ': expected', result, "\n\ngot", render_test].join(' '));
-        }
+        render_test = createContext().template(template, data);
+        console.log(plugin);
+        assertSameHTML(result, render_test);
         JSLitmus.test("Render with " + plugin, function() {
-          context.template(template, data);
+          createContext().template(template, data, (new Date()).getTime() + Math.random(100));
         });
       });
     </script>
