@@ -2,9 +2,9 @@
 <div class="post">
   <h2 class="title">{{title}}</h2>
   <div class="body">{{body}}</div>
-  {{%IMPLICIT-ITERATOR}}
+  {{%IMPLICIT-ITERATOR iterator=tag}}
   {{#tags}}
-  <span class="tags">{{.}}</span>
+  <span class="tags">{{tag}}</span>
   {{/tags}}
   <ul class="meta">
     {{#meta}}
