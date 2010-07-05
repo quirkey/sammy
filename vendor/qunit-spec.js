@@ -79,7 +79,7 @@
     matches: function(matcher, string, message) {
       return QUnit.ok(!!matcher.test(string), message || "expected: " + string + "match(" + matcher.toString() + ")");
     },
-    
+        
     // assert that a matching error is raised
     // expected can be a regex, a string, or an object
     raised: function(expected_error, callback) {

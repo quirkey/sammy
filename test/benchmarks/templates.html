@@ -4,15 +4,68 @@
     <meta charset="utf-8">
     <title>Template Benchmarks</title>
     <script src="../../vendor/jslitmus.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../vendor/jquery-1.4.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../plugins/sammy.template.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../plugins/sammy.mustache.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../plugins/sammy.meld.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../plugins/sammy.haml.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.mustache.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.meld.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.haml.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
+    <div id="main"></div>    
+    <script type="text/javascript" charset="utf-8">
+      function isSameHTML(actual, expected) {
+        return ($(actual).wrap('<div></div>')[0].innerHTML === $(expected).wrap('<div></div>')[0].innerHTML);
+      };
     
+      var data = {
+        post: {
+          title: 'My Post',
+          body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          tags: ['one', 'two', 'three'],
+          meta: {
+            comments: 5
+          }
+        }
+      };
+      
+      var result = '<div class="post">' + 
+        '<h2 class="title">My Post</h2>' +
+        '<div class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>' + 
+        '<span class="tags">one</span>' +
+        '<span class="tags">two</span>' +
+        '<span class="tags">three</span>' +
+        '<ul class="meta">' +
+          '<li>Comments Count: <span class="comments">5</span></li>' +
+        '</ul>' +    
+      '</div>';
+      
+      $.each(['Template', 'Mustache', 'EJS', 'Meld'], function(i, plugin) {
+        var app = new Sammy.Application(function() {
+          this.raise_errors = false;
+          this.element_selector = '#main';
+          this.use(Sammy[plugin], 'template');
+        });
+        var context = new app.context_prototype(app, 'get', '#/blurgh', {});
+        var template = "";
+        $.ajax({
+          url: 'template.' + plugin.toLowerCase(),
+          async: false,
+          success: function(response) {
+            template = response;
+          }
+        });
+        var rendered = context.template(template, data);
+        console.log(plugin, template, rendered);
+        if (!isSameHTML(rendered, result)) {
+          console.error(['Error generating HTML with plugin', plugin, ': expected', result, "\n\ngot", rendered].join(' '));
+        }
+        JSLitmus.test("Render with " + plugin, function() {
+          var rendered = context.template(template, data);
+        });
+      });
+    </script>
     
   </body>
 </html>

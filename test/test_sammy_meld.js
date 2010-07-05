@@ -2,7 +2,7 @@
     with(QUnit) {
       
       function sameHTML(actual, expected) {
-        equal($(actual)[0].outerHTML, $(expected)[0].outerHTML);
+        equal($(actual).wrap('<div></div>').html(), $(expected).wrap('<div></div>').html());
       };
       
       context('Sammy', 'Meld', {
