@@ -1,3 +1,26 @@
+== 0.5.4 [04/29/2010]
+
+New:
+
+- Sammy.EJS plugin for using embeddedjs templates. [Thanks CodeOfficer!]
+- Sammy.Store#each(), #filter() and #first()
+
+Changed:
+
+- $form is no longer passed as part of params. Instead use this.target in an event context. This fixes issues with chrome running $.param() on form params
+with the jQuery object nested.
+- Sammy.Haml updated to haml-js 0.2.2 [Thanks creationix!]
+- Forms with the 'get' method now change the location instead of submitting
+behind the scenes. This makes it comply better with browser expectations. [Thanks langalex!]
+- Refactored the query + form param parsing to all use a single internal method _parseParamPair()
+- Completely remove the Sammy.Object#uuid() method.
+- Inline documentation now just uses markdown instead of RDoc format.
+
+Fixed:
+
+- last_location was being overriden if you redirected back multiple times. #20
+- Fixed some typos in docs. [Thanks akahn and manalang]
+
 == 0.5.3 [04/02/2010]
 
 Fixed:
