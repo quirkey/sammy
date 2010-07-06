@@ -17,14 +17,14 @@
   <body>
     <div id="main"></div>    
     <script type="text/javascript" charset="utf-8">
-      function cleanHTMLWhitespace(html) {
-        return html.toString().replace(/(>)(\s*)(<)/g, "><");
-      }
-      
       function assertSameHTML(expected, actual) {
-        var actual = cleanHTMLWhitespace($(actual).wrap('<div></div>').parent().html()),
-            expected = cleanHTMLWhitespace($(expected).wrap('<div></div>').parent().html()),
-            assert = (actual == expected);
+        var strippedHTML = function(element) {
+          return $(element).wrap('<div></div>').parent().html().toString().replace(/(>)(\s*)(<)/g, "><");
+        };
+        
+        actual = strippedHTML(actual);
+        expected = strippedHTML(expected);
+        var assert = (actual === expected);
             
         if (!assert) {
           console.error(['HTML doesnt match: expected', expected, "\n\ngot", actual].join(' '));

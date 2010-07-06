@@ -2,7 +2,14 @@
     with(QUnit) {
       
       function sameHTML(actual, expected) {
-        equal($(actual).wrap('<div></div>').html(), $(expected).wrap('<div></div>').html());
+        var strippedHTML = function(element) {
+          return $(element).wrap('<div></div>').parent().html().toString().replace(/(>)(\s+)(<)/g, "><");
+        };
+        
+        actual = strippedHTML(actual);
+        expected = strippedHTML(expected);
+        console.log("\nactual\n", actual, "\nexpected\n", expected);
+        equal(actual, expected, "HTML is equal");
       };
       
       context('Sammy', 'Meld', {
@@ -58,7 +65,30 @@
               expected = "<div class='post'><div class='authors'><h2 class='name'>AQ</h2><span class='twitter'>aq</span></div><div class='authors'><h2 class='name'>Mike</h2><span class='twitter'>mrb_bk</span></div></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
-        ;
+        .should('render templates correctly', function() {
+          var context = this.test_context, 
+              templates = 2
+          var getAndAssertTemplate = function(i) {
+            var template, json, result;
+            $.get('fixtures/meld/' + i + '.meld', function(t) {
+              template = t;
+              $.getJSON('fixtures/meld/' + i + '.json', function(j) {
+                json = j;
+                $.get('fixtures/meld/' + i + '.html', function(r) {
+                  sameHTML(context.meld(template, json), r);
+                  if (i == templates) {
+                    start();
+                  } else {
+                    getAndAssertTemplate(i + 1);
+                  }
+                });
+              });
+            });
+          }
+          expect(templates);
+          stop();
+          getAndAssertTemplate(1);
+        });
       
       
     };
