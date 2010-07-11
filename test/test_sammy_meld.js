@@ -8,7 +8,7 @@
         
         actual = strippedHTML(actual);
         expected = strippedHTML(expected);
-        console.log("\nactual\n", actual, "\nexpected\n", expected);
+        Sammy.log("\nactual\n", actual, "\nexpected\n", expected);
         equal(actual, expected, "HTML is equal");
       };
       
