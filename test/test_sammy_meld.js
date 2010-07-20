@@ -65,6 +65,18 @@
               expected = "<div class='post'><div class='authors'><h2 class='name'>AQ</h2><span class='twitter'>aq</span></div><div class='authors'><h2 class='name'>Mike</h2><span class='twitter'>mrb_bk</span></div></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
+        .should('multiply an array on a list item', function() {
+          var template = "<div class='post'><ul class='tags'></ul></div>";
+              data = {'post': {'tags': ['one', 'two']}},
+              expected = "<div class='post'><ul class='tags'><li>one</li><li>two</li></ul></div>";
+          sameHTML(this.test_context.meld(template, data), expected);
+        })
+        .should('multiply an array on a list item using the example list item', function() {
+          var template = "<div class='post'><ol class='tags'><li class='tag'></li></ol></div>";
+              data = {'post': {'tags': ['one', 'two']}},
+              expected = "<div class='post'><ol class='tags'><li class='tag'>one</li><li class='tag'>two</li></ol></div>";
+          sameHTML(this.test_context.meld(template, data), expected);
+        })
         .should('render templates correctly', function() {
           var context = this.test_context, 
               templates = 2

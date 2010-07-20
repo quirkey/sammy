@@ -9,8 +9,6 @@
     <p class="bio"></p>
     <span class="updated"></span>
     <h4>Links</h4>
-    <ol class="links">
-      <li></li>
-    </ol>
+    <ol class="links"></ol>
   </div>
 </div>
