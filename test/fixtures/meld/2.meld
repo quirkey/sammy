@@ -2,7 +2,7 @@
   <h2 class="name"></h2>
   <div class="body"></div>
   
-  <span class="tags"></span>
+  <ul class="tags"></ul>
   
   <div class="author">
     <h3 class="name"></h3>
