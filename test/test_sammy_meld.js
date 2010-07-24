@@ -47,12 +47,6 @@
               expected = "<div class='post'><div class='title'>TEST</div><div class='author'>AQ</div></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
-        .should('not interpolate incorrectly nested keys', function() {
-          var template = "<div class='post'></div><div class='title'></div>";
-              data = {'post': {'title': 'TEST'}},
-              expected = "<div class='post'></div><div class='title'></div>";
-          sameHTML(this.test_context.meld(template, data), expected);
-        })
         .should('multiply an array of tags', function() {
           var template = "<div class='post'><span class='tags'></span></div>";
               data = {'post': {'tags': ['one', 'two']}},
@@ -77,9 +71,15 @@
               expected = "<div class='post'><ol class='tags'><li class='tag'>one</li><li class='tag'>two</li></ol></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
+        .should('replace attributes of elements as a fallback to class lookup', function() {
+          var template = "<div class='post'><a class='name'></a></div>",
+              data = {'post': {'name': {'href': 'http://www.google.com', 'text': 'Link'}}},
+              expected = "<div class='post'><a href='http://www.google.com' class='name'>Link</a></div>";
+          sameHTML(this.test_context.meld(template, data), expected);
+        })
         .should('render templates correctly', function() {
           var context = this.test_context, 
-              templates = 2
+              templates = 3
           var getAndAssertTemplate = function(i) {
             var template, json, result;
             $.get('fixtures/meld/' + i + '.meld', function(t) {
