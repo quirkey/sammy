@@ -27,7 +27,7 @@
         var assert = (actual === expected);
             
         if (!assert) {
-          console.error(['HTML doesnt match: expected', expected, "\n\ngot", actual].join(' '));
+          Sammy.log(['HTML doesnt match: expected', expected, "\n\ngot", actual].join(' '));
         }
         return assert;
       };
@@ -75,7 +75,7 @@
           }
         });
         render_test = createContext().template(template, data);
-        console.log(plugin);
+        Sammy.log(plugin);
         assertSameHTML(result, render_test);
         JSLitmus.test("Render with " + plugin, function() {
           createContext().template(template, data, (new Date()).getTime() + Math.random(100));
