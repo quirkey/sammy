@@ -1,17 +1,17 @@
 (function($) {
     with(QUnit) {
-      
+
       function sameHTML(actual, expected) {
         var strippedHTML = function(element) {
           return $(element).wrap('<div></div>').parent().html().toString().replace(/(>)(\s+)(<)/g, "><");
         };
-        
+
         actual = strippedHTML(actual);
         expected = strippedHTML(expected);
         Sammy.log("\nactual\n", actual, "\nexpected\n", expected);
         equal(actual, expected, "HTML is equal");
       };
-      
+
       context('Sammy', 'Meld', {
           before: function() {
             var test_app = new Sammy.Application(function() {
@@ -72,14 +72,14 @@
           sameHTML(this.test_context.meld(template, data), expected);
         })
         .should('replace attributes of elements as a fallback to class lookup', function() {
-          var template = "<div class='post'><a class='name'></a></div>",
+          var template = "<div class='post'><a class='name' href=''></a></div>",
               data = {'post': {'name': {'href': 'http://www.google.com', 'text': 'Link'}}},
-              expected = "<div class='post'><a href='http://www.google.com' class='name'>Link</a></div>";
+              expected = "<div class='post'><a class='name' href='http://www.google.com'>Link</a></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
         .should('render templates correctly', function() {
-          var context = this.test_context, 
-              templates = 3
+          var context = this.test_context,
+              templates = 3;
           var getAndAssertTemplate = function(i) {
             var template, json, result;
             $.get('fixtures/meld/' + i + '.meld', function(t) {
@@ -101,7 +101,7 @@
           stop();
           getAndAssertTemplate(1);
         });
-      
-      
+
+
     };
 })(jQuery);
