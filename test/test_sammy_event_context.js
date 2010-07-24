@@ -1,6 +1,6 @@
 (function($) {
     with(QUnit) {
-      
+
       var test_app = new Sammy.Application(function() {
         this.raise_errors = false;
         this.element_selector = '#main';
@@ -25,7 +25,7 @@
       .should('set params', function() {
         deepEqual(this.context.params, new Sammy.Object({test: 'hooray'}));
       });
-      
+
 
       context('Sammy', 'EventContext', 'redirect', {
         before: function() {
@@ -63,7 +63,7 @@
           context.notFound();
         });
       });
-      
+
       context('Sammy', 'EventContext', 'partial', {
         before: function() {
           this.app     = test_app;
@@ -73,15 +73,15 @@
       })
       .should('pass contents to callback', function() {
         var contents = '';
-        this.context.partial('fixtures/partial.html', function(data) { contents = data; });
+        this.context.partial('fixtures/partial.html').then(function(data) { contents = data; });
         soon(function () {
           equal(contents, '<div class="test_partial">PARTIAL</div>');
         }, this, 2);
       })
       .should('not run through template() if Sammy.Template is not present', function() {
         var contents = '';
-        this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) { 
-          contents = data; 
+        this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'}).then(function(data) {
+          contents = data;
         });
         soon(function () {
           equal(contents, '<div class="<%= class_name %>"><%= name %></div>');
@@ -92,64 +92,12 @@
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
         app.use(Sammy.Template);
         this.context = new app.context_prototype(app);
-        this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) { 
-          contents = data; 
+        this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'}).then(function(data) {
+          contents = data;
         });
         soon(function () {
           equal(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
-      })
-      .should('itterate over data if data is an array', function() {
-        var contents = '',
-            app = new Sammy.Application(function() { this.element_selector = '#main'; }),
-            data = [{name: 'one', class_name: 'it-1'}, {name: 'two', class_name: 'it-2'}],
-            expected = '<div class="it-1">one</div><div class="it-2">two</div>';
-                        
-        app.use(Sammy.Template);
-        this.context = new app.context_prototype(app);
-        this.context.partial('fixtures/partial.template', data);
-        this.context.partial('fixtures/partial.template', data, function(html) {
-          contents += html;
-        });
-        soon(function () {
-          equal($('#main').html(), expected);
-          equal(contents, expected);
-        }, this, 2, 2);
-      })
-      .should('cache template if cache() is present', function(){
-        var contents = '';
-        var app = new Sammy.Application(function() { this.element_selector = '#main'; });
-        app.use(Sammy.Template);
-        app.use(Sammy.Cache);
-        app.clearCache();
-        this.context = new app.context_prototype(app);
-        this.context.partial('fixtures/partial.html', function(data) { 
-          contents = data; 
-        });
-        soon(function () {
-          equal(contents, '<div class="test_partial">PARTIAL</div>');
-          equal(app.cache('partial:fixtures/partial.html'), '<div class="test_partial">PARTIAL</div>');
-          this.context.partial('fixtures/partial.html', function(data) { 
-            contents = data;
-          });
-          equal(contents, '<div class="test_partial">PARTIAL</div>');
-        }, this, 1, 3);
-      })
-      .should('not cache template if cache is present and cache_partials: false', function() {
-        var contents = '';
-        var app = new Sammy.Application(function() { this.element_selector = '#main'; });
-        app.use(Sammy.Template);
-        app.use(Sammy.Cache);
-        app.clearCache();
-        app.cache_partials = false;
-        this.context = new app.context_prototype(app);
-        this.context.partial('fixtures/partial.html', function(data) { 
-          contents = data;
-        });
-        soon(function () {
-          equal(contents, '<div class="test_partial">PARTIAL</div>');
-          ok(!app.cache('partial:fixtures/partial.html'));
-        }, this, 1, 2);
       })
       .should('replace default app element if no callback is passed', function() {
         var contents = '';
@@ -162,26 +110,12 @@
           equal(app.$element().children('.test_template').length, 1);
         }, this, 2, 2);
       })
-      .should('trigger changed after the partial callback', function() {
-        var changed = false;
-        test_app.bind('changed', function() {
-          changed = true;
-        });
-        test_app.run();
-        this.context.partial('fixtures/partial.html', function(data) { 
-          changed = false;
-        });
-        soon(function() {
-          ok(changed);
-          test_app.unload();
-        });
-      })
       .should('use default engine if provided and template doesnt match an engine', function() {
         var contents = '';
-        var app = new Sammy.Application(function() { 
-          this.element_selector = '#main'; 
+        var app = new Sammy.Application(function() {
+          this.element_selector = '#main';
           this.template_engine  = 'template';
-          
+
           this.helper('template',  function(template, data) {
             return "!!!" + template.toString() + "!!!";
           });
@@ -194,8 +128,8 @@
       })
       .should('use default engine as a method if template doesnt match an engine', function() {
         var contents = '';
-        var app = new Sammy.Application(function() { 
-          this.element_selector = '#main'; 
+        var app = new Sammy.Application(function() {
+          this.element_selector = '#main';
           this.template_engine  = function(template, data) {
             return "!!!" + template.toString() + "!!!";
           };
@@ -206,7 +140,7 @@
           equal(app.$element().text(), '!!!NOENGINE!!!');
         });
       });
-      
+
       context('Sammy', 'EventContext', 'trigger', {
         before: function() {
           this.context = test_context;
@@ -249,6 +183,6 @@
           deepEqual(passed_data, test_data);
         });
       });
-      
+
     };
 })(jQuery);
