@@ -83,6 +83,12 @@
               expected = "<div class='post'><h2 class='name'>My Name</h2></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
+        .should('allow the setting of a selector function', function() {
+          var template = "<div rel='post'><h2 rel='name'></h2></div>",
+              data = {'post': {'name': "My Name"}},
+              expected = "<div rel='post'><h2 rel='name'>My Name</h2></div>";
+          sameHTML(this.test_context.meld(template, data, {selector: function(k) { return "[rel='"+ k + "']"; }}), expected);
+        })
         .should('render templates correctly', function() {
           var context = this.test_context,
               templates = 3;
