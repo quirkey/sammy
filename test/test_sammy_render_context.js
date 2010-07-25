@@ -2,11 +2,11 @@
     with(QUnit) {
             
       // wrap jQuery get so that we can count how many times its called
-      jQuery.ajaxcount = 0;
-      
       var original_ajax = jQuery.ajax;
       jQuery.ajax = function() {
+        jQuery.ajaxcount = jQuery.ajaxcount || 0;
         jQuery.ajaxcount++;
+        Sammy.log('jQuery.ajax', arguments, jQuery.ajaxcount);
         original_ajax.apply(this, arguments);
       };
             
@@ -20,9 +20,9 @@
             var test_context = new test_app.context_prototype(test_app, 'get', '#/test/:test', {test: 'hooray'});
             this.runRouteAndAssert = function(callback, test_callback, expects) {
               callback.apply(test_context, [test_context]);
-              soon(test_callback, this, 1, expects);
+              soon(test_callback, this, 2, expects);
             };
-            $('#test_area').html('');         
+            $('#test_area').html('');
           }
         })        
         .should('pass rendered data to callback', function() {
@@ -96,8 +96,9 @@
           });
         })
         .should('only fetch the template once', function() {
-          jQuery.ajaxcount = 0;
           var callback = function(context) {
+            jQuery.ajaxcount = 0;
+            Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
             this.load('fixtures/partial.html')
                 .appendTo('#test_area')
                 .load('fixtures/partial.html')
@@ -109,8 +110,9 @@
           }, 2);
         })
         .should('not cache the template if cache: false', function() {
-          jQuery.ajaxcount = 0;
           var callback = function(context) {
+            jQuery.ajaxcount = 0;
+            Sammy.log('should not cache', 'ajaxcount', jQuery.ajaxcount);
             this.load('fixtures/partial.html', {cache: false})
                 .appendTo('#test_area')
                 .load('fixtures/partial.html', {cache: false})

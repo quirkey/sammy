@@ -77,6 +77,12 @@
               expected = "<div class='post'><a class='name' href='http://www.google.com'>Link</a></div>";
           sameHTML(this.test_context.meld(template, data), expected);
         })
+        .should('remove nodes if value is === false', function() {
+          var template = "<div class='post'><h2 class='name'></h2><span class='active'>Active</span></div>",
+              data = {'post': {'name': "My Name", 'active': false}},
+              expected = "<div class='post'><h2 class='name'>My Name</h2></div>";
+          sameHTML(this.test_context.meld(template, data), expected);
+        })
         .should('render templates correctly', function() {
           var context = this.test_context,
               templates = 3;
