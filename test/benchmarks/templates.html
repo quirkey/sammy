@@ -5,10 +5,12 @@
     <title>Sammy Template Benchmarks</title>
     <script src="../../vendor/jquery-1.4.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.json.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.template.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.mustache.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.meld.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.pure.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.haml.js" type="text/javascript" charset="utf-8"></script>
     
     <script src="../../vendor/jslitmus.js" type="text/javascript" charset="utf-8"></script>
@@ -54,7 +56,7 @@
         '</ul>' +    
       '</div>';
       
-      $.each(['Template', 'Mustache', 'EJS', 'Meld'], function(i, plugin) {
+      $.each(['Template', 'Mustache', 'EJS', 'Pure', 'Haml', 'Meld'], function(i, plugin) {
         var createContext,
             template = '', 
             meth = plugin.toLowerCase(), 
