@@ -1,17 +1,6 @@
 (function($) {
     with(QUnit) {
 
-      function sameHTML(actual, expected) {
-        var strippedHTML = function(element) {
-          return $(element).wrap('<div></div>').parent().html().toString().replace(/(>)(\s+)(<)/g, "><");
-        };
-
-        actual = strippedHTML(actual);
-        expected = strippedHTML(expected);
-        Sammy.log("\nactual\n", actual, "\nexpected\n", expected);
-        equal(actual, expected, "HTML is equal");
-      };
-
       context('Sammy', 'Meld', {
           before: function() {
             var test_app = new Sammy.Application(function() {

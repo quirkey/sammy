@@ -343,7 +343,23 @@
       })
       .should('use haml-js to render haml templates', function() {
         var template = ".mytemplate= title";
-        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
+        sameHTML(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
+      });
+      
+      context('Sammy', 'Pure', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Pure);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should('add pure helper to context', function() {
+        ok($.isFunction(this.context.pure));
+      })
+      .should('use pure to render templates', function() {
+        var template = "<div class='title'></div>";
+        sameHTML(this.context.pure(template, {title: "PURE!!"}), "<div class=\"title\">PURE!!</div>");
       });
       
       context('Sammy', 'Form', {

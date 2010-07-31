@@ -125,8 +125,23 @@
     
     flunk: function() {
       QUnit.ok(false, 'FLUNK');
-    }
+    },
+    
+    sameHTML: function(actual, expected) {
+      var strippedHTML = function(element) {
+        return $(element)
+          .wrap('<div></div>')
+          .parent()
+          .html()
+          .toString()
+          .replace(/(>)(\s+)(<)/g, "><");
+      };
 
+      actual = strippedHTML(actual);
+      expected = strippedHTML(expected);
+      equal(actual, expected, "HTML is equal");
+    }
+    
   });
 
 
