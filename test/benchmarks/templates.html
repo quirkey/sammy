@@ -77,10 +77,10 @@
           }
         });
         render_test = createContext().template(template, data);
-        Sammy.log(plugin);
+        Sammy.log(plugin, render_test);
         assertSameHTML(result, render_test);
         JSLitmus.test("Render with " + plugin, function() {
-          createContext().template(template, data, (new Date()).getTime() + Math.random(100));
+          createContext().template(template, data, (new Date()).getTime() + Math.random(1000));
         });
       });
     </script>
