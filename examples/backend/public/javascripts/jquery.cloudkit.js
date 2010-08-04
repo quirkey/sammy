@@ -637,7 +637,7 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
     that.isDeleted = function() {
       return (meta.deleted == true);
     };
-    
+
     that.attr = function(name, value) {
       if (typeof json[name] != 'undefined') {
         switch(typeof value) {

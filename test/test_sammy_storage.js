@@ -116,7 +116,7 @@
             equal(fired, 'bar');
             $('#main').unbind('set-test_store-foo');
           });
-        }) 
+        })
         .should('fire store event on set', function() {
           var fired = false;
           $('#main').bind('set-test_store', function(e, data) {
@@ -127,7 +127,7 @@
             equal(fired, 'foo');
             $('#main').unbind('set-test_store');
           });
-        }) 
+        })
         .should('fetch value or run callback', function() {
           ok(!this.store.get('foo'));
           this.store.fetch('foo', function() {
@@ -148,7 +148,7 @@
         });
       }
     });
-  
+
       context('Sammy.Storage', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -163,7 +163,7 @@
       .should('add the store method to event contexts', function() {
         ok($.isFunction(this.context.store));
       });
-    
+
       context('Sammy.Storage', 'store', {
         before: function() {
           var store = null;

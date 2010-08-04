@@ -3,17 +3,17 @@
     this.debug = true;
     this.use(Sammy.Cache);
     this.use(Sammy.Template, 'erb');
-    
-    var db = null, 
+
+    var db = null,
         db_loaded = false;
-                        
+
     this.before(function() {
       if (!db_loaded) {
         this.redirect('#/connecting');
         return false;
-      } 
+      }
     });
-    
+
     // display tasks
     this.get('#/', function(context) {
       this.partial('/templates/index.html.erb', function(html) {
@@ -26,16 +26,16 @@
         });
       });
     });
-    
+
     this.get('#/tasks/:id', function() {
       this.task = db.collection('tasks').get(this.params['id']).json();
       this.partial('/templates/task_details.html.erb')
     });
-    
+
     this.post('#/tasks', function(context) {
       var task  = {
-        entry: this.params['entry'], 
-        completed: false, 
+        entry: this.params['entry'],
+        completed: false,
         created_at: Date()
       };
       db.collection('tasks').create(task, {
@@ -51,11 +51,11 @@
         }
       });
     });
-    
+
     this.get('#/connecting', function() {
       $('#main').html('<span class="loading">... Loading ...</span>');
     });
-    
+
     this.bind('task-toggle', function(e, data) {
       this.log('data', data)
       var $task = data.$task;
@@ -67,7 +67,7 @@
         }
       });
     });
-    
+
     this.bind('run', function() {
       var context = this;
       db = $.cloudkit;
@@ -81,24 +81,24 @@
           context.trigger('error', {message: 'Could not connect to CloudKit.'})
         }
       });
-      
+
       $('li.task :checkbox').live('click', function() {
         var $task = $(this).parents('.task');
         context.trigger('task-toggle', {$task: $task});
       });
     });
-    
+
     this.bind('db-loaded', function() {
       this.redirect('#/')
     });
-    
+
     this.bind('error', function(e, data) {
       $('#error').text(data.message).show();
     });
-    
-    
+
+
   });
-  
+
   $(function() {
     app.run('#/');
   })

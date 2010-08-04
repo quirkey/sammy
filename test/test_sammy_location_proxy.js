@@ -1,6 +1,6 @@
 (function($) {
   with(QUnit) {
-    
+
     context('Sammy', 'HashLocationProxy', {
       before: function() {
         this.app = new Sammy.Application;
@@ -58,7 +58,7 @@
       }
     });
 
-    
+
     context('Sammy', 'DataLocationProxy', {
       before: function() {
         this.app = new Sammy.Application(function() {
@@ -76,7 +76,7 @@
     })
     .should('trigger app event when data changes', function() {
       $('body').data(this.app.location_proxy.data_name, '');
-      var triggered = false, 
+      var triggered = false,
           location = false,
           app = this.app;
       app.bind('location-changed', function() {

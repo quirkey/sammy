@@ -1,6 +1,6 @@
 (function($) {
     with(QUnit) {
-            
+
       // wrap jQuery get so that we can count how many times its called
       var original_ajax = jQuery.ajax;
       jQuery.ajax = function() {
@@ -9,7 +9,7 @@
         Sammy.log('jQuery.ajax', arguments, jQuery.ajaxcount);
         original_ajax.apply(this, arguments);
       };
-            
+
       context('Sammy', 'RenderContext', {
           before: function() {
             var test_app = new Sammy.Application(function() {
@@ -24,7 +24,7 @@
             };
             $('#test_area').html('');
           }
-        })        
+        })
         .should('pass rendered data to callback', function() {
           var rdata = null;
           var callback = function(context) {
@@ -255,8 +255,8 @@
             equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         });
-        
-      
-      
+
+
+
     };
 })(jQuery);
