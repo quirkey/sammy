@@ -942,7 +942,7 @@
         var app = this.app;
         var blah = 'whu';
         app.raise_errors = true;
-        raised(/function/, function() {
+        raised(/whu/, function() {
           app.use(blah);
         });
       })
