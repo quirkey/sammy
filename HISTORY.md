@@ -18,15 +18,18 @@ very fast. It's also currently < 100LOC
 - Sammy.Object#escapeHTML() escapes HTML strings (for use in templates).
 - Sammy.DataLocationProxy takes an optional `href_attribute` for binding clicks 
 directly to the proxy/data [Thanks CodeOfficer]
-- Sammy.PathLocationProxy is a location proxy that does no in page changing and
-is strictly for loading different code at different URIs
+- Sammy.PathLocationProxy is a location proxy that does no in page changing and is strictly for loading different code at different URIs
 
 Changed:
 
-- You can no longer set the location_proxy directly. Instead, use `setLocationProxy()` 
+- Upgraded to jQuery 1.4.2 - Previous 1.4.1 should still work, but I'm only 
+testing against 1.4.2
+- You can no longer set the location_proxy directly. Instead, use 
+`setLocationProxy()` 
 which will ensure proper binding/unbinding.
-- `use()` can now take a string of the sammy plugin you want to include: `use('Storage')`
-this is now the preferred way of including plugins, as it improves error reporting greatly.
+- `use()` can now take a string of the sammy plugin you want to include: 
+`use('Storage')`. This is now the preferred way of including plugins, as it 
+improves error reporting greatly.
 - Updated Sammy.Mustache
 
 Fixed:
