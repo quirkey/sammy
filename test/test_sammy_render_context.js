@@ -35,7 +35,7 @@
             });
           };
           this.runRouteAndAssert(callback, function() {
-            equal(rdata, '<div class="class">test</div>', "render contents");
+            sameHTML(rdata, '<div class="class">test</div>', "render contents");
           });
         })
         .should('load the contents from inside a jQuery object', function() {
@@ -47,7 +47,7 @@
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
             equal($('#main div.name').length, 2, "copied, not destroyed the element");
           }, 2);
         })
@@ -60,7 +60,7 @@
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
             equal($('#main div.name').length, 2, "copied, not destroyed the element");
           }, 2);
         })
@@ -71,7 +71,7 @@
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
+            sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
         .should('load an element and not clone the element if clone: false', function() {
@@ -83,7 +83,7 @@
                 .replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="name">Sammy</div>', "render contents");
             equal($('#main div.name').length, 1, "removed the original element");
           }, 2);
         })
@@ -92,7 +92,7 @@
             this.render($('#script-template'), {name: 'Sammy Davis'}).replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
+            sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
         .should('only fetch the template once', function() {
@@ -105,7 +105,7 @@
                 .appendTo('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
             equal(jQuery.ajaxcount, 1);
           }, 2);
         })
@@ -119,7 +119,7 @@
                 .appendTo('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
             equal(jQuery.ajaxcount, 2);
           }, 2);
         })
@@ -128,7 +128,7 @@
             this.render('fixtures/partial.template', {class_name: 'class', name:'test'}).swap();
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#main').html(), '<div class="class">test</div>', "render contents");
+            sameHTML($('#main').html(), '<div class="class">test</div>', "render contents");
           });
         })
         .should('add a callback with data', function() {
@@ -138,7 +138,7 @@
             });
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="class">test</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="class">test</div>', "render contents");
           });
         })
         .should('replace with rendered contents', function() {
@@ -146,7 +146,7 @@
             this.render('fixtures/partial.template', {class_name: 'class', name: 'test2'}).replace('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="class">test2</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="class">test2</div>', "render contents");
           });
         })
         .should('append rendered contents', function() {
@@ -155,7 +155,7 @@
             this.render('fixtures/partial.template', {class_name: 'class', name: 'test'}).appendTo('#test_area');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="original">test</div><div class="class">test</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="original">test</div><div class="class">test</div>', "render contents");
           });
         })
         .should('append then pass data to then', function() {
@@ -167,7 +167,7 @@
               });
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial blah">PARTIAL</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial blah">PARTIAL</div>', "render contents");
           });
         })
         .should('call multiple then callbacks in order', function() {
@@ -183,7 +183,7 @@
               });
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="class blah">test</div><div class="class blah2">test</div>', "render contents");
+            sameHTML($('#test_area').html(), '<div class="class blah">test</div><div class="class blah2">test</div>', "render contents");
           });
         })
         .should('load a file then render', function() {
@@ -199,7 +199,7 @@
               });
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul>', "render contents");
+            sameHTML($('#test_area').html(), '<ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul>', "render contents");
           });
         })
         .should('chain multiple renders', function() {
@@ -208,7 +208,7 @@
                 .render('fixtures/other_partial.template', {'name': 'other name'}).appendTo('.class-name');
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<div class="class-name">name<span>other name</span></div>');
+            sameHTML($('#test_area').html(), '<div class="class-name">name<span>other name</span></div>');
           });
         })
         .should('iterate and collect with each', function() {
@@ -220,7 +220,7 @@
                 .appendTo('#test_area ul')
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<ul><li>first</li><li>second</li></ul>');
+            sameHTML($('#test_area').html(), '<ul><li>first</li><li>second</li></ul>');
           });
         })
         .should('renderEach with a collection', function() {
@@ -231,7 +231,7 @@
                 .appendTo('#test_area ul')
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+            sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         })
         .should('swap data with partial', function() {
@@ -239,7 +239,7 @@
             this.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#main').html(), '<div class="class-name">name</div>', "render contents");
+            sameHTML($('#main').html(), '<div class="class-name">name</div>', "render contents");
           });
         })
         .should('run commands within a render function as if they were chained', function() {
@@ -252,7 +252,7 @@
             });
           };
           this.runRouteAndAssert(callback, function() {
-            equal($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+            sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         });
 
