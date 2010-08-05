@@ -5,7 +5,7 @@
       before: function() {
         this.app = new Sammy.Application;
         this.proxy = new Sammy.HashLocationProxy(this.app);
-        this.has_native = (typeof window.onhashchange != 'undefined');
+        this.has_native = (onhashchange in window);
       }
     })
     .should('store a pointer to the app', function() {
