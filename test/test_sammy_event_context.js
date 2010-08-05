@@ -96,7 +96,7 @@
           contents = data;
         });
         soon(function () {
-          equal(contents, '<div class="test_template">TEMPLATE!</div>');
+          sameHTML(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
       })
       .should('replace default app element if no callback is passed', function() {
