@@ -59,8 +59,8 @@
         equal(this.yielded_app, this.app)
       })
       .should('set the location proxy to the default hash location proxy', function() {
-        ok(this.app.location_proxy);
-        defined(this.app.location_proxy, 'getLocation');
+        ok(this.app._location_proxy);
+        defined(this.app._location_proxy, 'getLocation');
       });
 
       context('Sammy.Application', 'route', {
