@@ -18,7 +18,10 @@ very fast. It's also currently < 100LOC
 - Sammy.Object#escapeHTML() escapes HTML strings (for use in templates).
 - Sammy.DataLocationProxy takes an optional `href_attribute` for binding clicks 
 directly to the proxy/data [Thanks CodeOfficer]
-- Sammy.PathLocationProxy is a location proxy that does no in page changing and is strictly for loading different code at different URIs
+- Sammy.PathLocationProxy is a location proxy that does no in page changing and 
+is strictly for loading different code at different URIs
+- Sammy looks for the rails style form method override (`input[name=_method]`) to
+determine the submitted form's verb.
 
 Changed:
 
@@ -36,6 +39,7 @@ Fixed:
 
 - The HashLocationProxy poller would not stop running even if the proxy had been
 replaced.
+- IE was incorrectly reporting the form method attribute if it wasn't GET/POST. [Thanks rmurphey]
 - Mustache was not checking for its own existence correctly.
 
 
@@ -48,7 +52,8 @@ New:
 
 Changed:
 
-- $form is no longer passed as part of params. Instead use this.target in an event context. This fixes issues with chrome running $.param() on form params
+- $form is no longer passed as part of params. Instead use this.target in an event context. 
+This fixes issues with chrome running $.param() on form params
 with the jQuery object nested.
 - Sammy.Haml updated to haml-js 0.2.2 [Thanks creationix!]
 - Forms with the 'get' method now change the location instead of submitting
