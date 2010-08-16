@@ -170,6 +170,27 @@
             sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial blah">PARTIAL</div>', "render contents");
           });
         })
+        .should('prepend rendered contents', function() {
+          var callback = function(context) {
+            $('#test_area').html('<div class="original">test</div>')
+            this.render('fixtures/partial.template', {class_name: 'class', name: 'test'}).prependTo('#test_area');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="class">test</div><div class="original">test</div>', "render contents");
+          });
+        })
+        .should('prepend then pass data to then', function() {
+          var callback = function(context) {
+            this.load('fixtures/partial.html')
+              .prependTo('#test_area')
+              .then(function(data) {
+                $(data).addClass('blah').prependTo('#test_area');
+              });
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="test_partial blah">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
+          });
+        })
         .should('call multiple then callbacks in order', function() {
           var callback = function(context) {
             this.name = 'test';
