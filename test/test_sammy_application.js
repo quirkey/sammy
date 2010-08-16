@@ -287,8 +287,15 @@
               return false;
             });
 
-           this.route('post', '#/live', function() {
+            this.route('post', '#/live', function() {
               this.app.form_was_run = 'LIVE';
+              this.app.form_params = this.params;
+              this.app.form_target = this.target;
+              return false;
+            });
+
+            this.route('put', '#/puttest', function() {
+              this.app.form_was_run = 'PUT';
               this.app.form_params = this.params;
               this.app.form_target = this.target;
               return false;
@@ -336,6 +343,38 @@
         soon(function() {
           equal(app.form_was_run, 'LIVE');
           equal(app.form_target, $('#live_form').get(0));
+          app.unload();
+        }, this, 1, 2);
+      })
+      .should('get form verb from _method input', function() {
+        var app = this.app;
+        // add a new form to the page
+        $('#main').append('<form id="put_form" action="#/puttest" method="post">' +
+           '<input name="_method" type="hidden" value="put" />' +
+           '<input type="submit" class="submit" />' +
+           '</form>'
+         );
+         app.run('#/');
+
+        $('#put_form .submit').submit();
+        soon(function() {
+          equal(app.form_was_run, 'PUT');
+          equal(app.form_target, $('#put_form').get(0));
+          app.unload();
+        }, this, 1, 2);
+      })
+      .should('get form verb even if the browser has no support for the method', function() {
+        var app = this.app;
+        // add a new form to the page
+        $('#main').append('<form id="put_form2" action="#/puttest" method="put">' +
+           '<input type="submit" class="submit" />' +
+           '</form>'
+         );
+         app.run('#/');
+        $('#put_form2 .submit').submit();
+        soon(function() {
+          equal(app.form_was_run, 'PUT');
+          equal(app.form_target, $('#put_form2').get(0));
           app.unload();
         }, this, 1, 2);
       })
