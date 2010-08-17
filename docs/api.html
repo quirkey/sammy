@@ -2699,7 +2699,7 @@ nav:
      stored strings.</p>
     
     <p> Sammy.Store can be used directly, but within a Sammy.Application it is much
-     easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods.</p>
+     easier to use the <code>Sammy.Storage</code> plugin and its helper methods.</p>
     
     <p> Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
      a key is set.</p>
@@ -2790,7 +2790,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p> Removes the value at <tt>key</tt> from the current store</p></div></div>
+      </h4><div class='doc'><p> Removes the value at <code>key</code> from the current store</p></div></div>
     <div class='meth' id='Sammy.Store-clearAll'>
       <h4>
         clearAll
@@ -2825,7 +2825,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p> Checks for the existance of <tt>key</tt> in the current store. Returns a boolean.</p></div></div>
+      </h4><div class='doc'><p> Checks for the existance of <code>key</code> in the current store. Returns a boolean.</p></div></div>
     <div class='meth' id='Sammy.Store-fetch'>
       <h4>
         fetch
@@ -2834,7 +2834,7 @@ nav:
           <em>key, callback</em>
           )
         </span>
-      </h4><div class='doc'><p> Returns the value at <tt>key</tt> if set, otherwise, runs the callback
+      </h4><div class='doc'><p> Returns the value at <code>key</code> if set, otherwise, runs the callback
        and sets the value to the value returned in the callback.</p>
       
       <h3>Example</h3>
@@ -2893,7 +2893,7 @@ nav:
           <em>key</em>
           )
         </span>
-      </h4><div class='doc'><p> Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and
+      </h4><div class='doc'><p> Returns the set value at <code>key</code>, parsing with <code>JSON.parse</code> and
        turning into an object if possible</p></div></div>
     <div class='meth' id='Sammy.Store-isAvailable'>
       <h4>
@@ -2922,7 +2922,7 @@ nav:
           <em>key, path, callback</em>
           )
         </span>
-      </h4><div class='doc'><p> loads the response of a request to <tt>path</tt> into <tt>key</tt>.</p>
+      </h4><div class='doc'><p> loads the response of a request to <code>path</code> into <code>key</code>.</p>
       
       <h3>Example</h3>
       
@@ -2949,8 +2949,8 @@ nav:
           <em>key, value</em>
           )
         </span>
-      </h4><div class='doc'><p> Sets the value of <tt>key<tt> with <tt>value</tt>. If <tt>value<tt> is an
-       object, it is turned to and stored as a string with <tt>JSON.stringify</tt>.
+      </h4><div class='doc'><p> Sets the value of <code>key</code> with <code>value</code>. If <code>value</code> is an
+       object, it is turned to and stored as a string with <code>JSON.stringify</code>.
        It also tries to conform to the KVO pattern triggering jQuery events on the
        element that the store is bound to.</p>
       
@@ -3031,7 +3031,7 @@ nav:
      SessionStorage is only persistant through the current 'session' which is defined
      as the length that the current window is open. This means that data will survive
      refreshes but not close/open or multiple windows/tabs. For more info, check out
-     the <tt>LocalStorage</tt> documentation and links.</p></div></div>
+     the <code>LocalStorage</code> documentation and links.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Store.Cookie'>
     <h2>
@@ -3068,7 +3068,7 @@ nav:
         )
       </span>
     </h2><div class='doc'><p> Sammy.Storage is a plugin that provides shortcuts for creating and using
-     Sammy.Store objects. Once included it provides the <tt>store()</tt> app level
+     Sammy.Store objects. Once included it provides the <code>store()</code> app level
      and helper methods. Depends on Sammy.JSON (or json2.js).</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Session'>
@@ -3080,13 +3080,13 @@ nav:
         )
       </span>
     </h2><div class='doc'><p> Sammy.Session is an additional plugin for creating a common 'session' store
-     for the given app. It is a very simple wrapper around <tt>Sammy.Storage</tt>
+     for the given app. It is a very simple wrapper around <code>Sammy.Storage</code>
      that provides a simple fallback mechanism for trying to provide the best
-     possible storage type for the session. This means, <tt>LocalStorage</tt>
-     if available, otherwise <tt>Cookie</tt>, otherwise <tt>Memory</tt>.
-     It provides the <tt>session()</tt> helper through <tt>Sammy.Storage#store()</tt>.</p>
+     possible storage type for the session. This means, <code>LocalStorage</code>
+     if available, otherwise <code>Cookie</code>, otherwise <code>Memory</code>.
+     It provides the <code>session()</code> helper through <code>Sammy.Storage#store()</code>.</p>
     
-    <p> See the <tt>Sammy.Storage</tt> plugin for full documentation.</p></div></div>
+    <p> See the <code>Sammy.Storage</code> plugin for full documentation.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Cache'>
     <h2>
@@ -3097,13 +3097,13 @@ nav:
         )
       </span>
     </h2><div class='doc'><p> Sammy.Cache provides helpers for caching data within the lifecycle of a
-     Sammy app. The plugin provides two main methods on <tt>Sammy.Application<tt>,
-     <tt>cache</tt> and <tt>clearCache</tt>. Each app has its own cache store so that
+     Sammy app. The plugin provides two main methods on <code>Sammy.Application</code>,
+     <code>cache</code> and <code>clearCache</code>. Each app has its own cache store so that
      you dont have to worry about collisions. As of 0.5 the original Sammy.Cache module
      has been deprecated in favor of this one based on Sammy.Storage. The exposed
      API is almost identical, but Sammy.Storage provides additional backends including
-     HTML5 Storage. <tt>Sammy.Cache</tt> will try to use these backends when available
-     (in this order) <tt>LocalStorage</tt>, <tt>SessionStorage</tt>, and <tt>Memory</tt></p></div></div>
+     HTML5 Storage. <code>Sammy.Cache</code> will try to use these backends when available
+     (in this order) <code>LocalStorage</code>, <code>SessionStorage</code>, and <code>Memory</code></p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Template'>
     <h2>
