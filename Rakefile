@@ -111,7 +111,7 @@ task :push_site do
 end
 
 desc 'Build the site'
-task :build_site => [:minify, :api, :copy_test_and_examples, :update_version]
+task :build_site => [:api, :copy_test_and_examples, :update_version]
 
 desc 'Build the site, then push it to github'
 task :site => [:build_site, :push_site]
