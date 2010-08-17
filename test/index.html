@@ -4,7 +4,7 @@
   <title>Sammy Test Suite</title>
   <link rel="stylesheet" href="../vendor/qunit/qunit.css" type="text/css" media="screen">
   <script type="text/javascript" src="../vendor/qunit/qunit.js"></script>
-  <script type="text/javascript" src="../vendor/jquery-1.4.1.js"></script>
+  <script type="text/javascript" src="../vendor/jquery.js"></script>
   <script type="text/javascript" src="../vendor/qunit-spec.js"></script>
 
   <script type="text/javascript" src="../lib/sammy.js"></script>
@@ -17,6 +17,10 @@
   <script type="text/javascript" src="../lib/plugins/sammy.haml.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.form.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.title.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.meld.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.pure.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.data_location_proxy.js"></script>
+
 </head>
 <body>
   <h1 id="qunit-header">Sammy Test Suite</h1>
@@ -36,6 +40,12 @@
       <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
       <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
     </form>
+
+    <div class="inline-template-1"><div class="name"></div></div>
+
+    <script id="script-template" type="text/html" charset="utf-8" data-engine="template">
+      <div class="name"><%= name %></div>
+    </script>
   </div>
 
   <div id="form_params" style="display:none;">
@@ -83,8 +93,10 @@
 
   <script type="text/javascript" src="test_sammy_application.js"></script>
   <script type="text/javascript" src="test_sammy_event_context.js"></script>
+  <script type="text/javascript" src="test_sammy_render_context.js"></script>
   <script type="text/javascript" src="test_sammy_location_proxy.js"></script>
   <script type="text/javascript" src="test_sammy_plugins.js"></script>
+  <script type="text/javascript" src="test_sammy_meld.js"></script>
   <script type="text/javascript" src="test_sammy_storage.js"></script>
 </body>
 </html>

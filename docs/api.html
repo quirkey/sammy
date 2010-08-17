@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.5.4
+current_version: 0.6.0pre
 nav:
   - name: Overview
     link: ../index.html
@@ -46,13 +46,16 @@ nav:
       <a href='#Sammy.HashLocationProxy'>Sammy.HashLocationProxy</a>
     </li>
     <li>
-      <a href='#Sammy.DataLocationProxy'>Sammy.DataLocationProxy</a>
-    </li>
-    <li>
       <a href='#Sammy.Application'>Sammy.Application</a>
     </li>
     <li>
+      <a href='#Sammy.RenderContext'>Sammy.RenderContext</a>
+    </li>
+    <li>
       <a href='#Sammy.EventContext'>Sammy.EventContext</a>
+    </li>
+    <li>
+      <a href='#Sammy.DataLocationProxy'>Sammy.DataLocationProxy</a>
     </li>
     <li>
       <a href='#Sammy.FormBuilder'>Sammy.FormBuilder</a>
@@ -67,10 +70,19 @@ nav:
       <a href='#Sammy.JSON'>Sammy.JSON</a>
     </li>
     <li>
+      <a href='#Sammy.Meld'>Sammy.Meld</a>
+    </li>
+    <li>
       <a href='#Sammy.Mustache'>Sammy.Mustache</a>
     </li>
     <li>
       <a href='#Sammy.NestedParams'>Sammy.NestedParams</a>
+    </li>
+    <li>
+      <a href='#Sammy.PathLocationProxy'>Sammy.PathLocationProxy</a>
+    </li>
+    <li>
+      <a href='#Sammy.Pure'>Sammy.Pure</a>
     </li>
     <li>
       <a href='#Sammy.Store'>Sammy.Store</a>
@@ -177,7 +189,21 @@ nav:
         )
       </span>
     </h2><div class='doc'><p> Sammy.Object is the base for all other Sammy classes. It provides some useful
-     functionality, including cloning, iterating, etc.</p></div>    <h3>Methods</h3>
+     functionality, including cloning, iterating, etc.</p></div><h3>Attributes</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Object-escapeHTML'>escapeHTML</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='attr' id='Sammy.Object-escapeHTML'>
+      <h4>
+        escapeHTML
+        =
+        <span>_escapeHTML</span>
+      </h4><div class='doc'><p> Escape HTML in string, use in templates to prevent script injection.
+       Also aliased as <code>h()</code></p></div></div>
+    <h3>Methods</h3>
     <ul>
       <li>
         <a href='#Sammy.Object-has'>has</a>
@@ -351,21 +377,6 @@ nav:
       </h4><div class='doc'><p> unbind the proxy events from the current app</p></div></div>
   </div>
   <!-- its just a function -->
-  <div class='meth' id='Sammy.DataLocationProxy'>
-    <h2>
-      Sammy.DataLocationProxy
-      <span>
-        (
-        app, data_name
-        )
-      </span>
-    </h2><div class='doc'><p> The DataLocationProxy is an optional location proxy prototype. As opposed to
-     the <code>HashLocationProxy</code> it gets its location from a jQuery.data attribute
-     tied to the application's element. You can set the name of the attribute by
-     passing a string as the second argument to the constructor. The default attribute
-     name is 'sammy-location'. To read more about location proxies, check out the
-     documentation for <code>Sammy.HashLocationProxy</code></p></div></div>
-  <!-- its just a function -->
   <div class='klass' id='Sammy.Application'>
     <h2>
       Sammy.Application
@@ -399,9 +410,6 @@ nav:
       </li>
       <li>
         <a href='#Sammy.Application-get'>get</a>
-      </li>
-      <li>
-        <a href='#Sammy.Application-location_proxy'>location_proxy</a>
       </li>
       <li>
         <a href='#Sammy.Application-post'>post</a>
@@ -464,15 +472,6 @@ nav:
         =
         <span>_routeWrapper('get')</span>
       </h4><div class='doc'><p> Alias for route('get', ...)</p></div></div>
-    <div class='attr' id='Sammy.Application-location_proxy'>
-      <h4>
-        location_proxy
-        =
-        <span>null</span>
-      </h4><div class='doc'><p> The location proxy for the current app. By default this is set to a new
-       <code>Sammy.HashLocationProxy</code> on initialization. However, you can set
-       the location_proxy inside you're app function to give youre app a custom
-       location mechanism</p></div></div>
     <div class='attr' id='Sammy.Application-post'>
       <h4>
         post
@@ -579,7 +578,13 @@ nav:
         <a href='#Sammy.Application-setLocation'>setLocation</a>
       </li>
       <li>
+        <a href='#Sammy.Application-setLocationProxy'>setLocationProxy</a>
+      </li>
+      <li>
         <a href='#Sammy.Application-swap'>swap</a>
+      </li>
+      <li>
+        <a href='#Sammy.Application-templateCache'>templateCache</a>
       </li>
       <li>
         <a href='#Sammy.Application-toString'>toString</a>
@@ -894,7 +899,7 @@ nav:
           <em></em>
           )
         </span>
-      </h4><div class='doc'><p> Returns a boolean of weather the current application is running.</p></div></div>
+      </h4><div class='doc'><p> Returns <code>true</code> if the current application is running.</p></div></div>
     <div class='meth' id='Sammy.Application-lookupRoute'>
       <h4>
         lookupRoute
@@ -1058,6 +1063,30 @@ nav:
       <ul>
       <li><code>new_location</code> A new location string (e.g. '#/')</li>
       </ul></div></div>
+    <div class='meth' id='Sammy.Application-setLocationProxy'>
+      <h4>
+        setLocationProxy
+        <span>
+          (
+          <em>new_proxy</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Sets the location proxy for the current app. By default this is set to
+       a new <code>Sammy.HashLocationProxy</code> on initialization. However, you can set
+       the location_proxy inside you're app function to give your app a custom
+       location mechanism. See <code>Sammy.HashLocationProxy</code> and <code>Sammy.DataLocationProxy</code>
+       for examples.</p>
+      
+      <p> <code>setLocationProxy()</code> takes an initialized location proxy.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+          // to bind to data instead of the default hash;
+          var app = $.sammy(function() {
+            this.setLocationProxy(new Sammy.DataLocationProxy(this));
+          });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-swap'>
       <h4>
         swap
@@ -1086,6 +1115,17 @@ nav:
       
       });
       {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.Application-templateCache'>
+      <h4>
+        templateCache
+        <span>
+          (
+          <em>key, value</em>
+          )
+        </span>
+      </h4><div class='doc'><p> a simple global cache for templates. Uses the same semantics as
+       <code>Sammy.Cache</code> and <code>Sammy.Storage</code> so can easily be replaced with
+       a persistant storage that lasts beyond the current request.</p></div></div>
     <div class='meth' id='Sammy.Application-toString'>
       <h4>
         toString
@@ -1165,6 +1205,283 @@ nav:
           });
       
         });
+      {% endhighlight %}
+      
+      
+      <p> If plugin is passed as a string it assumes your are trying to load
+       Sammy."Plugin". This is the prefered way of loading core Sammy plugins
+       as it allows for better error-messaging.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        $.sammy(function() {
+          this.use('Mustache'); //=&gt; Sammy.Mustache
+          this.use('Storage'); //=&gt; Sammy.Storage
+        });
+      {% endhighlight %}</div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.RenderContext'>
+    <h2>
+      Sammy.RenderContext
+      <span>
+        (
+        event_context
+        )
+      </span>
+    </h2><div class='doc'><p> <code>Sammy.RenderContext</code> is an object that makes sequential template loading,
+     rendering and interpolation seamless even when dealing with asyncronous
+     operations.</p>
+    
+    <p> <code>RenderContext</code> objects are not usually created directly, rather they are
+     instatiated from an <code>Sammy.EventContext</code> by using <code>render()</code>, <code>load()</code> or
+     <code>partial()</code> which all return <code>RenderContext</code> objects.</p>
+    
+    <p> <code>RenderContext</code> methods always returns a modified <code>RenderContext</code>
+     for chaining (like jQuery itself).</p>
+    
+    <p> The core magic is in the <code>then()</code> method which puts the callback passed as
+     an argument into a queue to be executed once the previous callback is complete.
+     All the methods of <code>RenderContext</code> are wrapped in <code>then()</code> which allows you
+     to queue up methods by chaining, but maintaing a guarunteed execution order
+     even with remote calls to fetch templates.</p></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.RenderContext-appendTo'>appendTo</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-collect'>collect</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-interpolate'>interpolate</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-load'>load</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-next'>next</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-prependTo'>prependTo</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-render'>render</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-renderEach'>renderEach</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-replace'>replace</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-swap'>swap</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-then'>then</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-wait'>wait</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.RenderContext-appendTo'>
+      <h4>
+        appendTo
+        <span>
+          (
+          <em>selector</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Same usage as <code>jQuery.fn.appendTo()</code> but uses <code>then()</code> to ensure order</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-collect'>
+      <h4>
+        collect
+        <span>
+          (
+          <em>array, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> itterates over an array, applying the callback for each item item. the
+       callback takes the same style of arguments as <code>jQuery.each()</code> (index, item).
+       The return value of each callback is collected as a single string and stored
+       as <code>content</code> to be used in the next iteration of the <code>RenderContext</code>.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-interpolate'>
+      <h4>
+        interpolate
+        <span>
+          (
+          <em>data, engine, retain</em>
+          )
+        </span>
+      </h4><div class='doc'><p> uses the previous loaded <code>content</code> and the <code>data</code> object to interpolate
+       a template. <code>engine</code> defines the templating/interpolation method/engine
+       that should be used. If <code>engine</code> is not passed, the <code>next_engine</code> is
+       used. If <code>retain</code> is <code>true</code>, the final interpolated data is appended to
+       the <code>previous_content</code> instead of just replacing it.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-load'>
+      <h4>
+        load
+        <span>
+          (
+          <em>location, options, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Load a template into the context.
+       The <code>location</code> can either be a string specifiying the remote path to the
+       file, a jQuery object, or a DOM element.</p>
+      
+      <p> No interpolation happens by default, the content is stored in
+       <code>content</code>.</p>
+      
+      <p> In the case of a path, unless the option <code>{cache: false}</code> is passed the
+       data is stored in the app's <code>templateCache()</code>.</p>
+      
+      <p> If a jQuery or DOM object is passed the <code>innerHTML</code> of the node is pulled in.
+       This is useful for nesting templates as part of the initial page load wrapped
+       in invisible elements or <code>&lt;script&gt;</code> tags. With template paths, the template
+       engine is looked up by the extension. For DOM/jQuery embedded templates,
+       this isnt possible, so there are a couple of options:</p>
+      
+      <ul>
+      <li>pass an <code>{engine:}</code> option.</li>
+      <li>define the engine in the <code>data-engine</code> attribute of the passed node.</li>
+      <li>just store the raw template data and use <code>interpolate()</code> manually</li>
+      </ul>
+      
+      
+      <p> If a <code>callback</code> is passed it is executed after the template load.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-next'>
+      <h4>
+        next
+        <span>
+          (
+          <em>content</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Resume the queue, setting <code>content</code> to be used in the next operation.
+       See <code>wait()</code> for an example.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-prependTo'>
+      <h4>
+        prependTo
+        <span>
+          (
+          <em>selector</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Same usage as <code>jQuery.fn.prependTo()</code> but uses <code>then()</code> to ensure order</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-render'>
+      <h4>
+        render
+        <span>
+          (
+          <em>location, data, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> <code>load()</code> a template and then <code>interpolate()</code> it with data.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        this.get('#/', function() {
+          this.render('mytemplate.template', {name: 'test'});
+        });
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.RenderContext-renderEach'>
+      <h4>
+        renderEach
+        <span>
+          (
+          <em>location, name, data, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> loads a template, and then interpolates it for each item in the <code>data</code>
+       array.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-replace'>
+      <h4>
+        replace
+        <span>
+          (
+          <em>selector</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Replaces the <code>$(selector)</code> using <code>html()</code> with the previously loaded
+       <code>content</code></p></div></div>
+    <div class='meth' id='Sammy.RenderContext-swap'>
+      <h4>
+        swap
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> executes <code>EventContext#swap()</code> with the <code>content</code></p></div></div>
+    <div class='meth' id='Sammy.RenderContext-then'>
+      <h4>
+        then
+        <span>
+          (
+          <em>callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> The "core" of the <code>RenderContext</code> object, adds the <code>callback</code> to the
+       queue. If the context is <code>waiting</code> (meaning an async operation is happening)
+       then the callback will be executed in order, once the other operations are
+       complete. If there is no currently executing operation, the <code>callback</code>
+       is executed immediately.</p>
+      
+      <p> The value returned from the callback is stored in <code>content</code> for the
+       subsiquent operation. If you return <code>false</code>, the queue will pause, and
+       the next callback in the queue will not be executed until <code>next()</code> is
+       called. This allows for the guarunteed order of execution while working
+       with async operations.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        this.get('#/', function() {
+          // initialize the RenderContext
+          // Even though `load()` executes async, the next `then()`
+          // wont execute until the load finishes
+          this.load('myfile.txt')
+              .then(function(content) {
+                // the first argument to then is the content of the
+                // prev operation
+                $('#main').html(content);
+              });
+        });
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.RenderContext-wait'>
+      <h4>
+        wait
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Pause the <code>RenderContext</code> queue. Combined with <code>next()</code> allows for async
+       operations.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+          this.get('#/', function() {
+            this.load('mytext.json')
+                .then(function(content) {
+                  var context = this,
+                      data    = JSON.parse(content);
+                  // pause execution
+                  context.wait();
+                  // post to a url
+                  $.post(data.url, {}, function(response) {
+                    context.next(JSON.parse(response));
+                  });
+                })
+                .then(function(data) {
+                  // data is json from the previous post
+                  $('#message').text(data.status);
+                });
+          });
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
@@ -1182,22 +1499,22 @@ nav:
     
     <h3>Example</h3>
     
-    <p>  $.sammy(function() { with(this) {</p>
+    <p>  $.sammy(function() {</p>
     
     {% highlight javascript %}
     // The context here is this Sammy.Application
-    get('#/:name', function() { with(this) {
+    this.get('#/:name', function() {
       // The context here is a new Sammy.EventContext
-      if (params['name'] == 'sammy') {
-        partial('name.html.erb', {name: 'Sammy'});
+      if (this.params['name'] == 'sammy') {
+        this.partial('name.html.erb', {name: 'Sammy'});
       } else {
-        redirect('#/somewhere-else')
+        this.redirect('#/somewhere-else')
       }
-    }});
+    });
     {% endhighlight %}
     
     
-    <p>  }});</p>
+    <p>  });</p>
     
     <p> Initialize a new EventContext</p>
     
@@ -1218,7 +1535,16 @@ nav:
         <a href='#Sammy.EventContext-$element'>$element</a>
       </li>
       <li>
+        <a href='#Sammy.EventContext-engineFor'>engineFor</a>
+      </li>
+      <li>
         <a href='#Sammy.EventContext-eventNamespace'>eventNamespace</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-interpolate'>interpolate</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-load'>load</a>
       </li>
       <li>
         <a href='#Sammy.EventContext-notFound'>notFound</a>
@@ -1228,6 +1554,9 @@ nav:
       </li>
       <li>
         <a href='#Sammy.EventContext-redirect'>redirect</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-render'>render</a>
       </li>
       <li>
         <a href='#Sammy.EventContext-swap'>swap</a>
@@ -1249,6 +1578,26 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> A shortcut to the app's <code>$element()</code></p></div></div>
+    <div class='meth' id='Sammy.EventContext-engineFor'>
+      <h4>
+        engineFor
+        <span>
+          (
+          <em>engine</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Look up a templating engine within the current app and context.
+       <code>engine</code> can be one of the following:</p>
+      
+      <ul>
+      <li>a function: should conform to <code>function(content, data) { return interploated; }</code></li>
+      <li>a template path: 'template.ejs', looks up the extension to match to
+      the <code>ejs()</code> helper</li>
+      <li>a string referering to the helper: "mustache" => <code>mustache()</code></li>
+      </ul>
+      
+      
+      <p> If no engine is found, use the app's default <code>template_engine</code></p></div></div>
     <div class='meth' id='Sammy.EventContext-eventNamespace'>
       <h4>
         eventNamespace
@@ -1258,6 +1607,27 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> A shortcut to app's <code>eventNamespace()</code></p></div></div>
+    <div class='meth' id='Sammy.EventContext-interpolate'>
+      <h4>
+        interpolate
+        <span>
+          (
+          <em>content, data, engine</em>
+          )
+        </span>
+      </h4><div class='doc'><p> using the template <code>engine</code> found with <code>engineFor()</code>, interpolate the
+       <code>data</code> into <code>content</code></p></div></div>
+    <div class='meth' id='Sammy.EventContext-load'>
+      <h4>
+        load
+        <span>
+          (
+          <em>location, options, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> create a new <code>Sammy.RenderContext</code> calling <code>load()</code> with <code>location</code> and
+       <code>options</code>. Called without interpolation or placement, this allows for
+       preloading/caching the templates.</p></div></div>
     <div class='meth' id='Sammy.EventContext-notFound'>
       <h4>
         notFound
@@ -1272,62 +1642,11 @@ nav:
         partial
         <span>
           (
-          <em>path, data, callback</em>
+          <em>location, data</em>
           )
         </span>
-      </h4><div class='doc'><p> Used for rendering remote templates or documents within the current application/DOM.
-       By default Sammy and <code>partial()</code> know nothing about how your templates
-       should be interpeted/rendered. This is easy to change, though. <code>partial()</code> looks
-       for a method in <code>EventContext</code> that matches the extension of the file you're
-       fetching (e.g. 'myfile.template' will look for a template() method, 'myfile.haml' => haml(), etc.)
-       If no matching render method is found it just takes the file contents as is.</p>
-      
-      <p> If you're templates have different (or no) extensions, and you want to render them all
-       through the same engine, you can set the default/fallback template engine on the app level
-       by setting <code>app.template_engine</code> to the name of the engine or a <code>function() {}</code></p>
-      
-      <h3>Caching</h3>
-      
-      <p> If you use the <code>Sammy.Cache</code> plugin, remote requests will be automatically cached unless
-       you explicitly set <code>cache_partials</code> to <code>false</code></p>
-      
-      <h3>Example</h3>
-      
-      <p> There are a couple different ways to use <code>partial()</code>:</p>
-      
-      {% highlight javascript %}
-        partial('doc.html');
-        //=&gt; Replaces $element() with the contents of doc.html
-      
-        use(Sammy.Template);
-        //=&gt; includes the template() method
-        partial('doc.template', {name: 'Sammy'});
-        //=&gt; Replaces $element() with the contents of doc.template run through `template()`
-      
-        partial('doc.html', function(data) {
-          // data is the contents of the template.
-          $('.other-selector').html(data);
-        });
-      {% endhighlight %}
-      
-      
-      <h3>Iteration/Arrays</h3>
-      
-      <p> If the data object passed to <code>partial()</code> is an Array, <code>partial()</code>
-       will itterate over each element in data calling the callback with the
-       results of interpolation and the index of the element in the array.</p>
-      
-      {% highlight javascript %}
-      use(Sammy.Template);
-      // item.template =&gt; "&lt;li&gt;I'm an item named &lt;%= name %&gt;&lt;/li&gt;"
-      partial('item.template', [{name: "Item 1"}, {name: "Item 2"}])
-      //=&gt; Replaces $element() with:
-      // &lt;li&gt;I'm an item named Item 1&lt;/li&gt;&lt;li&gt;I'm an item named Item 2&lt;/li&gt;
-      partial('item.template', [{name: "Item 1"}, {name: "Item 2"}], function(rendered, i) {
-        rendered; //=&gt; &lt;li&gt;I'm an item named Item 1&lt;/li&gt; // for each element in the Array
-        i; // the 0 based index of the itteration
-      });
-      {% endhighlight %}</div></div>
+      </h4><div class='doc'><p> <code>render()</code> the the <code>location</code> with <code>data</code> and then <code>swap()</code> the
+       app's <code>$element</code> with the rendered content.</p></div></div>
     <div class='meth' id='Sammy.EventContext-redirect'>
       <h4>
         redirect
@@ -1346,6 +1665,28 @@ nav:
         redirect('#/other/route');
         // equivilent to
         redirect('#', 'other', 'route');
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.EventContext-render'>
+      <h4>
+        render
+        <span>
+          (
+          <em>location, data, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Create and return a <code>Sammy.RenderContext</code> calling <code>render()</code> on it.
+       Loads the template and interpolate the data, however does not actual
+       place it in the DOM.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        // mytemplate.mustache &lt;div class="name"&gt;{{name}}&lt;/div&gt;
+        render('mytemplate.mustache', {name: 'quirkey'});
+        // sets the `content` to &lt;div class="name"&gt;quirkey&lt;/div&gt;
+        render('mytemplate.mustache', {name: 'quirkey'})
+          .appendTo('ul');
+        // appends the rendered content to $('ul')
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.EventContext-swap'>
       <h4>
@@ -1375,6 +1716,51 @@ nav:
         </span>
       </h4><div class='doc'><p> Triggers events on <code>app</code> within the current context.</p></div></div>
   </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.DataLocationProxy'>
+    <h2>
+      Sammy.DataLocationProxy
+      <span>
+        (
+        app, data_name, href_attribute
+        )
+      </span>
+    </h2><div class='doc'><p> The DataLocationProxy is an optional location proxy prototype. As opposed to
+     the <code>HashLocationProxy</code> it gets its location from a jQuery.data attribute
+     tied to the application's element. You can set the name of the attribute by
+     passing a string as the second argument to the constructor. The default attribute
+     name is 'sammy-location'. To read more about location proxies, check out the
+     documentation for <code>Sammy.HashLocationProxy</code></p>
+    
+    <p> An optional <code>href_attribute</code> can be passed, which specifies a DOM element
+     attribute that holds "links" to different locations in the app. When the
+     proxy is bound, clicks to element that have this attribute activate a
+     <code>setLocation()</code> using the contents of the <code>href_attribute</code>.</p>
+    
+    <h3>Example</h3>
+    
+    {% highlight javascript %}
+      var app = $.sammy(function() {
+        // set up the location proxy
+        this.setLocationProxy(new Sammy.DataLocationProxy(this, 'location', 'rel'));
+    
+        this.get('about', function() {
+          this.partial('about.html');
+        });
+    
+      });
+    {% endhighlight %}
+    
+    
+    <p> In this scenario, if an element existed within the template:</p>
+    
+    {% highlight javascript %}
+      &lt;a href="/about" rel="about"&gt;About Us&lt;/a&gt;
+    {% endhighlight %}
+    
+    
+    <p> Clicking on that link would not go to /about, but would set the apps location
+     to 'about' and trigger the route.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.FormBuilder'>
     <h2>
@@ -1406,7 +1792,7 @@ nav:
         }
       };
       var form = new Sammy.FormBuilder('item', item);
-      form.text('name'); 
+      form.text('name');
       //=&gt; &lt;input type='text' name='item[form]' value='My Item' /&gt;
     {% endhighlight %}
     
@@ -1415,7 +1801,7 @@ nav:
      basically a string representation of the dot notation.</p>
     
     {% highlight javascript %}
-      form.hidden('meta.id'); 
+      form.hidden('meta.id');
       //=&gt; &lt;input type='hidden' name='item[meta][id]' value='123' /&gt;
     {% endhighlight %}</div>    <h3>Methods</h3>
     <ul>
@@ -1757,22 +2143,10 @@ nav:
      included.</p></div>    <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#Sammy.JSON-create_context'>create_context</a>
-      </li>
-      <li>
         <a href='#Sammy.JSON-json'>json</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='Sammy.JSON-create_context'>
-      <h4>
-        create_context
-        <span>
-          (
-          <em>_context</em>
-          )
-        </span>
-      </h4><div class='doc'><p> by @langalex, support for arrays of strings</p></div></div>
     <div class='meth' id='Sammy.JSON-json'>
       <h4>
         json
@@ -1798,6 +2172,114 @@ nav:
           });
         })
       {% endhighlight %}</div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Meld'>
+    <h2>
+      Sammy.Meld
+      <span>
+        (
+        app, method_alias
+        )
+      </span>
+    </h2><div class='doc'><p> <code>Sammy.Meld</code> is a simple templating engine that uses the power of jQuery's
+     DOM manipulation to easily meld JSON data and HTML templates very quickly.</p>
+    
+    <p> The template can either be a string (i.e. loaded from a remote template)
+     or a DOM Element/jQuery object. This allows you to have templates be DOM
+     elements as the initial document load.</p>
+    
+    <h3>Example</h3>
+    
+    <p> The simplest case is a nested <code>&lt;div&gt;</code> whose class name is tied to a
+     property of a JS object.</p>
+    
+    <p> Template:</p>
+    
+    {% highlight javascript %}
+        &lt;div class="post"&gt;
+          &lt;div class="title"&gt;&lt;/div&gt;
+          &lt;div class="entry"&gt;&lt;/div&gt;
+          &lt;div class="author"&gt;
+            &lt;span class="name"&gt;&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+    {% endhighlight %}
+    
+    
+    <p> Data:</p>
+    
+    {% highlight javascript %}
+        {
+          "post": {
+            "title": "My Post",
+            "entry": "My Entry",
+            "author": {
+              "name": "@aq"
+            }
+          }
+        }
+    {% endhighlight %}
+    
+    
+    <p> Result:</p>
+    
+    {% highlight javascript %}
+        &lt;div class="post"&gt;
+          &lt;div class="title"&gt;My Post&lt;/div&gt;
+          &lt;div class="entry"&gt;My Entry&lt;/div&gt;
+          &lt;div class="author"&gt;
+            &lt;span class="name"&gt;@aq&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+    {% endhighlight %}
+    
+    
+    <p> Templates can be much more complex, and more deeply nested.
+     More examples can be found in <code>test/fixtures/meld/</code></p>
+    
+    <p> If you don't think the lookup by classes is semantic for you, you can easily
+     switch the method of lookup by defining a selector function in the options</p>
+    
+    <p> For example:</p>
+    
+    {% highlight javascript %}
+      meld($('.post'), post_data, {
+        selector: function(k) {
+          return '[data-key=' + k + ']';
+        }
+      });
+    {% endhighlight %}
+    
+    
+    <p> Would look for template nodes like <code>&lt;div data-key='entry'&gt;</code></p></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Meld-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Meld-create_context'>create_context</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.Meld-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Checks whether a value is thruthy or false or 0</p></div></div>
+    <div class='meth' id='Sammy.Meld-create_context'>
+      <h4>
+        create_context
+        <span>
+          (
+          <em>_context</em>
+          )
+        </span>
+      </h4><div class='doc'><p> by @langalex, support for arrays of strings</p></div></div>
   </div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Mustache'>
@@ -1844,7 +2326,7 @@ nav:
            this.title = 'Hello!'
            this.name = this.params.name;
            // render the template and pass it through mustache
-           this.partial('mytemplate.ms'); 
+           this.partial('mytemplate.ms');
          });
     
        });
@@ -1895,7 +2377,7 @@ nav:
              context.hello_friend = {name: this.params.friend};
     
              // render the template and pass it through mustache
-             context.partial('mytemplate.ms'); 
+             context.partial('mytemplate.ms');
            });
          });
     
@@ -1974,6 +2456,233 @@ nav:
     
     <p> It supports creating arrays with [] and other niceities. Check out the tests for
      full specs.</p></div></div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.PathLocationProxy'>
+    <h2>
+      Sammy.PathLocationProxy
+      <span>
+        (
+        app
+        )
+      </span>
+    </h2><div class='doc'><p> <code>Sammy.PathLocationProxy</code> is a simple Location Proxy that just
+     gets and sets window.location. This allows you to use
+     Sammy to route on the full URL path instead of just the hash. It
+     will take a full refresh to get the app to change state.</p>
+    
+    <p> To read more about location proxies, check out the
+     documentation for <code>Sammy.HashLocationProxy</code></p></div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.PathLocationProxy-'></a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> error utility</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>return a new instance of plugins</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> returns the outer HTML of a node</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> returns the string generator function</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> default find using querySelector when available on the browser</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> create a function that concatenates constant string
+       sections (given in parts) and the results of called
+       functions to fill in the gaps between parts (fns).
+       fns[n] fills in the gap between parts[n-1] and parts[n];
+       fns[0] is unused.
+       this is the inner template evaluation loop.</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> parse and check the loop directive</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> parse a data selector and return a function that
+       can traverse the data accordingly, given a context.</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> wrap in an object the target node/attr and their properties</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> read de loop data, and pass it to the inner rendering function</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> generate the template for a loop node</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> returns a function that, given a context argument,
+       will render the template defined by dom and directive.</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> compile the template with directive
+       if a context is passed, the autoRendering is triggered automatically
+       return a function waiting the data as argument</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p>compile with the directive as argument
+       run the template function on the context argument
+       return an HTML string
+       should replace the template and return this</p></div></div>
+    <div class='meth' id='Sammy.PathLocationProxy-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> compile the template with autoRender
+       run the template function on the context argument
+       return an HTML string</p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Pure'>
+    <h2>
+      Sammy.Pure
+      <span>
+        (
+        app, method_alias
+        )
+      </span>
+    </h2><div class='doc'><p> <code>Sammy.Pure</code> is a simple wrapper around the pure.js templating engine for
+     use in Sammy apps.</p>
+    
+    <p> See http://beebole.com/pure/ for detailed documentation.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.Store'>
     <h2>
@@ -2161,7 +2870,7 @@ nav:
         store.set('two', 'three');
         store.set('1', 'two');
         var returned = store.filter(function(key, value) {
-          // only return 
+          // only return
           return value === 'two';
         });
         // returned =&gt; [['one', 'two'], ['1', 'two']];
@@ -2249,7 +2958,7 @@ nav:
       
       {% highlight javascript %}
         var store = new Sammy.Store({name: 'kvo'});
-        $('body').bind('set-kvo-foo', function(e, data) { 
+        $('body').bind('set-kvo-foo', function(e, data) {
           Sammy.log(data.key + ' changed to ' + data.value);
         });
         store.set('foo', 'bar'); // logged: foo changed to bar

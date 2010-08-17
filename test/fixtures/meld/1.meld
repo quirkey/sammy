@@ -1,0 +1,9 @@
+<div class="post">
+  <h2 class="title"></h2>
+  <div class="body"></div>
+  <span class="tags"></span>
+  <ul class="meta">
+    <li>Comments Count: <span class="comments"></span></li>
+    <li>Posted: <span class="time"></span></li>
+  </ul>
+</div>
