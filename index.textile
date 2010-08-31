@@ -22,7 +22,7 @@ nav:
   - name: Tutorials
     link: tutorials/index.html
   - name: Resources
-    link: resources.html
+    link: http://github.com/quirkey/sammy/wiki/
   
 ---
 
@@ -81,7 +81,7 @@ I've split up the information into a couple different sections.
 * "Documentation":docs/index.html
 * "Tutorials":tutorials/index.html
 * "Examples":http://github.com/quirkey/sammy/tree/master/examples/
-* "Resources":resources.html
+* "Resources on the Sammy Wiki":http://github.com/quirkey/sammy/wiki/
 
 Ways to stay informed/get in contact:
 

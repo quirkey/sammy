@@ -13,7 +13,7 @@ nav:
   - name: Tutorials
     link: index.html
   - name: Resources
-    link: ../resources.html
+    link: http://github.com/quirkey/sammy/wiki/
 ---
 
 h2(project_name). Sammy
