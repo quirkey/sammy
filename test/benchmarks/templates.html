@@ -80,7 +80,8 @@
         Sammy.log(plugin, render_test);
         assertSameHTML(result, render_test);
         JSLitmus.test("Render with " + plugin, function() {
-          createContext().template(template, data, (new Date()).getTime() + Math.random(1000));
+          render_test = createContext().template(template, data);
+          assertSameHTML(result, render_test);
         });
       });
     </script>
