@@ -12,8 +12,7 @@ changes that effect existing sammy apps:
       removed in favor of specific methods like `render()` and `load()`
     - template engine lookup has been moved to `engineFor()`
 - Sammy.Meld is a simple new templating engine written specifically for use with Sammy. 
-It uses jQuery's powerful DOM manipulation to merge data into DOM elements very
-very fast. It's also currently < 100LOC
+It uses jQuery's powerful DOM manipulation to merge data into DOM elements quickly. It's also currently < 100LOC
 - Sammy.Pure wraps the pure.js templating engine for use with Sammy.
 - Sammy.Object#escapeHTML() escapes HTML strings (for use in templates).
 - Sammy.DataLocationProxy takes an optional `href_attribute` for binding clicks 
