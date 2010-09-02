@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.6.0pre
+current_version: 0.6.0
 nav:
   - name: Overview
     link: ../index.html
@@ -1281,6 +1281,9 @@ nav:
         <a href='#Sammy.RenderContext-then'>then</a>
       </li>
       <li>
+        <a href='#Sammy.RenderContext-trigger'>trigger</a>
+      </li>
+      <li>
         <a href='#Sammy.RenderContext-wait'>wait</a>
       </li>
     </ul>
@@ -1451,6 +1454,17 @@ nav:
               });
         });
       {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.RenderContext-trigger'>
+      <h4>
+        trigger
+        <span>
+          (
+          <em>name, data</em>
+          )
+        </span>
+      </h4><div class='doc'><p> trigger the event in the order of the event context. Same semantics
+       as <code>Sammy.EventContext#trigger()</code>. If data is ommitted, <code>content</code>
+       is sent as <code>{content: content}</code></p></div></div>
     <div class='meth' id='Sammy.RenderContext-wait'>
       <h4>
         wait
