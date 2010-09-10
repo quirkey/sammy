@@ -98,6 +98,7 @@
         .should('only fetch the template once', function() {
           var callback = function(context) {
             jQuery.ajaxcount = 0;
+            this.app.clearTemplateCache();
             Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
             this.load('fixtures/partial.html')
                 .appendTo('#test_area')
