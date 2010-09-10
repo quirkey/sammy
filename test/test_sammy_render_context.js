@@ -158,6 +158,16 @@
             sameHTML($('#test_area').html(), '<div class="original">test</div><div class="class">test</div>', "render contents");
           });
         })
+        .should('use the contents of a previous load as the data for render', function() {
+          var callback = function(context) {
+            this.load('fixtures/partial.json')
+                .render('fixtures/partial.template')
+                .appendTo('#test_area');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="original">json</div><div class="class">test</div>', "render contents");
+          });
+        })
         .should('append then pass data to then', function() {
           var callback = function(context) {
             this.load('fixtures/partial.html')
