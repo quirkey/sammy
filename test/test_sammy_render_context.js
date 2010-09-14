@@ -286,6 +286,27 @@
           this.runRouteAndAssert(callback, function() {
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
+        })
+        .should('send a function without arguments and wait for the callback', function() {
+          var callback = function(context) {
+            var loadJSON = function(callback) {
+              $.getJSON('fixtures/partial.json', callback);
+            };
+            this.send(loadJSON)
+                .partial('fixtures/partial.template');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#main').html(), '<div class="original">json</div>', "render contents");
+          });
+        })
+        .should('send a function with arguments and wait for the callback', function() {
+          var callback = function(context) {
+            this.send($.getJSON, 'fixtures/partial.json')
+                .partial('fixtures/partial.template');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#main').html(), '<div class="original">json</div>', "render contents");
+          });
         });
 
 

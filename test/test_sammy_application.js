@@ -1005,7 +1005,7 @@
         });
       })
       .should('not override the global EventContext prototype methods', function() {
-        matches(/swap\(/, new Sammy.EventContext().partial.toString());
+        matches(/RenderContext/, new Sammy.EventContext().partial.toString());
       })
       .should('yield additional arguments as arguments to the plugin', function() {
         equal(this.app.a, 1);
