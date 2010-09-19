@@ -266,6 +266,18 @@
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         })
+        .should('renderEach with a callback', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html')
+                .replace('#test_area')
+                .renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}], function(object, template) {
+                  $('#test_area ul').append(template);
+                });
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });          
+        })
         .should('swap data with partial', function() {
           var callback = function(context) {
             this.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
