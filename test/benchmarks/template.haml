@@ -1,0 +1,9 @@
+.post
+  %h2.title= post.title
+  .body= post.body
+  :each tag in post.tags
+    %span.tags= tag
+  %ul.meta
+    %li
+      Comments Count:
+      %span.comments= post.meta.comments

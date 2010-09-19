@@ -23,7 +23,7 @@ task :minify => :version do
     min_path        = File.join(dir, path.gsub(/\.js$/, "-#{@version}.min.js"))
     latest_min_path = File.join(dir, path.gsub(/\.js$/, "-latest.min.js"))
     
-    sh "#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}"
+    `#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}`
     minified = File.read(min_path)
     prefix = []
     prefix << "// -- Sammy -- #{path}"
@@ -111,7 +111,7 @@ task :push_site do
 end
 
 desc 'Build the site'
-task :build_site => [:minify, :api, :copy_test_and_examples, :update_version]
+task :build_site => [:api, :copy_test_and_examples, :update_version]
 
 desc 'Build the site, then push it to github'
 task :site => [:build_site, :push_site]

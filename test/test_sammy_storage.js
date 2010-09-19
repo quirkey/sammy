@@ -69,6 +69,16 @@
           deepEqual(this.store.keys(), ['foo', 'blurgh', '123']);
           deepEqual(this.other_store.keys(), []);
         })
+        .should('iterate over keys and values', function() {
+          this.store.set('foo', 'bar');
+          this.store.set('blurgh', {boosh: 'blurgh'});
+          var keys = [], values = [];
+          this.store.each(function(key, value) {
+            keys.push(key); values.push(value);
+          });
+          deepEqual(keys, ['foo', 'blurgh']);
+          deepEqual(values, ['bar', {boosh: 'blurgh'}]);
+        })
         .should('clear all values', function() {
           this.store.set('foo', 'bar');
           this.store.set('blurgh', {boosh: 'blurgh'});
@@ -77,6 +87,24 @@
           this.store.clearAll();
           equal(this.store.keys().length, 0);
           ok(!this.store.exists('blurgh'));
+        })
+        .should('filter values with a callback', function() {
+          this.store.set('foo', 'bar');
+          this.store.set('blurgh', 'blargh');
+          this.store.set('boosh', 'blargh');
+          var returned = this.store.filter(function(key, value) {
+            return (value === "blargh");
+          });
+          deepEqual(returned, [['blurgh', 'blargh'], ['boosh', 'blargh']]);
+        })
+        .should('return first value that matches a callback', function() {
+          this.store.set('foo', 'bar');
+          this.store.set('blurgh', 'blargh');
+          this.store.set('boosh', 'blargh');
+          var returned = this.store.first(function(key, value) {
+            return (value === "blargh");
+          });
+          deepEqual(returned, ['blurgh', 'blargh']);
         })
         .should('fire specific key event on set', function() {
           var fired = false;
@@ -88,7 +116,7 @@
             equal(fired, 'bar');
             $('#main').unbind('set-test_store-foo');
           });
-        }) 
+        })
         .should('fire store event on set', function() {
           var fired = false;
           $('#main').bind('set-test_store', function(e, data) {
@@ -99,7 +127,7 @@
             equal(fired, 'foo');
             $('#main').unbind('set-test_store');
           });
-        }) 
+        })
         .should('fetch value or run callback', function() {
           ok(!this.store.get('foo'));
           this.store.fetch('foo', function() {
@@ -120,7 +148,7 @@
         });
       }
     });
-  
+
       context('Sammy.Storage', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -135,7 +163,7 @@
       .should('add the store method to event contexts', function() {
         ok($.isFunction(this.context.store));
       });
-    
+
       context('Sammy.Storage', 'store', {
         before: function() {
           var store = null;

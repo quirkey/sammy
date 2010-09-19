@@ -4,12 +4,12 @@
 
   // Sammy.Store is an abstract adapter class that wraps the multitude of in
   // browser data storage into a single common set of methods for storing and
-  // retreiving data. The JSON library is used (through the inclusion of the 
-  // Sammy.JSON) plugin, to automatically convert objects back and forth from 
+  // retreiving data. The JSON library is used (through the inclusion of the
+  // Sammy.JSON) plugin, to automatically convert objects back and forth from
   // stored strings.
-  // 
+  //
   // Sammy.Store can be used directly, but within a Sammy.Application it is much
-  // easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods. 
+  // easier to use the <tt>Sammy.Storage</tt> plugin and its helper methods.
   //
   // Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
   // a key is set.
@@ -28,18 +28,18 @@
   //      store.keys(); //=> ['json']
   //      store.clearAll();
   //      store.keys(); //=> []
-  // 
+  //
   // === Arguments
   //
   // The constructor takes a single argument which is a Object containing these possible options.
-  // 
+  //
   // +name+::     The name/namespace of this store. Stores are unique by name/type. (default 'store')
   // +element+::  A selector for the element that the store is bound to. (default 'body')
   // +type+::     The type of storage/proxy to use (default 'memory')
-  //  
+  //
   // Extra options are passed to the storage constructor.
   // Sammy.Store supports the following methods of storage:
-  // 
+  //
   // +memory+::   Basic object storage
   // +data+::     jQuery.data DOM Storage
   // +cookie+::   Access to document.cookie. Limited to 2K
@@ -79,13 +79,13 @@
     },
     // Sets the value of <tt>key<tt> with <tt>value</tt>. If <tt>value<tt> is an
     // object, it is turned to and stored as a string with <tt>JSON.stringify</tt>.
-    // It also tries to conform to the KVO pattern triggering jQuery events on the 
+    // It also tries to conform to the KVO pattern triggering jQuery events on the
     // element that the store is bound to.
-    // 
+    //
     // === Example
     //
     //      var store = new Sammy.Store({name: 'kvo'});
-    //      $('body').bind('set-kvo.foo', function(e, data) { 
+    //      $('body').bind('set-kvo.foo', function(e, data) {
     //        Sammy.log(data.key + ' changed to ' + data.value);
     //      });
     //      store.set('foo', 'bar'); // logged: foo changed to bar
@@ -94,14 +94,14 @@
       var string_value = (typeof value == 'string') ? value : JSON.stringify(value);
       key = key.toString();
       this.storage.set(key, string_value);
-      if (key != this.meta_key) { 
-        this._addKey(key); 
+      if (key != this.meta_key) {
+        this._addKey(key);
         this.$element.trigger('set-' + this.name + '.' + key, {key: key, value: value});
       };
       // always return the original value
       return value;
     },
-    // Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and 
+    // Returns the set value at <tt>key</tt>, parsing with <tt>JSON.parse</tt> and
     // turning into an object if possible
     get: function(key) {
       var value = this.storage.get(key);
@@ -133,9 +133,9 @@
     },
     // Returns the value at <tt>key</tt> if set, otherwise, runs the callback
     // and sets the value to the value returned in the callback.
-    // 
+    //
     // === Example
-    // 
+    //
     //    var store = new Sammy.Store;
     //    store.exists('foo'); //=> false
     //    store.fetch('foo', function() {
@@ -145,7 +145,7 @@
     //    store.fetch('foo', function() {
     //      return 'baz!';
     //    }); //=> 'bar!
-    // 
+    //
     fetch: function(key, callback) {
       if (!this.exists(key)) {
         return this.set(key, callback.apply(this));
@@ -154,20 +154,20 @@
       }
     },
     // loads the response of a request to <tt>path</tt> into <tt>key</tt>.
-    // 
+    //
     // === Example
-    // 
+    //
     // In /mytemplate.tpl:
-    // 
+    //
     //    My Template
-    //     
+    //
     // In app.js:
-    // 
+    //
     //    var store = new Sammy.Store;
     //    store.load('mytemplate', '/mytemplate.tpl', function() {
     //      s.get('mytemplate') //=> My Template
     //    });
-    // 
+    //
     load: function(key, path, callback) {
       var s = this;
       $.get(path, function(response) {
@@ -187,7 +187,7 @@
       this.set(this.meta_key, keys);
     }
   });
-  
+
   // Tests if the type of storage is available/works in the current browser/config.
   // Especially useful for testing the availability of the awesome, but not widely
   // supported HTML5 DOM storage
@@ -199,7 +199,7 @@
     }
   };
 
-  // Memory ('memory') is the basic/default store. It stores data in a global 
+  // Memory ('memory') is the basic/default store. It stores data in a global
   // JS object. Data is lost on refresh.
   Sammy.Store.Memory = function(name, element) {
     this.name  = name;
@@ -253,12 +253,12 @@
   });
 
   // LocalStorage ('local') makes use of HTML5 DOM Storage, and the window.localStorage
-  // object. The great advantage of this method is that data will persist beyond 
-  // the current request. It can be considered a pretty awesome replacement for 
+  // object. The great advantage of this method is that data will persist beyond
+  // the current request. It can be considered a pretty awesome replacement for
   // cookies accessed via JS. The great disadvantage, though, is its only available
-  // on the latest and greatest browsers. 
+  // on the latest and greatest browsers.
   //
-  // For more info on DOM Storage: 
+  // For more info on DOM Storage:
   // [https://developer.mozilla.org/en/DOM/Storage]
   // [http://www.w3.org/TR/2009/WD-webstorage-20091222/]
   //
@@ -285,10 +285,10 @@
     _key: function(key) {
       return ['store', this.element, this.name, key].join('.');
     }
-  }); 
+  });
 
   // .SessionStorage ('session') is similar to LocalStorage (part of the same API)
-  // and shares similar browser support/availability. The difference is that 
+  // and shares similar browser support/availability. The difference is that
   // SessionStorage is only persistant through the current 'session' which is defined
   // as the length that the current window is open. This means that data will survive
   // refreshes but not close/open or multiple windows/tabs. For more info, check out
@@ -299,8 +299,8 @@
   };
   $.extend(Sammy.Store.SessionStorage.prototype, {
     isAvailable: function() {
-      return ('sessionStorage' in window) && 
-      (window.location.protocol != 'file:') && 
+      return ('sessionStorage' in window) &&
+      (window.location.protocol != 'file:') &&
       ($.isFunction(window.sessionStorage.setItem));
     },
     exists: function(key) {
@@ -333,7 +333,7 @@
   // +expires_in+:: Number of seconds to keep the cookie alive (default 2 weeks).
   // +path+::       The path to activate the current cookie for (default '/').
   //
-  // For more information about document.cookie, check out the pre-eminint article 
+  // For more information about document.cookie, check out the pre-eminint article
   // by ppk: [http://www.quirksmode.org/js/cookies.html]
   //
   Sammy.Store.Cookie = function(name, element, options) {
@@ -342,7 +342,7 @@
     this.options = options || {};
     this.path = this.options.path || '/';
     // set the expires in seconds or default 14 days
-    this.expires_in = this.options.expires_in || (14 * 24 * 60 * 60); 
+    this.expires_in = this.options.expires_in || (14 * 24 * 60 * 60);
   };
   $.extend(Sammy.Store.Cookie.prototype, {
     isAvailable: function() {
@@ -373,13 +373,13 @@
       var date = new Date();
       date.setTime(date.getTime() + expires);
       var set_cookie = [
-        this._key(key), "=", value, 
-        "; expires=", date.toGMTString(), 
+        this._key(key), "=", value,
+        "; expires=", date.toGMTString(),
         "; path=", this.path
       ].join('');
       document.cookie = set_cookie;
     }
-  });  
+  });
 
   // Sammy.Storage is a plugin that provides shortcuts for creating and using
   // Sammy.Store objects. Once included it provides the <tt>store()</tt> app level
@@ -392,26 +392,26 @@
     // <tt>store()</tt> creates and looks up existing <tt>Sammy.Store</tt> objects
     // for the current application. The first time used for a given <tt>'name'</tt>
     // initializes a <tt>Sammy.Store</tt> and also creates a helper under the store's
-    // name. 
+    // name.
     //
     // === Example
     //
     //      var app = $.sammy(function() {
     //        this.use(Sammy.Storage);
-    //        
+    //
     //        // initializes the store on app creation.
     //        this.store('mystore', {type: 'cookie'});
-    //        
+    //
     //        this.get('#/', function() {
     //          // returns the Sammy.Store object
-    //          this.store('mystore'); 
+    //          this.store('mystore');
     //          // sets 'foo' to 'bar' using the shortcut/helper
     //          // equivilent to this.store('mystore').set('foo', 'bar');
-    //          this.mystore('foo', 'bar'); 
+    //          this.mystore('foo', 'bar');
     //          // returns 'bar'
     //          // equivilent to this.store('mystore').get('foo');
     //          this.mystore('foo');
-    //          // returns 'baz!' 
+    //          // returns 'baz!'
     //          // equivilent to:
     //          // this.store('mystore').fetch('foo!', function() {
     //          //   return 'baz!';
@@ -420,11 +420,11 @@
     //            return 'baz!';
     //          });
     //
-    //          this.clearMystore(); 
+    //          this.clearMystore();
     //          // equivilent to:
     //          // this.store('mystore').clearAll()
     //        });
-    //        
+    //
     //      });
     //
     // === Arguments
@@ -434,11 +434,11 @@
     //
     this.store = function(name, options) {
       // if the store has not been initialized
-      if (typeof this.stores[name] == 'undefined') { 
+      if (typeof this.stores[name] == 'undefined') {
         // create initialize the store
         var clear_method_name = "clear" + name.substr(0,1).toUpperCase() + name.substr(1);
         this.stores[name] = new Sammy.Store($.extend({
-          name: name, 
+          name: name,
           element: this.element_selector
         }, options || {}));
         // app.name()
@@ -466,18 +466,18 @@
       }
       return this.stores[name];
     };
-    
+
     this.helpers({
       store: function() {
         return this.app.store.apply(this.app, arguments);
       }
     });
   };
-  
+
   // Sammy.Session is an additional plugin for creating a common 'session' store
   // for the given app. It is a very simple wrapper around <tt>Sammy.Storage</tt>
   // that provides a simple fallback mechanism for trying to provide the best
-  // possible storage type for the session. This means, <tt>LocalStorage</tt> 
+  // possible storage type for the session. This means, <tt>LocalStorage</tt>
   // if available, otherwise <tt>Cookie</tt>, otherwise <tt>Memory</tt>.
   // It provides the <tt>session()</tt> helper through <tt>Sammy.Storage#store()</tt>.
   //
@@ -494,8 +494,8 @@
     }
     this.store('session', $.extend({type: type}, options));
   };
-  
-  // Sammy.Cache provides helpers for caching data within the lifecycle of a 
+
+  // Sammy.Cache provides helpers for caching data within the lifecycle of a
   // Sammy app. The plugin provides two main methods on <tt>Sammy.Application<tt>,
   // <tt>cache</tt> and <tt>clearCache</tt>. Each app has its own cache store so that
   // you dont have to worry about collisions. As of 0.5 the original Sammy.Cache module
@@ -516,5 +516,5 @@
     }
     this.store('cache', $.extend({type: type}, options));
   };
-  
+
 })(jQuery);

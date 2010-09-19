@@ -49,15 +49,15 @@
          this.app.store('cache').clear('mycache');
          ok(!this.app.cache('mycache'))
        });
-       
-      
+
+
        context('Sammy', 'Template', {
          before: function() {
            this.app = new Sammy.Application(function() {
              this.use(Sammy.Template);
            });
            this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-           
+
            this.alias_app = new Sammy.Application(function() {
              this.use(Sammy.Template, 'tpl');
            });
@@ -85,8 +85,37 @@
          ok($.isFunction(this.alias_context.tpl));
          ok(this.alias_context.tpl.toString().match(/srender/));
        });
-    
-    
+
+      context('Sammy', 'EJS', {
+         before: function() {
+           this.app = new Sammy.Application(function() {
+             this.use(Sammy.EJS);
+           });
+           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+
+           this.alias_app = new Sammy.Application(function() {
+             this.use(Sammy.EJS, 'ejs');
+           });
+           this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+         }
+       })
+       .should('add template helper to event context', function() {
+         ok($.isFunction(this.context.ejs));
+       })
+       .should('interpolate content', function() {
+         var rendered = this.context.ejs('<div class="test_class"><%= text %></div>', {text: 'TEXT!'});
+         equal(rendered, '<div class="test_class">TEXT!</div>');
+       })
+       .should('render templates with a lot of single quotes', function() {
+         var rendered = this.context.ejs("<div class='test_class' id='test'>I'm <%= text %></div>", {text: 'TEXT!'});
+         equal(rendered, "<div class='test_class' id='test'>I'm TEXT!</div>");
+       })
+       .should('alias the template method and thus the extension', function() {
+         ok(!$.isFunction(this.alias_context.template));
+         ok($.isFunction(this.alias_context.ejs));
+         ok(this.alias_context.ejs.toString().match(/render/));
+       });
+
        context('Sammy.NestedParams', 'parsing', {
          before: function () {
            this.app = new Sammy.Application(function() {
@@ -105,7 +134,7 @@
          $('#nested_params_test_form').submit();
          soon(function() {
            ok(app.form_params);
-           equal(app.form_params['author'], 'Thoreau', 'takes the last value');        
+           equal(app.form_params['author'], 'Thoreau', 'takes the last value');
            app.unload();
          }, this, 1, 2);
        })
@@ -140,7 +169,7 @@
            equal(app.form_params['poll']['name'], 'Which beverage do you like best?');
            equal(app.form_params['poll']['priority'], '10');
            app.unload();
-         }, this, 1, 3);      
+         }, this, 1, 3);
        })
        .should('parse nested hashes', function() {
          var app = this.app;
@@ -175,7 +204,7 @@
            equal(app.form_params['woods']['trees'][0]['name'], 'Spruce');
            equal(app.form_params['woods']['trees'][1]['name'], 'Maple');
            app.unload();
-         }, this, 1, 3);            
+         }, this, 1, 3);
        })
        .should('parse arrays in nested hashes in nested arrays', function() {
          var app = this.app;
@@ -186,7 +215,7 @@
            equal(app.form_params['pages'][0]['words'][0], 'Woods');
            equal(app.form_params['pages'][1]['words'][0], 'Money');
            app.unload();
-         }, this, 1, 3);      
+         }, this, 1, 3);
        })
        .should('parse complex hashes in nested arrays in nested hashes', function() {
          var app = this.app;
@@ -210,8 +239,23 @@
            equal(app.form_params['title'], 'Walden!');
            app.unload();
          }, this, 1, 2);
+       })
+       .should('parse the query string', function() {
+         var app = this.app;
+         app.get('#/get_form', function() {
+           app.form_params = this.params;
+         });
+
+         app.run('#/');
+         window.location.href = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature'
+         soon(function() {
+           ok(app.form_params);
+           equal(app.form_params['genre'][0], ['documentary']);
+           equal(app.form_params['genre'][1], ['nature']);
+           app.unload();
+         }, this, 1, 3);
        });
-       
+
        context('Sammy.NestedParams', 'bad fields', {
          before: function () {
            this.app = new Sammy.Application(function() {
@@ -225,8 +269,7 @@
            app._parseFormParams($('#bad_nested_params_form'));
          });
        });
-       
-       
+
        // Pretty much a copy of the Template tests
        context('Sammy', 'Mustache', {
           before: function() {
@@ -263,7 +306,7 @@
           ok($.isFunction(this.alias_context.ms));
           ok(this.alias_context.ms.toString().match(/Mustache/));
         });
-      
+
       context('Sammy', 'JSON', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -285,8 +328,8 @@
       .should('stringify JSON if object is an object', function() {
         equal(this.context.json({test: "123"}),"{\"test\":\"123\"}");
       });
-      
-      
+
+
       context('Sammy', 'Haml', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -300,9 +343,25 @@
       })
       .should('use haml-js to render haml templates', function() {
         var template = ".mytemplate= title";
-        deepEqual(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
+        sameHTML(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
       });
-      
+
+      context('Sammy', 'Pure', {
+        before: function() {
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Pure);
+          });
+          this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+        }
+      })
+      .should('add pure helper to context', function() {
+        ok($.isFunction(this.context.pure));
+      })
+      .should('use pure to render templates', function() {
+        var template = "<div class='title'></div>";
+        sameHTML(this.context.pure(template, {title: "PURE!!"}), "<div class=\"title\">PURE!!</div>");
+      });
+
       context('Sammy', 'Form', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -323,7 +382,7 @@
       .should("evaluate attributes that are functions", function() {
         equal(this.context.simple_element('div', {id: function() { return 'test'; }}), "<div id='test' />");
       });
-      
+
       context('Sammy', 'Form', 'FormBuilder', {
         before: function() {
           this.app = new Sammy.Application(function() {
@@ -331,7 +390,7 @@
             this.use(Sammy.Template);
           });
           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-          
+
           // test item
           this.item = {
             id: "1234",
@@ -410,6 +469,5 @@
         this.context.item = this.item;
         equals(this.context.template(template), rendered);
       });
-      
     };
 })(jQuery);

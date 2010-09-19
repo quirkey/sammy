@@ -1,0 +1,16 @@
+{
+  "post": {
+    "name": "My Post",
+    "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.",
+    "tags": ["one", "two", "three"],
+    "author": {
+      "name": "AQ",
+      "bio": "This is my bio.",
+      "updated": "Two weeks ago",
+      "links": [
+        "http://twitter.com/aq",
+        "http://www.quirkey.com"
+      ]
+    }
+  }
+}

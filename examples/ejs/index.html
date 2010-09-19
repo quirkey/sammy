@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>EJS</title>
+  <style type="text/css" media="screen">
+
+  </style>
+  <script src="../../vendor/jquery.js" type="text/javascript"></script>
+  <script src="../../lib/sammy.js" type="text/javascript"></script>
+  <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    ;(function($) {
+      var whos = {
+        'users': [
+          { 'name': "Russ" },
+          { 'name': "James" },
+          { 'name': "Sky" }
+        ]
+      };
+
+      var whats = {
+        'users': [
+          { 'name': "Mac" },
+          { 'name': "Linux" },
+          { 'name': "Windows" }
+        ]
+      };
+
+      var app = $.sammy(function() {
+        this.use(Sammy.EJS);
+
+        this.get('#/', function() {
+          $('#main').html('nothing to see here!');
+        });
+
+        this.get('#/who', function() {
+          this.partial('who.ejs', whos, function(html) {
+            $('#main').html(html);
+          });
+        });
+
+        this.get('#/what', function() {
+          this.partial('what.ejs', whats, function(html) {
+            $('#main').html(html);
+          });
+        });
+
+      });
+
+      $(function() {
+        app.run('#/');
+      });
+    })(jQuery);
+  </script>
+
+</head>
+
+<body>
+  <div id="container">
+    <ul id="link">
+      <li><a href="index.html">reset!</a></li>
+      <li><a href="#/who">People!</a></li>
+      <li><a href="#/what">Computers!</a></li>
+    </ul>
+    <div id="main"> </div>
+  </div>
+</body>
+</html>

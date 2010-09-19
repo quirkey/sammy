@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sammy Template Benchmarks</title>
+    <script src="../../vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.json.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.mustache.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.meld.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.pure.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.haml.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="../../vendor/jslitmus.js" type="text/javascript" charset="utf-8"></script>
+
+  </head>
+  <body>
+    <div id="main"></div>
+    <script type="text/javascript" charset="utf-8">
+      function assertSameHTML(expected, actual) {
+        var strippedHTML = function(element) {
+          return $(element).wrap('<div></div>').parent().html().toString().replace(/(>)(\s*)(<)/g, "><");
+        };
+
+        actual = strippedHTML(actual);
+        expected = strippedHTML(expected);
+        var assert = (actual === expected);
+
+        if (!assert) {
+          Sammy.log(['HTML doesnt match: expected', expected, "\n\ngot", actual].join(' '));
+        }
+        return assert;
+      };
+
+      var data = {
+        post: {
+          title: 'My Post',
+          body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          tags: ['one', 'two', 'three'],
+          meta: {
+            comments: 5
+          }
+        }
+      };
+
+      var result = '<div class="post">' +
+        '<h2 class="title">My Post</h2>' +
+        '<div class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>' +
+        '<span class="tags">one</span>' +
+        '<span class="tags">two</span>' +
+        '<span class="tags">three</span>' +
+        '<ul class="meta">' +
+          '<li>Comments Count: <span class="comments">5</span></li>' +
+        '</ul>' +
+      '</div>';
+
+      $.each(['Template', 'Mustache', 'EJS', 'Pure', 'Haml', 'Meld'], function(i, plugin) {
+        var createContext,
+            template = '',
+            meth = plugin.toLowerCase(),
+            render_test;
+        createContext = function() {
+          var app = new Sammy.Application(function() {
+            this.raise_errors = false;
+            this.element_selector = '#main';
+            this.use(Sammy[plugin], 'template');
+          });
+          return new app.context_prototype(app, 'get', '#/blurgh', {})
+        };
+        $.ajax({
+          url: 'template.' + meth,
+          async: false,
+          success: function(response) {
+            template = response;
+          }
+        });
+        render_test = createContext().template(template, data);
+        Sammy.log(plugin, render_test);
+        assertSameHTML(result, render_test);
+        JSLitmus.test("Render with " + plugin, function() {
+          render_test = createContext().template(template, data);
+          assertSameHTML(result, render_test);
+        });
+      });
+    </script>
+
+  </body>
+</html>

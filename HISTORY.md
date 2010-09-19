@@ -1,3 +1,71 @@
+== 0.6.0pre [08/04/2010]
+
+New:
+
+- Sammy.RenderContext provides a completely new way of handling loading, 
+interpolating and placing templates. It was rethought from the ground up to 
+fix a lot of the frustrations with nested templates and callbacks and handling 
+complex template scenarios. It also supports DOM elements as templates. The main
+changes that effect existing sammy apps:
+    - `partial()` is no longer very polymorphous. The basic usage 
+      `partial(template, data)` is still supported, but other forms have been
+      removed in favor of specific methods like `render()` and `load()`
+    - template engine lookup has been moved to `engineFor()`
+- Sammy.Meld is a simple new templating engine written specifically for use with Sammy. 
+It uses jQuery's powerful DOM manipulation to merge data into DOM elements quickly. It's also currently < 100LOC
+- Sammy.Pure wraps the pure.js templating engine for use with Sammy.
+- Sammy.Object#escapeHTML() escapes HTML strings (for use in templates).
+- Sammy.DataLocationProxy takes an optional `href_attribute` for binding clicks 
+directly to the proxy/data [Thanks CodeOfficer]
+- Sammy.PathLocationProxy is a location proxy that does no in page changing and 
+is strictly for loading different code at different URIs
+- Sammy looks for the rails style form method override (`input[name=_method]`) to
+determine the submitted form's verb.
+
+Changed:
+
+- Upgraded to jQuery 1.4.2 - Previous 1.4.1 should still work, but I'm only 
+testing against 1.4.2
+- You can no longer set the location_proxy directly. Instead, use 
+`setLocationProxy()` 
+which will ensure proper binding/unbinding.
+- `use()` can now take a string of the sammy plugin you want to include: 
+`use('Storage')`. This is now the preferred way of including plugins, as it 
+improves error reporting greatly.
+- Updated Sammy.Mustache
+
+Fixed:
+
+- The HashLocationProxy poller would not stop running even if the proxy had been
+replaced.
+- IE was incorrectly reporting the form method attribute if it wasn't GET/POST. [Thanks rmurphey]
+- Mustache was not checking for its own existence correctly.
+
+
+== 0.5.4 [04/29/2010]
+
+New:
+
+- Sammy.EJS plugin for using embeddedjs templates. [Thanks CodeOfficer!]
+- Sammy.Store#each(), #filter() and #first()
+
+Changed:
+
+- $form is no longer passed as part of params. Instead use this.target in an event context. 
+This fixes issues with chrome running $.param() on form params
+with the jQuery object nested.
+- Sammy.Haml updated to haml-js 0.2.2 [Thanks creationix!]
+- Forms with the 'get' method now change the location instead of submitting
+behind the scenes. This makes it comply better with browser expectations. [Thanks langalex!]
+- Refactored the query + form param parsing to all use a single internal method _parseParamPair()
+- Completely remove the Sammy.Object#uuid() method.
+- Inline documentation now just uses markdown instead of RDoc format.
+
+Fixed:
+
+- last_location was being overriden if you redirected back multiple times. #20
+- Fixed some typos in docs. [Thanks akahn and manalang]
+
 == 0.5.3 [04/02/2010]
 
 Fixed:

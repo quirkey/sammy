@@ -1,18 +1,24 @@
-(function($) {
+(function() {
 
   QUnit.Spec = function(name) {
     this.before = false;
     this.after = false;
     QUnit.module(name);
   };
-
+  
+  function extend(a, b) {
+    for ( var prop in b ) {
+      a[prop] = b[prop];
+    }
+    return a;
+  }
 
   // RSpec style describe
   // takes an arbitrary number of arguments that are contactenated as strings
   // the last argument is the configuration object
   // which can have before: after: callbacks
   function describe() {
-    var args = $.makeArray(arguments),
+    var args = Array.prototype.slice.call(arguments),
     // configuration function
       config = (args.length > 0 && args[args.length - 1]['before']) ? args.pop() : {},
       spec = new QUnit.Spec(args.join(' '));
@@ -22,7 +28,7 @@
   }
 
 
-  $.extend(QUnit.Spec.prototype, {
+  extend(QUnit.Spec.prototype, {
     
     // RSpec style test definition
     it: function(name, callback, nowait) {
@@ -54,7 +60,7 @@
   });
 
 
-  $.extend(QUnit, {
+  extend(QUnit, {
     // aliases for describe
     describe: describe,
     context: describe,
@@ -73,7 +79,7 @@
     matches: function(matcher, string, message) {
       return QUnit.ok(!!matcher.test(string), message || "expected: " + string + "match(" + matcher.toString() + ")");
     },
-    
+        
     // assert that a matching error is raised
     // expected can be a regex, a string, or an object
     raised: function(expected_error, callback) {
@@ -119,9 +125,24 @@
     
     flunk: function() {
       QUnit.ok(false, 'FLUNK');
-    }
+    },
+    
+    sameHTML: function(actual, expected) {
+      var strippedHTML = function(element) {
+        return $(element)
+          .wrap('<div></div>')
+          .parent()
+          .html()
+          .toString()
+          .replace(/(>)(\s+)(<)/g, "><");
+      };
 
+      actual = strippedHTML(actual);
+      expected = strippedHTML(expected);
+      equal(actual, expected, "HTML is equal");
+    }
+    
   });
 
 
-})(jQuery);
+})();

@@ -1,11 +1,11 @@
 (function($) {
   with(QUnit) {
-    
+
     context('Sammy', 'HashLocationProxy', {
       before: function() {
         this.app = new Sammy.Application;
         this.proxy = new Sammy.HashLocationProxy(this.app);
-        this.has_native = (typeof window.onhashchange != 'undefined');
+        this.has_native = ('onhashchange' in window);
       }
     })
     .should('store a pointer to the app', function() {
@@ -58,16 +58,16 @@
       }
     });
 
-    
+
     context('Sammy', 'DataLocationProxy', {
       before: function() {
         this.app = new Sammy.Application(function() {
-          this.location_proxy = new Sammy.DataLocationProxy(this);
+          this.setLocationProxy(new Sammy.DataLocationProxy(this));
         });
       }
     })
     .should('store a pointer to the app', function() {
-      equal(this.app.location_proxy.app, this.app);
+      equal(this.app._location_proxy.app, this.app);
     })
     .should('be able to configure data name', function() {
       var proxy = new Sammy.DataLocationProxy(this.app, 'othername');
@@ -75,8 +75,8 @@
       equal($('body').data('othername'), 'newlocation');
     })
     .should('trigger app event when data changes', function() {
-      $('body').data(this.app.location_proxy.data_name, '');
-      var triggered = false, 
+      $('body').data(this.app._location_proxy.data_name, '');
+      var triggered = false,
           location = false,
           app = this.app;
       app.bind('location-changed', function() {
@@ -85,7 +85,7 @@
       });
       ok(!triggered);
       app.run('#/');
-      $('body').data(this.app.location_proxy.data_name, '#/newhash');
+      $('body').data(this.app._location_proxy.data_name, '#/newhash');
       soon(function() {
         ok(triggered);
         equal(location, '#/newhash');
@@ -93,14 +93,14 @@
       }, this, 2, 3);
     })
     .should('return the current location from data', function() {
-      $('body').data(this.app.location_proxy.data_name, '#/zuh')
-      equal(this.app.location_proxy.getLocation(), '#/zuh');
+      $('body').data(this.app._location_proxy.data_name, '#/zuh')
+      equal(this.app._location_proxy.getLocation(), '#/zuh');
     })
     .should('set the current location in data', function() {
-      $('body').data(this.app.location_proxy.data_name, '#/zuh')
-      equal(this.app.location_proxy.getLocation(), '#/zuh');
-      this.app.location_proxy.setLocation('#/boosh');
-      equal('#/boosh', this.app.location_proxy.getLocation());
+      $('body').data(this.app._location_proxy.data_name, '#/zuh')
+      equal(this.app._location_proxy.getLocation(), '#/zuh');
+      this.app._location_proxy.setLocation('#/boosh');
+      equal('#/boosh', this.app._location_proxy.getLocation());
     });
 
   }
