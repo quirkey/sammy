@@ -74,6 +74,16 @@
             sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
+        .should('interpolate the data using the engine set by load', function() {
+            var callback = function(context) {
+              this.load('fixtures/partial.template')
+                  .interpolate({name: 'Sammy Davis', class_name: 'clazz'})
+                  .replace('#test_area');
+            };
+            this.runRouteAndAssert(callback, function() {
+              sameHTML($.trim($('#test_area').html()), '<div class="clazz">Sammy Davis</div>', "render contents");
+            });            
+        })
         .should('load an element and not clone the element if clone: false', function() {
           var callback = function(context) {
             this.load($('.inline-template-1'), {clone: false})
