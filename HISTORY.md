@@ -1,4 +1,25 @@
-== 0.6.0pre [08/04/2010]
+== 0.6.1 [09/25/2010]
+
+New: 
+
+- RenderContext#send() can execute arbitrary functions within the queue
+- Application#clearTemplateCache() (self explanatory)
+- RenderContext#`load()` automagically parses JSON and can pass that data to render()
+
+Changed:
+
+- RenderContext#renderEach() takes a callback that is called each for each value with the interpolated template [Thanks endor!]
+- If RenderContext#collect() is passed only a function, its assumed that array is the previous content
+- if RenderContext#then() is passed a string, its assumed that you want to call a helper in its context
+- RenderContext#collect() can take a third argument which will run the collect immediately instead of in the queue
+
+Fixed:
+
+- Fixed renderEach for DOM templates
+- Fixed Meld attribute interpolation 
+- Fix a number of jslint warnings
+
+== 0.6.0 [08/04/2010]
 
 New:
 
