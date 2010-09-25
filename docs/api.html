@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.6.0
+current_version: 0.6.1
 nav:
   - name: Overview
     link: ../index.html
@@ -530,6 +530,9 @@ nav:
         <a href='#Sammy.Application-bindToAllEvents'>bindToAllEvents</a>
       </li>
       <li>
+        <a href='#Sammy.Application-clearTemplateCache'>clearTemplateCache</a>
+      </li>
+      <li>
         <a href='#Sammy.Application-contextMatchesOptions'>contextMatchesOptions</a>
       </li>
       <li>
@@ -744,6 +747,15 @@ nav:
        as well as any custom events defined with <code>bind()</code>.</p>
       
       <p> Used internally for debug logging.</p></div></div>
+    <div class='meth' id='Sammy.Application-clearTemplateCache'>
+      <h4>
+        clearTemplateCache
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> clear the templateCache</p></div></div>
     <div class='meth' id='Sammy.Application-contextMatchesOptions'>
       <h4>
         contextMatchesOptions
@@ -1263,6 +1275,9 @@ nav:
         <a href='#Sammy.RenderContext-next'>next</a>
       </li>
       <li>
+        <a href='#Sammy.RenderContext-partial'>partial</a>
+      </li>
+      <li>
         <a href='#Sammy.RenderContext-prependTo'>prependTo</a>
       </li>
       <li>
@@ -1273,6 +1288,9 @@ nav:
       </li>
       <li>
         <a href='#Sammy.RenderContext-replace'>replace</a>
+      </li>
+      <li>
+        <a href='#Sammy.RenderContext-send'>send</a>
       </li>
       <li>
         <a href='#Sammy.RenderContext-swap'>swap</a>
@@ -1302,7 +1320,7 @@ nav:
         collect
         <span>
           (
-          <em>array, callback</em>
+          <em>array, callback, now</em>
           )
         </span>
       </h4><div class='doc'><p> itterates over an array, applying the callback for each item item. the
@@ -1364,6 +1382,16 @@ nav:
         </span>
       </h4><div class='doc'><p> Resume the queue, setting <code>content</code> to be used in the next operation.
        See <code>wait()</code> for an example.</p></div></div>
+    <div class='meth' id='Sammy.RenderContext-partial'>
+      <h4>
+        partial
+        <span>
+          (
+          <em>location, data</em>
+          )
+        </span>
+      </h4><div class='doc'><p> <code>render()</code> the the <code>location</code> with <code>data</code> and then <code>swap()</code> the
+       app's <code>$element</code> with the rendered content.</p></div></div>
     <div class='meth' id='Sammy.RenderContext-prependTo'>
       <h4>
         prependTo
@@ -1399,7 +1427,8 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> loads a template, and then interpolates it for each item in the <code>data</code>
-       array.</p></div></div>
+       array. If a callback is passed, it will call the callback with each
+       item in the array <em>after</em> interpolation</p></div></div>
     <div class='meth' id='Sammy.RenderContext-replace'>
       <h4>
         replace
@@ -1410,6 +1439,28 @@ nav:
         </span>
       </h4><div class='doc'><p> Replaces the <code>$(selector)</code> using <code>html()</code> with the previously loaded
        <code>content</code></p></div></div>
+    <div class='meth' id='Sammy.RenderContext-send'>
+      <h4>
+        send
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> defers the call of function to occur in order of the render queue.
+       The function can accept any number of arguments as long as the last
+       argument is a callback function. This is useful for putting arbitrary
+       asynchronous functions into the queue. The content passed to the
+       callback is passed as <code>content</code> to the next item in the queue.</p>
+      
+      <p> === Example</p>
+      
+      {% highlight javascript %}
+          this.send($.getJSON, '/app.json')
+              .then(function(json) {
+                $('#message).text(json['message']);
+              });
+      {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.RenderContext-swap'>
       <h4>
         swap
@@ -1438,6 +1489,9 @@ nav:
        the next callback in the queue will not be executed until <code>next()</code> is
        called. This allows for the guarunteed order of execution while working
        with async operations.</p>
+      
+      <p> If then() is passed a string instead of a function, the string is looked
+       up as a helper method on the event context.</p>
       
       <h3>Example</h3>
       
@@ -1558,6 +1612,9 @@ nav:
         <a href='#Sammy.EventContext-interpolate'>interpolate</a>
       </li>
       <li>
+        <a href='#Sammy.EventContext-json'>json</a>
+      </li>
+      <li>
         <a href='#Sammy.EventContext-load'>load</a>
       </li>
       <li>
@@ -1571,6 +1628,12 @@ nav:
       </li>
       <li>
         <a href='#Sammy.EventContext-render'>render</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-renderEach'>renderEach</a>
+      </li>
+      <li>
+        <a href='#Sammy.EventContext-send'>send</a>
       </li>
       <li>
         <a href='#Sammy.EventContext-swap'>swap</a>
@@ -1631,6 +1694,16 @@ nav:
         </span>
       </h4><div class='doc'><p> using the template <code>engine</code> found with <code>engineFor()</code>, interpolate the
        <code>data</code> into <code>content</code></p></div></div>
+    <div class='meth' id='Sammy.EventContext-json'>
+      <h4>
+        json
+        <span>
+          (
+          <em>string</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Default JSON parsing uses jQuery's <code>parseJSON()</code>. Include <code>Sammy.JSON</code>
+       plugin for the more conformant "crockford special".</p></div></div>
     <div class='meth' id='Sammy.EventContext-load'>
       <h4>
         load
@@ -1702,6 +1775,37 @@ nav:
           .appendTo('ul');
         // appends the rendered content to $('ul')
       {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.EventContext-renderEach'>
+      <h4>
+        renderEach
+        <span>
+          (
+          <em>location, name, data, callback</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Create and return a <code>Sammy.RenderContext</code> calling <code>renderEach()</code> on it.
+       Loads the template and interpolates the data for each item,
+       however does not actual place it in the DOM.</p>
+      
+      <h3>Example</h3>
+      
+      {% highlight javascript %}
+        // mytemplate.mustache &lt;div class="name"&gt;{{name}}&lt;/div&gt;
+        renderEach('mytemplate.mustache', [{name: 'quirkey'}, {name: 'endor'}])
+        // sets the `content` to &lt;div class="name"&gt;quirkey&lt;/div&gt;&lt;div class="name"&gt;endor&lt;/div&gt;
+        renderEach('mytemplate.mustache', [{name: 'quirkey'}, {name: 'endor'}]).appendTo('ul');
+        // appends the rendered content to $('ul')
+      {% endhighlight %}</div></div>
+    <div class='meth' id='Sammy.EventContext-send'>
+      <h4>
+        send
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> create a new <code>Sammy.RenderContext</code> calling <code>send()</code> with an arbitrary
+       function</p></div></div>
     <div class='meth' id='Sammy.EventContext-swap'>
       <h4>
         swap

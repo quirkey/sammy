@@ -74,6 +74,16 @@
             sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
+        .should('interpolate the data using the engine set by load', function() {
+            var callback = function(context) {
+              this.load('fixtures/partial.template')
+                  .interpolate({name: 'Sammy Davis', class_name: 'clazz'})
+                  .replace('#test_area');
+            };
+            this.runRouteAndAssert(callback, function() {
+              sameHTML($.trim($('#test_area').html()), '<div class="clazz">Sammy Davis</div>', "render contents");
+            });            
+        })
         .should('load an element and not clone the element if clone: false', function() {
           var callback = function(context) {
             this.load($('.inline-template-1'), {clone: false})
@@ -98,6 +108,7 @@
         .should('only fetch the template once', function() {
           var callback = function(context) {
             jQuery.ajaxcount = 0;
+            this.app.clearTemplateCache();
             Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
             this.load('fixtures/partial.html')
                 .appendTo('#test_area')
@@ -156,6 +167,16 @@
           };
           this.runRouteAndAssert(callback, function() {
             sameHTML($('#test_area').html(), '<div class="original">test</div><div class="class">test</div>', "render contents");
+          });
+        })
+        .should('use the contents of a previous load as the data for render', function() {
+          var callback = function(context) {
+            this.load('fixtures/partial.json')
+                .render('fixtures/partial.template')
+                .appendTo('#test_area');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="original">json</div><div class="class">test</div>', "render contents");
           });
         })
         .should('append then pass data to then', function() {
@@ -255,6 +276,18 @@
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
         })
+        .should('renderEach with a callback', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html')
+                .replace('#test_area')
+                .renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}], function(object, template) {
+                  $('#test_area ul').append(template);
+                });
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });          
+        })
         .should('swap data with partial', function() {
           var callback = function(context) {
             this.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
@@ -274,6 +307,27 @@
           };
           this.runRouteAndAssert(callback, function() {
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });
+        })
+        .should('send a function without arguments and wait for the callback', function() {
+          var callback = function(context) {
+            var loadJSON = function(callback) {
+              $.getJSON('fixtures/partial.json', callback);
+            };
+            this.send(loadJSON)
+                .partial('fixtures/partial.template');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#main').html(), '<div class="original">json</div>', "render contents");
+          });
+        })
+        .should('send a function with arguments and wait for the callback', function() {
+          var callback = function(context) {
+            this.send($.getJSON, 'fixtures/partial.json')
+                .partial('fixtures/partial.template');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#main').html(), '<div class="original">json</div>', "render contents");
           });
         });
 
