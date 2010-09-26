@@ -307,6 +307,43 @@
           ok(this.alias_context.ms.toString().match(/Mustache/));
         });
 
+        // Pretty much a copy of the Mustache tests
+       context('Sammy', 'Handlebars', {
+          before: function() {
+            this.app = new Sammy.Application(function() {
+              this.use(Sammy.Handlebars);
+            });
+            this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+
+            this.alias_app = new Sammy.Application(function() {
+              this.use(Sammy.Handlebars, 'hb');
+            });
+            this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+          }
+        })
+        .should('add handlebars helper to event context', function() {
+          ok($.isFunction(this.context.handlebars));
+        })
+        .should('interpolate content', function() {
+          var rendered = this.context.handlebars('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
+          equal(rendered, '<div class="test_class">TEXT!</div>');
+        })
+        .should('set the context of the template to the test_context', function() {
+          this.context.blurgh = 'boosh';
+          var rendered = this.context.handlebars('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
+          equal(rendered, '<div class="test_class">TEXT! boosh</div>');
+        })
+        .should('allow handlebars partials by passing partials to data', function() {
+          var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, what: 'partial'};
+          var rendered = this.context.handlebars('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
+          equal(rendered, '<div class="test_class">a partial boosh</div>');
+        })
+        .should('alias the handlebars method and thus the extension', function() {
+          ok(!$.isFunction(this.alias_context.handlebars));
+          ok($.isFunction(this.alias_context.hb));
+          ok(this.alias_context.hb.toString().match(/Handlebars/));
+        });
+
       context('Sammy', 'JSON', {
         before: function() {
           this.app = new Sammy.Application(function() {
