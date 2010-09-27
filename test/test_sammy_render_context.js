@@ -74,6 +74,16 @@
             sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
+        .should('interpolate the data using the engine set by load', function() {
+            var callback = function(context) {
+              this.load('fixtures/partial.template')
+                  .interpolate({name: 'Sammy Davis', class_name: 'clazz'})
+                  .replace('#test_area');
+            };
+            this.runRouteAndAssert(callback, function() {
+              sameHTML($.trim($('#test_area').html()), '<div class="clazz">Sammy Davis</div>', "render contents");
+            });            
+        })
         .should('load an element and not clone the element if clone: false', function() {
           var callback = function(context) {
             this.load($('.inline-template-1'), {clone: false})
@@ -265,6 +275,18 @@
           this.runRouteAndAssert(callback, function() {
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });
+        })
+        .should('renderEach with a callback', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html')
+                .replace('#test_area')
+                .renderEach('fixtures/item.template', 'item', [{'name': 'first'}, {'name': 'second'}], function(object, template) {
+                  $('#test_area ul').append(template);
+                });
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
+          });          
         })
         .should('swap data with partial', function() {
           var callback = function(context) {
