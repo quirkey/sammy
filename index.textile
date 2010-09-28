@@ -34,7 +34,7 @@ Sammy is a tiny javascript framework built on top of jQuery. It's RESTful Evente
 
 h3(#why). Why
 
-jQuery is probably the fastest, most robust way to abstract basic low-level Javascript functionality that every Javascript devleoper needs. However, it really remains low-level and does not imply any structure or organization for larger scale Javascript applications. 
+jQuery is probably the fastest, most robust way to abstract basic low-level Javascript functionality that every Javascript developer needs. However, it really remains low-level and does not imply any structure or organization for larger scale Javascript applications. 
 
 Working heavily with "Sinatra":http://www.sinatrarb.com, I realized that the simple route definitions and structure it provided could be a great fit with jQuery/JavaScript. Not only does it allow you to respond to specific URLs, but utilizing the URL hash (#) you can create single page applications that still respond to the back button in your browser (ala Gmail).
 
