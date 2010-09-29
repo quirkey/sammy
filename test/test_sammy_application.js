@@ -270,6 +270,7 @@
           $('.get_area').text('');
           this.app = new Sammy.Application(function() {
             this.element_selector = '#main';
+            this.debug = true;
             this.form_params = {};
 
             this.route('get', '#/', function() {
@@ -303,6 +304,17 @@
 
             this.route('get', '#/yield', function(c) {
               context.yielded_context = c;
+            });
+
+            this.route('get', '#/postpost', function(c) {
+              this.log('get', '#/postpost');
+              this.app.get_after_form = 'YES';
+            });
+
+            this.route('post', '#/postpost', function(c) {
+              this.app.form_was_run = 'POSTPOST';
+              this.log('post', '#/postpost');
+              this.redirect('#/postpost');
             });
 
             this.bind('blurgh', function () {
@@ -428,6 +440,21 @@
           window.location.hash = '#/no-route-for-me'
           soon(function() { app.unload(); });
         });
+      })
+      .should('redirect to same path after form submit', function() {
+        var app = this.app;
+        app.run('#/');
+        // add a new form to the page
+        $('#main').append('<form id="live_form" action="#/postpost" method="post">' +
+           '<input type="submit" class="submit" />' +
+           '</form>'
+         );
+        $('#live_form .submit').submit();
+        soon(function() {
+          equal(app.form_was_run, 'POSTPOST');
+          equal(app.get_after_form, 'YES');
+          app.unload();
+        }, this, 2, 2);
       });
 
       context('Sammy.Application','lookupRoute', {
