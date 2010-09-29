@@ -1,6 +1,6 @@
 task :start => :copy_files do
   system 'open http://localhost:9292/'
-  system 'rackup app.ru'
+  system 'rackup config.ru'
 end
 
 desc 'copy latest sammy and jquery from lib and vendor'
@@ -8,7 +8,7 @@ task :copy_files do
   root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
   {
     ['lib', 'sammy.js'] => 'sammy.js',
-    ['vendor', 'jquery-1.4.1.js'] => 'jquery.js'
+    ['vendor', 'jquery.js'] => 'jquery.js'
   }.each do |from, to|
     FileUtils.cp(File.join(root, *from), File.join('public', 'javascripts', to))
   end
