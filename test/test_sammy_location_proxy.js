@@ -101,7 +101,13 @@
       equal(this.app._location_proxy.getLocation(), '#/zuh');
       this.app._location_proxy.setLocation('#/boosh');
       equal('#/boosh', this.app._location_proxy.getLocation());
+    })
+    .should('return an empty string when there is no location stored in data', function() {
+      $.removeData($('body')[0], this.app._location_proxy.data_name);
+      equal(null, $('body').data(this.app._location_proxy.data_name));
+      equal('', this.app._location_proxy.getLocation());
     });
+
 
   }
 })(jQuery);
