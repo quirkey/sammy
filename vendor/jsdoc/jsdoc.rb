@@ -126,12 +126,12 @@ end
 docs.each do |klass, klass_methods|
   docs[klass][:attributes] = klass_methods[:attributes].sort {|a,b| a[:name] <=> b[:name] }
   docs[klass][:methods] = klass_methods[:methods].sort {|a,b| a[:name] <=> b[:name] }
-end.reject! do |klass, klass_methods|
-  # get rid of undocumented classes
-  klass[:doc].nil? || klass[:doc].to_s.strip == ''
 end
 
-docs = docs.sort {|a, b|
+docs = docs.reject do |klass, klass_methods|
+  # get rid of undocumented classes
+  klass[:doc].nil? || klass[:doc].to_s.strip == ''
+end.sort {|a, b|
   a[0][:klass] <=> b[0][:klass]
 }
 
