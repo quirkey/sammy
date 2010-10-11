@@ -131,6 +131,10 @@ end.reject! do |klass, klass_methods|
   klass[:doc].nil? || klass[:doc].to_s.strip == ''
 end
 
+docs = docs.sort {|a, b|
+  a[0][:klass] <=> b[0][:klass]
+}
+
 # class RDoc::Markup::ToHtml
 # 
 #   def accept_verbatim(am, fragment)
