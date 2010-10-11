@@ -4,6 +4,7 @@ New:
 
 - Sammy.Handlebars - a templating plugin for Handlebars.js [Thanks PlasticLizard!]
 - Sammy.Tmpl - a templating plugin for the official jquery.tmpl engine [Thanks stevenharman!]
+- Pulled the Sammy.GoogleAnalytics plugin into core, with modifications [Thanks to britg for the original!]
 
 Changed:
 

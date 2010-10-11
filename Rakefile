@@ -104,6 +104,16 @@ task :update_version => :version do
   end
 end
 
+desc 'Tag with the current version'
+task :tag => :version do
+  sh "git add ."
+  sh "git commit -a -m'Pushing version #{@version}'"
+  sh "git tag v#{@version}"
+  sh "git push --tags"
+end
+
+task :release => [:minify, :tag, :site]
+
 task :push_site do
   sh "cd site && git add ."
   sh "cd site && git commit -am 'Updated Site via Rake'"
