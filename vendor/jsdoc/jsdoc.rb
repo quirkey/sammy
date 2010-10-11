@@ -84,16 +84,20 @@ file.each do |line|
           comment = this_comment
         end
       elsif current == :method
-        meth = {
-          :klass => klass,
-          :name => line_match[4].to_s,
-          :args => line_match[5].to_s.split(',').collect {|a| a.strip }
-        }
-        if context == :comment
-          if !(comment.nil? || comment.strip == '')
-            meth[:doc] = comment
-            comment = ""
-            docs[klass][:methods] << meth
+        name = line_match[4].to_s
+        args = line_match[5].to_s.split(',').collect {|a| a.strip }
+        if name !~ /^\s$/
+          meth = {
+            :klass => klass,
+            :name => name,
+            :args => args
+          }
+          if context == :comment
+            if !(comment.nil? || comment.strip == '')
+              meth[:doc] = comment
+              comment = ""
+              docs[klass][:methods] << meth
+            end
           end
         end
       end
