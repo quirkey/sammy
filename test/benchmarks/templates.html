@@ -12,6 +12,7 @@
     <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.pure.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.haml.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.handlebars.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="../../vendor/jslitmus.js" type="text/javascript" charset="utf-8"></script>
 
@@ -56,7 +57,7 @@
         '</ul>' +
       '</div>';
 
-      $.each(['Template', 'Mustache', 'EJS', 'Pure', 'Haml', 'Meld'], function(i, plugin) {
+      $.each(['Template', 'Mustache', 'EJS', 'Pure', 'Haml', 'Meld', 'Handlebars'], function(i, plugin) {
         var createContext,
             template = '',
             meth = plugin.toLowerCase(),

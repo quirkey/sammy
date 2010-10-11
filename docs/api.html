@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Documentation - API
 github_name: sammy
-current_version: 0.6.1
+current_version: 0.6.2
 nav:
   - name: Overview
     link: ../index.html
@@ -64,7 +64,16 @@ nav:
       <a href='#Sammy.Form'>Sammy.Form</a>
     </li>
     <li>
+      <a href='#Sammy.GoogleAnalytics'>Sammy.GoogleAnalytics</a>
+    </li>
+    <li>
       <a href='#Sammy.Haml'>Sammy.Haml</a>
+    </li>
+    <li>
+      <a href='#Handlebars.SafeString'>Handlebars.SafeString</a>
+    </li>
+    <li>
+      <a href='#Sammy.Handlebars'>Sammy.Handlebars</a>
     </li>
     <li>
       <a href='#Sammy.JSON'>Sammy.JSON</a>
@@ -432,7 +441,7 @@ nav:
       <h4>
         APP_EVENTS
         =
-        <span>['run','unload','lookup-route','run-route','route-found','event-context-before','event-context-after','changed','error','check-form-submission','redirect']</span>
+        <span>['run'</span>
       </h4><div class='doc'><p> An array of the default events triggered by the
        application during its lifecycle</p></div></div>
     <div class='attr' id='Sammy.Application-ROUTE_VERBS'>
@@ -2124,34 +2133,10 @@ nav:
     <h3>Methods</h3>
     <ul>
       <li>
-        <a href='#Sammy.Form-'></a>
-      </li>
-      <li>
-        <a href='#Sammy.Form-'></a>
-      </li>
-      <li>
         <a href='#Sammy.Form-formFor'>formFor</a>
       </li>
     </ul>
     <hr />
-    <div class='meth' id='Sammy.Form-'>
-      <h4>
-        
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4><div class='doc'><p> Split interpolated strings into an array of literals and code fragments.</p></div></div>
-    <div class='meth' id='Sammy.Form-'>
-      <h4>
-        
-        <span>
-          (
-          <em></em>
-          )
-        </span>
-      </h4><div class='doc'><p> Parse the attribute block using a state machine</p></div></div>
     <div class='meth' id='Sammy.Form-formFor'>
       <h4>
         formFor
@@ -2184,7 +2169,109 @@ nav:
       {% endhighlight %}</div></div>
   </div>
   <!-- its just a function -->
-  <div class='meth' id='Sammy.Haml'>
+  <div class='klass' id='Sammy.GoogleAnalytics'>
+    <h2>
+      Sammy.GoogleAnalytics
+      <span>
+        (
+        app, tracker
+        )
+      </span>
+    </h2><div class='doc'><p> A simple plugin that pings Google Analytics tracker
+     every time a route is triggered. Originally by Brit Gardner (britg),
+     with updates from Aaron Quint (quirkey).</p>
+    
+    <p> === Arguments</p>
+    
+    <p> +tracker+:: the Google Analytics pageTracker object.  Defaults to
+     the default object defined by the GA snippet, or pass your own if you
+     have a custom install</p>
+    
+    <p> === Example</p>
+    
+    <p> Install Google Analytics to your site as you normally would. Be sure that
+     the 'pageTracker' global variable exists.</p>
+    
+    <p> Then, simply add the plugin to your Sammy App and it will automatically
+     track all of your routes in Google Analytics.
+     They will appear as page views to the route's path.</p>
+    
+    {% highlight javascript %}
+      $.sammy(function() {
+        this.use('GoogleAnalytics');
+    
+        ...
+      });
+    {% endhighlight %}
+    
+    
+    <p> If you have routes that you do not want to track, simply call <code>noTrack</code>
+     within the route.</p>
+    
+    {% highlight javascript %}
+      $.sammy(function() {
+        this.use('GoogleAnalytics')
+    
+        get('#/dont/track/me', function() {
+          this.noTrack();  // This route will not be tracked
+        });
+      });
+    {% endhighlight %}</div>    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.GoogleAnalytics-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.GoogleAnalytics-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.GoogleAnalytics-noTrack'>noTrack</a>
+      </li>
+      <li>
+        <a href='#Sammy.GoogleAnalytics-track'>track</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.GoogleAnalytics-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Split interpolated strings into an array of literals and code fragments.</p></div></div>
+    <div class='meth' id='Sammy.GoogleAnalytics-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Parse the attribute block using a state machine</p></div></div>
+    <div class='meth' id='Sammy.GoogleAnalytics-noTrack'>
+      <h4>
+        noTrack
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Disable tracking for the current route. Put at the begining of the
+       route's callback</p></div></div>
+    <div class='meth' id='Sammy.GoogleAnalytics-track'>
+      <h4>
+        track
+        <span>
+          (
+          <em>path</em>
+          )
+        </span>
+      </h4><div class='doc'><p> send a page view to the tracker with <code>path</code></p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='klass' id='Sammy.Haml'>
     <h2>
       Sammy.Haml
       <span>
@@ -2244,6 +2331,173 @@ nav:
     
     
     <p> Note: You dont have to include the haml.js file on top of the plugin as the plugin
+     includes the full source.</p></div><h3>Attributes</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Haml-pathPatterns'>pathPatterns</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='attr' id='Sammy.Haml-pathPatterns'>
+      <h4>
+        pathPatterns
+        =
+        <span>{}</span>
+      </h4><div class='doc'><p> spot to memoize paths to speed up loops and subsequent parses</p></div></div>
+    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Haml-filterOutput'>filterOutput</a>
+      </li>
+      <li>
+        <a href='#Sammy.Haml-parsePath'>parsePath</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.Haml-filterOutput'>
+      <h4>
+        filterOutput
+        <span>
+          (
+          <em>value, escape</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Escapes output and converts empty values to empty strings</p></div></div>
+    <div class='meth' id='Sammy.Haml-parsePath'>
+      <h4>
+        parsePath
+        <span>
+          (
+          <em>path</em>
+          )
+        </span>
+      </h4><div class='doc'><p> returns a two element array containing the numbers of contexts to back up the stack and
+       the properties to dig into on the current context</p>
+      
+      <p> for example, if the path is "../../alan/name", the result will be [2, ["alan", "name"]].</p></div></div>
+  </div>
+  <!-- its just a function -->
+  <div class='meth' id='Handlebars.SafeString'>
+    <h2>
+      Handlebars.SafeString
+      <span>
+        (
+        string
+        )
+      </span>
+    </h2><div class='doc'><p> Build out our basic SafeString type</p></div></div>
+  <!-- its just a function -->
+  <div class='meth' id='Sammy.Handlebars'>
+    <h2>
+      Sammy.Handlebars
+      <span>
+        (
+        app, method_alias
+        )
+      </span>
+    </h2><div class='doc'><p> <tt>Sammy.Handlebars</tt> provides a quick way of using Handlebars templates in your app.
+     The plugin itself includes the handlebars.js library created by Yehuda Kats at
+     at http://github.com/wycats/handlebars.js</p>
+    
+    <p> Handlebars.js is an extension to the Mustache templating language  created by Chris Wanstrath. Handlebars.js
+     and Mustache are both logicless templating languages that keep the view and the code separated like
+     we all know they should be.</p>
+    
+    <p> By default using Sammy.Handlbars in your app adds the <tt>handlebars()</tt> method to the EventContext
+     prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
+     by passing a second argument (e.g. you could use the hbr() as the method alias so that all the template
+     files could be in the form file.hbr instead of file.handlebars)</p>
+    
+    <h3>Example #1</h3>
+    
+    <p> The template (mytemplate.hb):</p>
+    
+    {% highlight javascript %}
+       &lt;h1&gt;\{\{title\}\}&lt;h1&gt;
+    
+       Hey, {{name}}! Welcome to Handlebars!
+    {% endhighlight %}
+    
+    
+    <p> The app:</p>
+    
+    {% highlight javascript %}
+       var $.app = $.sammy(function() {
+         // include the plugin and alias handlebars() to hb()
+         this.use(Sammy.Handlebars, 'hb');
+    
+         this.get('#/hello/:name', function() {
+           // set local vars
+           this.title = 'Hello!'
+           this.name = this.params.name;
+           // render the template and pass it through handlebars
+           this.partial('mytemplate.hb');
+         });
+    
+       });
+    {% endhighlight %}
+    
+    
+    <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
+    
+    {% highlight javascript %}
+       &lt;h1&gt;Hello!&lt;/h1&gt;
+    
+       Hey, AQ! Welcome to Handlebars!
+    {% endhighlight %}
+    
+    
+    <h3>Example #2 - Handlebars partials</h3>
+    
+    <p> The template (mytemplate.hb)</p>
+    
+    {% highlight javascript %}
+       Hey, {{name}}! {{&gt;hello_friend}}
+    {% endhighlight %}
+    
+    
+    <p> The partial (mypartial.hb)</p>
+    
+    {% highlight javascript %}
+       Say hello to your friend {{friend}}!
+    {% endhighlight %}
+    
+    
+    <p> The app:</p>
+    
+    {% highlight javascript %}
+       var $.app = $.sammy(function() {
+         // include the plugin and alias handlebars() to hb()
+         this.use(Sammy.Handlebars, 'hb');
+    
+         this.get('#/hello/:name/to/:friend', function() {
+           var context = this;
+    
+           // fetch handlebars-partial first
+           $.get('mypartial.hb', function(response){
+             context.partials = response;
+    
+             // set local vars
+             context.name = this.params.name;
+             context.hello_friend = {name: this.params.friend};
+    
+             // render the template and pass it through handlebars
+             context.partial('mytemplate.hb');
+           });
+         });
+    
+       });
+    {% endhighlight %}
+    
+    
+    <p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>
+    
+    {% highlight javascript %}
+       Hey, AQ! Say hello to your friend dP!
+    {% endhighlight %}
+    
+    
+    <p> Note: You dont have to include the handlebars.js file on top of the plugin as the plugin
      includes the full source.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.JSON'>
@@ -3283,7 +3537,7 @@ nav:
       });
     {% endhighlight %}</div></div>
   <!-- its just a function -->
-  <div class='meth' id='Sammy.Title'>
+  <div class='klass' id='Sammy.Title'>
     <h2>
       Sammy.Title
       <span>
@@ -3293,5 +3547,149 @@ nav:
       </span>
     </h2><div class='doc'><p> Sammy.Title is a very simple plugin to easily set the document's title.
      It supplies a helper for setting the title (<code>title()</code>) within routes,
-     and an app level method for setting the global title (<code>setTitle()</code>)</p></div></div>
+     and an app level method for setting the global title (<code>setTitle()</code>)</p></div><h3>Attributes</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Title-_default'>_default</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='attr' id='Sammy.Title-_default'>
+      <h4>
+        _default
+        =
+        <span>{ $1: "$data" }</span>
+      </h4><div class='doc'><p> Encoded expression evaluation. Abbreviated form is ${}.</p></div></div>
+    <h3>Methods</h3>
+    <ul>
+      <li>
+        <a href='#Sammy.Title-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-'></a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-complete'>complete</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-template'>template</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-template'>template</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-tmpl'>tmpl</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-tmpl'>tmpl</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-tmplItem'>tmplItem</a>
+      </li>
+      <li>
+        <a href='#Sammy.Title-tmplItem'>tmplItem</a>
+      </li>
+    </ul>
+    <hr />
+    <div class='meth' id='Sammy.Title-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Store template items in jQuery.data(), ensuring a unique tmplItem data data structure for each rendered template instance.</p></div></div>
+    <div class='meth' id='Sammy.Title-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Generate a reusable function that will serve to render a template against data</p></div></div>
+    <div class='meth' id='Sammy.Title-'>
+      <h4>
+        
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Call this from code which overrides domManip, or equivalent
+       Manage cloning/storing template items etc.</p></div></div>
+    <div class='meth' id='Sammy.Title-complete'>
+      <h4>
+        complete
+        <span>
+          (
+          <em>items</em>
+          )
+        </span>
+      </h4><div class='doc'><p> This stub can be overridden, e.g. in jquery.tmplPlus for providing rendered events</p></div></div>
+    <div class='meth' id='Sammy.Title-template'>
+      <h4>
+        template
+        <span>
+          (
+          <em>name</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Consider the first wrapped element as a template declaration, and get the compiled template or store it as a named template.</p></div></div>
+    <div class='meth' id='Sammy.Title-template'>
+      <h4>
+        template
+        <span>
+          (
+          <em>name, tmpl</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Get:
+       Use $.template( name ) to access a cached template.
+       Also $( selectorToScriptBlock ).template(), or $.template( null, templateString )
+       will return the compiled template, without adding a name reference.
+       If templateString includes at least one HTML tag, $.template( templateString ) is equivalent
+       to $.template( null, templateString )</p></div></div>
+    <div class='meth' id='Sammy.Title-tmpl'>
+      <h4>
+        tmpl
+        <span>
+          (
+          <em>data, options, parentItem</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Use first wrapped element as template markup.
+       Return wrapped set of template items, obtained by rendering template against data.</p></div></div>
+    <div class='meth' id='Sammy.Title-tmpl'>
+      <h4>
+        tmpl
+        <span>
+          (
+          <em>tmpl, data, options, parentItem</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Return wrapped set of template items, obtained by rendering template against data.</p></div></div>
+    <div class='meth' id='Sammy.Title-tmplItem'>
+      <h4>
+        tmplItem
+        <span>
+          (
+          <em></em>
+          )
+        </span>
+      </h4><div class='doc'><p> Find which rendered template item the first wrapped DOM element belongs to</p></div></div>
+    <div class='meth' id='Sammy.Title-tmplItem'>
+      <h4>
+        tmplItem
+        <span>
+          (
+          <em>elem</em>
+          )
+        </span>
+      </h4><div class='doc'><p> Return rendered template item for an element.</p></div></div>
+  </div>
 </div>

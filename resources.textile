@@ -2,7 +2,7 @@
 layout: quirkey_code_multi
 title: Sammy - Resources
 github_name: sammy
-current_version: 0.6.1
+current_version: 0.6.2
 nav:
   - name: Overview 
     link: index.html
