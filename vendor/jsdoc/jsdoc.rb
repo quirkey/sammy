@@ -86,7 +86,7 @@ file.each do |line|
       elsif current == :method
         name = line_match[4].to_s
         args = line_match[5].to_s.split(',').collect {|a| a.strip }
-        if name !~ /^\s$/
+        if !(name.nil? || name.strip == '')
           meth = {
             :klass => klass,
             :name => name,
@@ -130,7 +130,6 @@ end.reject! do |klass, klass_methods|
   # get rid of undocumented classes
   klass[:doc].nil? || klass[:doc].to_s.strip == ''
 end
-
 
 # class RDoc::Markup::ToHtml
 # 
