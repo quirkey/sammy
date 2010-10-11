@@ -1,3 +1,19 @@
+== 0.6.2 [10/11/2010]
+
+New: 
+
+- Sammy.Handlebars - a templating plugin for Handlebars.js [Thanks PlasticLizard!]
+- Sammy.Tmpl - a templating plugin for the official jquery.tmpl engine [Thanks stevenharman!]
+
+Changed:
+
+- Upgraded to the latest Haml.js [Thanks stevenharman!]
+
+Fixed:
+
+- Fixed issue with DataLocationProxy#getLocation() returning null [Thanks crofty!]
+- Fixed Rakefile and backend example issues. [Thanks fhemberger!]
+
 == 0.6.1 [09/25/2010]
 
 New: 
