@@ -308,7 +308,7 @@
         });
 
         // Pretty much a copy of the Mustache tests
-       context('Sammy', 'Handlebars', {
+        context('Sammy', 'Handlebars', {
           before: function() {
             this.app = new Sammy.Application(function() {
               this.use(Sammy.Handlebars);
@@ -342,6 +342,43 @@
           ok(!$.isFunction(this.alias_context.handlebars));
           ok($.isFunction(this.alias_context.hb));
           ok(this.alias_context.hb.toString().match(/Handlebars/));
+        });
+
+        // Pretty much a copy of the Mustache tests
+        context('Sammy', 'jQuery-tmpl', {
+          before: function() {
+            this.app = new Sammy.Application(function() {
+              this.use(Sammy.Tmpl);
+            });
+            this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
+
+            this.alias_app = new Sammy.Application(function() {
+              this.use(Sammy.Tmpl, 'jqt');
+            });
+            this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
+          }
+        })
+        .should('add tmpl helper to event context', function() {
+          ok($.isFunction(this.context.tmpl));
+        })
+        .should('interpolate content', function() {
+          var rendered = this.context.tmpl('<div class="test_class">${text}</div>', {text: 'TEXT!'});
+          sameHTML(rendered, '<div class="test_class">TEXT!</div>');
+        })
+        .should('set the context of the template to the test_context', function() {
+          this.context.blurgh = 'boosh';
+          var rendered = this.context.tmpl('<div class="test_class">${text} ${blurgh}</div>', {text: 'TEXT!'});
+          sameHTML(rendered, '<div class="test_class">TEXT! boosh</div>');
+        })
+//        .should('allow tmpl partials by passing partials to data', function() {
+//          var data = {blurgh: 'fizzzz', partials: {first: 'a ${what}'}, what: 'partial'};
+//          var rendered = this.context.tmpl('<div class="test_class">{{tmpl partials.first}} ${blurgh}</div>', data);
+//          sameHTML(rendered, '<div class="test_class">a partial boosh</div>');
+//        })
+        .should('alias the tmpl method and thus the extension', function() {
+          ok(!$.isFunction(this.alias_context.tmpl));
+          ok($.isFunction(this.alias_context.jqt));
+          ok(this.alias_context.jqt.toString().match(/jQuery\.tmpl/));
         });
 
       context('Sammy', 'JSON', {
