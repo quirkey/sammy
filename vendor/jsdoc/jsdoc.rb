@@ -1,5 +1,5 @@
 # jsdoc.rb (by quirkey/Aaron Quint)
-# 
+#
 # Simple Documentation generator for JavaScript Class files.
 #
 # usage :
@@ -14,11 +14,11 @@
 #   myMethod: function(arg1, arg2) {
 #     ...
 #   },
-#   
+#
 #   _noDoc: function() {
 #     ...
 #   }
-#   
+#
 # });
 
 require 'rubygems'
@@ -42,8 +42,8 @@ if paths.empty?
   raise 'No paths specified'
 else
   file = ""
-  paths.each {|p| 
-    f = File.read(p) 
+  paths.each {|p|
+    f = File.read(p)
     if f !~ /^\/\/\sdeprecated/
       file << f
     end
@@ -64,7 +64,7 @@ docs    = ActiveSupport::OrderedHash.new({})
 file.each do |line|
   if klass_match = line.match(klass_regexp)
     klass = {
-      :klass => klass_match[1].to_s.strip, 
+      :klass => klass_match[1].to_s.strip,
       :args => klass_match[2].to_s.split(',').collect {|a| a.strip },
       :doc => ""
     }
@@ -136,18 +136,18 @@ end.sort {|a, b|
 }
 
 # class RDoc::Markup::ToHtml
-# 
+#
 #   def accept_verbatim(am, fragment)
 #     @res << annotate("{% highlight javascript %}") << "\n"
 #     @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
 #     @res << "\n" << annotate("{% endhighlight %}") << "\n"
 #   end
-# 
+#
 # end
 
 module Helper
   extend self
-  
+
   def convert(text)
     final_text = ""
     text.each_line do |l|
@@ -158,7 +158,7 @@ module Helper
     final_text.gsub!('</code></pre>', "{% endhighlight %}\n")
     final_text
   end
-  
+
 end
 
 # rdoc = RDoc::Markup::ToHtml.new
