@@ -22,6 +22,10 @@ h2. Tutorials
 
 h3. The JSON Store: A Sammy.js Tutorial, Part II
 
+<div class="warning">
+  This tutorial is currently under reconstruction. It was written for Sammy v0.4 and is being updated for the changes in the latest version v0.6. The basic concepts are the same, but some of the syntax has changed. Sorry for the inconvenience. You can stay tuned to changes by "watching the github repo":http://github.com/quirkey/sammy/commits/gh-pages
+</div>
+
 _This is part two in a tutorial series introducing the core concepts of Sammy.js, if this is your first time here, may I suggest starting with "Part I":json_store_part1.html_
 
 For this belated Part II, we're going to jump right where we left off last time, and go through another big part of the world of Sammy.js. Last time we got our little JSON store to the point where we:
@@ -60,7 +64,7 @@ After updating our store should work and look just like it did before. If it doe
 
 Feeling all fresh and clean, lets get started on our next feature. Sure, we can keep selling things through boring old links to Amazon, but what if we want to sell one of these items ourselves? Why let those bigwigs get all the profit. In order to do that, we probably need some sort of thing that lets us collect the things our users want to buy into a single place, so that eventually they can make a transaction and hand over the money for all the items at once. Whether it not the analogy makes sense to you, at some point, the fore-fathers of E-commerce decided to call this _thing_ a *shopping cart*. The usual workflow with a *shopping cart* is to allow the user to browse to the item that they want, enter the _quantity_ they want of the specific item and then hit a button to _add to cart_. I'm sure the "no duh's" are flying, but as simple and commonplace as this is, it might help to think through what we actually _need_ to make this work.
 
-First, the user has to be able to browse to a detail view of the item. OK, *check* we already did that. 
+First, the user has to be able to browse to a detail view of the item. OK, *check* we already did that.
 
 Second, they need to be able to enter a _quantity_ of the item that they want. Entering something probably entails a form, so we'll need to add one to our detail template.
 
@@ -87,7 +91,7 @@ Nothing to complicated in the form body, just a simple text input with a label, 
 
 !http://img.skitch.com/20100101-j622xn613b3q6n9r4drqmiy5ai.jpg!
 
-When we try to submit it, we get some possibly unexpected behavior. The browser goes to #/cart and we're left with a blank content area. We could add a @get('#/cart')@ route to our app, but that wont actually get us where we want. What we want, is a way to capture the form submission and have a place to handle the contents of our form. Fortunately, Sammy makes this easy. 
+When we try to submit it, we get some possibly unexpected behavior. The browser goes to #/cart and we're left with a blank content area. We could add a @get('#/cart')@ route to our app, but that wont actually get us where we want. What we want, is a way to capture the form submission and have a place to handle the contents of our form. Fortunately, Sammy makes this easy.
 
 Lets look back at the template and where we defined the form's attributes.
 
@@ -99,7 +103,7 @@ We're defining the @method@ as @post@ - within a Sammy app this means that the f
 
 {% highlight javascript %}
 this.post('#/cart', function(context) {
-  
+
 });
 {% endhighlight %}
 
@@ -147,13 +151,13 @@ For our purposes, we just need to include the @sammy.storage.js@ and @sammy.json
 
 {% highlight javascript %}
 var app = $.sammy(function() {
-  this.element_selector = '#main';    
+  this.element_selector = '#main';
   this.use(Sammy.Template);
-  this.use(Sammy.Session);  
+  this.use(Sammy.Session);
   //....
 {% endhighlight %}
 
-Including this gives us access to a @session()@ helper method that will store whatever we want in a persistent name-spaced object. @Sammy.Session@ automatically tries to use the best possible method for storing the data. First it tries the HTML5 @localStorage@ method. If this isn't available in the current browser (support is limited at the moment), it then tries storing it in a cookie. If cookies aren t available or turned off, it finally resorts to using in-memory storage, like our original implementation. Obviously, this last method isn't ideal, but at least we don't have to make any changes to our app code to support all these different methods. 
+Including this gives us access to a @session()@ helper method that will store whatever we want in a persistent name-spaced object. @Sammy.Session@ automatically tries to use the best possible method for storing the data. First it tries the HTML5 @localStorage@ method. If this isn't available in the current browser (support is limited at the moment), it then tries storing it in a cookie. If cookies aren t available or turned off, it finally resorts to using in-memory storage, like our original implementation. Obviously, this last method isn't ideal, but at least we don't have to make any changes to our app code to support all these different methods.
 
 Lets make use of our new @session()@ helper in our current code. You'll see we don't have to change much:
 
@@ -207,7 +211,7 @@ We'll create a custom event that will calculate the current number of items and 
 
 {% highlight javascript %}
 this.bind('update-cart', function() {
-  
+
 });
 {% endhighlight %}
 
@@ -228,7 +232,7 @@ this.bind('update-cart', function() {
 });
 {% endhighlight %}
 
-It might seem like a bit of code, but you'll notice that theres actually very little to it. We sum the quantity of all the items in the cart, then we update the number displayed in the header. Finally, we call @jQuery.animate()@ to add a little flair to the display and to draw attention, so that the user has the feeling of actually _doing_ something. Of course at this point, nothing is doing anything, since this event never gets triggered. Easy enough, lets trigger the update after we post to our cart. At the end of our @post@ route: 
+It might seem like a bit of code, but you'll notice that theres actually very little to it. We sum the quantity of all the items in the cart, then we update the number displayed in the header. Finally, we call @jQuery.animate()@ to add a little flair to the display and to draw attention, so that the user has the feeling of actually _doing_ something. Of course at this point, nothing is doing anything, since this event never gets triggered. Easy enough, lets trigger the update after we post to our cart. At the end of our @post@ route:
 
 {% highlight javascript %}
 this.trigger('update-cart');
@@ -255,7 +259,7 @@ this.post('#/cart', function(context) {
 });
 {% endhighlight %}
 
-Now when you _add to cart_, you should see the "My Cart" text updated and the little area seem to _bounce_ (and how!). 
+Now when you _add to cart_, you should see the "My Cart" text updated and the little area seem to _bounce_ (and how!).
 
 Theres just one last thing for this episode. When the page loads, even if we already have items in our cart - it always reads "My Cart (0 items)". Well this just won't do. What we need is to fire the @update-cart@ event when the page loads. Luckily, Sammy provides a series of _life-cycle_ events that we can bind to. The most commonly used event is 'run'. This event is fired after the DOM loads and the app is started when we call @app.run()@. This is where we can put any _initializations_ like we want to do with the cart display.
 

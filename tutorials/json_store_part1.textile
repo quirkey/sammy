@@ -22,6 +22,10 @@ h2. Tutorials
 
 h3. The JSON Store: A Sammy.js Tutorial, Part I
 
+<div class="warning">
+  This tutorial is currently under reconstruction. It was written for Sammy v0.4 and is being updated for the changes in the latest version v0.6. The basic concepts are the same, but some of the syntax has changed. Sorry for the inconvenience. You can stay tuned to changes by "watching the github repo":http://github.com/quirkey/sammy/commits/gh-pages
+</div>
+
 As promised I'm starting a series of tutorials for getting to know Sammy.js. Instead of starting huge I'm going to start pretty small and slowly build up. However, instead of starting at Hello World (which the documentation pretty well covers), lets jump into a somewhat more realistic use case. Lets party like its 1999 and build ourselves an E-commerce front end! (Don't you love the word E-commerce? Its just like E-mail, but with more $$$.) We'll call our shop The JSON Store (_just to confuse people_).
 
 The goal of this little walkthrough is to build a very basic e-commerce front end. It wont do everything yet. We'll get to everything later. What it will do:
@@ -45,7 +49,7 @@ $ tree the_json_store
 |-templates
 {% endhighlight %}
 
-The sammy directory is just a clone of the lib/ directory in the sammy repository. 
+The sammy directory is just a clone of the lib/ directory in the sammy repository.
 
 {% highlight bash %}
 $ git clone git://github.com/quirkey/sammy.git
@@ -59,7 +63,7 @@ cd the_json_store/javascripts
 wget http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js
 {% endhighlight %}
 
-OK. Those are all the dependencies. Lets also create an empty JS file to store our app code. We could just include the code inside of script tags in our HTML, but I find its cleaner and easier to manage as an external file. 
+OK. Those are all the dependencies. Lets also create an empty JS file to store our app code. We could just include the code inside of script tags in our HTML, but I find its cleaner and easier to manage as an external file.
 
 {% highlight bash %}
 cd the_json_store/javascripts
@@ -76,7 +80,7 @@ Now lets get started by making a basic HTML thats empty except for our script in
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-  <title>The JSON Store</title>	
+  <title>The JSON Store</title>
 </head>
 <body>
 
@@ -106,11 +110,11 @@ Lets dig in and start actually coding our Sammy app. In our app file (javascript
 
 {% highlight javascript %}
 (function($) {
-  
+
   $.sammy(function() {
-    
+
   });
-  
+
 })(jQuery);
 {% endhighlight %}
 
@@ -130,7 +134,7 @@ Now we have to tell our Sammy app to only worry about the 'main' area.
 
 {% highlight javascript %}
 $.sammy(function() {
-  this.element_selector = '#main';    
+  this.element_selector = '#main';
 });
 {% endhighlight %}
 
@@ -144,7 +148,7 @@ First step: create a route.
 
 {% highlight javascript %}
 this.get('#/', function(context) {
-  
+
 });
 {% endhighlight %}
 
@@ -162,20 +166,20 @@ Oy, It doesn't. Even if we change the URL to 'index.html#/' it still doesn't sen
 
 {% highlight javascript %}
 (function($) {
-  
+
   var app = $.sammy(function() {
-    this.element_selector = '#main';    
+    this.element_selector = '#main';
 
     this.get('#/', function(context) {
       context.log('Yo yo yo');
     });
-    
+
   });
-  
+
   $(function() {
     app.run('#/');
   });
-  
+
 })(jQuery);
 {% endhighlight %}
 
@@ -188,7 +192,7 @@ Huzzah! Lets proceed to making our route actually useful. As we said, the first 
 {% highlight javascript %}
 this.get('#/', function(context) {
   $.ajax({
-    url: 'data/items.js', 
+    url: 'data/items.js',
     dataType: 'json',
     success: function(items) {
       $.each(items, function(i, item) {
@@ -203,7 +207,7 @@ If all goes as plan, we should see our items print in the console:
 
 !http://img.skitch.com/20091009-cyfjd81r2p38m4mtkmiehbmi4m.jpg!
 
-OKAY! Now that we have our data, we want to actual render it so that our thousands of potential shoppers can see it. 
+OKAY! Now that we have our data, we want to actual render it so that our thousands of potential shoppers can see it.
 
 Lets talk about client side templating. As of Sammy 0.3, templating is not built in, but its very easy to include. The Sammy.Template plugin provides us with a simple method based on "John Resig's templating code":http://ejohn.org/blog/javascript-micro-templating/ and "Greg Borenstein's $.srender":http://ideasfordozens.com that allows us to render HTML with embedded javascript and variables. _There are a number of Javascript/Client side templating options out there, and I hope to have plugins to support them as soon as possible. Please fork and contribute!_
 
@@ -251,7 +255,7 @@ Theres just one more missing element for our first phase. Clicking on an item to
 
 {% highlight javascript %}
 this.get('#/item/:id', function(context) {
-  
+
 });
 {% endhighlight %}
 
@@ -262,7 +266,7 @@ this.before(function() {
   // load the items
   var context = this;
   $.ajax({
-    url: 'data/items.js', 
+    url: 'data/items.js',
     dataType: 'json',
     async: false,
     success: function(items) {
@@ -274,7 +278,7 @@ this.before(function() {
 
 The first difference is instead of rendering partials in the AJAX callback, we're going to just assign the items to items in our context. This will allow us to retrieve them easily in the route callbacks. The second difference is a little more subtle. By setting the @async@ option to @false@, we're making sure this request executes synchronously and therefore blocks execution of the routes until its finished. This is definitely the easiest way to make sure that routes don't get execute before data is loaded, but its not necessarily the best. We'll go over better ways to do this in a later tutorial.
 
-Now that we have the item data loaded in our context, lets pull out the item we want and render a detail view. 
+Now that we have the item data loaded in our context, lets pull out the item we want and render a detail view.
 
 {% highlight javascript %}
 this.get('#/item/:id', function(context) {
@@ -284,7 +288,7 @@ this.get('#/item/:id', function(context) {
 });
 {% endhighlight %}
 
-Pretty simple, ay? For demonstration sake, here I'm using @this@ instead of @context@ to show that in a route callback, they're equivalent. Its important to mention though, if your nesting callbacks, @this@ will most likely change, which is why using the @context@ from the arguments is rather helpful. 
+Pretty simple, ay? For demonstration sake, here I'm using @this@ instead of @context@ to show that in a route callback, they're equivalent. Its important to mention though, if your nesting callbacks, @this@ will most likely change, which is why using the @context@ from the arguments is rather helpful.
 
 We pull item item out of the array, assign it to @item@ and then render a new item_detail template. We dont have to supply and extra arguments to @partial()@ because we can replace the entire content area and also use the item we've assigned to the context.  The template code, looks roughly the same as the index item template, except we're going to use the large image, and add a link to Amazon and a link back to the index:
 
