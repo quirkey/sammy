@@ -1040,7 +1040,19 @@
         equal(this.app.c, 3);
       });
 
-
+      context('Sammy.Application', '$element', {
+        before: function() {
+          this.app = $.sammy(function() {
+            this.element_selector = '#main';
+          });
+        }
+      })
+      .should('accept an element selector', function() {
+        sameHTML(this.app.$element('.inline-template-1'), '<div class="inline-template-1"><div class="name"></div></div>');
+      })
+      .should('return the app element if no selector is given', function() {
+        equal(this.app.$element().attr('id'), 'main');
+      });
     }
   // });
 })(jQuery);
