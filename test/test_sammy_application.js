@@ -194,16 +194,21 @@
       context('Sammy.Application', 'bind', {
         before: function() {
           var context = this;
-          context.triggered = false;
+          context.triggered = [];
           this.app = new Sammy.Application(function() {
 
             context.returned = this.bind('boosh', function() {
-              context.triggered = 'boosh';
+              context.triggered.push('boosh');
               context.inner_context = this;
             });
 
             this.bind('blurgh', function() {
-              context.triggered = 'blurgh';
+              context.triggered.push('blurgh-string');
+              context.inner_context = this;
+            });
+
+            this.bind(/blur/, function() {
+              context.triggered.push('blurgh-regex');
               context.inner_context = this;
             });
 
@@ -213,34 +218,35 @@
       .should('return the sammy application instance', function() {
         equal(this.returned, this.app);
       })
-      .should('add callback to the listeners collection', function() {
-        equal(this.app.listeners['boosh'].length, 1);
+      .should('add callback to the routes collection', function() {
+        equal(this.app.routes['bind'].length, 3);
       })
       .should('not be able to trigger before run', function() {
         var app = this.app;
         var context = this;
         app.trigger('boosh');
         soon(function() {
-          equal(context.triggered, false);
+          equal(context.triggered.length, 0);
         });
       })
       .should('actually bind/be able to trigger to element after run', function() {
         var app = this.app;
         var context = this;
         app.run();
+        console.log(app);
         app.trigger('blurgh');
         soon(function() {
-          equal(context.triggered, 'blurgh');
+          contains(context.triggered, 'blurgh-string');
           app.unload();
         });
       })
-      .should('catch events on the bound element', function() {
+      .should_eventually('catch events on the bound element', function() {
         var app = this.app;
         var context = this;
         app.run();
         app.$element().trigger('boosh');
         soon(function() {
-          equal(context.triggered, 'boosh');
+          contains(context.triggered, 'boosh');
           equal(context.inner_context.verb, 'bind');
           app.unload();
         }, this, 2, 2);
@@ -250,6 +256,7 @@
         var event_context = null;
         var yielded_context = null;
         this.app.bind('serious-boosh', function() {
+          console.log('running serious boosh');
           event_context = this;
         });
         app.run();
@@ -260,6 +267,17 @@
           equal(event_context.path, 'serious-boosh');
           app.unload();
         }, this, 1, 3);
+      })
+      .should('trigger multiple matching events', function() {
+          var app = this.app;
+          var context = this;
+          app.run();
+          app.trigger('blurgh');
+          soon(function() {
+            contains(context.triggered, 'blurgh-string');
+            contains(context.triggered, 'blurgh-regex');
+            app.unload();
+          }, this, 1, 2);
       });
 
       context('Sammy.Application','run', {
@@ -471,6 +489,10 @@
             this.route('post', '/blah', function() {
               $('#testarea').show();
             });
+
+            this.route('post', '/blah', function() {
+
+            });
           });
         }
       })
@@ -494,6 +516,12 @@
         isType(route, 'Object');
         equal(route.verb, 'get');
         defined(route, 'callback');
+      })
+      .should('find all matching routes with all', function() {
+        var app = this.app;
+        var routes = app.lookupRoute('post','/blah', true);
+        isType(routes, 'Array')
+        equal(routes.length, 2);
       });
 
       context('Sammy.Application','runRoute', {
