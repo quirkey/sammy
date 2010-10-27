@@ -405,6 +405,22 @@
           app.unload();
         });
       })
+      .should('URL encode form values', function() {
+        var app = this.app;
+        app.route('get', '#/live', function() {});
+        app.run('#/');
+        $('#main').append('<form id="live_form" action="#/live" method="get">' +
+           '<input name="spaces" type="text" value="value with spaces"/>' +
+           '<input name="pluses" type="text" value="+++"/>' +
+           '<input type="submit" class="submit"/>' +
+           '</form>'
+         );
+        $('#live_form .submit').submit();
+        soon(function() {
+          equal(window.location.hash, '#/live?spaces=value%20with%20spaces&pluses=%2B%2B%2B');
+          app.unload();
+        });
+      })
       .should('trigger routes on URL change', function() {
         var app = this.app;
         app.run();
