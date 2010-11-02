@@ -194,17 +194,21 @@
       context('Sammy.Application', 'bind', {
         before: function() {
           var context = this;
-          context.triggered = false;
+          context.triggered = [];
           this.app = new Sammy.Application(function() {
 
             context.returned = this.bind('boosh', function() {
-              context.triggered = 'boosh';
+              context.triggered.push('boosh');
               context.inner_context = this;
             });
 
             this.bind('blurgh', function() {
-              context.triggered = 'blurgh';
+              context.triggered.push('blurgh-string');
               context.inner_context = this;
+            });
+
+            this.bind(/blur/, function() {
+              context.triggered.push('blurgh-regex')
             });
 
           });
@@ -221,7 +225,7 @@
         var context = this;
         app.trigger('boosh');
         soon(function() {
-          equal(context.triggered, false);
+          equal(context.triggered, []);
         });
       })
       .should('actually bind/be able to trigger to element after run', function() {
@@ -230,7 +234,7 @@
         app.run();
         app.trigger('blurgh');
         soon(function() {
-          equal(context.triggered, 'blurgh');
+          contains(context.triggered, 'blurgh-string');
           app.unload();
         });
       })
@@ -240,7 +244,7 @@
         app.run();
         app.$element().trigger('boosh');
         soon(function() {
-          equal(context.triggered, 'boosh');
+          contains(context.triggered, 'boosh');
           equal(context.inner_context.verb, 'bind');
           app.unload();
         }, this, 2, 2);
@@ -260,6 +264,17 @@
           equal(event_context.path, 'serious-boosh');
           app.unload();
         }, this, 1, 3);
+      })
+      .should('trigger multiple matching events', function() {
+          var app = this.app;
+          var context = this;
+          app.run();
+          app.trigger('blurgh');
+          soon(function() {
+            contains(context.triggered, 'blurgh-string');
+            contains(context.triggered, 'blurgh-regex');
+            app.unload();
+          });
       });
 
       context('Sammy.Application','run', {

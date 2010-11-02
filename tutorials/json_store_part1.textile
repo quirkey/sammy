@@ -60,7 +60,7 @@ It's a bunch of extraneous files, but thats OK, we're not including all of them 
 
 {% highlight bash %}
 cd the_json_store/javascripts
-wget http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js
+wget http://jqueryjs.googlecode.com/files/jquery-1.4.2.js
 {% endhighlight %}
 
 OK. Those are all the dependencies. Lets also create an empty JS file to store our app code. We could just include the code inside of script tags in our HTML, but I find its cleaner and easier to manage as an external file.
@@ -84,7 +84,7 @@ Now lets get started by making a basic HTML thats empty except for our script in
 </head>
 <body>
 
-<script src="javascripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="javascripts/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="javascripts/sammy/sammy.js" type="text/javascript" charset="utf-8"></script>
 <script src="javascripts/json_store.js" type="text/javascript" charset="utf-8"></script>
 </body>
@@ -104,7 +104,7 @@ The main thing worth noting is the order that which we include the files. First 
 }
 {% endhighlight %}
 
-data/items.js is an array of 4 items with an identical structure.
+data/items.json is an array of 4 items with an identical structure.
 
 Lets dig in and start actually coding our Sammy app. In our app file (javascripts/json_store.js) lets encapsulate our code in "the module pattern":http://yuiblog.com/blog/2007/06/12/module-pattern/ so that we can prevent any scope leak and make use of local functions.
 
@@ -130,7 +130,8 @@ The first thing we want to do is handle an 'index'. This should be the page that
 </div>
 {% endhighlight %}
 
-Now we have to tell our Sammy app to only worry about the 'main' area.
+Now we have to tell our Sammy app to only worry about the 'main' area. You
+do this by setting the app's @element_selector@.
 
 {% highlight javascript %}
 $.sammy(function() {
@@ -138,11 +139,19 @@ $.sammy(function() {
 });
 {% endhighlight %}
 
-OK. For our 'index' we want to load all the items, then display each of them within the grid. Plan of attack:
+That's pretty explicit; It's also possible to use this shorthand:
+
+{% highlight javascript %}
+$.sammy('#main', function() {
+
+});
+{% endhighlight %}
+
+For our 'index' we want to load all the items, then display each of them within the grid. Plan of attack:
 
 * create a route to handle the index
 * ajax fetch the item data
-* render each item using client side templating
+* render each item using client-side templating
 
 First step: create a route.
 
@@ -167,8 +176,7 @@ Oy, It doesn't. Even if we change the URL to 'index.html#/' it still doesn't sen
 {% highlight javascript %}
 (function($) {
 
-  var app = $.sammy(function() {
-    this.element_selector = '#main';
+  var app = $.sammy('#main', function() {
 
     this.get('#/', function(context) {
       context.log('Yo yo yo');
@@ -192,7 +200,7 @@ Huzzah! Lets proceed to making our route actually useful. As we said, the first 
 {% highlight javascript %}
 this.get('#/', function(context) {
   $.ajax({
-    url: 'data/items.js',
+    url: 'data/items.json',
     dataType: 'json',
     success: function(items) {
       $.each(items, function(i, item) {
@@ -209,9 +217,53 @@ If all goes as plan, we should see our items print in the console:
 
 OKAY! Now that we have our data, we want to actual render it so that our thousands of potential shoppers can see it.
 
-Lets talk about client side templating. As of Sammy 0.3, templating is not built in, but its very easy to include. The Sammy.Template plugin provides us with a simple method based on "John Resig's templating code":http://ejohn.org/blog/javascript-micro-templating/ and "Greg Borenstein's $.srender":http://ideasfordozens.com that allows us to render HTML with embedded javascript and variables. _There are a number of Javascript/Client side templating options out there, and I hope to have plugins to support them as soon as possible. Please fork and contribute!_
+<div class="warning">
+<h4>Note about using Google Chrome (or Chromium) and AJAX</h4>
+<p>If you're using a recent version of chrome and have followed the instructions up until this point, you might be scratching your head wondering why nothing seems to work, or at least the items dont seem to be fetched from the JSON. Since version 5, Chrome has blocked AJAX resquests to any protocol other than @http://@. Of course, this includes @file://@, so if you're just running this code on your local machine the AJAX requests will seem to work, but just wont.
+</p>
+<p>There's an easy solution, however, just run a local web server. If you're coding in a Django, Sinatra, or Rails app, this shouldn't be a problem. If you just want to serve files from a directory, there are a couple options. If you're on OS X, you have Apache built in. Start Web Sharing in your Sharing Preferences and put you're files under the Apache www directory. To make it even easier, I've "included a simple ruby script called 'servefiles'":http://github.com/quirkey/the_json_store/blob/master/servefiles that will start a ruby web server in the directory.</p>
+</div>
 
-In order to use Sammy.Template we need to include the plugin in our HTML and then 'use' it in our app.
+As of Sammy 0.6 there's a whole new way to load data, interpolate it, and add it to the screen - the @RenderContext@. The @RenderContext@ tries to abstract away the problems of complex asynchronous templating, by creating a simple way to chain commands. The chaining looks a lot like jQuery's own syntax, but @RenderContext@ actually is doing a lot behind the scenes to make sure that each command happens in order whether its asynchronous or not. This means that you can fetch the data, interpolate it, and render it to the screen without ever making a callback. Sounds pretty nifty, eh?
+
+Lets start by changing the @$.ajax()@ call into a call to @load()@. @load@ will create a @RenderContext@ then load the data at the URL given and pass it to the next command in the chain. In our case we can just make this a call to @then()@.
+
+{% highlight javascript %}
+this.get('#/', function(context) {
+  this.load('data/items.json')
+      .then(function(items) {
+          $.each(items, function(i, item) {
+            context.log(item.title, '-', item.artist);
+          });
+      });
+});
+{% endhighlight %}
+
+@then()@ is one of the building blocks of @RenderContext@ that all the other commands use. It tells the @RenderContext@ to execute the callback as soon as the previous operation is done, passing the results as an argument. For example, we could chain as many @then()@s as we want, returning something different each time:
+
+{% highlight javascript %}
+this.load('data/items.json')
+    .then(function(items) {
+      this.log(items); //=> [{title: ...}]
+      return items[0];
+    })
+    .then(function(item) {
+      this.log(item); //=> {title: ...}
+      return item.title;
+    })
+    then(function(title) {
+      this.log(title); //=> "The Door"
+    });
+
+{% endhighlight %}
+
+Obviously the above example is useless, but you can see how we can refine or change content and then pass it down the chain. To learn more about @RenderContext@, check out "the API Documentation":http://code.quirkey.com/sammy/docs/api.html#Sammy.RenderContext
+
+By changing our original AJAX call to @load()@ we've also gained parsing of the JSON, simply by using the @.json@ extension. That tells Sammy to use the JSON 'engine' to parse the file, which in this case turns it from a JSON string, to a JS object.
+
+Now that we have the data and a @RenderContext@ to work with, lets make a template and interpolate the data. To do this we have to pick a templating engine and install the Sammy plugin for it. There are a lot of great options for client side templating these days - Mustache, EJS, HAML, Pure, Meld - I suggest when writing an app, you check them all out and evaluate which of them fits your needs. For the purposes of this tutorial, we're going to pick an old and trusted friend: @Sammy.Template@. The @Sammy.Template@ plugin provides us with a simple method based on "John Resig's templating code":http://ejohn.org/blog/javascript-micro-templating/ and "Greg Borenstein's $.srender":http://ideasfordozens.com that allows us to render HTML with embedded javascript and variables.
+
+In order to use @Sammy.Template@ we need to include the plugin in our HTML and then 'use' it in our app.
 
 In index.html:
 
@@ -222,8 +274,10 @@ In index.html:
 In our app:
 
 {% highlight javascript %}
-this.use(Sammy.Template);
+this.use('Template');
 {% endhighlight %}
+
+Using @'Template'@ as a string above is a shortcut for saying include the @Sammy@.Template object.
 
 Two lines later, we got templates! Lets create a simple template for an item.
 In templates/item.template:
@@ -237,17 +291,16 @@ In templates/item.template:
 </div>
 {% endhighlight %}
 
-Here we're going to interpolate a single item and print out some of its data. Now that we have our template, lets render it. The method for rendering remote templates in Sammy is @partial@. Instead of just logging, lets render the items with our new template:
+Here we're going to interpolate a single item and print out some of its data. Now that we have our template, lets render it. The method for rendering remote templates in Sammy is @render@. Instead of just logging, lets render the items with our new template:
 
 {% highlight javascript %}
 $.each(items, function(i, item) {
-  context.partial('templates/item.template', {item: item}, function(rendered) {
-    context.$element().append(rendered);
-  });
+  context.render('templates/item.template', {item: item})
+         .appendTo(context.$element());
 });
 {% endhighlight %}
 
-Here we're telling the context to fetch the template at the path we've defined. By using the extension 'template' we're informing Sammy to use the @template()@ method we've defined. Next, we're passing local variables to the template. Here its our our item. Because we're not swapping out the entire content area, we need to define a callback that just appends the rendered item to our $element (which we defined about as @#main@). With our new partial we should see our items displaying! (_NOTE: I took a brief but inconsequential interlude to add just a "teeny bit of stylesheet":http://github.com/quirkey/the_json_store/blob/master/stylesheets/jsonstore.css so that our page isn't so ugly_).
+Here we're telling the context to fetch the template at the path we've defined. By using the extension 'template' we're informing Sammy to use the @template()@ method we've defined. Next, we're passing local variables to the template. Here its our our item. Because we're not swapping out the entire content area, we use @.appendTo()@ to append the rendered content to our app's @$element@. With our new partial we should see our items displaying! (_NOTE: I took a brief but inconsequential interlude to add just a "teeny bit of stylesheet":http://github.com/quirkey/the_json_store/blob/master/stylesheets/jsonstore.css so that our page isn't so ugly_).
 
 !http://img.skitch.com/20091010-caw27njugyknrajd67eiwatj2w.jpg!
 
@@ -259,24 +312,21 @@ this.get('#/item/:id', function(context) {
 });
 {% endhighlight %}
 
-Here we're using the special :id interpolation in our route path. This allows us to pull the id for the item into the params object. For the sake of simplicity, were going to say that an item id is its index in the items array. This means that before we can load the details, we need to load the items data again. Instead of a dreaded copy and paste, lets use the opportunity to refactor a bit. Since we know were going to need to load the items _before_ each route, lets use Sammy's @before()@ method. We can pretty much move the code we have in our index route with a couple of small changes:
+Here we're using the special :id interpolation in our route path. This allows us to pull the id for the item into the params object. For the sake of simplicity, were going to say that an item id is its index in the items array. This means that before we can load the details, we need to load the items data again. Instead of a dreaded copy and paste, lets use the opportunity to refactor a bit. Since we know were going to need to load the items _before_ each route, we could use the @before()@ method to run something before each route runs. However, this won't work because we're not just doing anything before, we're making an asynchronous request to the server/filesystem and _then_ when its complete, we want to move on to the route. For this set of problems, we have @around()@. @around()@ works similar to before, but instead of just proceeding to the route, we have to let Sammy know to move on to the next operation. In our case, this would look something like:
 
 {% highlight javascript %}
-this.before(function() {
-  // load the items
+this.around(function(callback) {
   var context = this;
-  $.ajax({
-    url: 'data/items.js',
-    dataType: 'json',
-    async: false,
-    success: function(items) {
-      context.items = items;
-    }
-  });
+  this.load('data/items.json')
+      .then(function(items) {
+        context.items = items;
+      })
+      .then(callback);
 });
 {% endhighlight %}
 
-The first difference is instead of rendering partials in the AJAX callback, we're going to just assign the items to items in our context. This will allow us to retrieve them easily in the route callbacks. The second difference is a little more subtle. By setting the @async@ option to @false@, we're making sure this request executes synchronously and therefore blocks execution of the routes until its finished. This is definitely the easiest way to make sure that routes don't get execute before data is loaded, but its not necessarily the best. We'll go over better ways to do this in a later tutorial.
+
+First, we load the items.json as we did before, _then_ we assign the items into our @EventContext@ which is a shared context between the filters and the route. The first argument to the @around@ callback is the next callback in the chain, or in this case the route. Once we've assigned the items, we can queue the callback, making sure that the items are always loaded before we run our route code.
 
 Now that we have the item data loaded in our context, lets pull out the item we want and render a detail view.
 
@@ -290,7 +340,7 @@ this.get('#/item/:id', function(context) {
 
 Pretty simple, ay? For demonstration sake, here I'm using @this@ instead of @context@ to show that in a route callback, they're equivalent. Its important to mention though, if your nesting callbacks, @this@ will most likely change, which is why using the @context@ from the arguments is rather helpful.
 
-We pull item item out of the array, assign it to @item@ and then render a new item_detail template. We dont have to supply and extra arguments to @partial()@ because we can replace the entire content area and also use the item we've assigned to the context.  The template code, looks roughly the same as the index item template, except we're going to use the large image, and add a link to Amazon and a link back to the index:
+We pull item item out of the array, assign it to @item@ and then render a new item_detail template. This time, instead of using @render()@, we use @partial()@ which internally calls render and _then_ swaps our the content of the entire app element. The template code looks roughly the same as the index item template, except we're going to use the large image and add a link to Amazon and a link back to the index:
 
 {% highlight html %}
 <div class="item-detail">
@@ -321,10 +371,9 @@ And then make sure we interpolate the id into our template:
 
 {% highlight javascript %}
 this.get('#/', function(context) {
-  $.each(context.items, function(i, item) {
-    context.partial('templates/item.template', {id: i, item: item}, function(rendered) {
-      context.$element().append(rendered);
-    });
+  $.each(this.items, function(i, item) {
+    context.render('templates/item.template', {id: i, item: item})
+           .appendTo(context.$element());
   });
 });
 {% endhighlight %}

@@ -22,10 +22,6 @@ h2. Tutorials
 
 h3. The JSON Store: A Sammy.js Tutorial, Part II
 
-<div class="warning">
-  This tutorial is currently under reconstruction. It was written for Sammy v0.4 and is being updated for the changes in the latest version v0.6. The basic concepts are the same, but some of the syntax has changed. Sorry for the inconvenience. You can stay tuned to changes by "watching the github repo":http://github.com/quirkey/sammy/commits/gh-pages
-</div>
-
 _This is part two in a tutorial series introducing the core concepts of Sammy.js, if this is your first time here, may I suggest starting with "Part I":json_store_part1.html_
 
 For this belated Part II, we're going to jump right where we left off last time, and go through another big part of the world of Sammy.js. Last time we got our little JSON store to the point where we:
@@ -134,7 +130,7 @@ this.post('#/cart', function(context) {
     // initialize its quantity with 0
     cart[item_id] = 0;
   }
-  cart[item_id] += parseInt(this.params['quantity']);
+  cart[item_id] += parseInt(this.params['quantity'], 10);
   this.log("The current cart: ", cart);
 });
 {% endhighlight %}
@@ -150,10 +146,9 @@ As of Sammy 0.4, theres a new system for doing just that called @Sammy.Storage@.
 For our purposes, we just need to include the @sammy.storage.js@ and @sammy.json.js@ files in our index and then include the plugin in our app:
 
 {% highlight javascript %}
-var app = $.sammy(function() {
-  this.element_selector = '#main';
-  this.use(Sammy.Template);
-  this.use(Sammy.Session);
+var app = $.sammy('#main', function() {
+  this.use('Template');
+  this.use('Session');
   //....
 {% endhighlight %}
 
@@ -173,7 +168,7 @@ this.post('#/cart', function(context) {
     // initialize its quantity with 0
     cart[item_id] = 0;
   }
-  cart[item_id] += parseInt(this.params['quantity']);
+  cart[item_id] += parseInt(this.params['quantity'], 10);
   // store the cart
   this.session('cart', cart);
   this.log("The current cart: ", cart);
