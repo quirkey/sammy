@@ -22,10 +22,6 @@ h2. Tutorials
 
 h3. The JSON Store: A Sammy.js Tutorial, Part I
 
-<div class="warning">
-  This tutorial is currently under reconstruction. It was written for Sammy v0.4 and is being updated for the changes in the latest version v0.6. The basic concepts are the same, but some of the syntax has changed. Sorry for the inconvenience. You can stay tuned to changes by "watching the github repo":http://github.com/quirkey/sammy/commits/gh-pages
-</div>
-
 As promised I'm starting a series of tutorials for getting to know Sammy.js. Instead of starting huge I'm going to start pretty small and slowly build up. However, instead of starting at Hello World (which the documentation pretty well covers), lets jump into a somewhat more realistic use case. Lets party like its 1999 and build ourselves an E-commerce front end! (Don't you love the word E-commerce? Its just like E-mail, but with more $$$.) We'll call our shop The JSON Store (_just to confuse people_).
 
 The goal of this little walkthrough is to build a very basic e-commerce front end. It wont do everything yet. We'll get to everything later. What it will do:
