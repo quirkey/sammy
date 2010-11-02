@@ -384,3 +384,5 @@ this.get('#/', function(context) {
 {% endhighlight %}
 
 So after writing more HTML than Sammy code, we have a very simple single page app that loads JSON data, renders HTML using client side templating, and lets us link between multiple different routes dynamically. Not too shabby. Next time we'll learn how to use @post()@ routes to handle form submissions and more!
+
+*"Go on to Part II Now":json_store_part2.html*
