@@ -423,6 +423,22 @@
           app.unload();
         });
       })
+      .should('URL encode form values', function() {
+        var app = this.app;
+        app.route('get', '#/live', function() {});
+        app.run('#/');
+        $('#main').append('<form id="live_form" action="#/live" method="get">' +
+           '<input name="spaces" type="text" value="value with spaces"/>' +
+           '<input name="pluses" type="text" value="+++"/>' +
+           '<input type="submit" class="submit"/>' +
+           '</form>'
+         );
+        $('#live_form .submit').submit();
+        soon(function() {
+          equal(window.location.hash, '#/live?spaces=value%20with%20spaces&pluses=%2B%2B%2B');
+          app.unload();
+        });
+      })
       .should('trigger routes on URL change', function() {
         var app = this.app;
         app.run();
@@ -1068,7 +1084,19 @@
         equal(this.app.c, 3);
       });
 
-
+      context('Sammy.Application', '$element', {
+        before: function() {
+          this.app = $.sammy(function() {
+            this.element_selector = '#main';
+          });
+        }
+      })
+      .should('accept an element selector', function() {
+        sameHTML(this.app.$element('.inline-template-1'), '<div class="inline-template-1"><div class="name"></div></div>');
+      })
+      .should('return the app element if no selector is given', function() {
+        equal(this.app.$element().attr('id'), 'main');
+      });
     }
   // });
 })(jQuery);
