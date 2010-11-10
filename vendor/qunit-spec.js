@@ -50,7 +50,7 @@
 
     pending: function(name, callback, nowait) {
       name = '<span style="color: #EB8531;" class="pending">DEFERRED: ' + name + '</span>';
-      return this.it.apply(this, [name, function () { QUnit.ok(true) }, nowait]);
+      return this.it.apply(this, [name, function () { QUnit.ok(true); }, nowait]);
     },
 
     should_eventually: function(name, callback, nowait) {
@@ -85,18 +85,22 @@
     raised: function(expected_error, callback) {
       var error = null;
       try {
-        callback.apply(this);
+        try {
+          callback.apply(this);
+        } catch(e) {
+          error = e;
+        }
+        error_message = (error && error.message) ? error.message.toString() : error.toString();
+        message = "expected error: " + expected_error + ", actual error:" + error_message;
+        if (expected_error.constructor == RegExp) {
+          return QUnit.matches(expected_error, error_message, message);
+        } else if (expected_error.constructor == String) {
+          return QUnit.equal(expected_error, error_message, message);
+        } else {
+          return QUnit.deepEqual(expected_error, error, message);
+        }
       } catch(e) {
-        error = e;
-      }
-      error_message = error && error.message ? error.message.toString() : error.toString();
-      message = "expected error: " + expected_error.toString() + ", actual error:" + error_message;
-      if (expected_error.constructor == RegExp) {
-        return QUnit.matches(expected_error, error_message, message);
-      } else if (expected_error.constructor == String) {
-        return QUnit.equal(expected_error, error_message, message);
-      } else {
-        return QUnit.deepEqual(expected_error, error, message);
+        false;
       }
     },
 
@@ -143,7 +147,7 @@
     },
 
     contains: function(arr, element) {
-      ok(arr.indexOf(element) != -1, arr + " includes " + element);
+      ok(arr.indexOf(element) != -1, arr + " should include " + element);
     }
 
   });
