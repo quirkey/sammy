@@ -37,7 +37,7 @@
         }
       })
       .should('set full location if url is provided', function() {
-        this.context.redirect('index.html#/boosh');
+        this.context.redirect([window.location.pathname, window.location.search, '#/boosh'].join(''));
         equal('#/boosh', window.location.hash);
       })
       .should('only set hash if location is prefixed with #', function() {
@@ -167,8 +167,7 @@
         });
         this.context.trigger('other.custom');
         soon(function() {
-          equal(event_context.params, test_context.params);
-          equal(event_context.context, test_context)
+          equal(event_context.params['test'], test_context.params['test']);
           test_app.unload();
         });
       })
@@ -176,6 +175,7 @@
         var passed_data = null;
         var test_data   = {boosh: 'blurgh'};
         test_app.bind('custom-with-data', function(e, data) {
+          console.log(data);
           passed_data = data;
         });
         this.context.trigger('custom-with-data', test_data);

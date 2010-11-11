@@ -247,7 +247,7 @@
          });
 
          app.run('#/');
-         window.location.href = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature'
+         window.location.hash = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature'
          soon(function() {
            ok(app.form_params);
            equal(app.form_params['genre'][0], ['documentary']);
