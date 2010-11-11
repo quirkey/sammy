@@ -233,7 +233,6 @@
         var app = this.app;
         var context = this;
         app.run();
-        console.log(app);
         app.trigger('blurgh');
         soon(function() {
           contains(context.triggered, 'blurgh-string');
@@ -244,7 +243,7 @@
         var app = this.app;
         var context = this;
         app.run();
-        app.$element().trigger('boosh');
+        app.element().trigger('boosh');
         soon(function() {
           contains(context.triggered, 'boosh');
           equal(context.inner_context.verb, 'bind');
@@ -256,7 +255,6 @@
         var event_context = null;
         var yielded_context = null;
         this.app.bind('serious-boosh', function() {
-          console.log('running serious boosh');
           event_context = this;
         });
         app.run();
@@ -698,12 +696,12 @@
           this.app = new Sammy.Application(function() {
             this.after(function() {
               this.params['belch'] = 'burp';
-              context.after = this;
+              context.after = this.params;
             });
 
             this.get('#/', function() {
               this.params['belch'] = 'boosh';
-              context.route = this;
+              context.route = this.params;
             });
           });
         }
@@ -713,17 +711,9 @@
         this.app.run('#/');
         window.location.hash = '#/';
         soon(function() {
-          equal(context.after.params['belch'], 'burp');
+          equal(context.after['belch'], 'burp');
           context.app.unload();
         }, this, 5, 1);
-      })
-      .should('set context to event context', function() {
-        var context = this;
-        context.app.run('#/');
-        soon(function() {
-          deepEqual(context.route, context.after);
-          context.app.unload();
-        });
       });
 
       context('Sammy.Application', 'around', {
@@ -1018,7 +1008,7 @@
 
             this.helpers({
               alert: function(message) {
-                this.$element().append(message);
+                this.element().append(message);
               },
               partial: function(template, data) {
                 return "MY USELESS PARTIAL";
@@ -1085,7 +1075,7 @@
         equal(this.app.c, 3);
       });
 
-      context('Sammy.Application', '$element', {
+      context('Sammy.Application', 'element', {
         before: function() {
           this.app = $.sammy(function() {
             this.element_selector = '#main';
@@ -1093,10 +1083,10 @@
         }
       })
       .should('accept an element selector', function() {
-        sameHTML(this.app.$element('.inline-template-1'), '<div class="inline-template-1"><div class="name"></div></div>');
+        sameHTML(this.app.element('.inline-template-1'), '<div class="inline-template-1"><div class="name"></div></div>');
       })
       .should('return the app element if no selector is given', function() {
-        equal(this.app.$element().attr('id'), 'main');
+        equal(this.app.element().attr('id'), 'main');
       });
     }
   // });
