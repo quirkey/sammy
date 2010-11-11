@@ -106,8 +106,8 @@
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'});
         soon(function () {
-          equal(app.$element().text(), 'TEMPLATE!');
-          equal(app.$element().children('.test_template').length, 1);
+          equal(app.element().text(), 'TEMPLATE!');
+          equal(app.element().children('.test_template').length, 1);
         }, this, 2, 2);
       })
       .should('use default engine if provided and template doesnt match an engine', function() {
@@ -123,7 +123,7 @@
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial');
         soon(function () {
-          equal(app.$element().text(), '!!!NOENGINE!!!');
+          equal(app.element().text(), '!!!NOENGINE!!!');
         });
       })
       .should('use default engine as a method if template doesnt match an engine', function() {
@@ -137,7 +137,7 @@
         this.context = new app.context_prototype(app);
         this.context.partial('fixtures/partial.noengine');
         soon(function () {
-          equal(app.$element().text(), '!!!NOENGINE!!!');
+          equal(app.element().text(), '!!!NOENGINE!!!');
         });
       });
 
@@ -145,9 +145,6 @@
         before: function() {
           this.context = test_context;
           test_app.run();
-        },
-        after: function() {
-          test_app.unload();
         }
       })
       .should('trigger custom event on application', function() {
@@ -159,6 +156,7 @@
         this.context.trigger('custom');
         soon(function() {
           equal(spec_context.event_fired, true);
+          test_app.unload();
         });
       })
       .should('set the context of the event to the Sammy.EventContext', function() {
@@ -169,7 +167,9 @@
         });
         this.context.trigger('other.custom');
         soon(function() {
-          equal(event_context.toString(), test_context.toString());
+          equal(event_context.params, test_context.params);
+          equal(event_context.context, test_context)
+          test_app.unload();
         });
       })
       .should('pass data as an argument to the bound method', function() {
@@ -180,7 +180,8 @@
         });
         this.context.trigger('custom-with-data', test_data);
         soon(function() {
-          deepEqual(passed_data, test_data);
+          equal(passed_data, test_data);
+          test_app.unload();
         });
       });
 

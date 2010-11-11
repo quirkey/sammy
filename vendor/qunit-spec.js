@@ -132,18 +132,22 @@
     },
 
     sameHTML: function(actual, expected) {
-      var strippedHTML = function(element) {
-        return $(element)
-          .wrap('<div></div>')
-          .parent()
-          .html()
-          .toString()
-          .replace(/(>)(\s+)(<)/g, "><");
-      };
+      try {
+        var strippedHTML = function(element) {
+          return $(element)
+            .wrap('<div></div>')
+            .parent()
+            .html()
+            .toString()
+            .replace(/(>)(\s+)(<)/g, "><");
+        };
 
-      actual = strippedHTML(actual);
-      expected = strippedHTML(expected);
-      equal(actual, expected, "HTML is equal");
+        actual = strippedHTML(actual);
+        expected = strippedHTML(expected);
+        equal(actual, expected, "HTML is equal");
+      } catch(e) {
+        QUnit.ok(false, "problem evaluating sameHTML" + e.toString());
+      }
     },
 
     contains: function(arr, element) {
