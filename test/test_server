@@ -3,6 +3,11 @@ require 'rubygems'
 require 'sinatra/base'
 require 'vegas'
 
+Rack::Mime::MIME_TYPES['.template'] = Rack::Mime.mime_type('.html')
+Rack::Mime::MIME_TYPES['.meld']     = Rack::Mime.mime_type('.html')
+Rack::Mime::MIME_TYPES['.noengine'] = Rack::Mime.mime_type('.txt')
+Rack::Mime::MIME_TYPES['.']         = Rack::Mime.mime_type('.txt')
+
 class SammyTest < Sinatra::Application
 
   set :public, File.expand_path(File.dirname(__FILE__))
