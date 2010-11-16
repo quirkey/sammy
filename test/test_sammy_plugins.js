@@ -550,6 +550,7 @@
           this.app = new Sammy.Application(function() {
             this.use(Sammy.Session);
             this.use(Sammy.OAuth2);
+            this.loseAccessToken(); // Clear from previous run
             this.authorize = '#/oauth/authorize-me';
             this.requireOAuth();
             this.get('#/private', function(context) {
@@ -618,7 +619,47 @@
            this.app.unload();
          }, this, 1, 2);
       })
-      .should("test XHR", function() {
+      .should("trigger oauth.connected when connected", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.run('#/');
+        window.location.href = '#access_token=5678&state=%23';
+        soon(function() {
+          ok(connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("trigger oauth.connected if started with access token", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.setAccessToken('5678');
+        this.app.run('#/');
+        soon(function() {
+          ok(connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("not trigger oauth.connected if started without access token", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.run('#/');
+        soon(function() {
+          ok(!connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("trigger oauth.disconnected if access token lost", function() {
+        var disconnected;
+        this.app.bind('oauth.disconnected', function() { disconnected = true });
+        this.app.setAccessToken('5678');
+        this.app.run('#/');
+        window.location.href = '#/signout';
+        soon(function() {
+          ok(disconnected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("pass OAuth in header when making XHR request", function() {
          this.app.run('#/');
          this.app.setAccessToken('5678');
          xhr = { setRequestHeader: function(name, value) { this[name] = value } };
