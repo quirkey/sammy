@@ -543,5 +543,129 @@
         this.context.item = this.item;
         equals(this.context.template(template), rendered);
       });
+
+      context('Sammy', 'OAuth 2.0', {
+        before: function() {
+          window.location.hash = '';
+          this.app = new Sammy.Application(function() {
+            this.use(Sammy.Session);
+            this.use(Sammy.OAuth2);
+            this.loseAccessToken(); // Clear from previous run
+            this.authorize = '#/oauth/authorize-me';
+            this.requireOAuth();
+            this.get('#/private', function(context) {
+              context.app.requested = true;
+            });
+            this.get('#/signout', function(context) {
+              context.loseAccessToken();
+            });
+            this.bind('oauth.denied', function(evt, error) {
+              this.app.denied = error;
+            });
+          });
+        }
+      })
+      .should("request authorization if there is no token", function() {
+         this.app.run('#/');
+         window.location.href = '#/private';
+         soon(function() {
+           equal(location.hash, '#/oauth/authorize-me?state=%23/private');
+           ok(!this.app.requested);
+           this.app.unload();
+         }, this, 1, 2);
+      })
+      .should("capture access token from successful authorization", function() {
+         this.app.run('#/');
+         window.location.href = '#access_token=5678&state=%23';
+         soon(function() {
+           equal(this.app.getAccessToken(), '5678');
+           this.app.unload();
+         }, this, 1, 1);
+      })
+      .should("should redirect to original URL after successful authorization", function() {
+         this.app.run('#/');
+         window.location.href = '#state=%23/private&access_token=5678';
+         soon(function() {
+           ok(location.hash, '#/private');
+           this.app.unload();
+         }, this, 1, 1);
+      })
+      .should("trigger oauth.error event if authorization denied", function() {
+         this.app.run('#/');
+         window.location.href = '#error=access_denied&error_description=Access+Denied';
+         soon(function() {
+           equal(this.app.denied.code, 'access_denied');
+           equal(this.app.denied.message, "Access Denied");
+           this.app.unload();
+         }, this, 1, 2);
+      })
+      .should("lose access token from helper method", function() {
+         this.app.run('#/');
+         this.app.setAccessToken('5678');
+         equal(this.app.getAccessToken(), '5678');
+         window.location.href = '#/signout';
+         soon(function() {
+           equal(this.app.getAccessToken(), null);
+           this.app.unload();
+         }, this, 1, 2);
+      })
+      .should("pass to route if token available", function() {
+         this.app.run('#/');
+         this.app.setAccessToken('5678');
+         window.location.href = '#/private';
+         soon(function() {
+           equal(location.hash, '#/private');
+           ok(this.app.requested);
+           this.app.unload();
+         }, this, 1, 2);
+      })
+      .should("trigger oauth.connected when connected", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.run('#/');
+        window.location.href = '#access_token=5678&state=%23';
+        soon(function() {
+          ok(connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("trigger oauth.connected if started with access token", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.setAccessToken('5678');
+        this.app.run('#/');
+        soon(function() {
+          ok(connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("not trigger oauth.connected if started without access token", function() {
+        var connected;
+        this.app.bind('oauth.connected', function() { connected = true });
+        this.app.run('#/');
+        soon(function() {
+          ok(!connected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("trigger oauth.disconnected if access token lost", function() {
+        var disconnected;
+        this.app.bind('oauth.disconnected', function() { disconnected = true });
+        this.app.setAccessToken('5678');
+        this.app.run('#/');
+        window.location.href = '#/signout';
+        soon(function() {
+          ok(disconnected);
+          this.app.unload();
+        }, this, 1, 1);
+      })
+      .should("pass OAuth in header when making XHR request", function() {
+         this.app.run('#/');
+         this.app.setAccessToken('5678');
+         xhr = { setRequestHeader: function(name, value) { this[name] = value } };
+         $(document).trigger('ajaxSend', xhr);
+         equal('OAuth 5678', xhr['Authorization']);
+         this.app.unload();
+      })
     };
 })(jQuery);
