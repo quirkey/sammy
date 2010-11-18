@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Sammy Template Benchmarks</title>
+    <title>Sammy Bind Benchmarks</title>
     <script src="../../vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../vendor/jslitmus.js" type="text/javascript" charset="utf-8"></script>
@@ -11,17 +11,18 @@
   <body>
     <div id="main"></div>
     <script type="text/javascript" charset="utf-8">
-      $('#main').bind('custom1', function() {
+      var $main = $('#main');
+      $main.bind('custom1', function() {
         // console.log('custom1');
       });
-      $('#main').bind('custom2', function() {
+      $main.bind('custom2', function() {
         // console.log('custom2');
       });
-      $('#main').bind('custom2', function() {
+      $main.bind('custom2', function() {
         // console.log('custom2');
       });
 
-      Sammy('#main', function() {
+      var app = Sammy('#main', function() {
 
         this.bind('custom1', function() {});
         this.bind('custom2', function() {});
@@ -30,19 +31,19 @@
       }).run();
 
       JSLitmus.test("jQuery.trigger one binding", function() {
-        $('#main').trigger('custom1');
+        $main.trigger('custom1');
       });
 
       JSLitmus.test("jQuery.trigger two bindings", function() {
-        $('#main').trigger('custom2');
+        $main.trigger('custom2');
       });
 
       JSLitmus.test("Sammy.trigger one binding", function() {
-        Sammy('#main').trigger('custom1');
+        app.trigger('custom1');
       });
 
       JSLitmus.test("Sammy.trigger two bindings", function() {
-        Sammy('#main').trigger('custom2');
+        app.trigger('custom2');
       });
 
     </script>
