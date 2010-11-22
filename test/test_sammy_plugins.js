@@ -47,7 +47,7 @@
        })
        .should('clear specific cache value', function() {
          this.app.store('cache').clear('mycache');
-         ok(!this.app.cache('mycache'))
+         ok(!this.app.cache('mycache'));
        });
 
 
@@ -247,7 +247,7 @@
          });
 
          app.run('#/');
-         window.location.hash = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature'
+         window.location.hash = '#/get_form?genre%5B%5D=documentary&genre%5B%5D=nature';
          soon(function() {
            ok(app.form_params);
            equal(app.form_params['genre'][0], ['documentary']);
@@ -266,7 +266,7 @@
        }).should('raise error for bad params', function() {
          var app = this.app;
          raised(/400/, function() {
-           app._parseFormParams($('#bad_nested_params_form'));
+           app._parseFormParams(app.adapter.serializeFormIntoObject($('#bad_nested_params_form')[0]));
          });
        });
 
@@ -493,23 +493,23 @@
         deepEqual(this.builder.object, this.item);
       })
       .should("return text field for attribute with simple keypath", function() {
-        equal(this.builder.text('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />")
+        equal(this.builder.text('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />");
       })
       .should("return text field with additional attributes", function() {
-        equal(this.builder.text('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />")
+        equal(this.builder.text('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />");
       })
       .should("return text field when the attribute doesnt exist", function() {
-        equal(this.builder.text('none'), "<input type='text' name='item[none]' value='' class='item-none' />")
+        equal(this.builder.text('none'), "<input type='text' name='item[none]' value='' class='item-none' />");
       })
       .should("return text field for an attribute with a deep keypath", function() {
-        equal(this.builder.text('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
-        equal(this.builder.text(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
+        equal(this.builder.text('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />");
+        equal(this.builder.text(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />");
       })
       .should("return text field for an attribute with an array keypath", function() {
-        equal(this.builder.text('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />")
+        equal(this.builder.text('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />");
       })
       .should("return a select tag with options and selection", function() {
-        equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>")
+        equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>");
       })
       .should("return a label with key as for", function() {
         equal(this.builder.label('name', 'Name'), "<label for='item[name]'>Name</label>");
@@ -523,12 +523,12 @@
       .should("return a checkbox", function() {
         equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
         this.item.is_private = true;
-        equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+        equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />");
       })
        .should("return a checkbox with no hidden element", function() {
           equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
           this.item.is_private = true;
-          equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
+          equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />");
         })
       .should("return a radio button", function() {
         equal(this.builder.radio('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
@@ -539,9 +539,10 @@
                        "<p><label>Name:</label><%= f.text('name') %></p>" +
                        "<%= f.close() %>" +
                        "<% }); %>";
-        var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>"
+        var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>";
         this.context.item = this.item;
         equals(this.context.template(template), rendered);
       });
     };
+
 })(jQuery);
