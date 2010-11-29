@@ -288,6 +288,29 @@
             sameHTML($('#test_area').html(), '<ul><li class="item">first</li><li class="item">second</li></ul>');
           });          
         })
+        .should('renderEach with a data object', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html')
+                .replace('#test_area')
+                .renderEach('fixtures/item_with_data.template', 'item', [{'name': 'first'}, {'name': 'second'}], {test_data: 'expected data'})
+                .appendTo('#test_area ul') ;
+          } ;
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<ul><li class="item">first expected data</li><li class="item">second expected data</li></ul>');
+          }) ;
+        })
+        .should('renderEach with a data object and a callback', function() {
+          var callback = function(context) {
+            this.load('fixtures/list.html')
+                .replace('#test_area')
+                .renderEach('fixtures/item_with_data.template', 'item', [{'name': 'first'}, {'name': 'second'}], {test_data: 'expected data'}, function(object, template) {
+                  $('#test_area ul').append(template) ;
+                }) ;
+          } ;
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<ul><li class="item">first expected data</li><li class="item">second expected data</li></ul>');
+          }) ;
+        })
         .should('swap data with partial', function() {
           var callback = function(context) {
             this.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
