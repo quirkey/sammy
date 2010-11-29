@@ -52,6 +52,7 @@ class JSDoc
     @paths.each do |path|
       @docs.merge!(parse_file(path))
     end
+    sort_docs
   end
 
   def parse_file(filename)
@@ -102,7 +103,7 @@ class JSDoc
                 if !(comment.nil? || comment.strip == '')
                   meth[:doc] = comment
                   comment = ""
-                  docs[klass][:methods] << meth
+                  docs[klass][:methods] << meth if docs[klass] && docs[klass][:methods]
                 end
               end
             end
@@ -120,7 +121,7 @@ class JSDoc
             if !(comment.nil? || comment.strip == '')
               attribute[:doc] = comment
               comment = ""
-              docs[klass][:attributes] << attribute
+              docs[klass][:attributes] << attribute if docs[klass] && docs[klass][:attributes]
             end
           end
         else
@@ -136,18 +137,19 @@ class JSDoc
 
   def sort_docs
     # sort the methods and attributes for each klass
-    docs.each do |klass, klass_methods|
-      docs[klass][:attributes] = klass_methods[:attributes].sort {|a,b| a[:name] <=> b[:name] }
-      docs[klass][:methods] = klass_methods[:methods].sort {|a,b| a[:name] <=> b[:name] }
+    @docs.each do |klass, klass_methods|
+      @docs[klass][:attributes] = klass_methods[:attributes].sort {|a,b| a[:name] <=> b[:name] }
+      @docs[klass][:methods] = klass_methods[:methods].sort {|a,b| a[:name] <=> b[:name] }
     end
 
-    docs = docs.reject do |klass, klass_methods|
+    @docs = @docs.reject do |klass, klass_methods|
       # get rid of undocumented classes
       klass[:doc].nil? || klass[:doc].to_s.strip == ''
     end.sort {|a, b|
       a[0][:klass] <=> b[0][:klass]
     }
   end
+
   def to_json
     Yajl::Encoder.encode(@docs, :pretty => true)
   end
