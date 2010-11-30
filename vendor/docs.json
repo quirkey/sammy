@@ -1,0 +1,1918 @@
+Running JSDOC on ["lib/", "lib/plugins/"]
+parsing /Users/aaronquint/Sites/__active/sammy/lib/sammy.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.cache.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.data_location_proxy.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.ejs.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.form.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.googleanalytics.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.haml.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.handlebars.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.json.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.meld.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.mustache.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.nested_params.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.oauth2.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.path_location_proxy.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.pure.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.storage.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.template.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.title.js
+parsing /Users/aaronquint/Sites/__active/sammy/lib/plugins/sammy.tmpl.js
+[
+  [
+    {
+      "name": "Sammy",
+      "args": [
+
+      ],
+      "doc": "<p><code>Sammy</code> (also aliased as $.sammy) is not only the namespace for a\n number of prototypes, its also a top level method that allows for easy\n creation/management of <code>Sammy.Application</code> instances. There are a\n number of different forms for <code>Sammy()</code> but each returns an instance\n of <code>Sammy.Application</code>. When a new instance is created using\n <code>Sammy</code> it is added to an Object called <code>Sammy.apps</code>. This\n provides for an easy way to get at existing Sammy applications. Only one\n instance is allowed per <code>element_selector</code> so when calling\n <code>Sammy('selector')</code> multiple times, the first time will create\n the application and the following times will extend the application\n already added to that selector.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  // returns the app at #main or a new app\n  Sammy('#main')\n\n  // equivilent to \"new Sammy.Application\", except appends to apps\n  Sammy();\n  Sammy(function() { ... });\n\n  // extends the app at '#main' with function.\n  Sammy('#main', function() { ... });\n</code></pre>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 51
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.addLogger",
+      "args": [
+        "logger"
+      ],
+      "doc": "<p>Add to the global logger pool. Takes a function that accepts an\n unknown number of arguments and should print them or send them somewhere\n The first argument is always a timestamp.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 79
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.log",
+      "args": [
+
+      ],
+      "doc": "<p>Sends a log message to each logger listed in the global\n loggers pool. Can take any number of arguments.\n Also prefixes the arguments with a timestamp.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 86
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Object",
+      "args": [
+        "obj"
+      ],
+      "doc": "<p>Sammy.Object is the base for all other Sammy classes. It provides some useful\n functionality, including cloning, iterating, etc.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 118
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.Object",
+          "name": "has",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 170,
+          "doc": "<p>Checks if the object has a value at <code>key</code> and that the value is not empty</p>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "join",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 176,
+          "doc": "<p>convenience method to join as many arguments as you want\n by the first argument - useful for making paths</p>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "keys",
+          "args": [
+            "attributes_only"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 159,
+          "doc": "<p>Returns an array of keys for this object. If <code>attributes_only</code>\n is true will not return keys that map to a <code>function()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "log",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 183,
+          "doc": "<p>Shortcut to Sammy.log</p>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "toHTML",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 147,
+          "doc": "<p>Renders a simple HTML version of this Objects attributes.\n Does not render functions.\n For example. Given this Sammy.Object:</p>\n\n<pre class=\"prettyprint\"><code>var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});\ns.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "toHash",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 130,
+          "doc": "<p>Returns a copy of the object with Functions removed.</p>\n"
+        },
+        {
+          "klass": "Sammy.Object",
+          "name": "toString",
+          "args": [
+            "include_functions"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 190,
+          "doc": "<p>Returns a string representation of this object.\n if <code>include_functions</code> is true, it will also toString() the\n methods of this object. By default only prints the attributes.</p>\n"
+        }
+      ],
+      "attributes": [
+        {
+          "klass": "Sammy.Object",
+          "name": "escapeHTML",
+          "default": "_escapeHTML",
+          "filename": "/lib/sammy.js",
+          "lineno": 126,
+          "doc": "<p>Escape HTML in string, use in templates to prevent script injection.\n Also aliased as <code>h()</code></p>\n"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.HashLocationProxy",
+      "args": [
+        "app",
+        "run_interval_every"
+      ],
+      "doc": "<p>The HashLocationProxy is the default location proxy for all Sammy applications.\n A location proxy is a prototype that conforms to a simple interface. The purpose\n of a location proxy is to notify the Sammy.Application its bound to when the location\n or 'external state' changes. The HashLocationProxy considers the state to be\n changed when the 'hash' (window.location.hash / '#') changes. It does this in two\n different ways depending on what browser you are using. The newest browsers\n (IE, Safari > 4, FF >= 3.6) support a 'onhashchange' DOM event, thats fired whenever\n the location.hash changes. In this situation the HashLocationProxy just binds\n to this event and delegates it to the application. In the case of older browsers\n a poller is set up to track changes to the hash. Unlike Sammy 0.3 or earlier,\n the HashLocationProxy allows the poller to be a global object, eliminating the\n need for multiple pollers even when thier are multiple apps on the page.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 213
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.HashLocationProxy",
+          "name": "bind",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 223,
+          "doc": "<p>bind the proxy events to the current app.</p>\n"
+        },
+        {
+          "klass": "Sammy.HashLocationProxy",
+          "name": "getLocation",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 251,
+          "doc": "<p>get the current location from the hash.</p>\n"
+        },
+        {
+          "klass": "Sammy.HashLocationProxy",
+          "name": "setLocation",
+          "args": [
+            "new_location"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 260,
+          "doc": "<p>set the current location to <code>new_location</code></p>\n"
+        },
+        {
+          "klass": "Sammy.HashLocationProxy",
+          "name": "unbind",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 242,
+          "doc": "<p>unbind the proxy events from the current app</p>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Application",
+      "args": [
+        "app_function"
+      ],
+      "doc": "<p>Sammy.Application is the Base prototype for defining 'applications'.\n An 'application' is a collection of 'routes' and bound events that is\n attached to an element when <code>run()</code> is called.\n The only argument an 'app_function' is evaluated within the context of the application.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 290
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.Application",
+          "name": "$element",
+          "args": [
+            "selector"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 368,
+          "doc": "<p>returns a jQuery object of the Applications bound element.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "after",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 686,
+          "doc": "<p>A shortcut for binding a callback to be run after a route is executed.\n After callbacks have no guarunteed order.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "around",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 733,
+          "doc": "<p>Adds an around filter to the application. around filters are functions\n that take a single argument <code>callback</code> which is the entire route\n execution path wrapped up in a closure. This means you can decide whether\n or not to proceed with execution by not invoking <code>callback</code> or,\n more usefuly wrapping callback inside the result of an asynchronous execution.</p>\n\n<h3>Example</h3>\n\n<p> The most common use case for around() is calling a <em>possibly</em> async function\n and executing the route within the functions callback:</p>\n\n<pre class=\"prettyprint\"><code>  var app = $.sammy(function() {\n\n    var current_user = false;\n\n    function checkLoggedIn(callback) {\n      // /session returns a JSON representation of the logged in user\n      // or an empty object\n      if (!current_user) {\n        $.getJSON('/session', function(json) {\n          if (json.login) {\n            // show the user as logged in\n            current_user = json;\n            // execute the route path\n            callback();\n          } else {\n            // show the user as not logged in\n            current_user = false;\n            // the context of aroundFilters is an EventContext\n            this.redirect('#/login');\n          }\n        });\n      } else {\n        // execute the route path\n        callback();\n      }\n    };\n\n    this.around(checkLoggedIn);\n\n  });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "before",
+          "args": [
+            "options",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 675,
+          "doc": "<p>Takes a single callback that is pushed on to a stack.\n Before any route is run, the callbacks are evaluated in order within\n the current <code>Sammy.EventContext</code></p>\n\n<p> If any of the callbacks explicitly return false, execution of any\n further callbacks and the route itself is halted.</p>\n\n<p> You can also provide a set of options that will define when to run this\n before based on the route it proceeds.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var app = $.sammy(function() {\n\n    // will run at #/route but not at #/\n    this.before('#/route', function() {\n      //...\n    });\n\n    // will run at #/ but not at #/route\n    this.before({except: {path: '#/route'}}, function() {\n      this.log('not before #/route');\n    });\n\n    this.get('#/', function() {});\n\n    this.get('#/route', function() {});\n\n  });\n</code></pre>\n\n<p> See <code>contextMatchesOptions()</code> for a full list of supported options</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "bind",
+          "args": [
+            "name",
+            "data",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 589,
+          "doc": "<p>Works just like <code>jQuery.fn.bind()</code> with a couple noteable differences.</p>\n\n<ul>\n<li>It binds all events to the application element</li>\n<li>All events are bound within the <code>eventNamespace()</code></li>\n<li>Events are not actually bound until the application is started with <code>run()</code></li>\n<li>callbacks are evaluated within the context of a Sammy.EventContext</li>\n</ul>\n\n\n<p> See http://code.quirkey.com/sammy/docs/events.html for more info.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "bindToAllEvents",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 884,
+          "doc": "<p>Will bind a single callback function to every event that is already\n being listened to in the app. This includes all the <code>APP_EVENTS</code>\n as well as any custom events defined with <code>bind()</code>.</p>\n\n<p> Used internally for debug logging.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "clearTemplateCache",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1134,
+          "doc": "<p>clear the templateCache</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "contextMatchesOptions",
+          "args": [
+            "context",
+            "match_options",
+            "positive"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1048,
+          "doc": "<p>Matches an object of options against an <code>EventContext</code> like object that\n contains <code>path</code> and <code>verb</code> attributes. Internally Sammy uses this\n for matching <code>before()</code> filters against specific options. You can set the\n object to <em>only</em> match certain paths or verbs, or match all paths or verbs <em>except</em>\n those that match the options.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code> var app = $.sammy(),\n     context = {verb: 'get', path: '#/mypath'};\n\n // match against a path string\n app.contextMatchesOptions(context, '#/mypath'); //=&gt; true\n app.contextMatchesOptions(context, '#/otherpath'); //=&gt; false\n // equivilent to\n app.contextMatchesOptions(context, {only: {path:'#/mypath'}}); //=&gt; true\n app.contextMatchesOptions(context, {only: {path:'#/otherpath'}}); //=&gt; false\n // match against a path regexp\n app.contextMatchesOptions(context, /path/); //=&gt; true\n app.contextMatchesOptions(context, /^path/); //=&gt; false\n // match only a verb\n app.contextMatchesOptions(context, {only: {verb:'get'}}); //=&gt; true\n app.contextMatchesOptions(context, {only: {verb:'post'}}); //=&gt; false\n // match all except a verb\n app.contextMatchesOptions(context, {except: {verb:'post'}}); //=&gt; true\n app.contextMatchesOptions(context, {except: {verb:'get'}}); //=&gt; false\n // match all except a path\n app.contextMatchesOptions(context, {except: {path:'#/otherpath'}}); //=&gt; true\n app.contextMatchesOptions(context, {except: {path:'#/mypath'}}); //=&gt; false\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "error",
+          "args": [
+            "message",
+            "original_error"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1152,
+          "doc": "<p>The base error handler takes a string <code>message</code> and an <code>Error</code>\n object. If <code>raise_errors</code> is set to <code>true</code> on the app level,\n this will re-throw the error to the browser. Otherwise it will send the error\n to <code>log()</code>. Override this method to provide custom error handling\n e.g logging to a server side component or displaying some feedback to the\n user.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "eventNamespace",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 576,
+          "doc": "<p>A unique event namespace defined per application.\n All events bound with <code>bind()</code> are automatically bound within this space.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "getLocation",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1084,
+          "doc": "<p>Delegates to the <code>location_proxy</code> to get the current location.\n See <code>Sammy.HashLocationProxy</code> for more info on location proxies.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "helper",
+          "args": [
+            "name",
+            "method"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 799,
+          "doc": "<p>Helper extends the event context just like <code>helpers()</code> but does it\n a single method at a time. This is especially useful for dynamically named\n helpers</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code> // Trivial example that adds 3 helper methods to the context dynamically\n var app = $.sammy(function(app) {\n\n   $.each([1,2,3], function(i, num) {\n     app.helper('helper' + num, function() {\n       this.log(\"I'm helper number \" + num);\n     });\n   });\n\n   this.get('#/', function() {\n     this.helper2(); //=&gt; I'm helper number 2\n   });\n });\n</code></pre>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>name</code> The name of the method</li>\n<li><code>method</code> The function to be added to the prototype at <code>name</code></li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "helpers",
+          "args": [
+            "extensions"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 769,
+          "doc": "<p>Helpers extends the EventContext prototype specific to this app.\n This allows you to define app specific helper functions that can be used\n whenever you're inside of an event context (templates, routes, bind).</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>var app = $.sammy(function() {\n\n  helpers({\n    upcase: function(text) {\n     return text.toString().toUpperCase();\n    }\n  });\n\n  get('#/', function() { with(this) {\n    // inside of this context I can use the helpers\n    $('#main').html(upcase($('#main').text());\n  }});\n\n});\n</code></pre>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>extensions</code> An object collection of functions to extend the context.</li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "isRunning",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 739,
+          "doc": "<p>Returns <code>true</code> if the current application is running.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "lookupRoute",
+          "args": [
+            "verb",
+            "path"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 907,
+          "doc": "<p>Given a verb and a String path, will return either a route object or false\n if a matching route can be found within the current defined set.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "mapRoutes",
+          "args": [
+            "route_array"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 566,
+          "doc": "<p><code>mapRoutes</code> takes an array of arrays, each array being passed to route()\n as arguments, this allows for mass definition of routes. Another benefit is\n this makes it possible/easier to load routes via remote JSON.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>var app = $.sammy(function() {\n\n  this.mapRoutes([\n      ['get', '#/', function() { this.log('index'); }],\n      // strings in callbacks are looked up as methods on the app\n      ['post', '#/create', 'addUser'],\n      // No verb assumes 'any' as the verb\n      [/dowhatever/, function() { this.log(this.verb, this.path)}];\n    ]);\n})\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "notFound",
+          "args": [
+            "verb",
+            "path"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1141,
+          "doc": "<p>This thows a '404 Not Found' error by invoking <code>error()</code>.\n Override this method or <code>error()</code> to provide custom\n 404 behavior (i.e redirecting to / or showing a warning)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "refresh",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 637,
+          "doc": "<p>Reruns the current route</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "routablePath",
+          "args": [
+            "path"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 901,
+          "doc": "<p>Returns a copy of the given path with any query string after the hash\n removed.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "route",
+          "args": [
+            "verb",
+            "path",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 483,
+          "doc": "<p><code>route()</code> is the main method for defining routes within an application.\n For great detail on routes, check out: http://code.quirkey.com/sammy/doc/routes.html</p>\n\n<p> This method also has aliases for each of the different verbs (eg. <code>get()</code>, <code>post()</code>, etc.)</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>verb</code> A String in the set of ROUTE_VERBS or 'any'. 'any' will add routes for each\n of the ROUTE_VERBS. If only two arguments are passed,\n the first argument is the path, the second is the callback and the verb\n is assumed to be 'any'.</li>\n<li><code>path</code> A Regexp or a String representing the path to match to invoke this verb.</li>\n<li><code>callback</code> A Function that is called/evaluated whent the route is run see: <code>runRoute()</code>.\n It is also possible to pass a string as the callback, which is looked up as the name\n of a method on the application.</li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "run",
+          "args": [
+            "start_url"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 818,
+          "doc": "<p>Actually starts the application's lifecycle. <code>run()</code> should be invoked\n within a document.ready block to ensure the DOM exists before binding events, etc.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>var app = $.sammy(function() { ... }); // your application\n$(function() { // document.ready\n    app.run();\n });\n</code></pre>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>start_url</code> Optionally, a String can be passed which the App will redirect to\nafter the events/routes have been bound.</li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "runRoute",
+          "args": [
+            "verb",
+            "path",
+            "params",
+            "target"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 940,
+          "doc": "<p>First, invokes <code>lookupRoute()</code> and if a route is found, parses the\n possible URL params and then invokes the route's callback within a new\n <code>Sammy.EventContext</code>. If the route can not be found, it calls\n <code>notFound()</code>. If <code>raise_errors</code> is set to <code>true</code> and\n the <code>error()</code> has not been overriden, it will throw an actual JS\n error.</p>\n\n<p> You probably will never have to call this directly.</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>verb</code> A String for the verb.</li>\n<li><code>path</code> A String path to lookup.</li>\n<li><code>params</code> An Object of Params pulled from the URI or passed directly.</li>\n</ul>\n\n\n<h3>Returns</h3>\n\n<p> Either returns the value returned by the route callback or raises a 404 Not Found error.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "setLocation",
+          "args": [
+            "new_location"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1095,
+          "doc": "<p>Delegates to the <code>location_proxy</code> to set the current location.\n See <code>Sammy.HashLocationProxy</code> for more info on location proxies.</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>new_location</code> A new location string (e.g. '#/')</li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "setLocationProxy",
+          "args": [
+            "new_proxy"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 455,
+          "doc": "<p>Sets the location proxy for the current app. By default this is set to\n a new <code>Sammy.HashLocationProxy</code> on initialization. However, you can set\n the location_proxy inside you're app function to give your app a custom\n location mechanism. See <code>Sammy.HashLocationProxy</code> and <code>Sammy.DataLocationProxy</code>\n for examples.</p>\n\n<p> <code>setLocationProxy()</code> takes an initialized location proxy.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>    // to bind to data instead of the default hash;\n    var app = $.sammy(function() {\n      this.setLocationProxy(new Sammy.DataLocationProxy(this));\n    });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "swap",
+          "args": [
+            "content"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1118,
+          "doc": "<p>Swaps the content of <code>$element()</code> with <code>content</code>\n You can override this method to provide an alternate swap behavior\n for <code>EventContext.partial()</code>.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>var app = $.sammy(function() {\n\n  // implements a 'fade out'/'fade in'\n  this.swap = function(content) {\n    this.$element().hide('slow').html(content).show('slow');\n  }\n\n  get('#/', function() {\n    this.partial('index.html.erb') // will fade out and in\n  });\n\n});\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "templateCache",
+          "args": [
+            "key",
+            "value"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1125,
+          "doc": "<p>a simple global cache for templates. Uses the same semantics as\n <code>Sammy.Cache</code> and <code>Sammy.Storage</code> so can easily be replaced with\n a persistant storage that lasts beyond the current request.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "toString",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 363,
+          "doc": "<p>//=> Sammy.Application: body</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "trigger",
+          "args": [
+            "name",
+            "data"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 631,
+          "doc": "<p>Triggers custom events defined with <code>bind()</code></p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>name</code> The name of the event. Automatically prefixed with the <code>eventNamespace()</code></li>\n<li><code>data</code> An optional Object that can be passed to the bound callback.</li>\n<li><code>context</code> An optional context/Object in which to execute the bound callback.\nIf no context is supplied a the context is a new <code>Sammy.EventContext</code></li>\n</ul>\n\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "unload",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 861,
+          "doc": "<p>The opposite of <code>run()</code>, un-binds all event listeners and intervals\n <code>run()</code> Automaticaly binds a <code>onunload</code> event to run this when\n the document is closed.</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "use",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 416,
+          "doc": "<p><code>use()</code> is the entry point for including Sammy plugins.\n The first argument to use should be a function() that is evaluated\n in the context of the current application, just like the <code>app_function</code>\n argument to the <code>Sammy.Application</code> constructor.</p>\n\n<p> Any additional arguments are passed to the app function sequentially.</p>\n\n<p> For much more detail about plugins, check out:\n http://code.quirkey.com/sammy/doc/plugins.html</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var MyPlugin = function(app, prepend) {\n\n    this.helpers({\n      myhelper: function(text) {\n        alert(prepend + \" \" + text);\n      }\n    });\n\n  };\n\n  var app = $.sammy(function() {\n\n    this.use(MyPlugin, 'This is my plugin');\n\n    this.get('#/', function() {\n      this.myhelper('and dont you forget it!');\n      //=&gt; Alerts: This is my plugin and dont you forget it!\n    });\n\n  });\n</code></pre>\n\n<p> If plugin is passed as a string it assumes your are trying to load\n Sammy.\"Plugin\". This is the prefered way of loading core Sammy plugins\n as it allows for better error-messaging.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  $.sammy(function() {\n    this.use('Mustache'); //=&gt; Sammy.Mustache\n    this.use('Storage'); //=&gt; Sammy.Storage\n  });\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+        {
+          "klass": "Sammy.Application",
+          "name": "APP_EVENTS",
+          "default": "['run'",
+          "filename": "/lib/sammy.js",
+          "lineno": 322,
+          "doc": "<p>An array of the default events triggered by the\n application during its lifecycle</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "ROUTE_VERBS",
+          "default": "['get','post','put','delete']",
+          "filename": "/lib/sammy.js",
+          "lineno": 318,
+          "doc": "<p>the four route verbs</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "any",
+          "default": "_routeWrapper('any')",
+          "filename": "/lib/sammy.js",
+          "lineno": 547,
+          "doc": "<p>Alias for route('any', ...)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "debug",
+          "default": "false",
+          "filename": "/lib/sammy.js",
+          "lineno": 344,
+          "doc": "<p>When set to true, logs all of the default events using <code>log()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "del",
+          "default": "_routeWrapper('delete')",
+          "filename": "/lib/sammy.js",
+          "lineno": 544,
+          "doc": "<p>Alias for route('delete', ...)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "element_selector",
+          "default": "'body'",
+          "filename": "/lib/sammy.js",
+          "lineno": 341,
+          "doc": "<p>Defines what element the application is bound to. Provide a selector\n (parseable by <code>jQuery()</code>) and this will be used by <code>$element()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "get",
+          "default": "_routeWrapper('get')",
+          "filename": "/lib/sammy.js",
+          "lineno": 535,
+          "doc": "<p>Alias for route('get', ...)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "post",
+          "default": "_routeWrapper('post')",
+          "filename": "/lib/sammy.js",
+          "lineno": 538,
+          "doc": "<p>Alias for route('post', ...)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "put",
+          "default": "_routeWrapper('put')",
+          "filename": "/lib/sammy.js",
+          "lineno": 541,
+          "doc": "<p>Alias for route('put', ...)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "raise_errors",
+          "default": "false",
+          "filename": "/lib/sammy.js",
+          "lineno": 348,
+          "doc": "<p>When set to true, and the error() handler is not overriden, will actually\n raise JS errors in routes (500) and when routes can't be found (404)</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "run_interval_every",
+          "default": "50",
+          "filename": "/lib/sammy.js",
+          "lineno": 351,
+          "doc": "<p>The time in milliseconds that the URL is queried for changes</p>\n"
+        },
+        {
+          "klass": "Sammy.Application",
+          "name": "template_engine",
+          "default": "null",
+          "filename": "/lib/sammy.js",
+          "lineno": 360,
+          "doc": "<p>The default template engine to use when using <code>partial()</code> in an\n <code>EventContext</code>. <code>template_engine</code> can either be a string that\n corresponds to the name of a method/helper on EventContext or it can be a function\n that takes two arguments, the content of the unrendered partial and an optional\n JS object that contains interpolation data. Template engine is only called/refered\n to if the extension of the partial is null or unknown. See <code>partial()</code>\n for more information</p>\n"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.RenderContext",
+      "args": [
+        "event_context"
+      ],
+      "doc": "<p><code>Sammy.RenderContext</code> is an object that makes sequential template loading,\n rendering and interpolation seamless even when dealing with asyncronous\n operations.</p>\n\n<p> <code>RenderContext</code> objects are not usually created directly, rather they are\n instatiated from an <code>Sammy.EventContext</code> by using <code>render()</code>, <code>load()</code> or\n <code>partial()</code> which all return <code>RenderContext</code> objects.</p>\n\n<p> <code>RenderContext</code> methods always returns a modified <code>RenderContext</code>\n for chaining (like jQuery itself).</p>\n\n<p> The core magic is in the <code>then()</code> method which puts the callback passed as\n an argument into a queue to be executed once the previous callback is complete.\n All the methods of <code>RenderContext</code> are wrapped in <code>then()</code> which allows you\n to queue up methods by chaining, but maintaing a guarunteed execution order\n even with remote calls to fetch templates.</p>\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 1284
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "appendTo",
+          "args": [
+            "selector"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1605,
+          "doc": "<p>Same usage as <code>jQuery.fn.appendTo()</code> but uses <code>then()</code> to ensure order</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "collect",
+          "args": [
+            "array",
+            "callback",
+            "now"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1527,
+          "doc": "<p>itterates over an array, applying the callback for each item item. the\n callback takes the same style of arguments as <code>jQuery.each()</code> (index, item).\n The return value of each callback is collected as a single string and stored\n as <code>content</code> to be used in the next iteration of the <code>RenderContext</code>.</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "interpolate",
+          "args": [
+            "data",
+            "engine",
+            "retain"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1584,
+          "doc": "<p>uses the previous loaded <code>content</code> and the <code>data</code> object to interpolate\n a template. <code>engine</code> defines the templating/interpolation method/engine\n that should be used. If <code>engine</code> is not passed, the <code>next_engine</code> is\n used. If <code>retain</code> is <code>true</code>, the final interpolated data is appended to\n the <code>previous_content</code> instead of just replacing it.</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "load",
+          "args": [
+            "location",
+            "options",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1412,
+          "doc": "<p>Load a template into the context.\n The <code>location</code> can either be a string specifiying the remote path to the\n file, a jQuery object, or a DOM element.</p>\n\n<p> No interpolation happens by default, the content is stored in\n <code>content</code>.</p>\n\n<p> In the case of a path, unless the option <code>{cache: false}</code> is passed the\n data is stored in the app's <code>templateCache()</code>.</p>\n\n<p> If a jQuery or DOM object is passed the <code>innerHTML</code> of the node is pulled in.\n This is useful for nesting templates as part of the initial page load wrapped\n in invisible elements or <code>&lt;script&gt;</code> tags. With template paths, the template\n engine is looked up by the extension. For DOM/jQuery embedded templates,\n this isnt possible, so there are a couple of options:</p>\n\n<ul>\n<li>pass an <code>{engine:}</code> option.</li>\n<li>define the engine in the <code>data-engine</code> attribute of the passed node.</li>\n<li>just store the raw template data and use <code>interpolate()</code> manually</li>\n</ul>\n\n\n<p> If a <code>callback</code> is passed it is executed after the template load.</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "next",
+          "args": [
+            "content"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1380,
+          "doc": "<p>Resume the queue, setting <code>content</code> to be used in the next operation.\n See <code>wait()</code> for an example.</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "partial",
+          "args": [
+            "location",
+            "data"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1490,
+          "doc": "<p><code>render()</code> the the <code>location</code> with <code>data</code> and then <code>swap()</code> the\n app's <code>$element</code> with the rendered content.</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "prependTo",
+          "args": [
+            "selector"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1612,
+          "doc": "<p>Same usage as <code>jQuery.fn.prependTo()</code> but uses <code>then()</code> to ensure order</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "render",
+          "args": [
+            "location",
+            "data",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1477,
+          "doc": "<p><code>load()</code> a template and then <code>interpolate()</code> it with data.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  this.get('#/', function() {\n    this.render('mytemplate.template', {name: 'test'});\n  });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "renderEach",
+          "args": [
+            "location",
+            "name",
+            "data",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1552,
+          "doc": "<p>loads a template, and then interpolates it for each item in the <code>data</code>\n array. If a callback is passed, it will call the callback with each\n item in the array <em>after</em> interpolation</p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "replace",
+          "args": [
+            "selector"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1620,
+          "doc": "<p>Replaces the <code>$(selector)</code> using <code>html()</code> with the previously loaded\n <code>content</code></p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "send",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1508,
+          "doc": "<p>defers the call of function to occur in order of the render queue.\n The function can accept any number of arguments as long as the last\n argument is a callback function. This is useful for putting arbitrary\n asynchronous functions into the queue. The content passed to the\n callback is passed as <code>content</code> to the next item in the queue.</p>\n\n<p> === Example</p>\n\n<pre class=\"prettyprint\"><code>    this.send($.getJSON, '/app.json')\n        .then(function(json) {\n          $('#message).text(json['message']);\n        });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "swap",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1598,
+          "doc": "<p>executes <code>EventContext#swap()</code> with the <code>content</code></p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "then",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1324,
+          "doc": "<p>The \"core\" of the <code>RenderContext</code> object, adds the <code>callback</code> to the\n queue. If the context is <code>waiting</code> (meaning an async operation is happening)\n then the callback will be executed in order, once the other operations are\n complete. If there is no currently executing operation, the <code>callback</code>\n is executed immediately.</p>\n\n<p> The value returned from the callback is stored in <code>content</code> for the\n subsiquent operation. If you return <code>false</code>, the queue will pause, and\n the next callback in the queue will not be executed until <code>next()</code> is\n called. This allows for the guarunteed order of execution while working\n with async operations.</p>\n\n<p> If then() is passed a string instead of a function, the string is looked\n up as a helper method on the event context.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  this.get('#/', function() {\n    // initialize the RenderContext\n    // Even though `load()` executes async, the next `then()`\n    // wont execute until the load finishes\n    this.load('myfile.txt')\n        .then(function(content) {\n          // the first argument to then is the content of the\n          // prev operation\n          $('#main').html(content);\n        });\n  });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "trigger",
+          "args": [
+            "name",
+            "data"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1629,
+          "doc": "<p>trigger the event in the order of the event context. Same semantics\n as <code>Sammy.EventContext#trigger()</code>. If data is ommitted, <code>content</code>\n is sent as <code>{content: content}</code></p>\n"
+        },
+        {
+          "klass": "Sammy.RenderContext",
+          "name": "wait",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1374,
+          "doc": "<p>Pause the <code>RenderContext</code> queue. Combined with <code>next()</code> allows for async\n operations.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>    this.get('#/', function() {\n      this.load('mytext.json')\n          .then(function(content) {\n            var context = this,\n                data    = JSON.parse(content);\n            // pause execution\n            context.wait();\n            // post to a url\n            $.post(data.url, {}, function(response) {\n              context.next(JSON.parse(response));\n            });\n          })\n          .then(function(data) {\n            // data is json from the previous post\n            $('#message').text(data.status);\n          });\n    });\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.EventContext",
+      "args": [
+        "app",
+        "verb",
+        "path",
+        "params",
+        "target"
+      ],
+      "doc": "<p><code>Sammy.EventContext</code> objects are created every time a route is run or a\n bound event is triggered. The callbacks for these events are evaluated within a <code>Sammy.EventContext</code>\n This within these callbacks the special methods of <code>EventContext</code> are available.</p>\n\n<h3>Example</h3>\n\n<p>  $.sammy(function() {</p>\n\n<pre class=\"prettyprint\"><code>// The context here is this Sammy.Application\nthis.get('#/:name', function() {\n  // The context here is a new Sammy.EventContext\n  if (this.params['name'] == 'sammy') {\n    this.partial('name.html.erb', {name: 'Sammy'});\n  } else {\n    this.redirect('#/somewhere-else')\n  }\n});\n</code></pre>\n\n<p>  });</p>\n\n<p> Initialize a new EventContext</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>app</code> The <code>Sammy.Application</code> this event is called within.</li>\n<li><code>verb</code> The verb invoked to run this context/route.</li>\n<li><code>path</code> The string path invoked to run this context/route.</li>\n<li><code>params</code> An Object of optional params to pass to the context. Is converted\nto a <code>Sammy.Object</code>.</li>\n<li><code>target</code> a DOM element that the event that holds this context originates\nfrom. For post, put and del routes, this is the form element that triggered\nthe route.</li>\n</ul>\n\n",
+      "filename": "/lib/sammy.js",
+      "lineno": 1669
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.EventContext",
+          "name": "$element",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1680,
+          "doc": "<p>A shortcut to the app's <code>$element()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "engineFor",
+          "args": [
+            "engine"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1694,
+          "doc": "<p>Look up a templating engine within the current app and context.\n <code>engine</code> can be one of the following:</p>\n\n<ul>\n<li>a function: should conform to <code>function(content, data) { return interploated; }</code></li>\n<li>a template path: 'template.ejs', looks up the extension to match to\nthe <code>ejs()</code> helper</li>\n<li>a string referering to the helper: \"mustache\" => <code>mustache()</code></li>\n</ul>\n\n\n<p> If no engine is found, use the app's default <code>template_engine</code></p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "eventNamespace",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1808,
+          "doc": "<p>A shortcut to app's <code>eventNamespace()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "interpolate",
+          "args": [
+            "content",
+            "data",
+            "engine"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1716,
+          "doc": "<p>using the template <code>engine</code> found with <code>engineFor()</code>, interpolate the\n <code>data</code> into <code>content</code></p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "json",
+          "args": [
+            "string"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1824,
+          "doc": "<p>Default JSON parsing uses jQuery's <code>parseJSON()</code>. Include <code>Sammy.JSON</code>\n plugin for the more conformant \"crockford special\".</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "load",
+          "args": [
+            "location",
+            "options",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1756,
+          "doc": "<p>create a new <code>Sammy.RenderContext</code> calling <code>load()</code> with <code>location</code> and\n <code>options</code>. Called without interpolation or placement, this allows for\n preloading/caching the templates.</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "notFound",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1818,
+          "doc": "<p>Raises a possible <code>notFound()</code> error for the current path.</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "partial",
+          "args": [
+            "location",
+            "data"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1762,
+          "doc": "<p><code>render()</code> the the <code>location</code> with <code>data</code> and then <code>swap()</code> the\n app's <code>$element</code> with the rendered content.</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "redirect",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1783,
+          "doc": "<p>Changes the location of the current window. If <code>to</code> begins with\n '#' it only changes the document's hash. If passed more than 1 argument\n redirect will join them together with forward slashes.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  redirect('#/other/route');\n  // equivilent to\n  redirect('#', 'other', 'route');\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "render",
+          "args": [
+            "location",
+            "data",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1733,
+          "doc": "<p>Create and return a <code>Sammy.RenderContext</code> calling <code>render()</code> on it.\n Loads the template and interpolate the data, however does not actual\n place it in the DOM.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  // mytemplate.mustache &lt;div class=\"name\"&gt;{{name}}&lt;/div&gt;\n  render('mytemplate.mustache', {name: 'quirkey'});\n  // sets the `content` to &lt;div class=\"name\"&gt;quirkey&lt;/div&gt;\n  render('mytemplate.mustache', {name: 'quirkey'})\n    .appendTo('ul');\n  // appends the rendered content to $('ul')\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "renderEach",
+          "args": [
+            "location",
+            "name",
+            "data",
+            "callback"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1749,
+          "doc": "<p>Create and return a <code>Sammy.RenderContext</code> calling <code>renderEach()</code> on it.\n Loads the template and interpolates the data for each item,\n however does not actual place it in the DOM.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  // mytemplate.mustache &lt;div class=\"name\"&gt;{{name}}&lt;/div&gt;\n  renderEach('mytemplate.mustache', [{name: 'quirkey'}, {name: 'endor'}])\n  // sets the `content` to &lt;div class=\"name\"&gt;quirkey&lt;/div&gt;&lt;div class=\"name\"&gt;endor&lt;/div&gt;\n  renderEach('mytemplate.mustache', [{name: 'quirkey'}, {name: 'endor'}]).appendTo('ul');\n  // appends the rendered content to $('ul')\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "send",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1768,
+          "doc": "<p>create a new <code>Sammy.RenderContext</code> calling <code>send()</code> with an arbitrary\n function</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "swap",
+          "args": [
+            "contents"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1813,
+          "doc": "<p>A shortcut to app's <code>swap()</code></p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "toString",
+          "args": [
+
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1829,
+          "doc": "<p>//=> Sammy.EventContext: get #/ {}</p>\n"
+        },
+        {
+          "klass": "Sammy.EventContext",
+          "name": "trigger",
+          "args": [
+            "name",
+            "data"
+          ],
+          "filename": "/lib/sammy.js",
+          "lineno": 1801,
+          "doc": "<p>Triggers events on <code>app</code> within the current context.</p>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.MemoryCacheProxy",
+      "args": [
+        "initial"
+      ],
+      "doc": "<p>A simple cache strategy that stores key/values in memory.</p>\n",
+      "filename": "/lib/plugins/sammy.cache.js",
+      "lineno": 7
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.DataCacheProxy",
+      "args": [
+        "initial",
+        "$element"
+      ],
+      "doc": "<p>A simple cache strategy that stores key/values <tt>$element.data()</tt> with a <tt>cache.</tt> prefix</p>\n",
+      "filename": "/lib/plugins/sammy.cache.js",
+      "lineno": 27
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Cache",
+      "args": [
+        "app",
+        "proxy"
+      ],
+      "doc": "<p>Sammy.Cache provides helpers for caching data within the lifecycle of a\n Sammy app. The plugin provides two main methods on <tt>Sammy.Application<tt>,\n <tt>cache</tt> and <tt>clearCache</tt>. Each app has its own cache store so that\n you dont have to worry about collisions. There are currently two different 'cache proxies'\n that share the same API but store the data in different ways.</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>proxy</code> decides which caching proxy to use, either 'memory'(default) or 'data'</li>\n</ul>\n\n",
+      "filename": "/lib/plugins/sammy.cache.js",
+      "lineno": 60
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.Cache",
+          "name": "cache",
+          "args": [
+            "name",
+            "value"
+          ],
+          "filename": "/lib/plugins/sammy.cache.js",
+          "lineno": 91,
+          "doc": "<p>cache is the main method for interacting with the cache store. The same\n method is used for both setting and getting the value. The API is similar\n to jQuery.fn.attr()</p>\n\n<h3>Examples</h3>\n\n<pre class=\"prettyprint\"><code>  // setting a value\n  cache('key', 'value');\n\n  // getting a value\n  cache('key'); //=&gt; 'value'\n\n  // setting a value with a callback\n  cache('key', function() {\n    // this is the app\n    return app.element_selector;\n  });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Cache",
+          "name": "cache",
+          "args": [
+            "name",
+            "value"
+          ],
+          "filename": "/lib/plugins/sammy.cache.js",
+          "lineno": 109,
+          "doc": "<p>a helper shortcut for use in <tt>Sammy.EventContext</tt></p>\n"
+        },
+        {
+          "klass": "Sammy.Cache",
+          "name": "clearCache",
+          "args": [
+            "name"
+          ],
+          "filename": "/lib/plugins/sammy.cache.js",
+          "lineno": 102,
+          "doc": "<p>clears the cached value for <tt>name</tt></p>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.DataLocationProxy",
+      "args": [
+        "app",
+        "data_name",
+        "href_attribute"
+      ],
+      "doc": "<p>The DataLocationProxy is an optional location proxy prototype. As opposed to\n the <code>HashLocationProxy</code> it gets its location from a jQuery.data attribute\n tied to the application's element. You can set the name of the attribute by\n passing a string as the second argument to the constructor. The default attribute\n name is 'sammy-location'. To read more about location proxies, check out the\n documentation for <code>Sammy.HashLocationProxy</code></p>\n\n<p> An optional <code>href_attribute</code> can be passed, which specifies a DOM element\n attribute that holds \"links\" to different locations in the app. When the\n proxy is bound, clicks to element that have this attribute activate a\n <code>setLocation()</code> using the contents of the <code>href_attribute</code>.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var app = $.sammy(function() {\n    // set up the location proxy\n    this.setLocationProxy(new Sammy.DataLocationProxy(this, 'location', 'rel'));\n\n    this.get('about', function() {\n      this.partial('about.html');\n    });\n\n  });\n</code></pre>\n\n<p> In this scenario, if an element existed within the template:</p>\n\n<pre class=\"prettyprint\"><code>  &lt;a href=\"/about\" rel=\"about\"&gt;About Us&lt;/a&gt;\n</code></pre>\n\n<p> Clicking on that link would not go to /about, but would set the apps location\n to 'about' and trigger the route.</p>\n",
+      "filename": "/lib/plugins/sammy.data_location_proxy.js",
+      "lineno": 35
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.FormBuilder",
+      "args": [
+        "name",
+        "object"
+      ],
+      "doc": "<p>Sammy.FormBuilder is based very closely on the Rails FormBuilder classes.\n Its goal is to make it easy to create HTML forms for creating and editing\n JavaScript objects. It eases the process by auto-populating existing values\n into form inputs and creating input names suitable for parsing by\n Sammy.NestedParams and other backend frameworks.</p>\n\n<p> You initialize a Sammy.FormBuilder by passing the 'name' of the object and\n the object itself. Once initialized you create form elements with the object's\n prototype methods. Each of these methods returns a string of HTML suitable for\n appending through a template or directly with jQuery.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var item = {\n    name: 'My Item',\n    price: '$25.50',\n    meta: {\n      id: '123'\n    }\n  };\n  var form = new Sammy.FormBuilder('item', item);\n  form.text('name');\n  //=&gt; &lt;input type='text' name='item[form]' value='My Item' /&gt;\n</code></pre>\n\n<p> Nested attributes can be accessed/referred to by a 'keypath' which is\n basically a string representation of the dot notation.</p>\n\n<pre class=\"prettyprint\"><code>  form.hidden('meta.id');\n  //=&gt; &lt;input type='hidden' name='item[meta][id]' value='123' /&gt;\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.form.js",
+      "lineno": 68
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "checkbox",
+          "args": [
+            "keypath",
+            "value",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 181,
+          "doc": "<p>creates a checkbox input for keypath with the value <code>value</code>. Multiple\n checkboxes can be created with different value, if <code>value</code> equals the\n current value of the key of the form builder's object the attribute\n checked='checked' will be added.</p>\n\n<p> By default <code>checkbox()</code> also generates a hidden element whose value is\n the inverse of the value given. This is known hack to get around a common\n gotcha where browsers and jQuery itself does not include 'unchecked'\n elements in the list of submittable inputs. This ensures that a value\n should always be passed to Sammy and hence the server. You can disable\n the creation of the hidden element by setting the <code>hidden_element</code> attribute\n to <code>false</code></p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "close",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 81,
+          "doc": "<p>closes the form</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "hidden",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 93,
+          "doc": "<p>creates a hidden input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "label",
+          "args": [
+            "keypath",
+            "content",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 87,
+          "doc": "<p>creates a label for <code>keypath</code> with the text <code>content\n with an optional</code>attributes` object</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "open",
+          "args": [
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 76,
+          "doc": "<p>creates the open form tag with the object attributes</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "password",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 114,
+          "doc": "<p>creates a password input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "radio",
+          "args": [
+            "keypath",
+            "value",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 158,
+          "doc": "<p>creates a radio input for keypath with the value <code>value</code>. Multiple\n radios can be created with different value, if <code>value</code> equals the\n current value of the key of the form builder's object the attribute\n checked='checked' will be added.</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "select",
+          "args": [
+            "keypath",
+            "options",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 134,
+          "doc": "<p>creates a select element for <code>keypath</code> with the option elements\n specified by an array in <code>options</code>. If <code>options</code> is an array of arrays,\n the first element in each subarray becomes the text of the option and the\n second becomes the value.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code> var options = [\n   ['Small', 's'],\n   ['Medium', 'm'],\n   ['Large', 'l']\n ];\n form.select('size', options);\n //=&gt; &lt;select name='item[size]'&gt;&lt;option value='s'&gt;Small&lt;/option&gt; ...\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "submit",
+          "args": [
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 193,
+          "doc": "<p>creates a submit input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "text",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 99,
+          "doc": "<p>creates a text input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "klass": "Sammy.FormBuilder",
+          "name": "textarea",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 105,
+          "doc": "<p>creates a textarea for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Form",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.Form is a Sammy plugin that adds form building helpers to a\n Sammy.Application</p>\n",
+      "filename": "/lib/plugins/sammy.form.js",
+      "lineno": 223
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.Form",
+          "name": "formFor",
+          "args": [
+            "name",
+            "object",
+            "content_callback"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 259,
+          "doc": "<p>formFor creates a Sammy.Form builder object with the passed <code>name</code>\n and <code>object</code> and passes it as an argument to the <code>content_callback</code>.\n This is a shortcut for creating FormBuilder objects for use within\n templates.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  // in item_form.template\n\n  &lt;% formFor('item', item, function(f) { %&gt;\n    &lt;%= f.open({action: '#/items'}) %&gt;\n    &lt;p&gt;\n      &lt;%= f.label('name') %&gt;\n      &lt;%= f.text('name') %&gt;\n    &lt;/p&gt;\n    &lt;p&gt;\n      &lt;%= f.submit() %&gt;\n    &lt;/p&gt;\n    &lt;%= f.close() %&gt;\n  &lt;% }); %&gt;\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+        {
+          "klass": "Sammy.Form",
+          "name": "simple_element",
+          "default": "simple_element",
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 236,
+          "doc": "<p>simple_element is a simple helper for creating HTML tags.</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>tag</code> the HTML tag to generate e.g. input, p, etc/</li>\n<li><code>attributes</code> an object representing the attributes of the element as\nkey value pairs. e.g. {class: 'element-class'}</li>\n<li><code>content</code> an optional string representing the content for the\nthe element. If ommited, the element becomes self closing</li>\n</ul>\n\n"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.GoogleAnalytics",
+      "args": [
+        "app",
+        "tracker"
+      ],
+      "doc": "<p>A simple plugin that pings Google Analytics tracker\n every time a route is triggered. Originally by Brit Gardner (britg),\n with updates from Aaron Quint (quirkey).</p>\n\n<p> === Arguments</p>\n\n<p> +tracker+:: the Google Analytics pageTracker object.  Defaults to\n the default object defined by the GA snippet, or pass your own if you\n have a custom install</p>\n\n<p> === Example</p>\n\n<p> Install Google Analytics to your site as you normally would. Be sure that\n the 'pageTracker' global variable exists.</p>\n\n<p> Then, simply add the plugin to your Sammy App and it will automatically\n track all of your routes in Google Analytics.\n They will appear as page views to the route's path.</p>\n\n<pre class=\"prettyprint\"><code>  $.sammy(function() {\n    this.use('GoogleAnalytics');\n\n    ...\n  });\n</code></pre>\n\n<p> If you have routes that you do not want to track, simply call <code>noTrack</code>\n within the route.</p>\n\n<pre class=\"prettyprint\"><code>  $.sammy(function() {\n    this.use('GoogleAnalytics')\n\n    get('#/dont/track/me', function() {\n      this.noTrack();  // This route will not be tracked\n    });\n  });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.googleanalytics.js",
+      "lineno": 41
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.GoogleAnalytics",
+          "name": "noTrack",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.googleanalytics.js",
+          "lineno": 56,
+          "doc": "<p>Disable tracking for the current route. Put at the begining of the\n route's callback</p>\n"
+        },
+        {
+          "klass": "Sammy.GoogleAnalytics",
+          "name": "track",
+          "args": [
+            "path"
+          ],
+          "filename": "/lib/plugins/sammy.googleanalytics.js",
+          "lineno": 60,
+          "doc": "<p>send a page view to the tracker with <code>path</code></p>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Haml",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Haml</tt> provides a quick way of using haml style templates in your app.\n The plugin itself includes the haml-js library created by Tim Caswell at\n at http://github.com/creationix/haml-js</p>\n\n<p> Haml is an alternative HTML syntax that is really great for describing\n the structure of HTML documents.</p>\n\n<p> By default using Sammy.Haml in your app adds the <tt>haml()</tt> method to the EventContext\n prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method\n by passing a second argument (e.g. you could use the hml() as the method alias so that all the template\n files could be in the form file.hml instead of file.haml)</p>\n\n<h3>Example</h3>\n\n<p> The template (mytemplate.haml):</p>\n\n<pre class=\"prettyprint\"><code>   %h1&amp;= title\n\n   Hey, #{name}! Welcome to Haml!\n</code></pre>\n\n<p> The app:</p>\n\n<pre class=\"prettyprint\"><code>   var $.app = $.sammy(function() {\n     // include the plugin\n     this.use(Sammy.Haml);\n\n     this.get('#/hello/:name', function() {\n       // set local vars\n       this.title = 'Hello!'\n       this.name = this.params.name;\n       // render the template and pass it through haml\n       this.partial('mytemplate.haml');\n     });\n\n   });\n</code></pre>\n\n<p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class=\"prettyprint\"><code>   &lt;h1&gt;Hello!&lt;/h1&gt;\n\n   Hey, AQ! Welcome to HAML!\n</code></pre>\n\n<p> Note: You dont have to include the haml.js file on top of the plugin as the plugin\n includes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.haml.js",
+      "lineno": 548
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Handlebars.SafeString",
+      "args": [
+        "string"
+      ],
+      "doc": "<p>Build out our basic SafeString type</p>\n",
+      "filename": "/lib/plugins/sammy.handlebars.js",
+      "lineno": 243
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Handlebars",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Handlebars</tt> provides a quick way of using Handlebars templates in your app.\n The plugin itself includes the handlebars.js library created by Yehuda Katz at\n at http://github.com/wycats/handlebars.js</p>\n\n<p> Handlebars.js is an extension to the Mustache templating language  created by Chris Wanstrath. Handlebars.js\n and Mustache are both logicless templating languages that keep the view and the code separated like\n we all know they should be.</p>\n\n<p> By default using Sammy.Handlbars in your app adds the <tt>handlebars()</tt> method to the EventContext\n prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method\n by passing a second argument (e.g. you could use the hbr() as the method alias so that all the template\n files could be in the form file.hbr instead of file.handlebars)</p>\n\n<h3>Example #1</h3>\n\n<p> The template (mytemplate.hb):</p>\n\n<pre class=\"prettyprint\"><code>   &lt;h1&gt;\\{\\{title\\}\\}&lt;h1&gt;\n\n   Hey, {{name}}! Welcome to Handlebars!\n</code></pre>\n\n<p> The app:</p>\n\n<pre class=\"prettyprint\"><code>   var $.app = $.sammy(function() {\n     // include the plugin and alias handlebars() to hb()\n     this.use(Sammy.Handlebars, 'hb');\n\n     this.get('#/hello/:name', function() {\n       // set local vars\n       this.title = 'Hello!'\n       this.name = this.params.name;\n       // render the template and pass it through handlebars\n       this.partial('mytemplate.hb');\n     });\n\n   });\n</code></pre>\n\n<p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class=\"prettyprint\"><code>   &lt;h1&gt;Hello!&lt;/h1&gt;\n\n   Hey, AQ! Welcome to Handlebars!\n</code></pre>\n\n<h3>Example #2 - Handlebars partials</h3>\n\n<p> The template (mytemplate.hb)</p>\n\n<pre class=\"prettyprint\"><code>   Hey, {{name}}! {{&gt;hello_friend}}\n</code></pre>\n\n<p> The partial (mypartial.hb)</p>\n\n<pre class=\"prettyprint\"><code>   Say hello to your friend {{friend}}!\n</code></pre>\n\n<p> The app:</p>\n\n<pre class=\"prettyprint\"><code>   var $.app = $.sammy(function() {\n     // include the plugin and alias handlebars() to hb()\n     this.use(Sammy.Handlebars, 'hb');\n\n     this.get('#/hello/:name/to/:friend', function() {\n       var context = this;\n\n       // fetch handlebars-partial first\n       $.get('mypartial.hb', function(response){\n         context.partials = response;\n\n         // set local vars\n         context.name = this.params.name;\n         context.hello_friend = {name: this.params.friend};\n\n         // render the template and pass it through handlebars\n         context.partial('mytemplate.hb');\n       });\n     });\n\n   });\n</code></pre>\n\n<p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class=\"prettyprint\"><code>   Hey, AQ! Say hello to your friend dP!\n</code></pre>\n\n<p> Note: You dont have to include the handlebars.js file on top of the plugin as the plugin\n includes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.handlebars.js",
+      "lineno": 582
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.JSON",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.JSON is a simple wrapper around Douglas Crockford's ever-useful json2.js\n (http://www.json.org/js.html]) Sammy.JSON includes the top level JSON object if\n it doesn't already exist (a.k.a. does not override the native implementation that\n some browsers include). It also adds a <tt>json()</tt> helper to a Sammy app when\n included.</p>\n",
+      "filename": "/lib/plugins/sammy.json.js",
+      "lineno": 331
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.JSON",
+          "name": "json",
+          "args": [
+            "object"
+          ],
+          "filename": "/lib/plugins/sammy.json.js",
+          "lineno": 351,
+          "doc": "<p>json is a polymorphic function that translates objects aback and forth\n from JSON to JS. If given a string, it will parse into JS, if given a JS\n object it will stringify into JSON.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var app = $.sammy(function() {\n    this.use(Sammy.JSON);\n\n    this.get('#/', function() {\n      this.json({user_id: 123}); //=&gt; \"{\\\"user_id\\\":\\\"123\\\"}\"\n      this.json(\"{\\\"user_id\\\":\\\"123\\\"}\"); //=&gt; [object Object]\n      this.json(\"{\\\"user_id\\\":\\\"123\\\"}\").user_id; //=&gt; \"123\"\n    });\n  })\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Meld",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Meld</code> is a simple templating engine that uses the power of jQuery's\n DOM manipulation to easily meld JSON data and HTML templates very quickly.</p>\n\n<p> The template can either be a string (i.e. loaded from a remote template)\n or a DOM Element/jQuery object. This allows you to have templates be DOM\n elements as the initial document load.</p>\n\n<h3>Example</h3>\n\n<p> The simplest case is a nested <code>&lt;div&gt;</code> whose class name is tied to a\n property of a JS object.</p>\n\n<p> Template:</p>\n\n<pre class=\"prettyprint\"><code>    &lt;div class=\"post\"&gt;\n      &lt;div class=\"title\"&gt;&lt;/div&gt;\n      &lt;div class=\"entry\"&gt;&lt;/div&gt;\n      &lt;div class=\"author\"&gt;\n        &lt;span class=\"name\"&gt;&lt;/span&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n</code></pre>\n\n<p> Data:</p>\n\n<pre class=\"prettyprint\"><code>    {\n      \"post\": {\n        \"title\": \"My Post\",\n        \"entry\": \"My Entry\",\n        \"author\": {\n          \"name\": \"@aq\"\n        }\n      }\n    }\n</code></pre>\n\n<p> Result:</p>\n\n<pre class=\"prettyprint\"><code>    &lt;div class=\"post\"&gt;\n      &lt;div class=\"title\"&gt;My Post&lt;/div&gt;\n      &lt;div class=\"entry\"&gt;My Entry&lt;/div&gt;\n      &lt;div class=\"author\"&gt;\n        &lt;span class=\"name\"&gt;@aq&lt;/span&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n</code></pre>\n\n<p> Templates can be much more complex, and more deeply nested.\n More examples can be found in <code>test/fixtures/meld/</code></p>\n\n<p> If you don't think the lookup by classes is semantic for you, you can easily\n switch the method of lookup by defining a selector function in the options</p>\n\n<p> For example:</p>\n\n<pre class=\"prettyprint\"><code>  meld($('.post'), post_data, {\n    selector: function(k) {\n      return '[data-key=' + k + ']';\n    }\n  });\n</code></pre>\n\n<p> Would look for template nodes like <code>&lt;div data-key='entry'&gt;</code></p>\n",
+      "filename": "/lib/plugins/sammy.meld.js",
+      "lineno": 65
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Mustache",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Mustache</tt> provides a quick way of using mustache style templates in your app.\n The plugin itself includes the awesome mustache.js lib created and maintained by Jan Lehnardt\n at http://github.com/janl/mustache.js</p>\n\n<p> Mustache is a clever templating system that relys on double brackets {{}} for interpolation.\n For full details on syntax check out the original Ruby implementation created by Chris Wanstrath at\n http://github.com/defunkt/mustache</p>\n\n<p> By default using Sammy.Mustache in your app adds the <tt>mustache()</tt> method to the EventContext\n prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method\n by passing a second argument (e.g. you could use the ms() as the method alias so that all the template\n files could be in the form file.ms instead of file.mustache)</p>\n\n<h3>Example #1</h3>\n\n<p> The template (mytemplate.ms):</p>\n\n<pre class=\"prettyprint\"><code>   &lt;h1&gt;\\{\\{title\\}\\}&lt;h1&gt;\n\n   Hey, {{name}}! Welcome to Mustache!\n</code></pre>\n\n<p> The app:</p>\n\n<pre class=\"prettyprint\"><code>   var $.app = $.sammy(function() {\n     // include the plugin and alias mustache() to ms()\n     this.use(Sammy.Mustache, 'ms');\n\n     this.get('#/hello/:name', function() {\n       // set local vars\n       this.title = 'Hello!'\n       this.name = this.params.name;\n       // render the template and pass it through mustache\n       this.partial('mytemplate.ms');\n     });\n\n   });\n</code></pre>\n\n<p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class=\"prettyprint\"><code>   &lt;h1&gt;Hello!&lt;/h1&gt;\n\n   Hey, AQ! Welcome to Mustache!\n</code></pre>\n\n<h3>Example #2 - Mustache partials</h3>\n\n<p> The template (mytemplate.ms)</p>\n\n<pre class=\"prettyprint\"><code>   Hey, {{name}}! {{&gt;hello_friend}}\n</code></pre>\n\n<p> The partial (mypartial.ms)</p>\n\n<pre class=\"prettyprint\"><code>   Say hello to your friend {{friend}}!\n</code></pre>\n\n<p> The app:</p>\n\n<pre class=\"prettyprint\"><code>   var $.app = $.sammy(function() {\n     // include the plugin and alias mustache() to ms()\n     this.use(Sammy.Mustache, 'ms');\n\n     this.get('#/hello/:name/to/:friend', function() {\n       var context = this;\n\n       // fetch mustache-partial first\n       $.get('mypartial.ms', function(response){\n         context.partials = response;\n\n         // set local vars\n         context.name = this.params.name;\n         context.hello_friend = {name: this.params.friend};\n\n         // render the template and pass it through mustache\n         context.partial('mytemplate.ms');\n       });\n     });\n\n   });\n</code></pre>\n\n<p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class=\"prettyprint\"><code>   Hey, AQ! Say hello to your friend dP!\n</code></pre>\n\n<p> Note: You dont have to include the mustache.js file on top of the plugin as the plugin\n includes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.mustache.js",
+      "lineno": 420
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.NestedParams",
+      "args": [
+        "app"
+      ],
+      "doc": "<p><tt>Sammy.NestedParams</tt> overrides the default form parsing behavior to provide\n extended functionality for parsing Rack/Rails style form name/value pairs into JS\n Objects. In fact it passes the same suite of tests as Rack's nested query parsing.\n The code and tests were ported to JavaScript/Sammy by http://github.com/endor</p>\n\n<p> This allows you to translate a form with properly named inputs into a JSON object.</p>\n\n<h3>Example</h3>\n\n<p> Given an HTML form like so:</p>\n\n<pre class=\"prettyprint\"><code> &lt;form action=\"#/parse_me\" method=\"post\"&gt;\n   &lt;input type=\"text\" name=\"obj[first]\" /&gt;\n   &lt;input type=\"text\" name=\"obj[second]\" /&gt;\n   &lt;input type=\"text\" name=\"obj[hash][first]\" /&gt;\n   &lt;input type=\"text\" name=\"obj[hash][second]\" /&gt;\n &lt;/form&gt;\n</code></pre>\n\n<p> And a Sammy app like:</p>\n\n<pre class=\"prettyprint\"><code> var app = $.sammy(function(app) {\n   this.use(Sammy.NestedParams);\n\n   this.post('#/parse_me', function(context) {\n     $.log(this.params);\n   });\n });\n</code></pre>\n\n<p> If you filled out the form with some values and submitted it, you would see something\n like this in your log:</p>\n\n<pre class=\"prettyprint\"><code> {\n   'obj': {\n     'first': 'value',\n     'second': 'value',\n     'hash': {\n       'first': 'value',\n       'second': 'value'\n     }\n   }\n }\n</code></pre>\n\n<p> It supports creating arrays with [] and other niceities. Check out the tests for\n full specs.</p>\n",
+      "filename": "/lib/plugins/sammy.nested_params.js",
+      "lineno": 112
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.OAuth2",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.OAuth2 is a plugin for using OAuth 2.0 to authenticate users and\n access your application's API. Requires Sammy.Session.</p>\n\n<p> Triggers the following events:\n - oauth.connected -- Access token set and ready to use. Triggered when new\n access token acquired, of when application starts and already has access\n token.\n - oauth.disconnected -- Access token reset. Triggered by\n loseAccessToken().\n - oauth.denied -- Authorization attempt rejected.</p>\n\n<h3>Example</h3>\n\n<p> this.use(Sammy.Storage);\n this.use(Sammy.OAuth2);\n this.oauthorize = \"/oauth/authorize\";</p>\n\n<p> // The quick &amp; easy way\n this.requireOAuth();\n // Specific path\n this.requireOAuth(\"/private\");\n // Filter you can apply to specific URLs\n this.before(function(context) { return context.requireOAuth(); })\n // Apply to specific request\n this.get(\"/private\", function(context) {\n   this.requireOAuth(function() {</p>\n\n<pre class=\"prettyprint\"><code> // Do something\n</code></pre>\n\n<p>   })\n })</p>\n\n<p> // Sign in/sign out.\n this.bind(\"oauth.connected\", function() { $(\"#signin\").hide() });\n this.bind(\"oauth.disconnected\", function() { $(\"#signin\").show() });</p>\n\n<p> // Handle access denied and other errors\n this.bind(\"oauth.denied\", function(evt, error) {\n   this.partial(\"admin/views/no_access.tmpl\", { error: error.message });\n });</p>\n\n<p> // Sign out.\n this.get(\"#/signout\", function(context) {\n   context.loseAccessToken();\n   context.redirect(\"#/\");\n });</p>\n",
+      "filename": "/lib/plugins/sammy.oauth2.js",
+      "lineno": 48
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.PathLocationProxy",
+      "args": [
+        "app"
+      ],
+      "doc": "<p><code>Sammy.PathLocationProxy</code> is a simple Location Proxy that just\n gets and sets window.location. This allows you to use\n Sammy to route on the full URL path instead of just the hash. It\n will take a full refresh to get the app to change state.</p>\n\n<p> To read more about location proxies, check out the\n documentation for <code>Sammy.HashLocationProxy</code></p>\n",
+      "filename": "/lib/plugins/sammy.path_location_proxy.js",
+      "lineno": 12
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Pure",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Pure</code> is a simple wrapper around the pure.js templating engine for\n use in Sammy apps.</p>\n\n<p> See http://beebole.com/pure/ for detailed documentation.</p>\n",
+      "filename": "/lib/plugins/sammy.pure.js",
+      "lineno": 744
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store",
+      "args": [
+        "options"
+      ],
+      "doc": "<p>Sammy.Store is an abstract adapter class that wraps the multitude of in\n browser data storage into a single common set of methods for storing and\n retreiving data. The JSON library is used (through the inclusion of the\n Sammy.JSON) plugin, to automatically convert objects back and forth from\n stored strings.</p>\n\n<p> Sammy.Store can be used directly, but within a Sammy.Application it is much\n easier to use the <code>Sammy.Storage</code> plugin and its helper methods.</p>\n\n<p> Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when\n a key is set.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage\n  // Note: localStorage only works on browsers that support it\n  var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});\n  store.set('foo', 'bar');\n  store.get('foo'); //=&gt; 'bar'\n  store.set('json', {obj: 'this is an obj'});\n  store.get('json'); //=&gt; {obj: 'this is an obj'}\n  store.keys(); //=&gt; ['foo','json']\n  store.clear('foo');\n  store.keys(); //=&gt; ['json']\n  store.clearAll();\n  store.keys(); //=&gt; []\n</code></pre>\n\n<h3>Arguments</h3>\n\n<p> The constructor takes a single argument which is a Object containing these possible options.</p>\n\n<ul>\n<li><code>name</code> The name/namespace of this store. Stores are unique by name/type. (default 'store')</li>\n<li><code>element</code> A selector for the element that the store is bound to. (default 'body')</li>\n<li><code>type</code> The type of storage/proxy to use (default 'memory')</li>\n</ul>\n\n\n<p> Extra options are passed to the storage constructor.\n Sammy.Store supports the following methods of storage:</p>\n\n<ul>\n<li><code>memory</code> Basic object storage</li>\n<li><code>data</code> jQuery.data DOM Storage</li>\n<li><code>cookie</code> Access to document.cookie. Limited to 2K</li>\n<li><code>local</code> HTML5 DOM localStorage, browswer support is currently limited.</li>\n<li><code>session</code> HTML5 DOM sessionStorage, browswer support is currently limited.</li>\n</ul>\n\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 49
+    },
+    {
+      "methods": [
+        {
+          "klass": "Sammy.Store",
+          "name": "clear",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 129,
+          "doc": "<p>Removes the value at <code>key</code> from the current store</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "clearAll",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 134,
+          "doc": "<p>Clears all the values for the current store.</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "each",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 153,
+          "doc": "<p>Iterates over each key value pair passing them to the <code>callback</code> function</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  store.each(function(key, value) {\n    Sammy.log('key', key, 'value', value);\n  });\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "exists",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 87,
+          "doc": "<p>Checks for the existance of <code>key</code> in the current store. Returns a boolean.</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "fetch",
+          "args": [
+            "key",
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 216,
+          "doc": "<p>Returns the value at <code>key</code> if set, otherwise, runs the callback\n and sets the value to the value returned in the callback.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>var store = new Sammy.Store;\nstore.exists('foo'); //=&gt; false\nstore.fetch('foo', function() {\n  return 'bar!';\n}); //=&gt; 'bar!'\nstore.get('foo') //=&gt; 'bar!'\nstore.fetch('foo', function() {\n  return 'baz!';\n}); //=&gt; 'bar!\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "filter",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 179,
+          "doc": "<p>Filters the store by a filter function that takes a key value.\n Returns an array of arrays where the first element of each array\n is the key and the second is the value of that key.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var store = new Sammy.Store;\n  store.set('one', 'two');\n  store.set('two', 'three');\n  store.set('1', 'two');\n  var returned = store.filter(function(key, value) {\n    // only return\n    return value === 'two';\n  });\n  // returned =&gt; [['one', 'two'], ['1', 'two']];\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "first",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 191,
+          "doc": "<p>Works exactly like filter except only returns the first matching key\n value pair instead of all of them</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "get",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 117,
+          "doc": "<p>Returns the set value at <code>key</code>, parsing with <code>JSON.parse</code> and\n turning into an object if possible</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "isAvailable",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 79,
+          "doc": "<p>Checks for the availability of the current storage type in the current browser/config.</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "keys",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 142,
+          "doc": "<p>Returns the all the keys set for the current store as an array.\n Internally Sammy.Store keeps this array in a 'meta_key' for easy access.</p>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "load",
+          "args": [
+            "key",
+            "path",
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 238,
+          "doc": "<p>loads the response of a request to <code>path</code> into <code>key</code>.</p>\n\n<h3>Example</h3>\n\n<p> In /mytemplate.tpl:</p>\n\n<pre class=\"prettyprint\"><code>My Template\n</code></pre>\n\n<p> In app.js:</p>\n\n<pre class=\"prettyprint\"><code>var store = new Sammy.Store;\nstore.load('mytemplate', '/mytemplate.tpl', function() {\n  s.get('mytemplate') //=&gt; My Template\n});\n</code></pre>\n"
+        },
+        {
+          "klass": "Sammy.Store",
+          "name": "set",
+          "args": [
+            "key",
+            "value"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 103,
+          "doc": "<p>Sets the value of <code>key</code> with <code>value</code>. If <code>value</code> is an\n object, it is turned to and stored as a string with <code>JSON.stringify</code>.\n It also tries to conform to the KVO pattern triggering jQuery events on the\n element that the store is bound to.</p>\n\n<h3>Example</h3>\n\n<pre class=\"prettyprint\"><code>  var store = new Sammy.Store({name: 'kvo'});\n  $('body').bind('set-kvo-foo', function(e, data) {\n    Sammy.log(data.key + ' changed to ' + data.value);\n  });\n  store.set('foo', 'bar'); // logged: foo changed to bar\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.isAvailable",
+      "args": [
+        "type"
+      ],
+      "doc": "<p>Tests if the type of storage is available/works in the current browser/config.\n Especially useful for testing the availability of the awesome, but not widely\n supported HTML5 DOM storage</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 262
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.Memory",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>Memory ('memory') is the basic/default store. It stores data in a global\n JS object. Data is lost on refresh.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 272
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.Data",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>Data ('data') stores objects using the jQuery.data() methods. This has the advantadge\n of scoping the data to the specific element. Like the 'memory' store its data\n will only last for the length of the current request (data is lost on refresh/etc).</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 299
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.LocalStorage",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>LocalStorage ('local') makes use of HTML5 DOM Storage, and the window.localStorage\n object. The great advantage of this method is that data will persist beyond\n the current request. It can be considered a pretty awesome replacement for\n cookies accessed via JS. The great disadvantage, though, is its only available\n on the latest and greatest browsers.</p>\n\n<p> For more info on DOM Storage:\n [https://developer.mozilla.org/en/DOM/Storage]\n [http://www.w3.org/TR/2009/WD-webstorage-20091222/]</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 333
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.SessionStorage",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>.SessionStorage ('session') is similar to LocalStorage (part of the same API)\n and shares similar browser support/availability. The difference is that\n SessionStorage is only persistant through the current 'session' which is defined\n as the length that the current window is open. This means that data will survive\n refreshes but not close/open or multiple windows/tabs. For more info, check out\n the <code>LocalStorage</code> documentation and links.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 364
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Store.Cookie",
+      "args": [
+        "name",
+        "element",
+        "options"
+      ],
+      "doc": "<p>.Cookie ('cookie') storage uses browser cookies to store data. JavaScript\n has access to a single document.cookie variable, which is limited to 2Kb in\n size. Cookies are also considered 'unsecure' as the data can be read easily\n by other sites/JS. Cookies do have the advantage, though, of being widely\n supported and persistent through refresh and close/open. Where available,\n HTML5 DOM Storage like LocalStorage and SessionStorage should be used.</p>\n\n<p> .Cookie can also take additional options:</p>\n\n<ul>\n<li><code>expires_in</code> Number of seconds to keep the cookie alive (default 2 weeks).</li>\n<li><code>path</code> The path to activate the current cookie for (default '/').</li>\n</ul>\n\n\n<p> For more information about document.cookie, check out the pre-eminint article\n by ppk: [http://www.quirksmode.org/js/cookies.html]</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 408
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Storage",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.Storage is a plugin that provides shortcuts for creating and using\n Sammy.Store objects. Once included it provides the <code>store()</code> app level\n and helper methods. Depends on Sammy.JSON (or json2.js).</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 456
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Session",
+      "args": [
+        "app",
+        "options"
+      ],
+      "doc": "<p>Sammy.Session is an additional plugin for creating a common 'session' store\n for the given app. It is a very simple wrapper around <code>Sammy.Storage</code>\n that provides a simple fallback mechanism for trying to provide the best\n possible storage type for the session. This means, <code>LocalStorage</code>\n if available, otherwise <code>Cookie</code>, otherwise <code>Memory</code>.\n It provides the <code>session()</code> helper through <code>Sammy.Storage#store()</code>.</p>\n\n<p> See the <code>Sammy.Storage</code> plugin for full documentation.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 555
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Cache",
+      "args": [
+        "app",
+        "options"
+      ],
+      "doc": "<p>Sammy.Cache provides helpers for caching data within the lifecycle of a\n Sammy app. The plugin provides two main methods on <code>Sammy.Application</code>,\n <code>cache</code> and <code>clearCache</code>. Each app has its own cache store so that\n you dont have to worry about collisions. As of 0.5 the original Sammy.Cache module\n has been deprecated in favor of this one based on Sammy.Storage. The exposed\n API is almost identical, but Sammy.Storage provides additional backends including\n HTML5 Storage. <code>Sammy.Cache</code> will try to use these backends when available\n (in this order) <code>LocalStorage</code>, <code>SessionStorage</code>, and <code>Memory</code></p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 569
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Template",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Template</tt> is a simple plugin that provides a way to create\n and render client side templates. The rendering code is based on John Resig's\n quick templates and Greg Borenstien's srender plugin.\n This is also a great template/boilerplate for Sammy plugins.</p>\n\n<p> Templates use &lt;% %> tags to denote embedded javascript.</p>\n\n<h3>Examples</h3>\n\n<p> Here is an example template (user.template):</p>\n\n<pre class=\"prettyprint\"><code>  &lt;div class=\"user\"&gt;\n    &lt;div class=\"user-name\"&gt;&lt;%= user.name %&gt;&lt;/div&gt;\n    &lt;% if (user.photo_url) { %&gt;\n      &lt;div class=\"photo\"&gt;&lt;img src=\"&lt;%= user.photo_url %&gt;\" /&gt;&lt;/div&gt;\n    &lt;% } %&gt;\n  &lt;/div&gt;\n</code></pre>\n\n<p> Given that is a publicly accesible file, you would render it like:</p>\n\n<pre class=\"prettyprint\"><code>   $.sammy(function() {\n     // include the plugin\n     this.use(Sammy.Template);\n\n     this.get('#/', function() {\n       // the template is rendered in the current context.\n       this.user = {name: 'Aaron Quint'};\n       // partial calls template() because of the file extension\n       this.partial('user.template');\n     })\n   });\n</code></pre>\n\n<p> You can also pass a second argument to use() that will alias the template\n method and therefore allow you to use a different extension for template files\n in <tt>partial()</tt></p>\n\n<pre class=\"prettyprint\"><code>  // alias to 'tpl'\n  this.use(Sammy.Template, 'tpl');\n\n  // now .tpl files will be run through srender\n  this.get('#/', function() {\n    this.partial('myfile.tpl');\n  });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.template.js",
+      "lineno": 94
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Sammy.Title",
+      "args": [
+
+      ],
+      "doc": "<p>Sammy.Title is a very simple plugin to easily set the document's title.\n It supplies a helper for setting the title (<code>title()</code>) within routes,\n and an app level method for setting the global title (<code>setTitle()</code>)</p>\n",
+      "filename": "/lib/plugins/sammy.title.js",
+      "lineno": 8
+    },
+    {
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ]
+    }
+  ]
+]

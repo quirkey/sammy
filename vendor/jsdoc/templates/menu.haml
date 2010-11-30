@@ -1,0 +1,7 @@
+%ol
+  - docs.each do |klass|
+    - klass_name = klass[:klass].is_a?(String) ? klass[:klass] : klass[:klass][:klass]
+    %li
+      %h3
+        %a{:href => "#{klass_name}"} klass_name
+      - if klass

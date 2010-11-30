@@ -70,7 +70,7 @@ class JSDoc
     file.each do |line|
       if klass_match = line.match(KLASS_REGEXP)
         klass = {
-          :klass => klass_match[1].to_s.strip,
+          :name => klass_match[1].to_s.strip,
           :args => klass_match[2].to_s.split(',').collect {|a| a.strip },
           :doc => "",
           :filename => relative_filename,
@@ -96,7 +96,7 @@ class JSDoc
             args = line_match[5].to_s.split(',').collect {|a| a.strip }
             if !(name.nil? || name.strip == '')
               meth = {
-                :klass => klass,
+                :klass => klass[:name],
                 :name => name,
                 :args => args,
                 :filename => relative_filename,
@@ -114,7 +114,7 @@ class JSDoc
         elsif line_match = line.match(ATTRIBUTE_REGEXP)
           current = :attribute
           attribute = {
-            :klass => klass,
+            :klass => klass[:name],
             :name  => line_match[1].to_s,
             :default => line_match[2].to_s,
             :filename => relative_filename,
