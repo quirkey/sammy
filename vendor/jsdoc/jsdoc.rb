@@ -34,6 +34,8 @@ class JSDoc
   FUNCTION_REGEXP  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*function\s*\(([\w\d\s,]+)?\))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
   ATTRIBUTE_REGEXP = /^\s+([\w\d_\$]+)\:\s+(.*)\,\s+/i
 
+  TEMPLATE_DIR = File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
+
   def initialize(base_path, *paths)
     @base_path = File.expand_path(base_path)
     @paths = []
@@ -62,6 +64,7 @@ class JSDoc
     file = File.open(filename)
 
     klass   = {:klass => 'Top Level'}
+    klass_name = ""
     context = nil
     current = nil
     comment = ""
@@ -69,18 +72,21 @@ class JSDoc
     relative_filename = filename.gsub(@base_path, '')
     file.each do |line|
       if klass_match = line.match(KLASS_REGEXP)
+        klass_name = klass_match[1].to_s.strip;
         klass = {
-          :name => klass_match[1].to_s.strip,
+          :name => klass_name,
           :args => klass_match[2].to_s.split(',').collect {|a| a.strip },
           :doc => "",
           :filename => relative_filename,
-          :lineno => file.lineno
+          :lineno => file.lineno,
+          :methods => [],
+          :attributes => []
         }
         if context == :comment
           klass[:doc] = convert_doc(comment)
           comment = ""
         end
-        docs[klass] = {:methods => [], :attributes => []}
+        docs[klass_name] = klass
       else
         if line_match = line.match(FUNCTION_REGEXP)
           current = ((line_match[0] =~ /^\/\//) ? :comment : :method)
@@ -96,7 +102,6 @@ class JSDoc
             args = line_match[5].to_s.split(',').collect {|a| a.strip }
             if !(name.nil? || name.strip == '')
               meth = {
-                :klass => klass[:name],
                 :name => name,
                 :args => args,
                 :filename => relative_filename,
@@ -106,7 +111,7 @@ class JSDoc
                 if !(comment.nil? || comment.strip == '')
                   meth[:doc] = convert_doc(comment)
                   comment = ""
-                  docs[klass][:methods] << meth if docs[klass] && docs[klass][:methods]
+                  docs[klass_name][:methods] << meth if docs[klass_name] && docs[klass_name][:methods]
                 end
               end
             end
@@ -114,7 +119,6 @@ class JSDoc
         elsif line_match = line.match(ATTRIBUTE_REGEXP)
           current = :attribute
           attribute = {
-            :klass => klass[:name],
             :name  => line_match[1].to_s,
             :default => line_match[2].to_s,
             :filename => relative_filename,
@@ -124,7 +128,7 @@ class JSDoc
             if !(comment.nil? || comment.strip == '')
               attribute[:doc] = convert_doc(comment)
               comment = ""
-              docs[klass][:attributes] << attribute if docs[klass] && docs[klass][:attributes]
+              docs[klass_name][:attributes] << attribute if docs[klass_name] && docs[klass_name][:attributes]
             end
           end
         else
@@ -146,9 +150,9 @@ class JSDoc
 
     @docs = @docs.reject do |klass, klass_methods|
       # get rid of undocumented classes
-      klass[:doc].nil? || klass[:doc].to_s.strip == ''
+      klass_methods[:doc].nil? || klass_methods[:doc].to_s.strip == ''
     end.sort {|a, b|
-      a[0][:klass] <=> b[0][:klass]
+      a[1][:name] <=> b[1][:name]
     }
   end
 
@@ -162,20 +166,38 @@ class JSDoc
     final_text
   end
 
+  def docs
+    parse! if !@docs
+    @docs
+  end
+
+  def to_haml
+    rendered = {}
+    # build menu
+    menu_template = load_template('menu')
+    rendered['menu.html'] = Haml::Engine.new(menu_template).to_html(Object.new, :docs => docs)
+
+    rendered
+  end
+
   def to_json
     Yajl::Encoder.encode(@docs, :pretty => true)
   end
 
+private
+
+  def load_template(name)
+    File.read(File.join(TEMPLATE_DIR, "#{name}.haml"))
+  end
 end
 
 
 # rdoc = RDoc::Markup::ToHtml.new
-# template = File.read(File.join(File.dirname(__FILE__), 'doc.haml'))
-# puts Haml::Engine.new(template).to_html(Helper, {:doc => docs})
 
 if __FILE__ == $0
   puts "Running JSDOC on #{ARGV}"
   jsdoc = JSDoc.new(Dir.pwd, *ARGV)
   jsdoc.parse!
-  puts jsdoc.to_json
+  puts jsdoc.to_haml
+  #puts jsdoc.to_json
 end

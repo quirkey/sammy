@@ -1,0 +1,41 @@
+.api
+  .klass{:id => klass[:name]}
+    %h3
+      = klass[:name]
+      %span
+        (
+        =klass[:args].join(', ')
+        )
+    %div.doc><
+      = convert(klass[:doc] || "")
+    - unless klass[:attributes].empty?
+      %h3 Attributes
+      %ul
+        - klass[:attributes].each_with_index do |attribute,i|
+          %li
+            %a{:href => "##{klass[:klass]}-#{attribute[:name]}"}=attribute[:name]
+      %hr
+      - klass[:attributes].each_with_index do |attribute, i|
+        %div.attr{:id => "#{klass[:klass]}-#{attribute[:name]}"}
+          %h4
+            =attribute[:name]
+            \=
+            %span=attribute[:default]
+          %div.doc><
+            = convert(attribute[:doc])
+    %h3 Methods
+    %ul
+      -klass[:methods].each_with_index do |meth,i|
+        %li
+          %a{:href => "##{klass[:klass]}-#{meth[:name]}"}=meth[:name]
+    %hr
+    -klass[:methods].each_with_index do |meth,i|
+      %div.meth{:id => "#{klass[:klass]}-#{meth[:name]}"}
+        %h4
+          =meth[:name]
+          %span
+            (
+            %em=meth[:args].join(', ')
+            )
+        %div.doc><
+          =convert(meth[:doc])

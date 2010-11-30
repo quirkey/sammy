@@ -1,7 +1,11 @@
 %ol
-  - docs.each do |klass|
-    - klass_name = klass[:klass].is_a?(String) ? klass[:klass] : klass[:klass][:klass]
+  - docs.each do |klass_name, klass|
     %li
       %h3
-        %a{:href => "#{klass_name}"} klass_name
-      - if klass
+        %a{:href => "#{klass[:name]}"}= klass[:name]
+      - unless klass[:methods].empty?
+        %h4 Methods
+        %ol
+          - klass[:methods].each do |method|
+            %li
+              %a{:href => "#{klass[:name]}##{method[:name]}"}= method[:name]
