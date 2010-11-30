@@ -25,6 +25,7 @@ require 'rubygems'
 require 'haml'
 require 'rdiscount'
 require 'active_support/ordered_hash'
+require 'active_support/core_ext/hash'
 require 'yajl'
 
 class JSDoc
@@ -33,7 +34,8 @@ class JSDoc
   FUNCTION_REGEXP  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*function\s*\(([\w\d\s,]+)?\))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
   ATTRIBUTE_REGEXP = /^\s+([\w\d_\$]+)\:\s+(.*)\,\s+/i
 
-  def initialize(*paths)
+  def initialize(base_path, *paths)
+    @base_path = File.expand_path(base_path)
     @paths = []
     paths.flatten.each do |path|
       path = File.expand_path(path)
@@ -50,7 +52,7 @@ class JSDoc
 
   def parse!
     @paths.each do |path|
-      @docs.merge!(parse_file(path))
+      @docs.deep_merge!(parse_file(path))
     end
     sort_docs
   end
@@ -64,17 +66,18 @@ class JSDoc
     current = nil
     comment = ""
     docs    = ActiveSupport::OrderedHash.new({})
+    relative_filename = filename.gsub(@base_path, '')
     file.each do |line|
       if klass_match = line.match(KLASS_REGEXP)
         klass = {
           :klass => klass_match[1].to_s.strip,
           :args => klass_match[2].to_s.split(',').collect {|a| a.strip },
           :doc => "",
-          :filename => filename,
+          :filename => relative_filename,
           :lineno => file.lineno
         }
         if context == :comment
-          klass[:doc] = comment
+          klass[:doc] = convert_doc(comment)
           comment = ""
         end
         docs[klass] = {:methods => [], :attributes => []}
@@ -96,12 +99,12 @@ class JSDoc
                 :klass => klass,
                 :name => name,
                 :args => args,
-                :filename => filename,
+                :filename => relative_filename,
                 :lineno => file.lineno
               }
               if context == :comment
                 if !(comment.nil? || comment.strip == '')
-                  meth[:doc] = comment
+                  meth[:doc] = convert_doc(comment)
                   comment = ""
                   docs[klass][:methods] << meth if docs[klass] && docs[klass][:methods]
                 end
@@ -114,12 +117,12 @@ class JSDoc
             :klass => klass,
             :name  => line_match[1].to_s,
             :default => line_match[2].to_s,
-            :filename => filename,
+            :filename => relative_filename,
             :lineno   => file.lineno
           }
           if context == :comment
             if !(comment.nil? || comment.strip == '')
-              attribute[:doc] = comment
+              attribute[:doc] = convert_doc(comment)
               comment = ""
               docs[klass][:attributes] << attribute if docs[klass] && docs[klass][:attributes]
             end
@@ -131,7 +134,6 @@ class JSDoc
       end
     end
     file.close
-    puts docs.inspect
     docs
   end
 
@@ -150,37 +152,22 @@ class JSDoc
     }
   end
 
-  def to_json
-    Yajl::Encoder.encode(@docs, :pretty => true)
-  end
-end
-
-
-# class RDoc::Markup::ToHtml
-#
-#   def accept_verbatim(am, fragment)
-#     @res << annotate("{% highlight javascript %}") << "\n"
-#     @res << fragment.txt.split(/\n/).collect {|l| l.gsub(/^\s{4}/,'') }.join("\n")
-#     @res << "\n" << annotate("{% endhighlight %}") << "\n"
-#   end
-#
-# end
-
-module Helper
-  extend self
-
-  def convert(text)
+  def convert_doc(text)
     final_text = ""
-    text.each_line do |l|
+    text.strip.each_line do |l|
       final_text << l.gsub(/^\ #/,'#')
     end
     final_text = RDiscount.new(final_text).to_html
-    final_text.gsub!('<pre><code>', "{% highlight javascript %}\n")
-    final_text.gsub!('</code></pre>', "{% endhighlight %}\n")
+    final_text.gsub!(/<pre><code>/m, '<pre class="prettyprint"><code>')
     final_text
   end
 
+  def to_json
+    Yajl::Encoder.encode(@docs, :pretty => true)
+  end
+
 end
+
 
 # rdoc = RDoc::Markup::ToHtml.new
 # template = File.read(File.join(File.dirname(__FILE__), 'doc.haml'))
@@ -188,7 +175,7 @@ end
 
 if __FILE__ == $0
   puts "Running JSDOC on #{ARGV}"
-  jsdoc = JSDoc.new(*ARGV)
+  jsdoc = JSDoc.new(Dir.pwd, *ARGV)
   jsdoc.parse!
   puts jsdoc.to_json
 end
