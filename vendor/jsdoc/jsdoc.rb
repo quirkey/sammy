@@ -176,7 +176,9 @@ class JSDoc
     # build menu
     menu_template = load_template('menu')
     rendered['menu.html'] = Haml::Engine.new(menu_template).to_html(Object.new, :docs => docs)
-
+    docs.each do |klass_name, klass|
+      rendered["#{klass_name}.html"] = Haml::Engine.new(load_template('klass')).to_html(Object.new, :klass => klass)
+    end
     rendered
   end
 
@@ -184,6 +186,14 @@ class JSDoc
     Yajl::Encoder.encode(@docs, :pretty => true)
   end
 
+  def write_to_dir(dir)
+    dir = File.expand_path(dir)
+    FileUtils.mkdir_p(dir)
+    File.open(File.join(dir, 'docs.json'), 'w') {|f| f << to_json }
+    to_haml.each do |path, content|
+      File.open(File.join(dir, path), 'w') {|f| f << content }
+    end
+  end
 private
 
   def load_template(name)
@@ -198,6 +208,7 @@ if __FILE__ == $0
   puts "Running JSDOC on #{ARGV}"
   jsdoc = JSDoc.new(Dir.pwd, *ARGV)
   jsdoc.parse!
-  puts jsdoc.to_haml
+  #puts jsdoc.to_haml
   #puts jsdoc.to_json
+  jsdoc.write_to_dir('docs')
 end
