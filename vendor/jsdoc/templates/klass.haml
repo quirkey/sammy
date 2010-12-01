@@ -1,42 +1,33 @@
-.api
-  .klass{:id => klass[:name]}
-    %h3
-      = klass[:name]
-      %span
-        (
-        =klass[:args].join(', ')
-        )
-    .doc><
-      = klass[:doc] || ""
-    - unless klass[:attributes].empty?
-      %h3 Attributes
-      %ul
-        - klass[:attributes].each_with_index do |attribute,i|
-          %li
-            %a{:href => "##{klass[:klass]}-#{attribute[:name]}"}=attribute[:name]
-      %hr
-      - klass[:attributes].each_with_index do |attribute, i|
-        .attr{:id => "#{klass[:klass]}-#{attribute[:name]}"}
-          %h4
-            =attribute[:name]
-            \=
-            %span=attribute[:default]
-          .doc><
-            = attribute[:doc]
-    - unless klass[:methods].empty?
-      %h3 Methods
-      %ul
-        -klass[:methods].each_with_index do |meth,i|
-          %li
-            %a{:href => "##{klass[:klass]}-#{meth[:name]}"}=meth[:name]
-      %hr
+.klass{:id => klass[:name]}
+  %h3
+    = klass[:name]
+    %span
+      (
+      =klass[:args].join(', ')
+      )
+  .doc><
+    = klass[:doc] || ""
+  - unless klass[:attributes].empty?
+    %h3 Attributes
+    %ul
+      - klass[:attributes].each_with_index do |attribute,i|
+        %li
+          %a{:href => "##{klass[:name]}-#{attribute[:name]}"}=attribute[:name]
+    %hr
+    - klass[:attributes].each_with_index do |attribute, i|
+      .attr{:id => "#{klass[:name]}-#{attribute[:name]}"}
+        %h4
+          =attribute[:name]
+          \=
+          %span=attribute[:default]
+        .doc><
+          = attribute[:doc]
+  - unless klass[:methods].empty?
+    %h3 Methods
+    %ul
       -klass[:methods].each_with_index do |meth,i|
-        .meth{:id => "#{klass[:klass]}-#{meth[:name]}"}
-          %h4
-            =meth[:name]
-            %span
-              (
-              %em=meth[:args].join(', ')
-              )
-          .doc><
-            =meth[:doc]
+        %li
+          %a{:href => "##{klass[:name]}-#{meth[:name]}"}=meth[:name]
+    %hr
+    -klass[:methods].each do |meth|
+      =render('method', :klass => klass, :meth => meth, :individual => false)

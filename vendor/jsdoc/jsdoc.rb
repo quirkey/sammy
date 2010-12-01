@@ -36,8 +36,11 @@ class JSDoc
 
   TEMPLATE_DIR = File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
 
-  def initialize(base_path, *paths)
+  attr_accessor :version
+
+  def initialize(base_path, version, *paths)
     @base_path = File.expand_path(base_path)
+    @version = version
     @paths = []
     paths.flatten.each do |path|
       path = File.expand_path(path)
@@ -159,11 +162,16 @@ class JSDoc
   def convert_doc(text)
     final_text = ""
     text.strip.each_line do |l|
-      final_text << l.gsub(/^\ #/,'#')
+      final_text << l.gsub(/^\ #\s/,'#')
     end
     final_text = RDiscount.new(final_text).to_html
-    final_text.gsub!(/<pre><code>/m, '<pre class="prettyprint"><code>')
+    final_text.gsub!(/<pre><code>/m, "<pre class='prettyprint'><code>\n")
     final_text
+  end
+
+  def gh_url(doc_node)
+    version = "v#{version}" if version =~ /^\d/
+    "https://github.com/quirkey/sammy/tree/#{version}#{doc_node[:filename]}#L#{doc_node[:lineno]}"
   end
 
   def docs
@@ -174,10 +182,13 @@ class JSDoc
   def to_haml
     rendered = {}
     # build menu
-    menu_template = load_template('menu')
-    rendered['menu.html'] = Haml::Engine.new(menu_template).to_html(Object.new, :docs => docs)
+    rendered['menu.html'] = render('menu', :docs => docs)
+    rendered["index.html"] = ""
     docs.each do |klass_name, klass|
-      rendered["#{klass_name}.html"] = Haml::Engine.new(load_template('klass')).to_html(Object.new, :klass => klass)
+      rendered["index.html"] << render('klass', :klass => klass)
+      klass[:methods].each do |method|
+        rendered["#{klass_name}._methods_.#{method[:name]}.html"] = render('method', :meth => method, :klass => klass, :individual => true)
+      end
     end
     rendered
   end
@@ -187,7 +198,8 @@ class JSDoc
   end
 
   def write_to_dir(dir)
-    dir = File.expand_path(dir)
+    dir = File.expand_path(File.join(dir, version))
+    puts "writing to #{dir}"
     FileUtils.mkdir_p(dir)
     File.open(File.join(dir, 'docs.json'), 'w') {|f| f << to_json }
     to_haml.each do |path, content|
@@ -196,19 +208,23 @@ class JSDoc
   end
 private
 
+  def render(template, locals)
+    Haml::Engine.new(load_template(template)).to_html(self, locals)
+  end
+
   def load_template(name)
     File.read(File.join(TEMPLATE_DIR, "#{name}.haml"))
   end
 end
 
 
-# rdoc = RDoc::Markup::ToHtml.new
-
 if __FILE__ == $0
   puts "Running JSDOC on #{ARGV}"
-  jsdoc = JSDoc.new(Dir.pwd, *ARGV)
+  output_dir = ARGV.shift
+  version    = ARGV.shift
+  jsdoc = JSDoc.new(Dir.pwd, version, *ARGV)
   jsdoc.parse!
   #puts jsdoc.to_haml
   #puts jsdoc.to_json
-  jsdoc.write_to_dir('docs')
+  jsdoc.write_to_dir(output_dir)
 end
