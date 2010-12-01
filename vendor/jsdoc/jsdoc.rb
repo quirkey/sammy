@@ -94,7 +94,7 @@ class JSDoc
         if line_match = line.match(FUNCTION_REGEXP)
           current = ((line_match[0] =~ /^\/\//) ? :comment : :method)
           if current == :comment
-            this_comment = line_match[2].to_s
+            this_comment = line_match[2].to_s.gsub(/^ /,'')
             if context == :comment
               comment << this_comment
             else
@@ -162,6 +162,7 @@ class JSDoc
   def convert_doc(text)
     final_text = ""
     text.strip.each_line do |l|
+      puts l.inspect
       final_text << l.gsub(/^\ #\s/,'#')
     end
     final_text = RDiscount.new(final_text).to_html
