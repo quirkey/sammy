@@ -2,13 +2,13 @@
   %h4
     - if individual
       %strong= klass[:name]
-    %a{:href => "#{klass[:name]}._method_.#{meth[:name]}"}=meth[:name]
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html"}=meth[:name]
     %span
       (
       %em=meth[:args].join(', ')
       )
   .links
-    %a{:href => "#{klass[:name]}._method_.#{meth[:name]}#comments"} Comments
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments"} Comments
     |
     %a{:href => gh_url(meth)} Show in GitHub
   .doc><

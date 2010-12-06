@@ -162,7 +162,6 @@ class JSDoc
   def convert_doc(text)
     final_text = ""
     text.strip.each_line do |l|
-      puts l.inspect
       final_text << l.gsub(/^\ #\s/,'#')
     end
     final_text = RDiscount.new(final_text).to_html
@@ -171,8 +170,8 @@ class JSDoc
   end
 
   def gh_url(doc_node)
-    version = "v#{version}" if version =~ /^\d/
-    "https://github.com/quirkey/sammy/tree/#{version}#{doc_node[:filename]}#L#{doc_node[:lineno]}"
+    v = version =~ /^\d/ ? "v#{version}" : version
+    "https://github.com/quirkey/sammy/tree/#{v}#{doc_node[:filename]}#L#{doc_node[:lineno]}"
   end
 
   def docs
