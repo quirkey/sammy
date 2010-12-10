@@ -209,7 +209,7 @@ class JSDoc
 private
 
   def render(template, locals)
-    Haml::Engine.new(load_template(template)).to_html(self, locals)
+    Haml::Engine.new(load_template(template), :output_style => :ugly).to_html(self, locals)
   end
 
   def load_template(name)

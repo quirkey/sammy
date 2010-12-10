@@ -1,5 +1,5 @@
 .meth{:id => "#{klass[:name]}-#{meth[:name]}", :class => individual ? 'individual' : nil}
-  %h4
+  %h3
     - if individual
       %strong= klass[:name]
     %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html"}=meth[:name]
@@ -21,8 +21,8 @@
             var disqus_shortname = 'sammyjsorg'; // required: replace example with your forum shortname
 
             // The following are highly recommended additional parameters. Remove the slashes in front to use.
-            var disqus_identifier = "sammyjsdocs-<%= "#{klass[:name]}-#{meth[:name]}" %>";
-            // var disqus_url = 'http://example.com/permalink-to-page.html';
+            var disqus_identifier = "sammyjsdocs-<%= version %>-<%= "#{klass[:name]}-#{meth[:name]}" %>";
+            var disqus_url = 'http://www.sammyjs.org/docs/api/<%= version %>/<%= "#{klass[:name]}._methods_.#{meth[:name]}" %>.html';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
