@@ -19,7 +19,6 @@
       -klass[:methods].each_with_index do |meth,i|
         %li
           %a{:href => "##{klass[:name]}-#{meth[:name]}"}=meth[:name]
-  %hr
   - unless klass[:attributes].empty?
     - klass[:attributes].each_with_index do |attribute, i|
       .attr{:id => "#{klass[:name]}-#{attribute[:name]}"}

@@ -31,7 +31,7 @@ require 'yajl'
 class JSDoc
 
   KLASS_REGEXP     = /^\s*([A-Z][\w\d\.]+)\s+=\s+function\s*\(([^\)]+)?\)/
-  FUNCTION_REGEXP  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*function\s*\(([\w\d\s,]+)?\))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
+  FUNCTION_REGEXP  = /(\/\/(.*)|(([\w\d_\$]+)\:\s*(_.*|function\s*\(([\w\d\s,]+)?\)))|(function\s+([\w\d_\$]+)\(([\w\d\s,]+)?\)))/im
   ATTRIBUTE_REGEXP = /^\s+([\w\d_\$]+)\:\s+(.*)\,\s+/i
 
   TEMPLATE_DIR = File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
@@ -102,7 +102,8 @@ class JSDoc
             end
           elsif current == :method
             name = line_match[4].to_s
-            args = line_match[5].to_s.split(',').collect {|a| a.strip }
+            arg_type = line_match[6].to_s
+            args = arg_type =~ /^_/ ? ['...'] : arg_type.split(',').collect {|a| a.strip }
             if !(name.nil? || name.strip == '')
               meth = {
                 :name => name,

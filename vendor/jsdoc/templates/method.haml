@@ -8,11 +8,11 @@
       %em=meth[:args].join(', ')
       )
   .links
-    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments"} Comments
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments", :target => "all"} Comments
     |
-    %a{:href => gh_url(meth)} Show in GitHub
+    %a{:href => gh_url(meth), :target => "all"} Show in GitHub
   .doc><
-    =meth[:doc]
+    =preserve meth[:doc]
   - if individual
     #comments
       :erb
