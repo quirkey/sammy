@@ -6,7 +6,7 @@
       =klass[:args].join(', ')
       )
   .doc><
-    = klass[:doc] || ""
+    =preserve klass[:doc] || ""
   - unless klass[:attributes].empty?
     %h3.list Attributes
     %ul
@@ -27,7 +27,7 @@
           \=
           %span=attribute[:default]
         .doc><
-          = attribute[:doc]
+          =preserve attribute[:doc]
   - unless klass[:methods].empty?
     -klass[:methods].each do |meth|
       =render('method', :klass => klass, :meth => meth, :individual => false)

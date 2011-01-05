@@ -166,7 +166,7 @@ class JSDoc
       final_text << l.gsub(/^\ #\s/,'#')
     end
     final_text = RDiscount.new(final_text).to_html
-    final_text.gsub!(/<pre><code>/m, "<pre class='prettyprint'><code>\n")
+    final_text.gsub!(/<pre><code>/m, "<pre class='prettyprint'><code>")
     final_text
   end
 
