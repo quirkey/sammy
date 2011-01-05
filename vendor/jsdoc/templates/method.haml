@@ -1,4 +1,7 @@
 .meth{:id => "#{klass[:name]}-#{meth[:name]}", :class => individual ? 'individual' : nil}
+  - if individual
+    %a{:href => "/docs/api/#{version}/"}
+      %strong &laquo; Back
   %h3
     - if individual
       %strong= klass[:name]
@@ -8,7 +11,8 @@
       %em=meth[:args].join(', ')
       )
   .links
-    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments", :target => "all"} Comments
+
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments"} Comments
     |
     %a{:href => gh_url(meth), :target => "all"} Show in GitHub
   .doc><
@@ -32,4 +36,4 @@
             })();
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
