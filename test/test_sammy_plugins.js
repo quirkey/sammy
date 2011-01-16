@@ -541,7 +541,7 @@
                        "<% }); %>";
         var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>"
         this.context.item = this.item;
-        equals(this.context.template(template), rendered);
+        equals(this.context.template(template, {}, {escape_html: false}), rendered);
       });
 
       context('Sammy', 'OAuth 2.0', {
