@@ -119,5 +119,6 @@ task :site => [:build_site, :push_site]
 
 desc 'Generate the docs for the current version to DIR'
 task :docs => :version do
+  @version = ENV['VERSION'] if ENV['VERSION']
   sh "ruby vendor/jsdoc/jsdoc.rb #{ENV['DIR']} #{@version} lib/ lib/plugins/"
 end
