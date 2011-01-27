@@ -26,8 +26,8 @@ task :minify => :version do
     `#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}`
     minified = File.read(min_path)
     prefix = []
-    prefix << "// -- Sammy -- #{path}"
-    prefix << "// http://code.quirkey.com/sammy"
+    prefix << "// -- Sammy.js -- #{path}"
+    prefix << "// http://sammyjs.org"
     prefix << "// Version: #{@version}"
     prefix << "// Built: #{Time.now}"
     File.open(min_path, 'w') do |f|
