@@ -19,8 +19,10 @@
               name: 'other_test_store',
               type: store_type
             });
-            this.store.clearAll();
-            this.other_store.clearAll();
+            stop();
+            this.store.clearAll(function() {
+              this.other_store.clearAll(start);
+            });
           }
         })
         .should('set store type', function() {
@@ -33,10 +35,21 @@
           equal(this.store.element, '#main');
         })
         .should('check if a key exists', function() {
-          ok(!this.store.exists('foo'));
-          this.store.set('foo', 'bar');
-          ok(this.store.exists('foo'));
-          ok(!this.other_store.exists('foo'));
+          stop();
+          expect(4);
+          this.store.exists('foo', function(foo) {
+            ok(!foo);
+            this.store.set('foo', 'bar', function(set) {
+              ok(set);
+              this.store.exists('foo', function(foo2) {
+                ok(foo2);
+                this.other_store.exists('foo', function(foo3) {
+                  ok(!foo3);
+                  start();
+                });
+              });
+            });
+          });
         })
         .should('set and retrieve value as string', function() {
           ok(this.store.set('foo', 'bar'));
