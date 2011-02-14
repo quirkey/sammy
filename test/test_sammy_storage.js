@@ -37,13 +37,14 @@
         .should('check if a key exists', function() {
           stop();
           expect(4);
-          this.store.exists('foo', function(foo) {
+          var store = this.store, other_store = this.other_store;
+          store.exists('foo', function(foo) {
             ok(!foo);
-            this.store.set('foo', 'bar', function(set) {
+            store.set('foo', 'bar', function(set) {
               ok(set);
-              this.store.exists('foo', function(foo2) {
+              store.exists('foo', function(foo2) {
                 ok(foo2);
-                this.other_store.exists('foo', function(foo3) {
+                other_store.exists('foo', function(foo3) {
                   ok(!foo3);
                   start();
                 });
@@ -52,33 +53,80 @@
           });
         })
         .should('set and retrieve value as string', function() {
-          ok(this.store.set('foo', 'bar'));
-          equal(this.store.get('foo'), 'bar');
-          ok(!this.other_store.get('foo'));
+          stop();
+          expect(4);
+          var store = this.store, other_store = this.other_store;
+          store.set('foo', 'bar', function(newval, key) {
+            equal(key, 'foo');
+            equal(newval, 'bar');
+            store.get('foo', function(val) {
+              equal(val, 'bar');
+              other_store.get('foo', function(val) {
+                ok(!val);
+                start();
+              });
+            });
+          });
         })
         .should('set and retrieve value as JSON', function() {
           var obj = {'obj': 'is json'};
-          equal(this.store.set('foo', obj), obj);
-          equal(this.store.get('foo').obj,'is json');
-          ok(!this.other_store.get('foo'));
+          stop();
+          expect(4);
+          var store = this.store, other_store = this.other_store;
+          store.set('foo', obj, function(newval, key) {
+            equal(key, 'foo');
+            equal(newval, obj);
+            store.get('foo', function(val) {
+              equal(val, obj);
+              other_store.get('foo', function(val) {
+                ok(!val);
+                start();
+              });
+            });
+          });
         })
         .should('should store in global space accessible by name', function() {
-          this.store.set('foo', 'bar');
-          var new_store = new Sammy.Store(this.store_attributes);
-          equal(new_store.get('foo'), 'bar');
+          stop();
+          expect(1);
+          this.store.set('foo', 'bar', function() {
+            var new_store = new Sammy.Store(this.store_attributes);
+            new_store.get('foo', function(val) {
+              equal(val, 'bar');
+              start();
+            });
+          });
         })
         .should('clear value', function() {
-          ok(this.store.set('foo', 'bar'));
-          ok(this.other_store.set('foo', 'bar'));
-          equal(this.store.get('foo'), 'bar');
-          this.store.clear('foo');
-          ok(!this.store.exists('foo'));
-          ok(this.other_store.get('foo'), 'bar');
+          stop();
+          expect(5);
+          var store = this.store, other_store = this.other_store;
+          store.set('foo', 'bar', function(newval) {
+            ok(newval);
+            other_store.set('foo', 'bar', function(newval) {
+              ok(newval);
+              store.get('foo', function(val) {
+                equal(val, 'foo');
+                store.clear('foo', function() {
+                  store.exists('foo', function(foo) {
+                    ok(!foo);
+                    other_store.get('foo', function(val) {
+                      equal(val, 'foo');
+                      start();
+                    });
+                  });
+                });
+              });
+            });
+          });
         })
         .should('return list of keys', function() {
-          this.store.set('foo', 'bar');
-          this.store.set('blurgh', {boosh: 'blurgh'});
-          this.store.set(123, {boosh: 'blurgh'});
+          stop();
+          expect(5);
+          var store = this.store, other_store = this.other_store;
+          store.set('foo', 'bar');
+          store.set('blurgh', {boosh: 'blurgh'});
+          store.set(123, {boosh: 'blurgh'});
+
           deepEqual(this.store.keys(), ['foo', 'blurgh', '123']);
           deepEqual(this.other_store.keys(), []);
         })
