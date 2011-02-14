@@ -1,5 +1,5 @@
  ---
-layout: quirkey_code_multi
+layout: sammyjs-redirect 
 title: Sammy
 github_name: sammy
 current_version: 0.6.2 
