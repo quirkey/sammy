@@ -1,5 +1,5 @@
 ---
-layout: quirkey_code_multi
+layout: sammyjs-redirect
 title: Sammy - Documentation - API
 github_name: sammy
 current_version: 0.6.2
@@ -146,7 +146,7 @@ nav:
       Sammy
       <span>
         (
-        
+
         )
       </span>
     </h2><div class='doc'><p> <code>Sammy</code> (also aliased as $.sammy) is not only the namespace for a
@@ -160,17 +160,17 @@ nav:
      <code>Sammy('selector')</code> multiple times, the first time will create
      the application and the following times will extend the application
      already added to that selector.</p>
-    
+
     <h3>Example</h3>
-    
+
     {% highlight javascript %}
       // returns the app at #main or a new app
       Sammy('#main')
-    
+
       // equivilent to "new Sammy.Application", except appends to apps
       Sammy();
       Sammy(function() { ... });
-    
+
       // extends the app at '#main' with function.
       Sammy('#main', function() { ... });
     {% endhighlight %}</div></div>
@@ -433,17 +433,17 @@ nav:
        execution path wrapped up in a closure. This means you can decide whether
        or not to proceed with execution by not invoking <code>callback</code> or,
        more usefuly wrapping callback inside the result of an asynchronous execution.</p>
-      
+
       <h3>Example</h3>
-      
+
       <p> The most common use case for around() is calling a <em>possibly</em> async function
        and executing the route within the functions callback:</p>
-      
+
       {% highlight javascript %}
         var app = $.sammy(function() {
-      
+
           var current_user = false;
-      
+
           function checkLoggedIn(callback) {
             // /session returns a JSON representation of the logged in user
             // or an empty object
@@ -466,9 +466,9 @@ nav:
               callback();
             }
           };
-      
+
           this.around(checkLoggedIn);
-      
+
         });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-before'>
@@ -482,36 +482,36 @@ nav:
       </h4><div class='doc'><p> Takes a single callback that is pushed on to a stack.
        Before any route is run, the callbacks are evaluated in order within
        the current <code>Sammy.EventContext</code></p>
-      
+
       <p> If any of the callbacks explicitly return false, execution of any
        further callbacks and the route itself is halted.</p>
-      
+
       <p> You can also provide a set of options that will define when to run this
        before based on the route it proceeds.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         var app = $.sammy(function() {
-      
+
           // will run at #/route but not at #/
           this.before('#/route', function() {
             //...
           });
-      
+
           // will run at #/ but not at #/route
           this.before({except: {path: '#/route'}}, function() {
             this.log('not before #/route');
           });
-      
+
           this.get('#/', function() {});
-      
+
           this.get('#/route', function() {});
-      
+
         });
       {% endhighlight %}
-      
-      
+
+
       <p> See <code>contextMatchesOptions()</code> for a full list of supported options</p></div></div>
     <div class='meth' id='Sammy.Application-bind'>
       <h4>
@@ -522,15 +522,15 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> Works just like <code>jQuery.fn.bind()</code> with a couple noteable differences.</p>
-      
+
       <ul>
       <li>It binds all events to the application element</li>
       <li>All events are bound within the <code>eventNamespace()</code></li>
       <li>Events are not actually bound until the application is started with <code>run()</code></li>
       <li>callbacks are evaluated within the context of a Sammy.EventContext</li>
       </ul>
-      
-      
+
+
       <p> See http://code.quirkey.com/sammy/docs/events.html for more info.</p></div></div>
     <div class='meth' id='Sammy.Application-bindToAllEvents'>
       <h4>
@@ -543,7 +543,7 @@ nav:
       </h4><div class='doc'><p> Will bind a single callback function to every event that is already
        being listened to in the app. This includes all the <code>APP_EVENTS</code>
        as well as any custom events defined with <code>bind()</code>.</p>
-      
+
       <p> Used internally for debug logging.</p></div></div>
     <div class='meth' id='Sammy.Application-clearTemplateCache'>
       <h4>
@@ -567,13 +567,13 @@ nav:
        for matching <code>before()</code> filters against specific options. You can set the
        object to <em>only</em> match certain paths or verbs, or match all paths or verbs <em>except</em>
        those that match the options.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
        var app = $.sammy(),
            context = {verb: 'get', path: '#/mypath'};
-      
+
        // match against a path string
        app.contextMatchesOptions(context, '#/mypath'); //=&gt; true
        app.contextMatchesOptions(context, '#/otherpath'); //=&gt; false
@@ -638,28 +638,28 @@ nav:
       </h4><div class='doc'><p> Helper extends the event context just like <code>helpers()</code> but does it
        a single method at a time. This is especially useful for dynamically named
        helpers</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
        // Trivial example that adds 3 helper methods to the context dynamically
        var app = $.sammy(function(app) {
-      
+
          $.each([1,2,3], function(i, num) {
            app.helper('helper' + num, function() {
              this.log("I'm helper number " + num);
            });
          });
-      
+
          this.get('#/', function() {
            this.helper2(); //=&gt; I'm helper number 2
          });
        });
       {% endhighlight %}
-      
-      
+
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>name</code> The name of the method</li>
       <li><code>method</code> The function to be added to the prototype at <code>name</code></li>
@@ -675,29 +675,29 @@ nav:
       </h4><div class='doc'><p> Helpers extends the EventContext prototype specific to this app.
        This allows you to define app specific helper functions that can be used
        whenever you're inside of an event context (templates, routes, bind).</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
       var app = $.sammy(function() {
-      
+
         helpers({
           upcase: function(text) {
            return text.toString().toUpperCase();
           }
         });
-      
+
         get('#/', function() { with(this) {
           // inside of this context I can use the helpers
           $('#main').html(upcase($('#main').text());
         }});
-      
+
       });
       {% endhighlight %}
-      
-      
+
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>extensions</code> An object collection of functions to extend the context.</li>
       </ul></div></div>
@@ -731,12 +731,12 @@ nav:
       </h4><div class='doc'><p> <code>mapRoutes</code> takes an array of arrays, each array being passed to route()
        as arguments, this allows for mass definition of routes. Another benefit is
        this makes it possible/easier to load routes via remote JSON.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
       var app = $.sammy(function() {
-      
+
         this.mapRoutes([
             ['get', '#/', function() { this.log('index'); }],
             // strings in callbacks are looked up as methods on the app
@@ -786,11 +786,11 @@ nav:
         </span>
       </h4><div class='doc'><p> <code>route()</code> is the main method for defining routes within an application.
        For great detail on routes, check out: http://code.quirkey.com/sammy/doc/routes.html</p>
-      
+
       <p> This method also has aliases for each of the different verbs (eg. <code>get()</code>, <code>post()</code>, etc.)</p>
-      
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>verb</code> A String in the set of ROUTE_VERBS or 'any'. 'any' will add routes for each
        of the ROUTE_VERBS. If only two arguments are passed,
@@ -811,19 +811,19 @@ nav:
         </span>
       </h4><div class='doc'><p> Actually starts the application's lifecycle. <code>run()</code> should be invoked
        within a document.ready block to ensure the DOM exists before binding events, etc.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
       var app = $.sammy(function() { ... }); // your application
       $(function() { // document.ready
           app.run();
        });
       {% endhighlight %}
-      
-      
+
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>start_url</code> Optionally, a String can be passed which the App will redirect to
       after the events/routes have been bound.</li>
@@ -842,20 +842,20 @@ nav:
        <code>notFound()</code>. If <code>raise_errors</code> is set to <code>true</code> and
        the <code>error()</code> has not been overriden, it will throw an actual JS
        error.</p>
-      
+
       <p> You probably will never have to call this directly.</p>
-      
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>verb</code> A String for the verb.</li>
       <li><code>path</code> A String path to lookup.</li>
       <li><code>params</code> An Object of Params pulled from the URI or passed directly.</li>
       </ul>
-      
-      
+
+
       <h3>Returns</h3>
-      
+
       <p> Either returns the value returned by the route callback or raises a 404 Not Found error.</p></div></div>
     <div class='meth' id='Sammy.Application-setLocation'>
       <h4>
@@ -867,9 +867,9 @@ nav:
         </span>
       </h4><div class='doc'><p> Delegates to the <code>location_proxy</code> to set the current location.
        See <code>Sammy.HashLocationProxy</code> for more info on location proxies.</p>
-      
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>new_location</code> A new location string (e.g. '#/')</li>
       </ul></div></div>
@@ -886,11 +886,11 @@ nav:
        the location_proxy inside you're app function to give your app a custom
        location mechanism. See <code>Sammy.HashLocationProxy</code> and <code>Sammy.DataLocationProxy</code>
        for examples.</p>
-      
+
       <p> <code>setLocationProxy()</code> takes an initialized location proxy.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
           // to bind to data instead of the default hash;
           var app = $.sammy(function() {
@@ -908,21 +908,21 @@ nav:
       </h4><div class='doc'><p> Swaps the content of <code>$element()</code> with <code>content</code>
        You can override this method to provide an alternate swap behavior
        for <code>EventContext.partial()</code>.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
       var app = $.sammy(function() {
-      
+
         // implements a 'fade out'/'fade in'
         this.swap = function(content) {
           this.$element().hide('slow').html(content).show('slow');
         }
-      
+
         get('#/', function() {
           this.partial('index.html.erb') // will fade out and in
         });
-      
+
       });
       {% endhighlight %}</div></div>
     <div class='meth' id='Sammy.Application-templateCache'>
@@ -954,9 +954,9 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> Triggers custom events defined with <code>bind()</code></p>
-      
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>name</code> The name of the event. Automatically prefixed with the <code>eventNamespace()</code></li>
       <li><code>data</code> An optional Object that can be passed to the bound callback.</li>
@@ -986,44 +986,44 @@ nav:
        The first argument to use should be a function() that is evaluated
        in the context of the current application, just like the <code>app_function</code>
        argument to the <code>Sammy.Application</code> constructor.</p>
-      
+
       <p> Any additional arguments are passed to the app function sequentially.</p>
-      
+
       <p> For much more detail about plugins, check out:
        http://code.quirkey.com/sammy/doc/plugins.html</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         var MyPlugin = function(app, prepend) {
-      
+
           this.helpers({
             myhelper: function(text) {
               alert(prepend + " " + text);
             }
           });
-      
+
         };
-      
+
         var app = $.sammy(function() {
-      
+
           this.use(MyPlugin, 'This is my plugin');
-      
+
           this.get('#/', function() {
             this.myhelper('and dont you forget it!');
             //=&gt; Alerts: This is my plugin and dont you forget it!
           });
-      
+
         });
       {% endhighlight %}
-      
-      
+
+
       <p> If plugin is passed as a string it assumes your are trying to load
        Sammy."Plugin". This is the prefered way of loading core Sammy plugins
        as it allows for better error-messaging.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         $.sammy(function() {
           this.use('Mustache'); //=&gt; Sammy.Mustache
@@ -1063,34 +1063,34 @@ nav:
      passing a string as the second argument to the constructor. The default attribute
      name is 'sammy-location'. To read more about location proxies, check out the
      documentation for <code>Sammy.HashLocationProxy</code></p>
-    
+
     <p> An optional <code>href_attribute</code> can be passed, which specifies a DOM element
      attribute that holds "links" to different locations in the app. When the
      proxy is bound, clicks to element that have this attribute activate a
      <code>setLocation()</code> using the contents of the <code>href_attribute</code>.</p>
-    
+
     <h3>Example</h3>
-    
+
     {% highlight javascript %}
       var app = $.sammy(function() {
         // set up the location proxy
         this.setLocationProxy(new Sammy.DataLocationProxy(this, 'location', 'rel'));
-    
+
         this.get('about', function() {
           this.partial('about.html');
         });
-    
+
       });
     {% endhighlight %}
-    
-    
+
+
     <p> In this scenario, if an element existed within the template:</p>
-    
+
     {% highlight javascript %}
       &lt;a href="/about" rel="about"&gt;About Us&lt;/a&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> Clicking on that link would not go to /about, but would set the apps location
      to 'about' and trigger the route.</p></div></div>
   <!-- its just a function -->
@@ -1105,11 +1105,11 @@ nav:
     </h2><div class='doc'><p> <code>Sammy.EventContext</code> objects are created every time a route is run or a
      bound event is triggered. The callbacks for these events are evaluated within a <code>Sammy.EventContext</code>
      This within these callbacks the special methods of <code>EventContext</code> are available.</p>
-    
+
     <h3>Example</h3>
-    
+
     <p>  $.sammy(function() {</p>
-    
+
     {% highlight javascript %}
     // The context here is this Sammy.Application
     this.get('#/:name', function() {
@@ -1121,14 +1121,14 @@ nav:
       }
     });
     {% endhighlight %}
-    
-    
+
+
     <p>  });</p>
-    
+
     <p> Initialize a new EventContext</p>
-    
+
     <h3>Arguments</h3>
-    
+
     <ul>
     <li><code>app</code> The <code>Sammy.Application</code> this event is called within.</li>
     <li><code>verb</code> The verb invoked to run this context/route.</li>
@@ -1206,15 +1206,15 @@ nav:
         </span>
       </h4><div class='doc'><p> Look up a templating engine within the current app and context.
        <code>engine</code> can be one of the following:</p>
-      
+
       <ul>
       <li>a function: should conform to <code>function(content, data) { return interploated; }</code></li>
       <li>a template path: 'template.ejs', looks up the extension to match to
       the <code>ejs()</code> helper</li>
       <li>a string referering to the helper: "mustache" => <code>mustache()</code></li>
       </ul>
-      
-      
+
+
       <p> If no engine is found, use the app's default <code>template_engine</code></p></div></div>
     <div class='meth' id='Sammy.EventContext-eventNamespace'>
       <h4>
@@ -1286,9 +1286,9 @@ nav:
       </h4><div class='doc'><p> Changes the location of the current window. If <code>to</code> begins with
        '#' it only changes the document's hash. If passed more than 1 argument
        redirect will join them together with forward slashes.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         redirect('#/other/route');
         // equivilent to
@@ -1305,9 +1305,9 @@ nav:
       </h4><div class='doc'><p> Create and return a <code>Sammy.RenderContext</code> calling <code>render()</code> on it.
        Loads the template and interpolate the data, however does not actual
        place it in the DOM.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         // mytemplate.mustache &lt;div class="name"&gt;{{name}}&lt;/div&gt;
         render('mytemplate.mustache', {name: 'quirkey'});
@@ -1327,9 +1327,9 @@ nav:
       </h4><div class='doc'><p> Create and return a <code>Sammy.RenderContext</code> calling <code>renderEach()</code> on it.
        Loads the template and interpolates the data for each item,
        however does not actual place it in the DOM.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         // mytemplate.mustache &lt;div class="name"&gt;{{name}}&lt;/div&gt;
         renderEach('mytemplate.mustache', [{name: 'quirkey'}, {name: 'endor'}])
@@ -1398,9 +1398,9 @@ nav:
         =
         <span>simple_element</span>
       </h4><div class='doc'><p> simple_element is a simple helper for creating HTML tags.</p>
-      
+
       <h3>Arguments</h3>
-      
+
       <ul>
       <li><code>tag</code> the HTML tag to generate e.g. input, p, etc/</li>
       <li><code>attributes</code> an object representing the attributes of the element as
@@ -1427,12 +1427,12 @@ nav:
        and <code>object</code> and passes it as an argument to the <code>content_callback</code>.
        This is a shortcut for creating FormBuilder objects for use within
        templates.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         // in item_form.template
-      
+
         &lt;% formFor('item', item, function(f) { %&gt;
           &lt;%= f.open({action: '#/items'}) %&gt;
           &lt;p&gt;
@@ -1460,14 +1460,14 @@ nav:
      JavaScript objects. It eases the process by auto-populating existing values
      into form inputs and creating input names suitable for parsing by
      Sammy.NestedParams and other backend frameworks.</p>
-    
+
     <p> You initialize a Sammy.FormBuilder by passing the 'name' of the object and
      the object itself. Once initialized you create form elements with the object's
      prototype methods. Each of these methods returns a string of HTML suitable for
      appending through a template or directly with jQuery.</p>
-    
+
     <h3>Example</h3>
-    
+
     {% highlight javascript %}
       var item = {
         name: 'My Item',
@@ -1480,11 +1480,11 @@ nav:
       form.text('name');
       //=&gt; &lt;input type='text' name='item[form]' value='My Item' /&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> Nested attributes can be accessed/referred to by a 'keypath' which is
      basically a string representation of the dot notation.</p>
-    
+
     {% highlight javascript %}
       form.hidden('meta.id');
       //=&gt; &lt;input type='hidden' name='item[meta][id]' value='123' /&gt;
@@ -1537,7 +1537,7 @@ nav:
        checkboxes can be created with different value, if <code>value</code> equals the
        current value of the key of the form builder's object the attribute
        checked='checked' will be added.</p>
-      
+
       <p> By default <code>checkbox()</code> also generates a hidden element whose value is
        the inverse of the value given. This is known hack to get around a common
        gotcha where browsers and jQuery itself does not include 'unchecked'
@@ -1615,9 +1615,9 @@ nav:
        specified by an array in <code>options</code>. If <code>options</code> is an array of arrays,
        the first element in each subarray becomes the text of the option and the
        second becomes the value.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
        var options = [
          ['Small', 's'],
@@ -1667,38 +1667,38 @@ nav:
     </h2><div class='doc'><p> A simple plugin that pings Google Analytics tracker
      every time a route is triggered. Originally by Brit Gardner (britg),
      with updates from Aaron Quint (quirkey).</p>
-    
+
     <p> === Arguments</p>
-    
+
     <p> +tracker+:: the Google Analytics pageTracker object.  Defaults to
      the default object defined by the GA snippet, or pass your own if you
      have a custom install</p>
-    
+
     <p> === Example</p>
-    
+
     <p> Install Google Analytics to your site as you normally would. Be sure that
      the 'pageTracker' global variable exists.</p>
-    
+
     <p> Then, simply add the plugin to your Sammy App and it will automatically
      track all of your routes in Google Analytics.
      They will appear as page views to the route's path.</p>
-    
+
     {% highlight javascript %}
       $.sammy(function() {
         this.use('GoogleAnalytics');
-    
+
         ...
       });
     {% endhighlight %}
-    
-    
+
+
     <p> If you have routes that you do not want to track, simply call <code>noTrack</code>
      within the route.</p>
-    
+
     {% highlight javascript %}
       $.sammy(function() {
         this.use('GoogleAnalytics')
-    
+
         get('#/dont/track/me', function() {
           this.noTrack();  // This route will not be tracked
         });
@@ -1745,33 +1745,33 @@ nav:
     </h2><div class='doc'><p> <tt>Sammy.Haml</tt> provides a quick way of using haml style templates in your app.
      The plugin itself includes the haml-js library created by Tim Caswell at
      at http://github.com/creationix/haml-js</p>
-    
+
     <p> Haml is an alternative HTML syntax that is really great for describing
      the structure of HTML documents.</p>
-    
+
     <p> By default using Sammy.Haml in your app adds the <tt>haml()</tt> method to the EventContext
      prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
      by passing a second argument (e.g. you could use the hml() as the method alias so that all the template
      files could be in the form file.hml instead of file.haml)</p>
-    
+
     <h3>Example</h3>
-    
+
     <p> The template (mytemplate.haml):</p>
-    
+
     {% highlight javascript %}
        %h1&amp;= title
-    
+
        Hey, #{name}! Welcome to Haml!
     {% endhighlight %}
-    
-    
+
+
     <p> The app:</p>
-    
+
     {% highlight javascript %}
        var $.app = $.sammy(function() {
          // include the plugin
          this.use(Sammy.Haml);
-    
+
          this.get('#/hello/:name', function() {
            // set local vars
            this.title = 'Hello!'
@@ -1779,20 +1779,20 @@ nav:
            // render the template and pass it through haml
            this.partial('mytemplate.haml');
          });
-    
+
        });
     {% endhighlight %}
-    
-    
+
+
     <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
-    
+
     {% highlight javascript %}
        &lt;h1&gt;Hello!&lt;/h1&gt;
-    
+
        Hey, AQ! Welcome to HAML!
     {% endhighlight %}
-    
-    
+
+
     <p> Note: You dont have to include the haml.js file on top of the plugin as the plugin
      includes the full source.</p></div><h3>Attributes</h3>
     <ul>
@@ -1836,7 +1836,7 @@ nav:
         </span>
       </h4><div class='doc'><p> returns a two element array containing the numbers of contexts to back up the stack and
        the properties to dig into on the current context</p>
-      
+
       <p> for example, if the path is "../../alan/name", the result will be [2, ["alan", "name"]].</p></div></div>
   </div>
   <!-- its just a function -->
@@ -1851,34 +1851,34 @@ nav:
     </h2><div class='doc'><p> <tt>Sammy.Handlebars</tt> provides a quick way of using Handlebars templates in your app.
      The plugin itself includes the handlebars.js library created by Yehuda Katz at
      at http://github.com/wycats/handlebars.js</p>
-    
+
     <p> Handlebars.js is an extension to the Mustache templating language  created by Chris Wanstrath. Handlebars.js
      and Mustache are both logicless templating languages that keep the view and the code separated like
      we all know they should be.</p>
-    
+
     <p> By default using Sammy.Handlbars in your app adds the <tt>handlebars()</tt> method to the EventContext
      prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
      by passing a second argument (e.g. you could use the hbr() as the method alias so that all the template
      files could be in the form file.hbr instead of file.handlebars)</p>
-    
+
     <h3>Example #1</h3>
-    
+
     <p> The template (mytemplate.hb):</p>
-    
+
     {% highlight javascript %}
        &lt;h1&gt;\{\{title\}\}&lt;h1&gt;
-    
+
        Hey, {{name}}! Welcome to Handlebars!
     {% endhighlight %}
-    
-    
+
+
     <p> The app:</p>
-    
+
     {% highlight javascript %}
        var $.app = $.sammy(function() {
          // include the plugin and alias handlebars() to hb()
          this.use(Sammy.Handlebars, 'hb');
-    
+
          this.get('#/hello/:name', function() {
            // set local vars
            this.title = 'Hello!'
@@ -1886,70 +1886,70 @@ nav:
            // render the template and pass it through handlebars
            this.partial('mytemplate.hb');
          });
-    
+
        });
     {% endhighlight %}
-    
-    
+
+
     <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
-    
+
     {% highlight javascript %}
        &lt;h1&gt;Hello!&lt;/h1&gt;
-    
+
        Hey, AQ! Welcome to Handlebars!
     {% endhighlight %}
-    
-    
+
+
     <h3>Example #2 - Handlebars partials</h3>
-    
+
     <p> The template (mytemplate.hb)</p>
-    
+
     {% highlight javascript %}
        Hey, {{name}}! {{&gt;hello_friend}}
     {% endhighlight %}
-    
-    
+
+
     <p> The partial (mypartial.hb)</p>
-    
+
     {% highlight javascript %}
        Say hello to your friend {{friend}}!
     {% endhighlight %}
-    
-    
+
+
     <p> The app:</p>
-    
+
     {% highlight javascript %}
        var $.app = $.sammy(function() {
          // include the plugin and alias handlebars() to hb()
          this.use(Sammy.Handlebars, 'hb');
-    
+
          this.get('#/hello/:name/to/:friend', function() {
            var context = this;
-    
+
            // fetch handlebars-partial first
            $.get('mypartial.hb', function(response){
              context.partials = response;
-    
+
              // set local vars
              context.name = this.params.name;
              context.hello_friend = {name: this.params.friend};
-    
+
              // render the template and pass it through handlebars
              context.partial('mytemplate.hb');
            });
          });
-    
+
        });
     {% endhighlight %}
-    
-    
+
+
     <p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>
-    
+
     {% highlight javascript %}
        Hey, AQ! Say hello to your friend dP!
     {% endhighlight %}
-    
-    
+
+
     <p> Note: You dont have to include the handlebars.js file on top of the plugin as the plugin
      includes the full source.</p></div></div>
   <!-- its just a function -->
@@ -2056,13 +2056,13 @@ nav:
       </h4><div class='doc'><p> json is a polymorphic function that translates objects aback and forth
        from JSON to JS. If given a string, it will parse into JS, if given a JS
        object it will stringify into JSON.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         var app = $.sammy(function() {
           this.use(Sammy.JSON);
-      
+
           this.get('#/', function() {
             this.json({user_id: 123}); //=&gt; "{\"user_id\":\"123\"}"
             this.json("{\"user_id\":\"123\"}"); //=&gt; [object Object]
@@ -2082,18 +2082,18 @@ nav:
       </span>
     </h2><div class='doc'><p> <code>Sammy.Meld</code> is a simple templating engine that uses the power of jQuery's
      DOM manipulation to easily meld JSON data and HTML templates very quickly.</p>
-    
+
     <p> The template can either be a string (i.e. loaded from a remote template)
      or a DOM Element/jQuery object. This allows you to have templates be DOM
      elements as the initial document load.</p>
-    
+
     <h3>Example</h3>
-    
+
     <p> The simplest case is a nested <code>&lt;div&gt;</code> whose class name is tied to a
      property of a JS object.</p>
-    
+
     <p> Template:</p>
-    
+
     {% highlight javascript %}
         &lt;div class="post"&gt;
           &lt;div class="title"&gt;&lt;/div&gt;
@@ -2103,10 +2103,10 @@ nav:
           &lt;/div&gt;
         &lt;/div&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> Data:</p>
-    
+
     {% highlight javascript %}
         {
           "post": {
@@ -2118,10 +2118,10 @@ nav:
           }
         }
     {% endhighlight %}
-    
-    
+
+
     <p> Result:</p>
-    
+
     {% highlight javascript %}
         &lt;div class="post"&gt;
           &lt;div class="title"&gt;My Post&lt;/div&gt;
@@ -2131,16 +2131,16 @@ nav:
           &lt;/div&gt;
         &lt;/div&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> Templates can be much more complex, and more deeply nested.
      More examples can be found in <code>test/fixtures/meld/</code></p>
-    
+
     <p> If you don't think the lookup by classes is semantic for you, you can easily
      switch the method of lookup by defining a selector function in the options</p>
-    
+
     <p> For example:</p>
-    
+
     {% highlight javascript %}
       meld($('.post'), post_data, {
         selector: function(k) {
@@ -2148,8 +2148,8 @@ nav:
         }
       });
     {% endhighlight %}
-    
-    
+
+
     <p> Would look for template nodes like <code>&lt;div data-key='entry'&gt;</code></p></div>    <h3>Methods</h3>
     <ul>
       <li>
@@ -2179,34 +2179,34 @@ nav:
     </h2><div class='doc'><p> <tt>Sammy.Mustache</tt> provides a quick way of using mustache style templates in your app.
      The plugin itself includes the awesome mustache.js lib created and maintained by Jan Lehnardt
      at http://github.com/janl/mustache.js</p>
-    
+
     <p> Mustache is a clever templating system that relys on double brackets {{}} for interpolation.
      For full details on syntax check out the original Ruby implementation created by Chris Wanstrath at
      http://github.com/defunkt/mustache</p>
-    
+
     <p> By default using Sammy.Mustache in your app adds the <tt>mustache()</tt> method to the EventContext
      prototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method
      by passing a second argument (e.g. you could use the ms() as the method alias so that all the template
      files could be in the form file.ms instead of file.mustache)</p>
-    
+
     <h3>Example #1</h3>
-    
+
     <p> The template (mytemplate.ms):</p>
-    
+
     {% highlight javascript %}
        &lt;h1&gt;\{\{title\}\}&lt;h1&gt;
-    
+
        Hey, {{name}}! Welcome to Mustache!
     {% endhighlight %}
-    
-    
+
+
     <p> The app:</p>
-    
+
     {% highlight javascript %}
        var $.app = $.sammy(function() {
          // include the plugin and alias mustache() to ms()
          this.use(Sammy.Mustache, 'ms');
-    
+
          this.get('#/hello/:name', function() {
            // set local vars
            this.title = 'Hello!'
@@ -2214,70 +2214,70 @@ nav:
            // render the template and pass it through mustache
            this.partial('mytemplate.ms');
          });
-    
+
        });
     {% endhighlight %}
-    
-    
+
+
     <p> If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>
-    
+
     {% highlight javascript %}
        &lt;h1&gt;Hello!&lt;/h1&gt;
-    
+
        Hey, AQ! Welcome to Mustache!
     {% endhighlight %}
-    
-    
+
+
     <h3>Example #2 - Mustache partials</h3>
-    
+
     <p> The template (mytemplate.ms)</p>
-    
+
     {% highlight javascript %}
        Hey, {{name}}! {{&gt;hello_friend}}
     {% endhighlight %}
-    
-    
+
+
     <p> The partial (mypartial.ms)</p>
-    
+
     {% highlight javascript %}
        Say hello to your friend {{friend}}!
     {% endhighlight %}
-    
-    
+
+
     <p> The app:</p>
-    
+
     {% highlight javascript %}
        var $.app = $.sammy(function() {
          // include the plugin and alias mustache() to ms()
          this.use(Sammy.Mustache, 'ms');
-    
+
          this.get('#/hello/:name/to/:friend', function() {
            var context = this;
-    
+
            // fetch mustache-partial first
            $.get('mypartial.ms', function(response){
              context.partials = response;
-    
+
              // set local vars
              context.name = this.params.name;
              context.hello_friend = {name: this.params.friend};
-    
+
              // render the template and pass it through mustache
              context.partial('mytemplate.ms');
            });
          });
-    
+
        });
     {% endhighlight %}
-    
-    
+
+
     <p> If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>
-    
+
     {% highlight javascript %}
        Hey, AQ! Say hello to your friend dP!
     {% endhighlight %}
-    
-    
+
+
     <p> Note: You dont have to include the mustache.js file on top of the plugin as the plugin
      includes the full source.</p></div></div>
   <!-- its just a function -->
@@ -2293,13 +2293,13 @@ nav:
      extended functionality for parsing Rack/Rails style form name/value pairs into JS
      Objects. In fact it passes the same suite of tests as Rack's nested query parsing.
      The code and tests were ported to JavaScript/Sammy by http://github.com/endor</p>
-    
+
     <p> This allows you to translate a form with properly named inputs into a JSON object.</p>
-    
+
     <h3>Example</h3>
-    
+
     <p> Given an HTML form like so:</p>
-    
+
     {% highlight javascript %}
      &lt;form action="#/parse_me" method="post"&gt;
        &lt;input type="text" name="obj[first]" /&gt;
@@ -2308,24 +2308,24 @@ nav:
        &lt;input type="text" name="obj[hash][second]" /&gt;
      &lt;/form&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> And a Sammy app like:</p>
-    
+
     {% highlight javascript %}
      var app = $.sammy(function(app) {
        this.use(Sammy.NestedParams);
-    
+
        this.post('#/parse_me', function(context) {
          $.log(this.params);
        });
      });
     {% endhighlight %}
-    
-    
+
+
     <p> If you filled out the form with some values and submitted it, you would see something
      like this in your log:</p>
-    
+
     {% highlight javascript %}
      {
        'obj': {
@@ -2338,8 +2338,8 @@ nav:
        }
      }
     {% endhighlight %}
-    
-    
+
+
     <p> It supports creating arrays with [] and other niceities. Check out the tests for
      full specs.</p></div></div>
   <!-- its just a function -->
@@ -2440,7 +2440,7 @@ nav:
       </h4><div class='doc'><p> Renders a simple HTML version of this Objects attributes.
        Does not render functions.
        For example. Given this Sammy.Object:</p>
-      
+
       {% highlight javascript %}
       var s = new Sammy.Object({first_name: 'Sammy', last_name: 'Davis Jr.'});
       s.toHTML() //=&gt; '&lt;strong&gt;first_name&lt;/strong&gt; Sammy&lt;br /&gt;&lt;strong&gt;last_name&lt;/strong&gt; Davis Jr.&lt;br /&gt;'
@@ -2479,7 +2479,7 @@ nav:
      gets and sets window.location. This allows you to use
      Sammy to route on the full URL path instead of just the hash. It
      will take a full refresh to get the app to change state.</p>
-    
+
     <p> To read more about location proxies, check out the
      documentation for <code>Sammy.HashLocationProxy</code></p></div></div>
   <!-- its just a function -->
@@ -2493,7 +2493,7 @@ nav:
       </span>
     </h2><div class='doc'><p> <code>Sammy.Pure</code> is a simple wrapper around the pure.js templating engine for
      use in Sammy apps.</p>
-    
+
     <p> See http://beebole.com/pure/ for detailed documentation.</p></div></div>
   <!-- its just a function -->
   <div class='klass' id='Sammy.RenderContext'>
@@ -2507,14 +2507,14 @@ nav:
     </h2><div class='doc'><p> <code>Sammy.RenderContext</code> is an object that makes sequential template loading,
      rendering and interpolation seamless even when dealing with asyncronous
      operations.</p>
-    
+
     <p> <code>RenderContext</code> objects are not usually created directly, rather they are
      instatiated from an <code>Sammy.EventContext</code> by using <code>render()</code>, <code>load()</code> or
      <code>partial()</code> which all return <code>RenderContext</code> objects.</p>
-    
+
     <p> <code>RenderContext</code> methods always returns a modified <code>RenderContext</code>
      for chaining (like jQuery itself).</p>
-    
+
     <p> The core magic is in the <code>then()</code> method which puts the callback passed as
      an argument into a queue to be executed once the previous callback is complete.
      All the methods of <code>RenderContext</code> are wrapped in <code>then()</code> which allows you
@@ -2613,26 +2613,26 @@ nav:
       </h4><div class='doc'><p> Load a template into the context.
        The <code>location</code> can either be a string specifiying the remote path to the
        file, a jQuery object, or a DOM element.</p>
-      
+
       <p> No interpolation happens by default, the content is stored in
        <code>content</code>.</p>
-      
+
       <p> In the case of a path, unless the option <code>{cache: false}</code> is passed the
        data is stored in the app's <code>templateCache()</code>.</p>
-      
+
       <p> If a jQuery or DOM object is passed the <code>innerHTML</code> of the node is pulled in.
        This is useful for nesting templates as part of the initial page load wrapped
        in invisible elements or <code>&lt;script&gt;</code> tags. With template paths, the template
        engine is looked up by the extension. For DOM/jQuery embedded templates,
        this isnt possible, so there are a couple of options:</p>
-      
+
       <ul>
       <li>pass an <code>{engine:}</code> option.</li>
       <li>define the engine in the <code>data-engine</code> attribute of the passed node.</li>
       <li>just store the raw template data and use <code>interpolate()</code> manually</li>
       </ul>
-      
-      
+
+
       <p> If a <code>callback</code> is passed it is executed after the template load.</p></div></div>
     <div class='meth' id='Sammy.RenderContext-next'>
       <h4>
@@ -2672,9 +2672,9 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> <code>load()</code> a template and then <code>interpolate()</code> it with data.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         this.get('#/', function() {
           this.render('mytemplate.template', {name: 'test'});
@@ -2714,9 +2714,9 @@ nav:
        argument is a callback function. This is useful for putting arbitrary
        asynchronous functions into the queue. The content passed to the
        callback is passed as <code>content</code> to the next item in the queue.</p>
-      
+
       <p> === Example</p>
-      
+
       {% highlight javascript %}
           this.send($.getJSON, '/app.json')
               .then(function(json) {
@@ -2745,18 +2745,18 @@ nav:
        then the callback will be executed in order, once the other operations are
        complete. If there is no currently executing operation, the <code>callback</code>
        is executed immediately.</p>
-      
+
       <p> The value returned from the callback is stored in <code>content</code> for the
        subsiquent operation. If you return <code>false</code>, the queue will pause, and
        the next callback in the queue will not be executed until <code>next()</code> is
        called. This allows for the guarunteed order of execution while working
        with async operations.</p>
-      
+
       <p> If then() is passed a string instead of a function, the string is looked
        up as a helper method on the event context.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         this.get('#/', function() {
           // initialize the RenderContext
@@ -2791,9 +2791,9 @@ nav:
         </span>
       </h4><div class='doc'><p> Pause the <code>RenderContext</code> queue. Combined with <code>next()</code> allows for async
        operations.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
           this.get('#/', function() {
             this.load('mytext.json')
@@ -2829,7 +2829,7 @@ nav:
      possible storage type for the session. This means, <code>LocalStorage</code>
      if available, otherwise <code>Cookie</code>, otherwise <code>Memory</code>.
      It provides the <code>session()</code> helper through <code>Sammy.Storage#store()</code>.</p>
-    
+
     <p> See the <code>Sammy.Storage</code> plugin for full documentation.</p></div></div>
   <!-- its just a function -->
   <div class='meth' id='Sammy.Storage'>
@@ -2857,15 +2857,15 @@ nav:
      retreiving data. The JSON library is used (through the inclusion of the
      Sammy.JSON) plugin, to automatically convert objects back and forth from
      stored strings.</p>
-    
+
     <p> Sammy.Store can be used directly, but within a Sammy.Application it is much
      easier to use the <code>Sammy.Storage</code> plugin and its helper methods.</p>
-    
+
     <p> Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when
      a key is set.</p>
-    
+
     <h3>Example</h3>
-    
+
     {% highlight javascript %}
       // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage
       // Note: localStorage only works on browsers that support it
@@ -2880,22 +2880,22 @@ nav:
       store.clearAll();
       store.keys(); //=&gt; []
     {% endhighlight %}
-    
-    
+
+
     <h3>Arguments</h3>
-    
+
     <p> The constructor takes a single argument which is a Object containing these possible options.</p>
-    
+
     <ul>
     <li><code>name</code> The name/namespace of this store. Stores are unique by name/type. (default 'store')</li>
     <li><code>element</code> A selector for the element that the store is bound to. (default 'body')</li>
     <li><code>type</code> The type of storage/proxy to use (default 'memory')</li>
     </ul>
-    
-    
+
+
     <p> Extra options are passed to the storage constructor.
      Sammy.Store supports the following methods of storage:</p>
-    
+
     <ul>
     <li><code>memory</code> Basic object storage</li>
     <li><code>data</code> jQuery.data DOM Storage</li>
@@ -2969,9 +2969,9 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> Iterates over each key value pair passing them to the <code>callback</code> function</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         store.each(function(key, value) {
           Sammy.log('key', key, 'value', value);
@@ -2996,9 +2996,9 @@ nav:
         </span>
       </h4><div class='doc'><p> Returns the value at <code>key</code> if set, otherwise, runs the callback
        and sets the value to the value returned in the callback.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
       var store = new Sammy.Store;
       store.exists('foo'); //=&gt; false
@@ -3021,9 +3021,9 @@ nav:
       </h4><div class='doc'><p> Filters the store by a filter function that takes a key value.
        Returns an array of arrays where the first element of each array
        is the key and the second is the value of that key.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         var store = new Sammy.Store;
         store.set('one', 'two');
@@ -3083,18 +3083,18 @@ nav:
           )
         </span>
       </h4><div class='doc'><p> loads the response of a request to <code>path</code> into <code>key</code>.</p>
-      
+
       <h3>Example</h3>
-      
+
       <p> In /mytemplate.tpl:</p>
-      
+
       {% highlight javascript %}
       My Template
       {% endhighlight %}
-      
-      
+
+
       <p> In app.js:</p>
-      
+
       {% highlight javascript %}
       var store = new Sammy.Store;
       store.load('mytemplate', '/mytemplate.tpl', function() {
@@ -3113,9 +3113,9 @@ nav:
        object, it is turned to and stored as a string with <code>JSON.stringify</code>.
        It also tries to conform to the KVO pattern triggering jQuery events on the
        element that the store is bound to.</p>
-      
+
       <h3>Example</h3>
-      
+
       {% highlight javascript %}
         var store = new Sammy.Store({name: 'kvo'});
         $('body').bind('set-kvo-foo', function(e, data) {
@@ -3139,15 +3139,15 @@ nav:
      by other sites/JS. Cookies do have the advantage, though, of being widely
      supported and persistent through refresh and close/open. Where available,
      HTML5 DOM Storage like LocalStorage and SessionStorage should be used.</p>
-    
+
     <p> .Cookie can also take additional options:</p>
-    
+
     <ul>
     <li><code>expires_in</code> Number of seconds to keep the cookie alive (default 2 weeks).</li>
     <li><code>path</code> The path to activate the current cookie for (default '/').</li>
     </ul>
-    
-    
+
+
     <p> For more information about document.cookie, check out the pre-eminint article
      by ppk: [http://www.quirksmode.org/js/cookies.html]</p></div></div>
   <!-- its just a function -->
@@ -3176,7 +3176,7 @@ nav:
      the current request. It can be considered a pretty awesome replacement for
      cookies accessed via JS. The great disadvantage, though, is its only available
      on the latest and greatest browsers.</p>
-    
+
     <p> For more info on DOM Storage:
      [https://developer.mozilla.org/en/DOM/Storage]
      [http://www.w3.org/TR/2009/WD-webstorage-20091222/]</p></div></div>
@@ -3231,13 +3231,13 @@ nav:
      and render client side templates. The rendering code is based on John Resig's
      quick templates and Greg Borenstien's srender plugin.
      This is also a great template/boilerplate for Sammy plugins.</p>
-    
+
     <p> Templates use &lt;% %> tags to denote embedded javascript.</p>
-    
+
     <h3>Examples</h3>
-    
+
     <p> Here is an example template (user.template):</p>
-    
+
     {% highlight javascript %}
       &lt;div class="user"&gt;
         &lt;div class="user-name"&gt;&lt;%= user.name %&gt;&lt;/div&gt;
@@ -3246,15 +3246,15 @@ nav:
         &lt;% } %&gt;
       &lt;/div&gt;
     {% endhighlight %}
-    
-    
+
+
     <p> Given that is a publicly accesible file, you would render it like:</p>
-    
+
     {% highlight javascript %}
        $.sammy(function() {
          // include the plugin
          this.use(Sammy.Template);
-    
+
          this.get('#/', function() {
            // the template is rendered in the current context.
            this.user = {name: 'Aaron Quint'};
@@ -3263,16 +3263,16 @@ nav:
          })
        });
     {% endhighlight %}
-    
-    
+
+
     <p> You can also pass a second argument to use() that will alias the template
      method and therefore allow you to use a different extension for template files
      in <tt>partial()</tt></p>
-    
+
     {% highlight javascript %}
       // alias to 'tpl'
       this.use(Sammy.Template, 'tpl');
-    
+
       // now .tpl files will be run through srender
       this.get('#/', function() {
         this.partial('myfile.tpl');
@@ -3284,7 +3284,7 @@ nav:
       Sammy.Title
       <span>
         (
-        
+
         )
       </span>
     </h2><div class='doc'><p> Sammy.Title is a very simple plugin to easily set the document's title.
@@ -3415,7 +3415,7 @@ nav:
       Sammy.log
       <span>
         (
-        
+
         )
       </span>
     </h2><div class='doc'><p> Sends a log message to each logger listed in the global
