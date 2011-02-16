@@ -12,16 +12,16 @@
               name: 'test_store',
               type: store_type
             };
-            this.store = new Sammy.Store(this.store_attributes);
+            var store = this.store = new Sammy.Store(this.store_attributes);
 
-            this.other_store = new Sammy.Store({
+            var other_store = this.other_store = new Sammy.Store({
               element: '#main',
               name: 'other_test_store',
               type: store_type
             });
             stop();
             this.store.clearAll(function() {
-              this.other_store.clearAll(start);
+              other_store.clearAll(function() { start(); });
             });
           }
         })
@@ -121,14 +121,17 @@
         })
         .should('return list of keys', function() {
           stop();
-          expect(5);
+          expect(2);
           var store = this.store, other_store = this.other_store;
           store.set('foo', 'bar');
           store.set('blurgh', {boosh: 'blurgh'});
           store.set(123, {boosh: 'blurgh'});
-
-          deepEqual(this.store.keys(), ['foo', 'blurgh', '123']);
-          deepEqual(this.other_store.keys(), []);
+          store.keys(function(keys) {
+            deepEqual(keys, ['foo', 'blurgh', '123']);
+          });
+          other_store.keys(function(keys) {
+            deepEqual(keys, []);
+          });
         })
         .should('iterate over keys and values', function() {
           this.store.set('foo', 'bar');
@@ -137,17 +140,29 @@
           this.store.each(function(key, value) {
             keys.push(key); values.push(value);
           });
-          deepEqual(keys, ['foo', 'blurgh']);
-          deepEqual(values, ['bar', {boosh: 'blurgh'}]);
+          soon(function() {
+            deepEqual(keys, ['foo', 'blurgh']);
+            deepEqual(values, ['bar', {boosh: 'blurgh'}]);
+          }, 2);
         })
         .should('clear all values', function() {
-          this.store.set('foo', 'bar');
-          this.store.set('blurgh', {boosh: 'blurgh'});
-          this.store.set(123, {boosh: 'blurgh'});
-          equal(this.store.keys().length, 3);
-          this.store.clearAll();
-          equal(this.store.keys().length, 0);
-          ok(!this.store.exists('blurgh'));
+          stop();
+          expect(2);
+          var store = this.store, other_store = this.other_store;
+          store.set('foo', 'bar', function() {
+            store.set('blurgh', {boosh: 'blurgh'}, function() {
+              store.set(123, {boosh: 'blurgh'}, function() {
+                store.keys(function(keys) {
+                  equal(keys.length, 3);
+                  store.clearAll(function() {
+                    store.keys(function(keys) {
+                      equal(keys.length, 0);
+                    });
+                  });
+                });
+              });
+            });
+          });
         })
         .should('filter values with a callback', function() {
           this.store.set('foo', 'bar');
