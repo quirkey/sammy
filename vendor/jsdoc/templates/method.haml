@@ -5,14 +5,14 @@
   %h3
     - if individual
       %strong= klass[:name]
-    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html"}=meth[:name]
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}"}=meth[:name]
     %span
       (
       %em=meth[:args].join(', ')
       )
   .links
 
-    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}.html#comments"} Comments
+    %a{:href => "#{klass[:name]}._methods_.#{meth[:name]}#comments"} Comments
     |
     %a{:href => gh_url(meth), :target => "all"} Show in GitHub
   .doc><
@@ -26,7 +26,7 @@
 
             // The following are highly recommended additional parameters. Remove the slashes in front to use.
             var disqus_identifier = "sammyjsdocs-<%= version %>-<%= "#{klass[:name]}-#{meth[:name]}" %>";
-            var disqus_url = 'http://www.sammyjs.org/docs/api/<%= version %>/<%= "#{klass[:name]}._methods_.#{meth[:name]}" %>.html';
+            var disqus_url = 'http://www.sammyjs.org/docs/api/<%= version %>/<%= "#{klass[:name]}._methods_.#{meth[:name]}" %>';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {

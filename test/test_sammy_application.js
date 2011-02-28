@@ -557,6 +557,12 @@
         equal(this.params['with'], 'some');
         equal(this.params['nifty'], 'params');
       })
+      .should('set value-less params to an empty string', function() {
+        this.app.runRoute('get', '#/boosh/farg/wow?empty&again=&not-empty=blah');
+        equal(this.params['empty'], '');
+        equal(this.params['again'], '');
+        equal(this.params['not-empty'], 'blah');
+      })
       .should('exclude the query string from named param values', function() {
         this.app.runRoute('get', '#/boosh/farg/wow?with=some&nifty=params');
         equal(this.params['test'], 'farg');
