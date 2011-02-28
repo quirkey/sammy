@@ -1,0 +1,19 @@
+- core, plugins = docs.partition {|klass_name, klass| !klass[:plugin] }
+%h2 Core
+%ol.api-menu
+  - core.each do |klass_name, klass|
+    %li
+      %h3
+        %a{:href => "all##{klass[:name]}"}= klass[:name]
+      - unless klass[:methods].empty?
+        %ol
+          - klass[:methods].each do |method|
+            %li
+              %a{:href => "all##{klass[:name]}-#{method[:name]}"}= method[:name]
+
+%h2 Plugins
+%ol.api-menu
+  - plugins.each do |klass_name, klass|
+    %li
+      %h3
+        %a{:href => "all##{klass[:name]}"}= klass[:name]

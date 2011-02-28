@@ -1,3 +1,20 @@
+== 0.6.3 [01/24/2011]
+
+New:
+
+- Sammy.Flash plugin [Thanks James Rosen!]
+- Sammy.OAuth2 plugin from [Thanks assaf!]
+- app.element takes a jQuery selector [Thanks Chris Mytton!]
+- Updated docs and new site :)
+
+Changed:
+- Sammy.Template and Sammy.Tmpl use better internal vars to prevent collisions and auto-escape HTML [Thanks dvv!]
+- Allow for passing of options and {escape_html: false} to Sammy.Template
+
+Fixed:
+- URL encoded and decoding properley handles spaces and + [Thanks kbuckler and benvinegar!]
+- empty action or form method was crashing chrome when checking in _getFormVerb
+
 == 0.6.2 [10/11/2010]
 
 New: 

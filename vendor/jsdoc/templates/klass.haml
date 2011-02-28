@@ -1,0 +1,33 @@
+.klass{:id => klass[:name]}
+  %h2.klass-name
+    = klass[:name]
+    %span
+      (
+      =klass[:args].join(', ')
+      )
+  .doc><
+    =preserve klass[:doc] || ""
+  - unless klass[:attributes].empty?
+    %h3.list Attributes
+    %ul
+      - klass[:attributes].each_with_index do |attribute,i|
+        %li
+          %a{:href => "##{klass[:name]}-#{attribute[:name]}"}=attribute[:name]
+  - unless klass[:methods].empty?
+    %h3.list Methods
+    %ul
+      -klass[:methods].each_with_index do |meth,i|
+        %li
+          %a{:href => "##{klass[:name]}-#{meth[:name]}"}=meth[:name]
+  - unless klass[:attributes].empty?
+    - klass[:attributes].each_with_index do |attribute, i|
+      .attr{:id => "#{klass[:name]}-#{attribute[:name]}"}
+        %h4
+          =attribute[:name]
+          \=
+          %span=attribute[:default]
+        .doc><
+          =preserve attribute[:doc]
+  - unless klass[:methods].empty?
+    -klass[:methods].each do |meth|
+      =render('method', :klass => klass, :meth => meth, :individual => false)
