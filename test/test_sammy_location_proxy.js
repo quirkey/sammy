@@ -3,8 +3,8 @@
 
     context('Sammy', 'DefaultLocationProxy', {
       before: function() {
-        this.app = new Sammy.Application;
-        this.proxy = new Sammy.DefaultLocationProxy(this.app);
+        this.app = new Sammy.Application(function() {});
+        this.proxy = this.app._location_proxy;
         this.has_native = ('onhashchange' in window);
       }
     })
@@ -60,13 +60,33 @@
     .should('return full path for location', function() {
       equal(this.proxy.getLocation(), [window.location.pathname, window.location.search, window.location.hash].join(''));
     })
-    .should('push and pop state if History is available', function() {
+    .should('push and pop state if History is available', function(t, spec) {
       if (window.history && history.pushState) {
-        flunk();
-
+        var locations = [], app = this.app, proxy = this.proxy;
+        app.bind('location-changed', function(e) {
+          locations.push(this.app.getLocation());
+        });
+        app.run('');
+        ok(app.isRunning());
+        var original_location = this.proxy.getLocation();
+        app.setLocation('/testing');
+        expect(6);
+        stop();
+        setTimeout(function() {
+          equal(proxy.getLocation(), '/testing');
+          app.setLocation(original_location);
+          equal(proxy.getLocation(), original_location);
+          setTimeout(function() {
+            equal(locations.length, 2);
+            equal(locations[0], '/testing');
+            equal(locations[1], original_location);
+            app.unload();
+            start();
+          }, 1000);
+        }, 1000);
       } else {
         ok(true);
-        this.pending('Browser does not have HTML5 history');
+        spec.pending('Browser does not have HTML5 history');
       }
     });
 
