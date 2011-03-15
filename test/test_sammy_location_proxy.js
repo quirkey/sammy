@@ -6,6 +6,7 @@
         this.app = new Sammy.Application(function() {});
         this.proxy = this.app._location_proxy;
         this.has_native = ('onhashchange' in window);
+        this.has_history = window.history && history.pushState;
       }
     })
     .should('store a pointer to the app', function() {
@@ -65,7 +66,7 @@
       equal(this.proxy.getLocation(), [window.location.pathname, window.location.search, window.location.hash].join(''));
     })
     .should('push and pop state if History is available', function(t, spec) {
-      if (window.history && history.pushState) {
+      if (this.has_history) {
         var locations = [], app = this.app, proxy = this.proxy;
         app.bind('location-changed', function(e) {
           locations.push(this.app.getLocation());
@@ -94,7 +95,7 @@
       }
     })
     .should('bind to push state links', function(e, spec) {
-      if (window.history && history.pushState) {
+      if (this.has_history) {
         var locations = [], app = this.app, proxy = this.proxy;
         app.get('/push', function(e) {
           locations.push(this.app.getLocation());
@@ -112,6 +113,7 @@
           equal(proxy.getLocation(), '/push');
           $('#pop').click();
           equal(proxy.getLocation(), '/');
+          proxy.setLocation(original_location)
           setTimeout(function() {
             equal(locations.length, 2);
             equal(locations[0], '/push');
@@ -124,6 +126,40 @@
         ok(true);
         spec.pending('Browser does not have HTML5 history');
       }
+    })
+    .should('handle arbitrary non-specific locations', function(e) {
+      var app = this.app, proxy = this.proxy, has_history = this.has_history;
+      var triggered = false, locations = [];
+      app.get('/testing', function(e) {
+        triggered = true;
+        locations.push(this.app.getLocation());
+      });
+      app.get('/', function(e) {
+        triggered = true;
+        locations.push(this.app.getLocation());
+      });
+      app.run();
+      ok(app.isRunning());
+      var original_location = proxy.getLocation();
+      expect(5);
+      stop();
+      proxy.setLocation('testing');
+      setTimeout(function() {
+        if (has_history) {
+          equal(proxy.getLocation(), '/testing');
+        } else {
+          equal(proxy.getLocation(), '/#!/testing');
+        }
+        proxy.setLocation('');
+        equal(proxy.getLocation(), '/');
+        proxy.setLocation(original_location)
+        setTimeout(function() {
+          matches(/testing/, locations[0]);
+          matches(/\//, locations[1]);
+          app.unload();
+          start();
+        }, 1000);
+      }, 1000);
     });
 
 
