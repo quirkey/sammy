@@ -569,7 +569,7 @@
          this.app.run('#/');
          window.location.href = '#/private';
          soon(function() {
-           equal(location.hash, '#/oauth/authorize-me?state=/index.html%23/private');
+           equal(location.hash, '#/oauth/authorize-me?state=/%23/private');
            ok(!this.app.requested);
            this.app.unload();
          }, this, 1, 2);

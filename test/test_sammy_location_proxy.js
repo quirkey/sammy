@@ -11,7 +11,7 @@
     .should('store a pointer to the app', function() {
       equal(this.proxy.app, this.app)
     })
-    .should('set is_native true if onhashchange exists in window', function() {
+    .should('set is_native true if onhashchange exists in window', function(e, spec) {
       if (this.has_native) {
         window.location.hash = '';
         var proxy = new Sammy.DefaultLocationProxy(this.app)
@@ -22,10 +22,11 @@
           proxy.unbind();
         }, this, 3, 1);
       } else {
-        ok(true, 'No native hash change support.')
+        ok(true);
+        spec.pending('No native hash change support.')
       }
     })
-    .should('set is_native to false if onhashchange does not exist in window', function() {
+    .should('set is_native to false if onhashchange does not exist in window', function(e, spec) {
       if (!this.has_native) {
         var proxy = new Sammy.DefaultLocationProxy(this.app)
         proxy.bind();
@@ -37,24 +38,27 @@
         }, this, 3, 1);
         window.location.hash = '';
       } else {
-        ok(true, 'Native hash change support.')
+        ok(true);
+        spec.pending('Has native hash change support.')
       }
     })
-    .should('create poller on hash change', function() {
+    .should('create poller on hash change', function(e, spec) {
       if (!this.has_native) {
         ok(Sammy.DefaultLocationProxy._interval);
         isType(Sammy.DefaultLocationProxy._interval, 'Number');
       } else {
-        ok(true, 'Native hash change support.')
+        ok(true);
+        spec.pending('Has native hash change support.')
       }
     })
-    .should('only create a single poller', function() {
+    .should('only create a single poller', function(e, spec) {
       if (!this.has_native) {
         var interval = Sammy.DefaultLocationProxy._interval;
         var proxy = new Sammy.DefaultLocationProxy(this.app)
         equal(Sammy.DefaultLocationProxy._interval, interval);
       } else {
-        ok(true, 'Native hash change support.')
+        ok(true);
+        spec.pending('Has native hash change support.')
       }
     })
     .should('return full path for location', function() {
@@ -80,6 +84,38 @@
             equal(locations.length, 2);
             equal(locations[0], '/testing');
             equal(locations[1], original_location);
+            app.unload();
+            start();
+          }, 1000);
+        }, 1000);
+      } else {
+        ok(true);
+        spec.pending('Browser does not have HTML5 history');
+      }
+    })
+    .should('bind to push state links', function(e, spec) {
+      if (window.history && history.pushState) {
+        var locations = [], app = this.app, proxy = this.proxy;
+        app.get('/push', function(e) {
+          locations.push(this.app.getLocation());
+        });
+        app.get('/', function(e) {
+          locations.push(this.app.getLocation());
+        });
+        app.run('');
+        ok(app.isRunning());
+        var original_location = this.proxy.getLocation();
+        $('#push').click();
+        expect(6);
+        stop();
+        setTimeout(function() {
+          equal(proxy.getLocation(), '/push');
+          $('#pop').click();
+          equal(proxy.getLocation(), '/');
+          setTimeout(function() {
+            equal(locations.length, 2);
+            equal(locations[0], '/push');
+            equal(locations[1], '/');
             app.unload();
             start();
           }, 1000);
