@@ -5,7 +5,7 @@
     this.after = false;
     QUnit.module(name);
   };
-  
+
   function extend(a, b) {
     for ( var prop in b ) {
       a[prop] = b[prop];
@@ -27,16 +27,15 @@
     return spec;
   }
 
-
   extend(QUnit.Spec.prototype, {
-    
+
     // RSpec style test definition
     it: function(name, callback, nowait) {
       var spec = this;
       var spec_context = {};
-      QUnit.test(name, function() { 
+      QUnit.test(name, function() {
         if (spec.before) spec.before.apply(spec_context);
-        callback.apply(spec_context, [this]); 
+        callback.apply(spec_context, [this]);
         if (spec.after) spec.after.apply(spec_context);
       });
       return spec;
@@ -47,16 +46,16 @@
       name = 'should ' + name;
       return this.it.apply(this, [name, callback, nowait]);
     },
-    
+
     pending: function(name, callback, nowait) {
       name = '<span style="color: #EB8531;" class="pending">DEFERRED: ' + name + '</span>';
       return this.it.apply(this, [name, function () { QUnit.ok(true) }, nowait]);
     },
-    
+
     should_eventually: function(name, callback, nowait) {
       return this.pending(name, callback, nowait);
     }
-    
+
   });
 
 
@@ -74,12 +73,12 @@
     isType: function(object, type) {
       return ok(QUnit.is(type, object), "expected " + object + " to be a " + type);
     },
-    
+
     // assert a string matches a regex
     matches: function(matcher, string, message) {
       return QUnit.ok(!!matcher.test(string), message || "expected: " + string + "match(" + matcher.toString() + ")");
     },
-        
+
     // assert that a matching error is raised
     // expected can be a regex, a string, or an object
     raised: function(expected_error, callback) {
@@ -99,7 +98,7 @@
         return QUnit.deepEqual(expected_error, error, message);
       }
     },
-    
+
     notRaised: function(callback) {
       var error = '';
       try {
@@ -110,7 +109,7 @@
       message = "expected: no errors, actual error: " + error.toString();
       QUnit.equal('', error, message);
     },
-    
+
     soon: function(callback, context, secs, many_expects) {
       if (typeof context == 'undefined') context = this;
       if (typeof secs == 'undefined') secs = 1;
@@ -122,11 +121,11 @@
         QUnit.start();
       }, secs * 500);
     },
-    
+
     flunk: function() {
       QUnit.ok(false, 'FLUNK');
     },
-    
+
     sameHTML: function(actual, expected) {
       var strippedHTML = function(element) {
         return $(element)
@@ -141,7 +140,7 @@
       expected = strippedHTML(expected);
       equal(actual, expected, "HTML is equal");
     }
-    
+
   });
 
 

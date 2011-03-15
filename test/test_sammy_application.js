@@ -435,7 +435,7 @@
         window.location.hash = '#';
         app.run('#/yield');
         soon(function() {
-          equal(this.yielded_context.path, '/index.html#/yield');
+          equal(this.yielded_context.path, '/#/yield');
           app.unload();
         }, this);
       })
@@ -657,7 +657,7 @@
         stop();
         setTimeout(function() {
           ok(context.route);
-          equal(context.route.path, '/index.html#/');
+          equal(context.route.path, '/#/');
           deepEqual(context.before_run, ['/'], 'should match /')
           window.location = '#/boosh';
           setTimeout(function() {
@@ -863,7 +863,7 @@
       .should('return the browsers path and hash by default', function() {
         window.location.hash = '#/boosh';
         soon(function() {
-          equal(this.app.getLocation(), "/index.html#/boosh");
+          equal(this.app.getLocation(), "/#/boosh");
         }, this);
       });
 

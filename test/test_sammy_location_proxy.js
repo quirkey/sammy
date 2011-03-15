@@ -1,10 +1,10 @@
 (function($) {
   with(QUnit) {
 
-    context('Sammy', 'HashLocationProxy', {
+    context('Sammy', 'DefaultLocationProxy', {
       before: function() {
         this.app = new Sammy.Application;
-        this.proxy = new Sammy.HashLocationProxy(this.app);
+        this.proxy = new Sammy.DefaultLocationProxy(this.app);
         this.has_native = ('onhashchange' in window);
       }
     })
@@ -14,7 +14,7 @@
     .should('set is_native true if onhashchange exists in window', function() {
       if (this.has_native) {
         window.location.hash = '';
-        var proxy = new Sammy.HashLocationProxy(this.app)
+        var proxy = new Sammy.DefaultLocationProxy(this.app)
         proxy.bind();
         window.location.hash = '#/testing';
         soon(function() {
@@ -27,7 +27,7 @@
     })
     .should('set is_native to false if onhashchange does not exist in window', function() {
       if (!this.has_native) {
-        var proxy = new Sammy.HashLocationProxy(this.app)
+        var proxy = new Sammy.DefaultLocationProxy(this.app)
         proxy.bind();
         window.location.hash = '#/testing'
         soon(function() {
@@ -42,19 +42,31 @@
     })
     .should('create poller on hash change', function() {
       if (!this.has_native) {
-        ok(Sammy.HashLocationProxy._interval);
-        isType(Sammy.HashLocationProxy._interval, 'Number');
+        ok(Sammy.DefaultLocationProxy._interval);
+        isType(Sammy.DefaultLocationProxy._interval, 'Number');
       } else {
         ok(true, 'Native hash change support.')
       }
     })
     .should('only create a single poller', function() {
       if (!this.has_native) {
-        var interval = Sammy.HashLocationProxy._interval;
-        var proxy = new Sammy.HashLocationProxy(this.app)
-        equal(Sammy.HashLocationProxy._interval, interval);
+        var interval = Sammy.DefaultLocationProxy._interval;
+        var proxy = new Sammy.DefaultLocationProxy(this.app)
+        equal(Sammy.DefaultLocationProxy._interval, interval);
       } else {
         ok(true, 'Native hash change support.')
+      }
+    })
+    .should('return full path for location', function() {
+      equal(this.proxy.getLocation(), [window.location.pathname, window.location.search, window.location.hash].join(''));
+    })
+    .should('push and pop state if History is available', function() {
+      if (window.history && history.pushState) {
+        flunk();
+
+      } else {
+        ok(true);
+        this.pending('Browser does not have HTML5 history');
       }
     });
 
