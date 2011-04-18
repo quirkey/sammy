@@ -99,6 +99,18 @@
           sameHTML(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
       })
+      .should('run through template() if Sammy.Template _is_ present _and_ path starts with a dot', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() { this.element_selector = '#main'; });
+        app.use(Sammy.Template);
+        this.context = new app.context_prototype(app);
+        this.context.partial('./fixtures/partial.template', {name: 'TEMPLATE!', class_name: 'test_template'}).then(function(data) {
+          contents = data;
+        });
+        soon(function () {
+          sameHTML(contents, '<div class="test_template">TEMPLATE!</div>');
+        }, this, 2);
+      })
       .should('replace default app element if no callback is passed', function() {
         var contents = '';
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
