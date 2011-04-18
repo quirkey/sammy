@@ -111,6 +111,18 @@
           sameHTML(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
       })
+      .should('allow rendering partials', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() { this.element_selector = '#main'; });
+        app.use(Sammy.Mustache);
+        this.context = new app.context_prototype(app);
+        this.context.render('fixtures/partial.mustache', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) {
+          contents = data;
+        }, {item: 'fixtures/item.mustache'});
+        soon(function () {
+          sameHTML(contents, '<div class="test_template"><span>TEMPLATE!</span></div>');
+        }, this, 2);        
+      })
       .should('replace default app element if no callback is passed', function() {
         var contents = '';
         var app = new Sammy.Application(function() { this.element_selector = '#main'; });
