@@ -27,7 +27,6 @@
     return spec;
   }
 
-
   extend(QUnit.Spec.prototype, {
 
     // RSpec style test definition
@@ -36,7 +35,7 @@
       var spec_context = {};
       QUnit.test(name, function() {
         if (spec.before) spec.before.apply(spec_context);
-        callback.apply(spec_context, [this]);
+        callback.apply(spec_context, [this, spec]);
         if (spec.after) spec.after.apply(spec_context);
       });
       return spec;
