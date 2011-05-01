@@ -139,7 +139,7 @@
         isType(route.path, 'RegExp');
         equal(route.verb, 'get');
         defined(route, 'callback');
-        equal(route.path.toString(), new RegExp("^#/$").toString());
+        equal(route.path.toString(), new RegExp("#/$").toString());
       })
       .should('lookup callback as a string', function() {
         var app = this.app;
@@ -154,7 +154,7 @@
           ok(app.routes[verb], verb + "is set on routes");
           var route = app.routes[verb].pop();
           ok(route, "route exists on " + verb);
-          equal(route.path.toString(), new RegExp("^/any$").toString());
+          equal(route.path.toString(), new RegExp("/any$").toString());
         });
       });
 
@@ -182,12 +182,12 @@
         var app = this.app;
         ok(app.routes, "should have routes");
         ok(app.routes['get'], "should have get routes");
-        equal(app.routes['get'][0].path.toString(), new RegExp("^#/get$").toString());
+        equal(app.routes['get'][0].path.toString(), new RegExp("#/get$").toString());
       })
       .should('lookup callbacks as strings', function() {
         var app = this.app, route = app.routes['get'].pop();
         ok(route);
-        equal(route.path, new RegExp("^#/string$").toString());
+        equal(route.path, new RegExp("#/string$").toString());
         equal(route.callback, this.empty_callback);
       });
 
@@ -435,7 +435,7 @@
         window.location.hash = '#';
         app.run('#/yield');
         soon(function() {
-          equal(this.yielded_context.path, '#/yield');
+          equal(this.yielded_context.path, '/#/yield');
           app.unload();
         }, this);
       })
@@ -651,12 +651,13 @@
           context.before_run.push('/')
         });
         window.location.hash = '';
-        context.app.run('#/');
+        context.app.run();
+        context.app.setLocation('#/');
         expect(4);
         stop();
         setTimeout(function() {
           ok(context.route);
-          equal(context.route.path, '#/');
+          equal(context.route.path, '/#/');
           deepEqual(context.before_run, ['/'], 'should match /')
           window.location = '#/boosh';
           setTimeout(function() {
@@ -720,7 +721,7 @@
             });
 
             this.get('#/', function() {
-              context.path.push('route ' + this.path);
+              context.path.push('route #/');
             });
 
           });
@@ -859,10 +860,10 @@
           this.app = new Sammy.Application;
         }
       })
-      .should('return the browsers hash by default', function() {
+      .should('return the browsers path and hash by default', function() {
         window.location.hash = '#/boosh';
         soon(function() {
-          equal(this.app.getLocation(), "#/boosh");
+          equal(this.app.getLocation(), "/#/boosh");
         }, this);
       });
 
