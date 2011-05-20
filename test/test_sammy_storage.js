@@ -75,9 +75,9 @@
           var store = this.store, other_store = this.other_store;
           store.set('foo', obj, function(newval, key) {
             equal(key, 'foo');
-            equal(newval, obj);
+            deepEqual(newval, obj);
             store.get('foo', function(val) {
-              equal(val, obj);
+              deepEqual(val, obj);
               other_store.get('foo', function(val) {
                 ok(!val);
                 start();
