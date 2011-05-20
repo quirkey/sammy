@@ -88,8 +88,9 @@
         .should('should store in global space accessible by name', function() {
           stop();
           expect(1);
+          var ctx = this;
           this.store.set('foo', 'bar', function() {
-            var new_store = new Sammy.Store(this.store_attributes);
+            var new_store = new Sammy.Store(ctx.store_attributes);
             new_store.get('foo', function(val) {
               equal(val, 'bar');
               start();
