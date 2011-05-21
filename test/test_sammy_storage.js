@@ -120,69 +120,6 @@
             });
           });
         })
-        .should('return list of keys', function() {
-          stop();
-          expect(2);
-          var store = this.store, other_store = this.other_store;
-          store.set('foo', 'bar');
-          store.set('blurgh', {boosh: 'blurgh'});
-          store.set(123, {boosh: 'blurgh'});
-          store.keys(function(keys) {
-            deepEqual(keys, ['foo', 'blurgh', '123']);
-          });
-          other_store.keys(function(keys) {
-            deepEqual(keys, []);
-          });
-        })
-        .should('iterate over keys and values', function() {
-          this.store.set('foo', 'bar');
-          this.store.set('blurgh', {boosh: 'blurgh'});
-          var keys = [], values = [];
-          this.store.each(function(key, value) {
-            keys.push(key); values.push(value);
-          });
-          soon(function() {
-            deepEqual(keys, ['foo', 'blurgh']);
-            deepEqual(values, ['bar', {boosh: 'blurgh'}]);
-          }, 2);
-        })
-        .should('clear all values', function() {
-          stop();
-          expect(2);
-          var store = this.store, other_store = this.other_store;
-          store.set('foo', 'bar', function() {
-            store.set('blurgh', {boosh: 'blurgh'}, function() {
-              store.set(123, {boosh: 'blurgh'}, function() {
-                store.keys(function(keys) {
-                  equal(keys.length, 3);
-                  store.clearAll(function() {
-                    store.keys(function(keys) {
-                      equal(keys.length, 0);
-                    });
-                  });
-                });
-              });
-            });
-          });
-        })
-        .should('filter values with a callback', function() {
-          this.store.set('foo', 'bar');
-          this.store.set('blurgh', 'blargh');
-          this.store.set('boosh', 'blargh');
-          var returned = this.store.filter(function(key, value) {
-            return (value === "blargh");
-          });
-          deepEqual(returned, [['blurgh', 'blargh'], ['boosh', 'blargh']]);
-        })
-        .should('return first value that matches a callback', function() {
-          this.store.set('foo', 'bar');
-          this.store.set('blurgh', 'blargh');
-          this.store.set('boosh', 'blargh');
-          var returned = this.store.first(function(key, value) {
-            return (value === "blargh");
-          });
-          deepEqual(returned, ['blurgh', 'blargh']);
-        })
         .should('fire specific key event on set', function() {
           var fired = false;
           $('#main').bind('set-test_store-foo', function(e, data) {
@@ -204,24 +141,6 @@
             equal(fired, 'foo');
             $('#main').unbind('set-test_store');
           });
-        })
-        .should('fetch value or run callback', function() {
-          ok(!this.store.get('foo'));
-          this.store.fetch('foo', function() {
-            return "bar";
-          });
-          equal(this.store.get('foo'), 'bar');
-          equal(this.store.fetch('foo', function() {
-            return "baz";
-          }), 'bar');
-          equal(this.store.get('foo'), 'bar');
-        })
-        .should('load file into a key', function() {
-          ok(!this.store.get('foo'));
-          this.store.load('foo', 'fixtures/partial');
-          soon(function() {
-            equal(this.store.get('foo'), 'NOENGINE');
-          }, this, 2, 2);
         });
       }
     });
