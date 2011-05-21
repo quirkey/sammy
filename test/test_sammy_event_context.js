@@ -37,7 +37,7 @@
         }
       })
       .should('set full location if url is provided', function() {
-        this.context.redirect('index.html#/boosh');
+        this.context.redirect('#/boosh');
         equal('#/boosh', window.location.hash);
       })
       .should('only set hash if location is prefixed with #', function() {

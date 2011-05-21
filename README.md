@@ -1,6 +1,6 @@
 # Sammy
 
-[http://code.quirkey.com/sammy](http://code.quirkey.com/sammy)
+[http://sammyjs.org](http://sammyjs.org)
 
 ## Description
 
@@ -79,10 +79,18 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * Mickael Bailly / dready92
 * Rich Manalang / manalang
 * Brian Mitchell / binary42
-  
+* Assaf Arkin / assaf
+* James Rosen / jamesrosen
+* Chris Mytton
+* kbuckler
+* dvv
+* Ben Vinegar / benvinegar
+
+## Donate!
+
+If you're using Sammy.js in production or just for fun, instead of gifting me a beer - please consider donating to the [Code for Other People Fund]:http://pledgie.com/campaigns/15239 - you can probably spare a dollar or ten and it will be greatly appreciated.
+
 ## License
 
 Sammy is covered by the MIT License. See LICENSE for more information.
-
-Sammy includes code originally created by John Resig ([Class implementation](http://ejohn.org/blog/simple-javascript-inheritance/)) and Greg Borenstien ([srender](http://github.com/atduskgreg/srender/tree/master)).
 

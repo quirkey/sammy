@@ -72,6 +72,7 @@ class JSDoc
     context = nil
     current = nil
     comment = ""
+    plugin  = filename =~ /plugins\//
     docs    = ActiveSupport::OrderedHash.new({})
     relative_filename = filename.gsub(@base_path, '')
     file.each do |line|
@@ -84,7 +85,8 @@ class JSDoc
           :filename => relative_filename,
           :lineno => file.lineno,
           :methods => [],
-          :attributes => []
+          :attributes => [],
+          :plugin => plugin
         }
         if context == :comment
           klass[:doc] = convert_doc(comment)
