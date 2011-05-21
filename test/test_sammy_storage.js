@@ -149,7 +149,7 @@
           expect(1);
           this.store.set('foo', 'bar', function() {
             setTimeout(function() {
-              equal(fired, foo);
+              equal(fired, 'foo');
               app.unload();
               start();
             }, 900);
