@@ -7,15 +7,15 @@
       if (Sammy.Store.isAvailable(store_type)) {
         context('Sammy.Store', store_type, {
           before: function() {
+            this.app = Sammy('#main');
             this.store_attributes = {
-              element: '#main',
               name: 'test_store',
-              type: store_type
+              type: store_type,
+              app: this.app
             };
             var store = this.store = new Sammy.Store(this.store_attributes);
 
             var other_store = this.other_store = new Sammy.Store({
-              element: '#main',
               name: 'other_test_store',
               type: store_type
             });
@@ -31,8 +31,8 @@
         .should('set name', function() {
           equal(this.store.name, 'test_store');
         })
-        .should('set the element', function() {
-          equal(this.store.element, '#main');
+        .should('set the app', function() {
+          equal(this.store.app, this.app);
         })
         .should('check if a key exists', function() {
           stop();
@@ -122,26 +122,28 @@
           });
         })
         .should('fire specific key event on set', function() {
-          var fired = false;
-          $('#main').bind('set-test_store-foo', function(e, data) {
+          var fired = false, app = this.app;
+          app.bind('set-test_store-foo', function(e, data) {
             fired = data.value;
           });
+          app.run();
           stop();
           expect(1);
           this.store.set('foo', 'bar', function() {
             equal(fired, 'bar');
-            $('#main').unbind('set-test_store-foo');
+            app.unload();
             start();
           });
         })
         .should('fire store event on set', function() {
           var fired = false;
-          $('#main').bind('set-test_store', function(e, data) {
+          this.app.bind('set-test_store', function(e, data) {
             fired = data.key;
             equal(fired, 'foo');
-            $('#main').unbind('set-test_store');
+            this.app.unload();
             start();
           });
+          this.app.run();
           stop();
           expect(1);
           this.store.set('foo', 'bar');
