@@ -1,7 +1,7 @@
 (function($) {
   with(QUnit) {
 
-    var stores = ['memory', 'data', 'local', 'session', 'cookie'];
+    var stores = ['memory', 'local', 'session', 'cookie'];
 
     $.each(stores, function(i, store_type) {
       if (Sammy.Store.isAvailable(store_type)) {
@@ -21,7 +21,9 @@
             });
             stop();
             this.store.clearAll(function() {
-              other_store.clearAll(function() { start(); });
+              other_store.clearAll(function() {
+                start();
+              });
             });
           }
         })
@@ -127,26 +129,31 @@
             fired = data.value;
           });
           app.run();
-          stop();
+          QUnit.stop();
           expect(1);
           this.store.set('foo', 'bar', function() {
-            equal(fired, 'bar');
-            app.unload();
-            start();
+            setTimeout(function() {
+              equal(fired, 'bar');
+              app.unload();
+              start();
+            }, 1000);
           });
         })
         .should('fire store event on set', function() {
-          var fired = false;
-          this.app.bind('set-test_store', function(e, data) {
+          var fired = false, app = this.app;
+          app.bind('set-test_store', function(e, data) {
             fired = data.key;
-            equal(fired, 'foo');
-            this.app.unload();
-            start();
           });
-          this.app.run();
+          app.run();
           stop();
           expect(1);
-          this.store.set('foo', 'bar');
+          this.store.set('foo', 'bar', function() {
+            setTimeout(function() {
+              equal(fired, foo);
+              app.unload();
+              start();
+            }, 900);
+          });
         });
       }
     });
