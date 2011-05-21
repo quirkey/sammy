@@ -42,8 +42,8 @@
             ok(!foo);
             store.set('foo', 'bar', function(set) {
               ok(set);
-              store.exists('foo', function(foo2) {
-                ok(foo2);
+              store.exists('foo', function(after_set) {
+                equal(after_set, true);
                 other_store.exists('foo', function(foo3) {
                   ok(!foo3);
                   start();
@@ -91,6 +91,7 @@
           var ctx = this;
           this.store.set('foo', 'bar', function() {
             var new_store = new Sammy.Store(ctx.store_attributes);
+            console.log(new_store, ctx.store);
             new_store.get('foo', function(val) {
               equal(val, 'bar');
               start();
@@ -106,12 +107,12 @@
             other_store.set('foo', 'bar', function(newval) {
               ok(newval);
               store.get('foo', function(val) {
-                equal(val, 'foo');
+                equal(val, 'bar');
                 store.clear('foo', function() {
                   store.exists('foo', function(foo) {
-                    ok(!foo);
+                    equal(foo, false);
                     other_store.get('foo', function(val) {
-                      equal(val, 'foo');
+                      equal(val, 'bar');
                       start();
                     });
                   });
@@ -125,22 +126,25 @@
           $('#main').bind('set-test_store-foo', function(e, data) {
             fired = data.value;
           });
-          this.store.set('foo', 'bar');
-          soon(function() {
+          stop();
+          expect(1);
+          this.store.set('foo', 'bar', function() {
             equal(fired, 'bar');
             $('#main').unbind('set-test_store-foo');
+            start();
           });
         })
         .should('fire store event on set', function() {
           var fired = false;
           $('#main').bind('set-test_store', function(e, data) {
             fired = data.key;
-          });
-          this.store.set('foo', 'bar');
-          soon(function() {
             equal(fired, 'foo');
             $('#main').unbind('set-test_store');
+            start();
           });
+          stop();
+          expect(1);
+          this.store.set('foo', 'bar');
         });
       }
     });
