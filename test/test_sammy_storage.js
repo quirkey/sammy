@@ -37,8 +37,8 @@
           equal(this.store.app, this.app);
         })
         .should('check if a key exists', function() {
-          stop();
           expect(4);
+          stop();
           var store = this.store, other_store = this.other_store;
           store.exists('foo', function(foo) {
             ok(!foo);
@@ -48,15 +48,15 @@
                 equal(after_set, true);
                 other_store.exists('foo', function(foo3) {
                   ok(!foo3);
-                  start();
+          //        start();
                 });
               });
             });
           });
         })
         .should('set and retrieve value as string', function() {
-          stop();
           expect(4);
+          stop();
           var store = this.store, other_store = this.other_store;
           store.set('foo', 'bar', function(newval, key) {
             equal(key, 'foo');
@@ -72,8 +72,8 @@
         })
         .should('set and retrieve value as JSON', function() {
           var obj = {'obj': 'is json'};
-          stop();
           expect(4);
+          stop();
           var store = this.store, other_store = this.other_store;
           store.set('foo', obj, function(newval, key) {
             equal(key, 'foo');
@@ -88,12 +88,11 @@
           });
         })
         .should('should store in global space accessible by name', function() {
-          stop();
           expect(1);
+          stop();
           var ctx = this;
           this.store.set('foo', 'bar', function() {
             var new_store = new Sammy.Store(ctx.store_attributes);
-            console.log(new_store, ctx.store);
             new_store.get('foo', function(val) {
               equal(val, 'bar');
               start();
@@ -101,8 +100,8 @@
           });
         })
         .should('clear value', function() {
-          stop();
           expect(5);
+          stop();
           var store = this.store, other_store = this.other_store;
           store.set('foo', 'bar', function(newval) {
             ok(newval);
@@ -129,8 +128,8 @@
             fired = data.value;
           });
           app.run();
-          QUnit.stop();
           expect(1);
+          stop();
           this.store.set('foo', 'bar', function() {
             setTimeout(function() {
               equal(fired, 'bar');
@@ -145,8 +144,8 @@
             fired = data.key;
           });
           app.run();
-          stop();
           expect(1);
+          stop();
           this.store.set('foo', 'bar', function() {
             setTimeout(function() {
               equal(fired, 'foo');
