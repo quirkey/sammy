@@ -48,6 +48,10 @@
         var boosh = 'boosh';
         this.context.redirect('#', 'blah', boosh);
         equal('#/blah/boosh', window.location.hash);
+      })
+      .should('append to query string if an argument is an object', function() {
+        this.context.redirect('#', 'blah', 'boosh', {x: 'y'}, {a: 'b'});
+        equal(window.location.hash, '#/blah/boosh?x=y&a=b');
       });
 
 
