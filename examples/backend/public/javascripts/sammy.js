@@ -1026,7 +1026,7 @@
       }
       var path_matched = true, verb_matched = true;
       if (options.path) {
-        // wierd regexp test
+        // weird regexp test
         if ($.isFunction(options.path.test)) {
           path_matched = options.path.test(context.path);
         } else {
@@ -1034,7 +1034,11 @@
         }
       }
       if (options.verb) {
-        verb_matched = options.verb === context.verb;
+        if(typeof options.verb === 'string') {
+          verb_matched = options.verb === context.verb;
+        } else {
+          verb_matched = options.verb.indexOf(context.verb) > -1;
+        }
       }
       return positive ? (verb_matched && path_matched) : !(verb_matched && path_matched);
     },
