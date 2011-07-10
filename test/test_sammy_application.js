@@ -956,6 +956,10 @@
         ok(this.app.contextMatchesOptions(this.route, {only: {verb: 'get'}}));
         ok(!this.app.contextMatchesOptions(this.route, {only: {verb: 'put'}}));
       })
+      .should('match against only with verb array', function() {
+        ok(this.app.contextMatchesOptions(this.route, {only: {verb: ['get', 'post']}}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {verb: ['put', 'post']}}));
+      })
       .should('match against except with path and verb', function() {
         ok(this.app.contextMatchesOptions(this.route, {except: {path: '#/', verb: 'get'}}));
         ok(!this.app.contextMatchesOptions(this.route, {except: {path: '#/boosh', verb: 'get'}}));
