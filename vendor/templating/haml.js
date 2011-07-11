@@ -1,5 +1,4 @@
-var Haml,
-    sys = require("sys");
+var Haml;
 
 (function () {
 
@@ -634,7 +633,6 @@ var Haml,
       var f = new Function("locals",  escaper + str );
       return f;
     }catch(e){
-      sys.error(str);
       throw e;
     }
   }
