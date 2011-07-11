@@ -2,8 +2,7 @@
     with(QUnit) {
 
       var createAppsWithFlash = function() {
-        this.app = new Sammy.Application(function() {
-          this.element_selector = '#form_params';
+        this.app = Sammy('#form_params', function() {
           this.use(Sammy.Flash);
           this.get('#/', function() {
             this.flash('welcome info', 'Welcome!');
@@ -14,8 +13,7 @@
           });
         });
 
-        this.nowApp = new Sammy.Application(function() {
-          this.element_selector = '#main';
+        this.nowApp = Sammy('#main', function() {
           this.use(Sammy.Flash);
           this.get('#/', function() {
             this.flashNow('info', '您好');
@@ -28,9 +26,8 @@
           });
         });
 
-        this.app.run('/#');
-        this.nowApp.run('/#');
-        window.location.hash = '#/';
+        this.app.run('#/');
+        this.nowApp.run('#/');
       };
 
       var unloadAppsWithFlash = function() {
@@ -73,6 +70,7 @@
         ok(this.nowApp.flash.now);
       })
       .should('retain entries after a non-redirect', function() {
+        window.location.hash = '#/';
         equal(this.nowApp.flash.now.info, '您好');
       })
       .should('lose all entries after a redirect', function() {
@@ -83,7 +81,7 @@
         }, this, 2, 2);
       })
       .should('lose all entries after being rendered', function() {
-        this.app.flash.toHTML();
+        this.nowApp.flash.toHTML();
         equal(this.nowApp.flash.now.info, null);
         equal(this.nowApp.flash.now.warn, null);
       })
