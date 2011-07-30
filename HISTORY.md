@@ -1,3 +1,32 @@
+== 0.7.0 [07/30/2011]
+
+New:
+- Seamless Support for HTML5 History (on by default, use `disable_push_state` to turn off). [Thanks to chatgris for initial implementation]
+- Sammy.Hoptoad and Sammy.Exceptional plugins [Thanks James Rosen!]
+- Form2JSON Plugin [Thanks stephen101]
+- Partials loading in render/load [Thanks endor]
+- before matchers match verb arrays [Thanks endor]
+
+Changed:
+
+- ! Changes related to HTML5 History:
+  - EventContext#path now returns the full path after the host from / even if HTML5 support is not enabled. (could be a breaking change)
+  - HashLocationProxy is now DefaultLocationProxy and includes the pushState support
+- ! All template plugins are now just wrappers without the actual template code (with the exception of Sammy.Meld and Sammy.Template) this
+  means that you have to include the template code in your app before the Sammy plugin. The template library files have been included in 
+  this repo under `/vendor/templating` for your convenience
+- Removed low timeout setting in RenderContext
+- add support for more template caching options [Thanks Bryan Woods, Conner Peirce & Matt Vermaak (howaboutwe)]
+- Upgraded/tested with latest jQuery (1.6.2)
+    
+Fixed:
+
+- Don't blow up if a query string key doesn't have a corresponding value. [Thanks Ben Pickles!]
+- defer loading content in RenderContext.render [Thanks Johann Klähn!]
+- HashLocationProxy does not need to constantly trigger the 'hashchange' event when there is no hash. [Thanks Kevin Gessner!]
+- _decode should be able to handle undefined arguments in order to deal with routes with optional params [Thanks Elijah Hamovitz!]
+- GA plugin didn't work with async code. Now checks existence of _gaq in this.helpers.track(). [Thanks Gavin Cooper!]
+
 == 0.6.3 [01/24/2011]
 
 New:
