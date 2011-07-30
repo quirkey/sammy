@@ -1,9 +1,12 @@
 (function($) {
+
   with(QUnit) {
 
     var stores = ['memory', 'local', 'session', 'cookie'];
 
-    $.each(stores, function(i, store_type) {
+    var i = 0, l = stores.length;
+    for (; i < l; i++) {
+      var store_type = stores[i];
       if (Sammy.Store.isAvailable(store_type)) {
         context('Sammy.Store', store_type, {
           before: function() {
@@ -20,9 +23,11 @@
               type: store_type
             });
             stop();
+            console.log('stop in before')
             this.store.clearAll(function() {
               other_store.clearAll(function() {
                 start();
+                console.log('start in before')
               });
             });
           }
@@ -38,6 +43,7 @@
         })
         .should('check if a key exists', function() {
           expect(4);
+          console.log('-- stop key exists');
           stop();
           var store = this.store, other_store = this.other_store;
           store.exists('foo', function(foo) {
@@ -48,6 +54,7 @@
                 equal(after_set, true);
                 other_store.exists('foo', function(foo3) {
                   ok(!foo3);
+                console.log('-- start key exists');
           //        start();
                 });
               });
@@ -57,6 +64,7 @@
         .should('set and retrieve value as string', function() {
           expect(4);
           stop();
+          console.log('-- stop value as a string');
           var store = this.store, other_store = this.other_store;
           store.set('foo', 'bar', function(newval, key) {
             equal(key, 'foo');
@@ -65,6 +73,7 @@
               equal(val, 'bar');
               other_store.get('foo', function(val) {
                 ok(!val);
+                console.log(' -- start value as a string')
                 start();
               });
             });
@@ -155,7 +164,7 @@
           });
         });
       }
-    });
+    }
 
       context('Sammy.Storage', {
         before: function() {

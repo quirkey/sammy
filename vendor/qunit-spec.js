@@ -33,9 +33,11 @@
       var spec = this;
       var spec_context = {};
       QUnit.test(name, function() {
+        console.log('------- test ', name, spec_context);
         if (spec.before) spec.before.apply(spec_context);
         callback.apply(spec_context, [this, spec]);
         if (spec.after) spec.after.apply(spec_context);
+        console.log('------ finished ', name, spec_context);
       });
       return spec;
     },
