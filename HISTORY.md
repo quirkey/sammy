@@ -1,6 +1,7 @@
 == 0.7.0 [07/30/2011]
 
 New:
+
 - Seamless Support for HTML5 History (on by default, use `disable_push_state` to turn off). [Thanks to chatgris for initial implementation]
 - Sammy.Hoptoad and Sammy.Exceptional plugins [Thanks James Rosen!]
 - Form2JSON Plugin [Thanks stephen101]
