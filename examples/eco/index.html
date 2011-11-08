@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Eco</title>
+  <script src="../../vendor/jquery.js"></script>
+  <script src="../../lib/sammy.js"></script>
+  <script src="../../lib/plugins/sammy.eco.js"></script>
+  <script src="who.eco.js"></script>
+  <script type="text/javascript">
+    ;(function($) {
+      var whos = {
+        'users': [
+          { 'name': "Russ" },
+          { 'name': "James" },
+          { 'name': "Sky" }
+        ]
+      };
+      
+      var app = $.sammy(function() {
+        this.use(Sammy.Eco);
+        
+        this.get('#/', function() {
+          $('#main').html('nothing to see here!');
+        });
+        
+        this.get('#/who', function() {
+          var html = this.eco('who', whos );
+          $('#main').html(html);
+        });
+        
+      });
+      
+      $(function() {
+        app.run('#/');
+      });
+    })(jQuery);
+  </script>
+
+</head>
+
+<body>
+  <div id="container">
+    <ul id="link">
+      <li><a href="index.html">reset!</a></li>
+      <li><a href="#/who">People!</a></li>
+    </ul>
+    <div id="main"> </div>
+  </div>
+</body>
+</html>
