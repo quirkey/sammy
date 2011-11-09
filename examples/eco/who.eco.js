@@ -1,6 +1,6 @@
 (function() {
-  this.toto || (this.toto = {});
-  this.toto["who"] = function(__obj) {
+  this.ecoTemplates || (this.ecoTemplates = {});
+  this.ecoTemplates["who"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
       var out = __out, result;
