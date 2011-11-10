@@ -1,0 +1,5 @@
+<ul>
+<% for prefix in @prefixes: %>
+  <li><%= prefix %> <%= @name %> !</li>
+<% end %>
+</ul>

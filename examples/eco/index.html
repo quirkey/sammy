@@ -7,34 +7,32 @@
   <script src="../../vendor/jquery.js"></script>
   <script src="../../lib/sammy.js"></script>
   <script src="../../lib/plugins/sammy.eco.js"></script>
-  <script src="who.eco.js"></script>
+  <script src="home.js"></script>
   <script type="text/javascript">
     ;(function($) {
-      var whos = {
-        'users': [
-          { 'name': "Russ" },
-          { 'name': "James" },
-          { 'name': "Sky" }
-        ]
-      };
-      
-      var app = $.sammy(function() {
+      var app = $.sammy('#main', function() {
         this.use(Sammy.Eco);
         
         this.get('#/', function() {
-          $('#main').html('nothing to see here!');
+          this.$element().html('Nothing to see here!');
         });
         
-        this.get('#/who', function() {
-          var html = this.eco('who', whos );
-          $('#main').html(html);
-        });
-        
+        this.get('#/hi/:name', function() {
+          var data = {
+             prefixes: ['Hi', 'Hello', 'Hallo', 'Hola', 'Bonjour'],
+             name: this.params.name
+          };
+          // render the template and pass it through Eco
+          var html = this.eco('home', data);
+          // update the view
+          this.$element().html(html);
       });
+    });
       
-      $(function() {
-        app.run('#/');
-      });
+    $(function() {
+      app.run('#/');
+    });
+    
     })(jQuery);
   </script>
 
@@ -44,7 +42,7 @@
   <div id="container">
     <ul id="link">
       <li><a href="index.html">reset!</a></li>
-      <li><a href="#/who">People!</a></li>
+      <li><a href="#/hi/Jason">Say Hi!</a></li>
     </ul>
     <div id="main"> </div>
   </div>

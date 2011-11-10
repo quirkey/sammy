@@ -1,6 +1,6 @@
 (function() {
   this.ecoTemplates || (this.ecoTemplates = {});
-  this.ecoTemplates["who"] = function(__obj) {
+  this.ecoTemplates["home"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
       var out = __out, result;
@@ -39,16 +39,18 @@
     }
     (function() {
       (function() {
-        var user, _i, _len, _ref;
+        var prefix, _i, _len, _ref;
         __out.push('<ul>\n');
-        _ref = this.users;
+        _ref = this.prefixes;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          user = _ref[_i];
+          prefix = _ref[_i];
           __out.push('\n  <li>');
-          __out.push(__sanitize(user.name));
-          __out.push('</li>\n');
+          __out.push(__sanitize(prefix));
+          __out.push(' ');
+          __out.push(__sanitize(this.name));
+          __out.push(' !</li>\n');
         }
-        __out.push('\n</ul>\n');
+        __out.push('\n</ul>');
       }).call(this);
       
     }).call(__obj);
