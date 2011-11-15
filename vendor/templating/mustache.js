@@ -47,7 +47,7 @@ var Mustache = function() {
       Sends parsed lines
     */
     send: function(line) {
-      if(line != "") {
+      if(line !== "") {
         this.buffer.push(line);
       }
     },
@@ -66,7 +66,7 @@ var Mustache = function() {
             this.ctag, "g");
       return template.replace(regex, function(match, pragma, options) {
         if(!that.pragmas_implemented[pragma]) {
-          throw({message:
+          throw({message: 
             "This implementation of mustache doesn't understand the '" +
             pragma + "' pragma"});
         }
@@ -246,8 +246,7 @@ var Mustache = function() {
       s = String(s === null ? "" : s);
       return s.replace(/&(?!\w+;)|["'<>\\]/g, function(s) {
         switch(s) {
-        case "&": return "&amp;";
-        case "\\": return "\\\\";
+        case "&": return "&amp;";        
         case '"': return '&quot;';
         case "'": return '&#39;';
         case "<": return "&lt;";
