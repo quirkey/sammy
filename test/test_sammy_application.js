@@ -975,6 +975,30 @@
         ok(!this.app.contextMatchesOptions(this.route, {except: {verb: 'get'}}));
         ok(this.app.contextMatchesOptions(this.route, {except: {verb: 'put'}}));
       })
+      .should('match against path array', function(){
+        ok(!this.app.contextMatchesOptions(this.route, {path: ['#/', '#/foo']}));
+        ok(this.app.contextMatchesOptions(this.route, {path: ['#/', '#/boosh']}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/foo']}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/boosh']}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/foo']}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/boosh']}}));
+      })
+      .should('match against path array with verb', function(){
+        ok(this.app.contextMatchesOptions(this.route, {path: ['#/', '#/boosh'], verb: 'get'}));
+        ok(!this.app.contextMatchesOptions(this.route, {path: ['#/', '#/boosh'], verb: 'put'}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/boosh'], verb: 'put'}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/boosh'], verb: 'get'}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/boosh'], verb: 'put'}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/boosh'], verb: 'get'}}));
+      })
+      .should('match against path array with verb array', function(){
+        ok(this.app.contextMatchesOptions(this.route, {path: ['#/', '#/boosh'], verb: ['get', 'put']}));
+        ok(!this.app.contextMatchesOptions(this.route, {path: ['#/', '#/boosh'], verb: ['put', 'post']}));
+        ok(!this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/boosh'], verb: ['put', 'post']}}));
+        ok(this.app.contextMatchesOptions(this.route, {only: {path: ['#/', '#/boosh'], verb: ['put', 'get']}}));
+        ok(this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/boosh'], verb: ['put', 'post']}}));
+        ok(!this.app.contextMatchesOptions(this.route, {except: {path: ['#/', '#/boosh'], verb: ['put', 'get']}}));
+      })
       .should('match against just path', function() {
         ok(this.app.contextMatchesOptions(this.route, '#/boosh'), 'should match exact string path');
         ok(!this.app.contextMatchesOptions(this.route, '#/boo'), 'should not match partial string path');
