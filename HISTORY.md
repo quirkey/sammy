@@ -1,3 +1,18 @@
+== 0.7.1 [01/18/2012]
+
+New: 
+- Swap now takes an optional callback to execute after the swap is complete [enix, dfunckt]
+- Added log function to Sammy.Application which adds the element_selector, so you can tell which app is running [Avi Deitcher]
+- Sammy.Application.contextMatchesOptions can now match against an array of paths.
+
+Fixed:
+- DefaultLocationProxy tries to handle every link on the page [dfunckt]
+- Fixes issue when multiple params with the same name are passed with empty values [bentruyman]
+- Fix case where get form wasn't matching routes correctly if the form was empty
+- Fix loadPartials to work with multiple partials [endor]
+- dataType for $.ajax cant be null
+- Use $.isPlainObject() to check for empty object in contextMatchesOptions
+
 == 0.7.0 [07/30/2011]
 
 New:
