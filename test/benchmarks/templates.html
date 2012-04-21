@@ -8,6 +8,7 @@
     <script src="../../lib/plugins/sammy.json.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.template.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.mustache.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../lib/plugins/sammy.hogan.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.meld.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../lib/plugins/sammy.pure.js" type="text/javascript" charset="utf-8"></script>
@@ -57,7 +58,7 @@
         '</ul>' +
       '</div>';
 
-      $.each(['Template', 'Mustache', 'EJS', 'Pure', 'Haml', 'Meld', 'Handlebars'], function(i, plugin) {
+      $.each(['Template', 'Mustache', 'Hogan', 'EJS', 'Pure', 'Haml', 'Meld', 'Handlebars'], function(i, plugin) {
         var createContext,
             template = '',
             meth = plugin.toLowerCase(),
