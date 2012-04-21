@@ -5,6 +5,7 @@ require 'vegas'
 
 Rack::Mime::MIME_TYPES['.template'] = Rack::Mime.mime_type('.html')
 Rack::Mime::MIME_TYPES['.mustache'] = Rack::Mime.mime_type('.mustache')
+Rack::Mime::MIME_TYPES['.hogan']    = Rack::Mime.mime_type('.hogan')
 Rack::Mime::MIME_TYPES['.meld']     = Rack::Mime.mime_type('.html')
 Rack::Mime::MIME_TYPES['.noengine'] = Rack::Mime.mime_type('.txt')
 Rack::Mime::MIME_TYPES['.']         = Rack::Mime.mime_type('.txt')

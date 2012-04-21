@@ -1,0 +1,15 @@
+{{#post}}
+<div class="post">
+  <h2 class="title">{{title}}</h2>
+  <div class="body">{{body}}</div>
+  {{%IMPLICIT-ITERATOR iterator=tag}}
+  {{#tags}}
+  <span class="tags">{{tag}}</span>
+  {{/tags}}
+  <ul class="meta">
+    {{#meta}}
+    <li>Comments Count: <span class="comments">{{comments}}</span></li>
+    {{/meta}}
+  </ul>    
+</div>
+{{/post}}
