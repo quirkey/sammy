@@ -5,3 +5,4 @@ tmp/*
 _layouts
 _site
 .DS_Store
+*.swp
