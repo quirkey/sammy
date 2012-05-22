@@ -75,6 +75,24 @@
             , '#/aaaa/bbbb/cccc/folder/file'
             , "Making sure setLocation works."
         )
+
+        this.app.setLocation('#/aaaa/bbbb/cccc/eeee/#/dynamic/data/?arg=value//wqer')
+        this.app.setLocation('#./folder/file')
+        equal(
+            window.location.hash
+            , '#/aaaa/bbbb/cccc/eeee/folder/file'
+            , "Path resolver allows you to separate away (duplicate use of haspPrefix after a folder marker)"+
+              " 'dynamic' section of hash, not subject to relative path."
+        )
+
+        this.app.setLocation('#/aaaa/bbbb/cccc/dddd#/dynamic/data/?arg=value//wqer')
+        this.app.setLocation('#./folder/file')
+        equal(
+            window.location.hash
+            , '#/aaaa/bbbb/cccc/dddd#/dynamic/data/folder/file'
+            , "Though looks almost the same, because preceeding '/' is missing before hashPrefix "+
+              "it is treated as part of the name of folder 'dddd#'. Chopping only occurs at '?'"
+        )
       })
       .should('Testing click trigger on a tag', function() {
         var starthash, endhash, relHash
