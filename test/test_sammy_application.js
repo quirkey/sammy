@@ -939,7 +939,8 @@
         }
       })
       .should('match against empty options', function() {
-        ok(this.app.contextMatchesOptions(this.route, {}));
+        ok(this.app.contextMatchesOptions(this.route, {}), 'should match against empty options');
+        ok(this.app.contextMatchesOptions(this.route), 'should match against undefined options');
       })
       .should('match against only with path', function() {
         ok(this.app.contextMatchesOptions(this.route, {only: {path: '#/boosh'}}));
@@ -1004,9 +1005,6 @@
         ok(!this.app.contextMatchesOptions(this.route, '#/boo'), 'should not match partial string path');
         ok(this.app.contextMatchesOptions(this.route, /^\#\/boosh/), 'should match regex');
         ok(!this.app.contextMatchesOptions(this.route, /^\#\/$/), 'should not match regex');
-      })
-      .should('match empty options', function() {
-        ok(this.app.contextMatchesOptions(this.route, {}));
       });
 
       context('Sammy.Application', 'use', {
