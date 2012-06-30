@@ -105,7 +105,7 @@
             sameHTML($.trim($('#test_area').html()), '<div class="name">Sammy Davis</div>', "render contents");
           });
         })
-        .should('only fetch the template once', function() {
+        .should('cache the template by default', function() {
           var callback = function(context) {
             jQuery.ajaxcount = 0;
             this.app.clearTemplateCache();
@@ -120,7 +120,22 @@
             equal(jQuery.ajaxcount, 1);
           }, 2);
         })
-        .should('not cache the template if cache: false', function() {
+        .should('cache the template if cache is not explicitly false', function() {
+            var callback = function(context) {
+              jQuery.ajaxcount = 0;
+              this.app.clearTemplateCache();
+              Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
+              this.load('fixtures/partial.html', {cache: 0})
+                  .appendTo('#test_area')
+                  .load('fixtures/partial.html', {cache: 0})
+                  .appendTo('#test_area');
+            };
+            this.runRouteAndAssert(callback, function() {
+              sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
+              equal(jQuery.ajaxcount, 1);
+            }, 2);            
+        })
+        .should('not cache the template if cache is explicitly false', function() {
           var callback = function(context) {
             jQuery.ajaxcount = 0;
             Sammy.log('should not cache', 'ajaxcount', jQuery.ajaxcount);
@@ -133,6 +148,30 @@
             sameHTML($('#test_area').html(), '<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>', "render contents");
             equal(jQuery.ajaxcount, 2);
           }, 2);
+        })
+        .should('only cache json if cache is explicitly true', function() {
+            var callback = function(context) {
+              jQuery.ajaxcount = 0;
+              this.app.clearTemplateCache();
+              Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
+              this.load('fixtures/partial.json', {cache: true})
+                  .load('fixtures/partial.json', {cache: true});
+            };
+            this.runRouteAndAssert(callback, function() {
+              equal(jQuery.ajaxcount, 1);
+            }, 1);
+        })
+        .should('not cache json unless cache is explicitly true', function() {
+            var callback = function(context) {
+              jQuery.ajaxcount = 0;
+              this.app.clearTemplateCache();
+              Sammy.log('should only fetch the template once', 'ajaxcount', jQuery.ajaxcount);
+              this.load('fixtures/partial.json', {cache: 1})
+                  .load('fixtures/partial.json', {cache: 1});
+            };
+            this.runRouteAndAssert(callback, function() {
+              equal(jQuery.ajaxcount, 2);
+            }, 1);            
         })
         .should('swap the rendered contents', function() {
           var callback = function(context) {
