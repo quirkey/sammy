@@ -370,11 +370,11 @@
           var rendered = this.context.tmpl('<div class="test_class">${text} ${blurgh}</div>', {text: 'TEXT!'});
           sameHTML(rendered, '<div class="test_class">TEXT! boosh</div>');
         })
-//        .should('allow tmpl partials by passing partials to data', function() {
-//          var data = {blurgh: 'fizzzz', partials: {first: 'a ${what}'}, what: 'partial'};
-//          var rendered = this.context.tmpl('<div class="test_class">{{tmpl partials.first}} ${blurgh}</div>', data);
-//          sameHTML(rendered, '<div class="test_class">a partial boosh</div>');
-//        })
+        .should('allow tmpl partials by passing partials to data', function() {
+          var data = {blurgh: 'fizzzz', partials: {first: 'a ${what}'}, what: 'partial'};
+          var rendered = this.context.tmpl('<div class="test_class">{{tmpl "first"}} ${blurgh}</div>', data);
+          sameHTML(rendered, '<div class="test_class">a partial fizzzz</div>');
+        })
         .should('alias the tmpl method and thus the extension', function() {
           ok(!$.isFunction(this.alias_context.tmpl));
           ok($.isFunction(this.alias_context.jqt));
