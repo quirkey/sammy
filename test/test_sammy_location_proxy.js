@@ -204,12 +204,12 @@
       $('body').data(this.app._location_proxy.data_name, '#/zuh')
       equal(this.app._location_proxy.getLocation(), '#/zuh');
       this.app._location_proxy.setLocation('#/boosh');
-      equal('#/boosh', this.app._location_proxy.getLocation());
+      equal(this.app._location_proxy.getLocation(), '#/boosh');
     })
     .should('return an empty string when there is no location stored in data', function() {
       $.removeData($('body')[0], this.app._location_proxy.data_name);
-      equal(null, $('body').data(this.app._location_proxy.data_name));
-      equal('', this.app._location_proxy.getLocation());
+      equal($('body').data(this.app._location_proxy.data_name), null);
+      equal(this.app._location_proxy.getLocation(), '');
     });
 
 
