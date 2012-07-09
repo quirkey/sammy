@@ -1,11 +1,23 @@
+New:
+
+- Partials support for jQuery.Tmpl [avalez]
+
+Fixed:
+
+- Template language plugin documentations were out of date [nsdpt]
+- Only cache json if cache is explicitly true, only stop caching everything else if cache is explicitly false [cyx]
+- Cmd-Click now works as expected on a Mac [pbiggar, o.v.]
+
 == 0.7.1 [01/18/2012]
 
-New: 
+New:
+
 - Swap now takes an optional callback to execute after the swap is complete [enix, dfunckt]
 - Added log function to Sammy.Application which adds the element_selector, so you can tell which app is running [Avi Deitcher]
 - Sammy.Application.contextMatchesOptions can now match against an array of paths.
 
 Fixed:
+
 - DefaultLocationProxy tries to handle every link on the page [dfunckt]
 - Fixes issue when multiple params with the same name are passed with empty values [bentruyman]
 - Fix case where get form wasn't matching routes correctly if the form was empty
@@ -53,10 +65,12 @@ New:
 - Updated docs and new site :)
 
 Changed:
+
 - Sammy.Template and Sammy.Tmpl use better internal vars to prevent collisions and auto-escape HTML [Thanks dvv!]
 - Allow for passing of options and {escape_html: false} to Sammy.Template
 
 Fixed:
+
 - URL encoded and decoding properley handles spaces and + [Thanks kbuckler and benvinegar!]
 - empty action or form method was crashing chrome when checking in _getFormVerb
 
