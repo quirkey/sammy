@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'sinatra/base'
+require 'vegas'
+
+Rack::Mime::MIME_TYPES['.template'] = Rack::Mime.mime_type('.html')
+Rack::Mime::MIME_TYPES['.mustache'] = Rack::Mime.mime_type('.mustache')
+Rack::Mime::MIME_TYPES['.hogan']    = Rack::Mime.mime_type('.hogan')
+Rack::Mime::MIME_TYPES['.meld']     = Rack::Mime.mime_type('.html')
+Rack::Mime::MIME_TYPES['.noengine'] = Rack::Mime.mime_type('.txt')
+Rack::Mime::MIME_TYPES['.']         = Rack::Mime.mime_type('.txt')
+
+class SammyTest < Sinatra::Application
+
+  set :public_folder, File.expand_path(File.dirname(__FILE__))
+
+  get '/' do
+    content_type 'text/html'
+    read_relative_file 'index.html'
+  end
+
+  get /\/(lib|vendor)\/(.*)/ do
+    filename = File.join(params['captures'][0],params['captures'][1])
+    content_type File.extname(filename)
+    read_relative_file '..', filename
+  end
+
+  def read_relative_file(*args)
+    File.read(File.join(File.expand_path(File.dirname(__FILE__)), *args))
+  end
+
+end
+
+Vegas::Runner.new(SammyTest, 'sammy_test_server')

@@ -1,0 +1,11 @@
+{
+  "post": {
+    "title": "My Post",
+    "body": "Lorem ipsum dolor sit amet.",
+    "tags": ["one", "two", "three"],
+    "meta": {
+      "comments": 5,
+      "time": "Yesterday"
+    }
+  }
+}

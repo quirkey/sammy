@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../vendor/mocha/mocha.css" />
+    <style>
+      #main {
+        display: none;
+      }
+    </style>
+    <script src="../vendor/jquery.js"></script>
+    <script src="../vendor/mocha/expect.js"></script>
+    <script src="../vendor/mocha/mocha.js"></script>
+    <script src="../vendor/mocha/helpers.js"></script>
+    <script>
+      mocha.setup({
+        ui: 'bdd',
+        ignoreLeaks: true
+      })
+    </script>
+    
+    <script type="text/javascript" src="../vendor/templating/mustache.js"></script>
+    
+    <script src="../lib/sammy.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.mustache.js"></script>
+    
+    <script src="event_context_spec.js"></script>
+    
+    <script>
+      $(function(){
+        mocha.run();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <div id="main"></div>
+  </body>
+</html>
