@@ -1,4 +1,4 @@
-describe('EventContext', function() {
+describe('Sammy.EventContext', function() {
   var app,
       context;
   
