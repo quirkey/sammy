@@ -20,11 +20,11 @@ function bind(fn, scope) {
  * the original error with throwException().
  *
  */
-function disableTrigger(context, callback, done) {
-  var origElement = context.app.$element;
-  context.app.$element = function() { return $('.doesNotExist'); }
+function disableTrigger(app, callback, done) {
+  var origElement = app.$element;
+  app.$element = function() { return $('.doesNotExist'); }
   callback();
-  context.app.$element = origElement;
+  app.$element = origElement;
   done();
 };
 

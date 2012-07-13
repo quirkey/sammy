@@ -3,7 +3,9 @@ describe('EventContext', function() {
       context;
   
   beforeEach(function() {
-    app = new Sammy.Application(function() {});
+    app = new Sammy.Application(function() {
+      this.element_selector = '#main';
+    });
     app.raise_errors = false;
     context = new Sammy.EventContext(app, 'get', '#/test/:test', {test: 'hooray'});      
   });
@@ -52,18 +54,14 @@ describe('EventContext', function() {
   
   describe('#notFound()', function() {
     it('throws a 404 error', function(done) {
-      disableTrigger(context, function() {
+      disableTrigger(context.app, function() {
         context.app.raise_errors = true;
         expect(bind(context.notFound, context)).to.throwException(/404/);        
       }, done);
     });
   });
   
-  describe('#partial()', function() {
-    beforeEach(function() {
-      app.element_selector = '#main';
-    });
-    
+  describe('#partial()', function() {    
     it('passes the contents to the callback', function(done) {
       context.partial('fixtures/partial.html').then(function(data) {
         expect(data).to.eql('<div class="test_partial">PARTIAL</div>');
