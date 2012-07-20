@@ -7,21 +7,11 @@
   <script type="text/javascript" src="../vendor/jquery.js"></script>
   <script type="text/javascript" src="../vendor/qunit-spec.js"></script>
 
-  <script type="text/javascript" src="../vendor/templating/ejs.js"></script>
-  <script type="text/javascript" src="../vendor/templating/haml.js"></script>
-  <script type="text/javascript" src="../vendor/templating/handlebars.js"></script>
-  <script type="text/javascript" src="../vendor/templating/mustache.js"></script>
-  <script type="text/javascript" src="../vendor/templating/hogan.js"></script>
-  <script type="text/javascript" src="../vendor/templating/pure.js"></script>
-  <script type="text/javascript" src="../vendor/templating/tmpl.js"></script>
-
-  <script type="text/javascript" src="../lib/sammy.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.storage.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.ejs.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.nested_params.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.mustache.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.hogan.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.handlebars.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.tmpl.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.json.js"></script>
@@ -33,10 +23,11 @@
   <script type="text/javascript" src="../lib/plugins/sammy.data_location_proxy.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.oauth2.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.flash.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.hoptoad.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.exceptional.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.setlocationfilter.js"></script>
   <script type="text/javascript" src="../lib/plugins/sammy.relativehash.js"></script>
+  <script type="text/javascript" src="../lib/plugins/sammy.googleanalytics.js"></script>
+  <!-- loading sammy last on purpose to simulate effects of async script loading -->
+  <script type="text/javascript" src="../lib/sammy.js"></script>
 
 </head>
 <body>
@@ -57,9 +48,6 @@
       <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
       <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
     </form>
-
-    <a id="pop" href="/">test</a>
-    <a id="push" href="/push">test</a>
 
     <div class="inline-template-1"><div class="name"></div></div>
 
@@ -111,16 +99,20 @@
     </form>
   </div>
 
+  
   <script type="text/javascript" src="test_sammy_application.js"></script>
+
+  <!-- These plugins are not compatible with async (unordered) script loading.
   <script type="text/javascript" src="test_sammy_event_context.js"></script>
-  <script type="text/javascript" src="test_sammy_render_context.js"></script>
   <script type="text/javascript" src="test_sammy_location_proxy.js"></script>
+  <script type="text/javascript" src="test_sammy_render_context.js"></script>
   <script type="text/javascript" src="test_sammy_plugins.js"></script>
   <script type="text/javascript" src="test_sammy_flash.js"></script>
   <script type="text/javascript" src="test_sammy_meld.js"></script>
   <script type="text/javascript" src="test_sammy_storage.js"></script>
-  <script type="text/javascript" src="test_sammy_hoptoad.js"></script>
-  <script type="text/javascript" src="test_sammy_exceptional.js"></script>
+  -->
+
+  <script type="text/javascript" src="test_sammy_googleanalytics.js"></script>
   <script type="text/javascript" src="test_sammy_setlocationfilter.js"></script>
   <script type="text/javascript" src="test_sammy_relativehash.js"></script>
 </body>

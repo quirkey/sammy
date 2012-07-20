@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>Hello World</title>
+
+  <style type="text/css" media="screen">
+
+  </style>
+
+  <script src="../../vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+  
+  <!-- NOTE!: You must also load SetLocationFilter plug in for RelativeHash to work. (order does not matter, as long as they are loaded after core Sammy.) -->
+  <script src="../../lib/plugins/sammy.setlocationfilter.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../lib/plugins/sammy.relativehash.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+  <div id="container"><h3>Menu of resources:</h3>
+    <ul id="link">
+      <li><a href="#/documentation/about/">About: Menu</a></li>
+      <li><a href="#/documentation/about/moredetails">About: More Details</a></li>
+      <li><a href="#/documentation/about/lessdetails">About: Less Details</a></li>
+      <li><a href="#/documentation/about/does_not_exist">About: Resource does not exist. Forwarding to "index" of the folder.</a></li>
+      <li><a href="#/folder/resource">Some other resource</a></li>
+    </div>
+    <h3>Page Content:</h3>
+    <div id="content">
+    </div>
+  </div>
+</body>
+
+  <script type="text/javascript" charset="utf-8">
+    ;(function($) {
+      var app = $.sammy(function() {
+
+        this.element_selector = '#content'
+
+        // there other alternatives, of course, like '#!'
+        // you just need to commit to one otherwise detection of relative
+        // hash will not happen, as it looks ONLY for patterns:
+        //   hashPrefix + './' or hashPrefix + '../'
+        // before it kicks in the path resolution logic.
+        var hashPrefix = '#' 
+
+        // This activates the RelativeHash functionality
+        this.use('RelativeHash', hashPrefix)
+
+        this.get('#/documentation/about/', function() {
+          this.app.swap('<p>You need to chose:</p><p>' +
+            '<a href="#./moredetails">page with more details</a><span>, or </span>'+
+            '<a href="#./lessdetails">page with less details</a></p>'
+            )
+        });
+
+        this.get('#/documentation/about/moredetails', function() {
+          relativeHash = '#./lessdetails'
+          resolvedHash = this.app.setLocationFilter.filter(relativeHash)
+
+          this.app.swap('<p>We have a lot of text below.</p><p>' +
+            'If you want to see a page with short version of this, see <a href="' + relativeHash +
+            '">page with less details</a> (which has the following, hard-coded in the template href: "' + relativeHash +
+            '" (got ahead, hover over it and check), but which is resolved, on the fly (when you click on it), to full hash of ' +
+            resolvedHash + '</p><p>It\'s time for you to click the above link to "page with less'+
+            ' details" or go back to <a href="#./">index page of this folder</a></p>' +
+            '<p>You can also traverse back in folder structure using "#../../folder/resource" hashes. ' + 
+            'Observe: <a href="#../../folder/resource">2 levels up back ref</a></p>'
+          )
+        });
+
+        this.get('#/documentation/about/lessdetails', function() {
+          relativeHash = '#./moredetails'
+          resolvedHash = this.app.setLocationFilter.filter(relativeHash)
+
+          this.app.swap('<p>Blah</p><p>' +
+            'More details <a href="' + relativeHash + '">here</a> (resolved to "' + resolvedHash + '")'
+          )
+        });
+
+        // this is a contrived (not realistic) example designed to demonstrate
+        // that context.app.setLocation(path) also resolves relative paths.
+        //
+        // If resource ("file name") is not found in the folder, we are sent
+        // back to "index" of this folder
+        //
+        // Regex says: (if any non-empty string follows 'about/', but cannot 
+        // contain '/' (which is a folder designator))
+        this.get(/\#\/documentation\/about\/[^\/]+$/, function() {
+          this.app.setLocation('#./')
+        });
+
+        this.get('#/folder/resource', function() {
+          this.app.swap('<p>Hello</p><p>' +
+            'This is "'+window.location.hash+'"</p>'
+          )
+        });
+
+      });
+
+      $(function() {
+        app.run()
+      });
+    })(jQuery);
+  </script>
+
+</html>
