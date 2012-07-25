@@ -80,7 +80,7 @@
         this.context.partial('fixtures/partial.html').then(function(data) { contents = data; });
         soon(function () {
           sameHTML(contents, '<div class="test_partial">PARTIAL</div>');
-        }, this, 2);
+        }, this, 4);
       })
       .should('not run through template() if Sammy.Template is not present', function() {
         var contents = '';
@@ -114,18 +114,6 @@
         soon(function () {
           sameHTML(contents, '<div class="test_template">TEMPLATE!</div>');
         }, this, 2);
-      })
-      .should('allow rendering partials', function() {
-        var contents = '';
-        var app = new Sammy.Application(function() { this.element_selector = '#main'; });
-        app.use(Sammy.Mustache);
-        this.context = new app.context_prototype(app);
-        this.context.render('fixtures/partial.mustache', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) {
-          contents = data;
-        }, {item: 'fixtures/item.mustache'});
-        soon(function () {
-          sameHTML(contents, '<div class="test_template"><span>TEMPLATE!</span></div>');
-        }, this, 2);        
       })
       .should('replace default app element if no callback is passed', function() {
         var contents = '';
@@ -167,6 +155,47 @@
         soon(function () {
           equal(app.$element().text(), '!!!NOENGINE!!!');
         });
+      })
+      .should('render partials with callback and data', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() {
+          this.element_selector = '#main';
+          this.use(Sammy.Mustache);
+        });
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial.mustache', {name: 'TEMPLATE!', class_name: 'test_template'}, function(data) {
+          contents = data;
+        }, {item: 'fixtures/item.mustache'});
+        soon(function () {
+          sameHTML(contents, '<div class="test_template"><span>TEMPLATE!</span></div>');
+          sameHTML(app.$element().html(), '<div class="test_template"><span>TEMPLATE!</span></div>');
+        }, this, 2, 2);
+      })
+      .should('render partials without callback but with data', function() {
+        var app = new Sammy.Application(function() {
+          this.element_selector = '#main';
+          this.use(Sammy.Mustache);
+        });
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial.mustache', {name: 'TEMPLATE!', class_name: 'test_template'}, {item: 'fixtures/item.mustache'});
+        soon(function () {
+          sameHTML(app.$element().html(), '<div class="test_template"><span>TEMPLATE!</span></div>');
+        }, this, 2);
+      })
+      .should('render partials without data but with callback', function() {
+        var contents = '';
+        var app = new Sammy.Application(function() {
+          this.element_selector = '#main';
+          this.use(Sammy.Mustache);
+        });
+        this.context = new app.context_prototype(app);
+        this.context.partial('fixtures/partial2.mustache', function(data) {
+          contents = data;
+        }, {item: 'fixtures/item2.mustache'});
+        soon(function () {
+          sameHTML(contents, '<div class="blah"><span>my name</span></div>');
+          sameHTML(app.$element().html(), '<div class="blah"><span>my name</span></div>');
+        }, this, 2, 2);
       });
 
       context('Sammy', 'EventContext', 'trigger', {

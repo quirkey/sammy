@@ -12,7 +12,7 @@ Rack::Mime::MIME_TYPES['.']         = Rack::Mime.mime_type('.txt')
 
 class SammyTest < Sinatra::Application
 
-  set :public, File.expand_path(File.dirname(__FILE__))
+  set :public_folder, File.expand_path(File.dirname(__FILE__))
 
   get '/' do
     content_type 'text/html'

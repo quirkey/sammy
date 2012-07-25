@@ -16,6 +16,7 @@
               this.raise_errors = false;
               this.element_selector = '#main';
               this.use(Sammy.Template);
+              this.use(Sammy.Mustache);
             });
             var test_context = new test_app.context_prototype(test_app, 'get', '#/test/:test', {test: 'hooray'});
             this.runRouteAndAssert = function(callback, test_callback, expects) {
@@ -290,6 +291,36 @@
           };
           this.runRouteAndAssert(callback, function() {
             sameHTML($('#test_area').html(), '<div class="class-name">name<span>other name</span></div>');
+          });
+        })
+        .should('render with partials and callback and data', function() {
+          var callback = function(context) {
+            this.render('fixtures/partial.mustache', {name: 'my name', class_name: 'class'}, function(data) {
+              $('#test_area').html(data);
+            }, {item: 'fixtures/item.mustache'});
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="class"><span>my name</span></div>', "render contents");
+          });
+        })
+        .should('render with partials without callback but with data', function() {
+          $('#test_area').html('');
+          var callback = function(context) {
+            this.render('fixtures/partial.mustache', {name: 'my name', class_name: 'class'}, {item: 'fixtures/item.mustache'})
+                .appendTo('#test_area');
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="class"><span>my name</span></div>', "render contents");
+          });          
+        })
+        .should('render with partials without data but with callback', function() {
+          var callback = function(context) {
+            this.render('fixtures/partial2.mustache', function(data) {
+              $('#test_area').html(data);
+            }, {item: 'fixtures/item2.mustache'});
+          };
+          this.runRouteAndAssert(callback, function() {
+            sameHTML($('#test_area').html(), '<div class="blah"><span>my name</span></div>', "render contents");
           });
         })
         .should('iterate and collect with each', function() {
