@@ -63,6 +63,7 @@ describe('Sammy.EventContext', function() {
   
   describe('#partial()', function() {    
     it('passes the contents to the callback', function(done) {
+      this.timeout(4000);
       context.partial('fixtures/partial.html').then(function(data) {
         expect(data).to.eql('<div class="test_partial">PARTIAL</div>');
         done();
@@ -75,7 +76,7 @@ describe('Sammy.EventContext', function() {
         done();
       });      
     });
-
+  
     it('runs through template() if Sammy.Template is present', function(done) {
       app.use(Sammy.Template);
       context = new app.context_prototype(app);
@@ -104,11 +105,12 @@ describe('Sammy.EventContext', function() {
         onChange: function() {
           expect(app.$element().text()).to.eql('TEMPLATE!');
           expect(app.$element().children('.test_template').length).to.eql(1);
+          app.unload();
           done();
         }
       });
     });
-  
+      
     it('uses the default engine if provided and template does not match an engine', function(done) {
       listenToChanged(app, {
         setup: function() {
@@ -121,11 +123,12 @@ describe('Sammy.EventContext', function() {
         },
         onChange: function() {
           expect(app.$element().text()).to.eql('!!!NOENGINE!!!');
+          app.unload();
           done();
         }
       });
     });
-  
+      
     it('uses the default engine as a method if template does not match an engine', function(done) {
       listenToChanged(app, {
         setup: function() {
@@ -137,6 +140,7 @@ describe('Sammy.EventContext', function() {
         },
         onChange: function() {
           expect(app.$element().text()).to.eql('!!!NOENGINE!!!');
+          app.unload();
           done();
         }
       });
@@ -157,6 +161,7 @@ describe('Sammy.EventContext', function() {
           onChange: function() {
             expect(contents).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
             expect(app.$element().html()).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
+            app.unload();
             done();
           }
         });
@@ -171,11 +176,12 @@ describe('Sammy.EventContext', function() {
           },
           onChange: function() {
             expect(app.$element().html()).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
+            app.unload();
             done();
           }
         });
       });
-
+  
       it('renders partials with callback but without data', function(done) {
         var contents = '';
         
@@ -190,6 +196,7 @@ describe('Sammy.EventContext', function() {
           onChange: function() {
             expect(contents).to.eql('<div class="blah"><span>my name</span></div>');
             expect(app.$element().html()).to.eql('<div class="blah"><span>my name</span></div>');
+            app.unload();
             done();
           }
         });

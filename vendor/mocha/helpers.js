@@ -35,8 +35,8 @@ function disableTrigger(app, callback, done) {
  *
  */
 function listenToChanged(app, callbacks) {
-  app.get('/', function() {});
-  app.run();
+  app.get('#/', function() {});
+  app.run('#/');
   app.bind('changed', callbacks.onChange);
   callbacks.setup();  
 };

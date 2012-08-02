@@ -50,13 +50,15 @@ describe('Sammy.Exceptional', function() {
       expect(window.Exceptional.errors).to.have.length(1);
       expect(window.Exceptional.errors[0].message).to.match(/Communications error/);
       expect(window.Exceptional.errors[0].url).to.match(new RegExp(window.location.href));
+
       app.unload();
       done();
     });
-    
+
     app.post('#/handle_my_form', function() {
       throw new Error('Communications error.');
     });
-    $('#myform').submit();    
+
+    $('#myform').submit();
   });
 });
