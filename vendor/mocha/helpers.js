@@ -38,6 +38,21 @@ function listenToChanged(app, callbacks) {
   callbacks.setup();  
 };
 
+/**
+ * Runs the callback the second time the
+ * function is called.
+ */
+function evaluateSecondCall(callback) {
+  var i = 0;
+
+  return function() {
+    if(i == 1) {
+      callback();
+    }
+    
+    i += 1;
+  };
+};
 
 /**
  * Test if a jquery element has the same HTML

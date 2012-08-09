@@ -1,4 +1,4 @@
-describe('Sammy.Flash', function() {
+describe('Flash', function() {
   var app, nowApp, context, output,
       createAppsWithFlash, unloadAppsWithFlash;
   

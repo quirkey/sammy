@@ -11,7 +11,7 @@ window.Exceptional = {
   }
 };
 
-describe('Sammy.Exceptional', function() {
+describe('Exceptional', function() {
   var app;
   
   beforeEach(function() {

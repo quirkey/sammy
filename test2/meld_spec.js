@@ -9,7 +9,6 @@ describe('Meld', function() {
     });
     
     context = new app.context_prototype(app, 'get', '#/test/:test', {test: 'hooray'});
-    // $('#test_area').html('');    
   });
   
   it('does simple interpolation', function() {
