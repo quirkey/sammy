@@ -42,6 +42,7 @@ describe('RenderContext', function() {
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
         expect($('#main2').html()).to.eql('<div class="inline-template-1"><div class="name"></div></div>');
+        app.unload();
         done();
       }
     });
@@ -61,6 +62,7 @@ describe('RenderContext', function() {
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
         expect($('#main2').html()).to.eql('<div class="inline-template-1"><div class="name"></div></div>');
+        app.unload();
         done();
       }
     });
@@ -79,6 +81,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="name">Sammy Davis</div>');
+        app.unload();
         done();
       }
     });    
@@ -93,6 +96,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="clazz">Sammy Davis</div>');
+        app.unload();
         done();
       }
     });
@@ -112,6 +116,7 @@ describe('RenderContext', function() {
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
         expect($('#main2').html()).to.be.empty();
+        app.unload();
         done();
       }
     });
@@ -128,6 +133,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="name">Sammy Davis</div>');
+        app.unload();
         done();
       }
     });    
@@ -147,6 +153,7 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
         expect(jQuery.ajaxcount).to.eql(1);
+        app.unload();
         done();          
       })
     });
@@ -166,6 +173,7 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
         expect(jQuery.ajaxcount).to.eql(1);
+        app.unload();
         done();          
       })
     });
@@ -185,6 +193,7 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
         expect(jQuery.ajaxcount).to.eql(2);
+        app.unload();
         done();          
       })
     });
@@ -217,6 +226,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="class">test</div>');
+        app.unload();
         done();
       }
     });
@@ -236,6 +246,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="class">test2</div>');
+        app.unload();
         done();
       }
     });
@@ -249,6 +260,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<p>abc</p><div class="class">test</div>');
+        app.unload();
         done();
       }
     });    
@@ -263,6 +275,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="original">json</div>');
+        app.unload();
         done();
       }
     });
@@ -287,6 +300,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="class">test</div><p>abc</p>');
+        app.unload();
         done();
       }
     });
@@ -343,6 +357,7 @@ describe('RenderContext', function() {
       },
       onChange: evaluateSecondCall(function() {
         expect($('#main').html()).to.eql('<div class="class-name">name<span>other name</span></div>');
+        app.unload();
         done();          
       })
     });
@@ -363,6 +378,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($('#main').html()).to.eql('<div class="class"><span>my name</span></div>');
+        app.unload();
         done();          
       }
     });
@@ -387,6 +403,7 @@ describe('RenderContext', function() {
       },
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<ul><li>first</li><li>second</li></ul>');
+        app.unload();
         done();        
       })
     });    
@@ -402,6 +419,7 @@ describe('RenderContext', function() {
       },
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<ul><li class="item">first</li><li class="item">second</li></ul>');
+        app.unload();
         done();          
       })
     });
@@ -426,6 +444,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="class-name">name</div>');
+        app.unload();
         done();          
       }
     });    
@@ -443,6 +462,7 @@ describe('RenderContext', function() {
       },
       onChange: evaluateSecondCall(function() {
         expect($.trim($('#main').html())).to.eql('<ul><li class="item">first</li><li class="item">second</li></ul>');
+        app.unload();
         done();
       })
     });
@@ -459,6 +479,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="original">json</div>');
+        app.unload();
         done();
       }
     });    
@@ -472,6 +493,7 @@ describe('RenderContext', function() {
       },
       onChange: function() {
         expect($.trim($('#main').html())).to.eql('<div class="original">json</div>');
+        app.unload();
         done();
       }
     });    

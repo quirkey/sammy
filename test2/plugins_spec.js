@@ -340,481 +340,511 @@ describe('Plugins', function() {
   });
 
   describe('Mustache', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Mustache);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+      
+      alias_app = new Sammy.Application(function() {
+        this.use(Sammy.Mustache, 'ms');
+      });
+      alias_context = new alias_app.context_prototype(alias_app, 'get', '#/', {});
+    });
+
+    it('adds a mustache helper to the event context', function() {
+      expect(context.mustache).to.be.a(Function);
+    });
+
+    it('interpolates content', function() {
+      var rendered = context.mustache('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT!</div>');
+    });
+
+    it('sets the context of the template to the test_context', function() {
+      context.blurgh = 'boosh';
+      var rendered = context.mustache('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT! boosh</div>');
+    });
+
+    it('allows mustache partials by passing partials to data', function() {
+      var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: {what: 'partial'}};
+      var rendered = context.mustache('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
+      expect(rendered).to.eql('<div class="test_class">a partial boosh</div>');
+    });
+
+    it('aliases the template method and thus the extension', function() {
+      expect(alias_context.mustache).to.be(undefined);
+      expect(alias_context.ms).to.be.a(Function);
+      expect(alias_context.ms.toString()).to.match(/Mustache/);
+    });
   });
 
   describe('Hogan', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Hogan);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+      
+      alias_app = new Sammy.Application(function() {
+        this.use(Sammy.Hogan, 'hg');
+      });
+      alias_context = new alias_app.context_prototype(alias_app, 'get', '#/', {});
+    });
+
+    it('adds a mustache helper to the event context', function() {
+      expect(context.hogan).to.be.a(Function);
+    });
+
+    it('interpolates content', function() {
+      var rendered = context.hogan('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT!</div>');
+    });
+
+    it('sets the context of the template to the test_context', function() {
+      context.blurgh = 'boosh';
+      var rendered = context.hogan('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT! boosh</div>');
+    });
+
+    it('allows hogan partials by passing partials to data', function() {
+      var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: { what: 'partial'}};
+      var rendered = context.hogan('<div class="test_class">{{#first}}{{>first}}{{/first}} {{blurgh}}</div>', data);      
+      expect(rendered).to.eql('<div class="test_class">a partial boosh</div>');
+    });
+
+    it('aliases the template method and thus the extension', function() {
+      expect(alias_context.hogan).to.be(undefined);
+      expect(alias_context.hg).to.be.a(Function);
+      expect(alias_context.hg.toString()).to.match(/Hogan/);
+    });
   });
 
   describe('Handlebars', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Handlebars);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+      
+      alias_app = new Sammy.Application(function() {
+        this.use(Sammy.Handlebars, 'hb');
+      });
+      alias_context = new alias_app.context_prototype(alias_app, 'get', '#/', {});
+    });
+
+    it('adds a mustache helper to the event context', function() {
+      expect(context.handlebars).to.be.a(Function);
+    });
+
+    it('interpolates content', function() {
+      var rendered = context.handlebars('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT!</div>');
+    });
+
+    it('sets the context of the template to the test_context', function() {
+      context.blurgh = 'boosh';
+      var rendered = context.handlebars('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
+      expect(rendered).to.eql('<div class="test_class">TEXT! boosh</div>');
+    });
+
+    it('allows handlebars partials by passing partials to data', function() {
+      var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, what: 'partial'};
+      var rendered = context.handlebars('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
+      expect(rendered).to.eql('<div class="test_class">a partial boosh</div>');
+    });
+
+    it('aliases the template method and thus the extension', function() {
+      expect(alias_context.handlebars).to.be(undefined);
+      expect(alias_context.hb).to.be.a(Function);
+      expect(alias_context.hb.toString()).to.match(/Handlebars/);
+    });
   });
 
   describe('jQuery-tmpl', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Tmpl);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+      
+      alias_app = new Sammy.Application(function() {
+        this.use(Sammy.Tmpl, 'jqt');
+      });
+      alias_context = new alias_app.context_prototype(alias_app, 'get', '#/', {});
+    });
+
+    it('adds a mustache helper to the event context', function() {
+      expect(context.tmpl).to.be.a(Function);
+    });
+
+    it('interpolates content', function() {
+      var rendered = context.tmpl('<div class="test_class">${text}</div>', {text: 'TEXT!'});
+      expect(rendered).to.have.sameHTMLAs('<div class="test_class">TEXT!</div>');
+    });
+
+    it('sets the context of the template to the test_context', function() {
+      context.blurgh = 'boosh';
+      var rendered = context.tmpl('<div class="test_class">${text} ${blurgh}</div>', {text: 'TEXT!'});
+      expect(rendered).to.have.sameHTMLAs('<div class="test_class">TEXT! boosh</div>');
+    });
+
+    it('allows tmpl partials by passing partials to data', function() {
+      var data = {blurgh: 'fizzzz', partials: {first: 'a ${what}'}, what: 'partial'};
+      var rendered = context.tmpl('<div class="test_class">{{tmpl "first"}} ${blurgh}</div>', data);
+      expect(rendered).to.have.sameHTMLAs('<div class="test_class">a partial fizzzz</div>');
+    });
+
+    it('aliases the template method and thus the extension', function() {
+      expect(alias_context.tmpl).to.be(undefined);
+      expect(alias_context.jqt).to.be.a(Function);
+      expect(alias_context.jqt.toString()).to.match(/jQuery.tmpl/);
+    });
   });
 
   describe('JSON', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.JSON);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+    });
+
+    it('adds a json helper to the event context', function() {
+      expect(context.json).to.be.a(Function);
+    });
+
+    it('ensures JSON is in the global namespace', function() {
+      expect(JSON.parse).to.be.a(Function);
+      expect(JSON.stringify).to.be.a(Function);
+    });
+
+    it('parses JSON if object is a string', function() {
+      expect(context.json("{\"test\":\"123\"}").test).to.eql("123");
+    });
+
+    it('stringifies JSON if object is an object', function() {
+      expect(context.json({test: "123"})).to.eql("{\"test\":\"123\"}");
+    });
   });
 
   describe('Haml', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Haml);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+    });
+
+    it('adds a haml helper to the event context', function() {
+      expect(context.haml).to.be.a(Function);
+    });
+
+    it('uses haml-js to render haml templates', function() {
+      var template = ".mytemplate= title";
+      expect(context.haml(template, {title: "HAML!!"})).to.eql("<div class=\"mytemplate\">HAML!!</div>");
+    });
   });
 
   describe('PURE', function() {
-    
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Pure);
+      });
+      context = new app.context_prototype(app, 'get', '#/', {});
+    });
+
+    it('adds a pure helper to the event context', function() {
+      expect(context.pure).to.be.a(Function);
+    });
+
+    it('uses pure to render haml templates', function() {
+      var template = "<div class='title'></div>";
+      expect(context.pure(template, {title: "PURE!!"})).to.have.sameHTMLAs("<div class=\"title\">PURE!!</div>");
+    });
   });
 
   describe('Form', function() {
-    
+    var item;
+
+    describe('#simple_element()', function() {
+      beforeEach(function() {
+        app = new Sammy.Application(function() {
+          this.use(Sammy.Form);
+        });
+        context = new app.context_prototype(app, 'get', '#/', {});
+        item = {
+          name: 'Test Item'
+        };
+      });
+
+      it('returns a simple string element with simple_element', function() {
+        expect(context.simple_element('div', {'class': 'test'}, "test")).to.eql("<div class='test'>test</div>");
+      });
+
+      it('creates a self closing if no content is passed', function() {
+        expect(context.simple_element('div', {'class': 'test'})).to.eql("<div class='test' />");        
+      });
+
+      it('evaluates attributes that are functions', function() {
+        expect(context.simple_element('div', {id: function() { return 'test'; }})).to.eql("<div id='test' />");
+      });
+    });
+
+    describe('FormBuilder', function() {
+      var builder;
+
+      beforeEach(function() {
+        app = new Sammy.Application(function() {
+          this.use(Sammy.Form);
+          this.use(Sammy.Template);
+        });
+        context = new app.context_prototype(app, 'get', '#/', {});
+        
+        // test item
+        item = {
+          id: "1234",
+          name: 'Item Name',
+          price: '$10.00',
+          quantity: 5,
+          description: "This is a long\ndescription",
+          color: function() {
+            return 'red';
+          },
+          meta: {
+            url: 'http://www.quirkey.com'
+          },
+          is_private: false,
+          related: [
+            {name: 'Related 1'},
+            {name: 'Related 2'}
+          ]
+        };
+        builder = new Sammy.FormBuilder('item', item);
+      });
+
+      it('creates a form builder with name and object', function() {
+        expect(builder.name).to.eql('item');
+        expect(builder.object).to.eql(item);
+      });
+
+      it('returns a text field for attributes with a simple keypath', function() {
+        var expected = "<input type='text' name='item[name]' value='Item Name' class='item-name' />";
+        expect(builder.text('name')).to.eql(expected);
+      });
+
+      it('returns a text field with additional attributes', function() {
+        var expected = "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />";
+        expect(builder.text('name', {rel: 'test'})).to.eql(expected);
+      });
+
+      it('returns a text field when the attribute does not exist', function() {
+        var expected = "<input type='text' name='item[none]' value='' class='item-none' />";
+        expect(builder.text('none')).to.eql(expected);
+      });
+
+      it('returns a text field for an attribute with a deep keypath', function() {
+        var expected = "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />";
+        expect(builder.text('meta.url')).to.eql(expected);
+        expect(builder.text(['meta', 'url'])).to.eql(expected);
+      });
+
+      it('returns a text field for an attribute with an array keypath', function() {
+        var expected = "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />";
+        expect(builder.text('related.0.name')).to.eql(expected);
+      });
+
+      it('returns a select tag with options and selection', function() {
+        var expected = "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>";
+        expect(builder.select('color', ['blue', 'red', 'green'])).to.eql(expected);
+      });
+
+      it('returns a label with key as for', function() {
+        var expected = "<label for='item[name]'>Name</label>";
+        expect(builder.label('name', 'Name')).to.eql(expected);
+      });
+
+      it('returns a hidden input', function() {
+        var expected = "<input type='hidden' name='item[id]' value='1234' class='item-id' />";
+        expect(builder.hidden('id')).to.eql(expected);
+      });
+
+      it('returns a textarea', function() {
+        var expected = "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>";
+        expect(builder.textarea('description')).to.eql(expected);
+      });
+
+      it('returns a checkbox', function() {
+        var expected = "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />";
+        expect(builder.checkbox('is_private', true)).to.eql(expected);
+        
+        item.is_private = true;
+        expected = "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />";
+        expect(builder.checkbox('is_private', true)).to.eql(expected);
+      });
+
+      it('returns a checkbox with no hidden element', function() {
+        var expected = "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />";
+        expect(builder.checkbox('is_private', true, {hidden_element: false})).to.eql(expected);
+        
+        item.is_private = true;
+        expected = "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />";
+        expect(builder.checkbox('is_private', true, {hidden_element: false})).to.eql(expected);        
+      });
+
+      it('returns a radio button', function() {
+        var expected = "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />";
+        expect(builder.radio('quantity', 5)).to.eql(expected);
+      });
+
+      it('builds a form with form in a template', function() {
+        var template = "<% formFor('item', function(f) { %>" +
+                       "<%= f.open() %>" +
+                       "<p><label>Name:</label><%= f.text('name') %></p>" +
+                       "<%= f.close() %>" +
+                       "<% }); %>";
+        var rendered = "<form method='post' action='#/items'>" +
+          "<p><label>Name:</label>" +
+          "<input type='text' name='item[name]' value='Item Name' class='item-name' />" +
+          "</p></form>";
+
+        context.item = item;
+        expect(context.template(template, {}, {escape_html: false})).to.eql(rendered);
+      });
+    });
   });
 
   describe('oAuth', function() {
+    beforeEach(function() {
+      app = new Sammy.Application(function() {
+        this.use(Sammy.Session);
+        this.use(Sammy.OAuth2);
+        this.loseAccessToken(); // Clear from previous run
+        this.authorize = '#/oauth/authorize-me';
+        this.requireOAuth('#/private');
+        this.get('/', function() {});
+        this.get('#/private', function() {});
+        this.get('#/oauth/authorize-me', function() {});
+        this.get('#/signout', function(context) {
+          context.loseAccessToken();
+        });
+      });
+    });
     
+    afterEach(function() {
+      window.location.hash = '/';
+    });
+
+    it('requests authorization if there is no token', function(done) {
+      app.bind('location-changed', evaluateSecondCall(function() {
+        expect(window.location.hash).to.eql('#/oauth/authorize-me?state=/%23/private');
+        app.unload();
+        done();
+      }));
+
+      app.run('/');
+      window.location.href = '#/private';      
+    });
+    
+    it('captures the access token from a successful authorization', function(done) {
+      app.bind('location-changed', evaluateSecondCall(function() {
+        expect(app.getAccessToken()).to.eql('5678');
+        app.unload();
+        done();
+      }));
+
+      app.run('/');
+      window.location.href = '#access_token=5678&state=%23';      
+    });
+    
+    it('redirects to the original URL after a successful authorization', function(done) {
+      app.bind('location-changed', evaluateSecondCall(function() {
+        expect(window.location.hash).to.eql('#/private');
+        app.unload();
+        done();
+      }));
+
+      app.run('/');
+      window.location.href = '#state=%23/private&access_token=5678';
+    });
+
+    it('triggers an oauth.error event if authorization denied', function(done) {
+      app.bind('oauth.denied', function(evt, error) {
+        expect(error.code).to.eql('access_denied');
+        expect(error.message).to.eql("Access Denied");
+        app.unload();
+        done();
+      });
+
+      app.run('/');
+      window.location.href = '#error=access_denied&error_description=Access+Denied';
+    });
+
+    it('loses access token from helper method', function(done) {
+      app.bind('oauth.disconnected', function() {
+        expect(app.getAccessToken()).to.be(null);
+        app.unload();
+        done();
+      });
+
+      app.run('/');
+      app.setAccessToken('5678');
+      expect(app.getAccessToken()).to.eql('5678');
+      window.location.href = '#/signout';
+    });
+
+    it('passes to route if token is available', function(done) {
+      app.requireOAuth('#/test');
+      app.get('#/test', function() {
+        app.unload();
+        done();
+      });
+
+      app.run('/');
+      app.setAccessToken('5678');
+      window.location.href = '#/test';
+    });
+
+    it('triggers oauth.connected when connected', function(done) {
+      app.bind('oauth.connected', function() {
+        app.unload();
+        done();
+      });
+      app.run('/');
+      window.location.href = '#access_token=5678&state=%23';
+    });
+
+    it('triggers oauth.connected if started with an access token', function(done) {
+      app.bind('oauth.connected', function() {
+        app.unload();
+        done();
+      });
+      app.setAccessToken('5678');
+      app.run('/');
+    });
+
+    it('does not trigger oauth.connected if started without an access token', function(done) {
+      var connected;
+      app.bind('oauth.connected', function() { connected = true });
+      app.run('/');
+      setTimeout(function() {
+        expect(connected).to.be(undefined);
+        app.unload();
+        done();
+      }, 200);
+    });
+
+    it('passes OAuth in header when making an XHR request', function(done) {
+      app.run('#/');
+      app.setAccessToken('5678');
+      xhr = {setRequestHeader: function(name, value) {
+         expect(name).to.eql('Authorization');
+         expect(value).to.eql('OAuth 5678');
+         app.unload();
+         done();
+      }};
+      $(document).trigger('ajaxSend', xhr);
+    });
   });
 });
-
-//        // Pretty much a copy of the Template tests
-//        context('Sammy', 'Mustache', {
-//           before: function() {
-//             this.app = new Sammy.Application(function() {
-//               this.use(Sammy.Mustache);
-//             });
-//             this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-// 
-//             this.alias_app = new Sammy.Application(function() {
-//               this.use(Sammy.Mustache, 'ms');
-//             });
-//             this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
-//           }
-//         })
-//         .should('add mustache helper to event context', function() {
-//           ok($.isFunction(this.context.mustache));
-//         })
-//         .should('interpolate content', function() {
-//           var rendered = this.context.mustache('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
-//           equal(rendered, '<div class="test_class">TEXT!</div>');
-//         })
-//         .should('set the context of the template to the test_context', function() {
-//           this.context.blurgh = 'boosh';
-//           var rendered = this.context.mustache('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
-//           equal(rendered, '<div class="test_class">TEXT! boosh</div>');
-//         })
-//         .should('allow mustache partials by passing partials to data', function() {
-//           var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: {what: 'partial'}};
-//           var rendered = this.context.mustache('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
-//           equal(rendered, '<div class="test_class">a partial boosh</div>');
-//         })
-//         .should('alias the mustache method and thus the extension', function() {
-//           ok(!$.isFunction(this.alias_context.mustache));
-//           ok($.isFunction(this.alias_context.ms));
-//           ok(this.alias_context.ms.toString().match(/Mustache/));
-//         });
-// 
-//          // Hogan.js tests (BTW: partials work in another way, than musctache partials - without variable scope)
-//          context('Sammy', 'Hogan', {
-//             before: function() {
-//               this.app = new Sammy.Application(function() {
-//                 this.use(Sammy.Hogan);
-//               });
-//               this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-// 
-//               this.alias_app = new Sammy.Application(function() {
-//                 this.use(Sammy.Hogan, 'hg');
-//               });
-//               this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
-//             }
-//           })
-//           .should('add hogan helper to event context', function() {
-//             ok($.isFunction(this.context.hogan));
-//           })
-//           .should('interpolate content', function() {
-//             var rendered = this.context.hogan('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
-//             equal(rendered, '<div class="test_class">TEXT!</div>');
-//           })
-//           .should('set the context of the template to the test_context', function() {
-//             this.context.blurgh = 'boosh';
-//             var rendered = this.context.hogan('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
-//             equal(rendered, '<div class="test_class">TEXT! boosh</div>');
-//           })
-//           .should('allow hogan partials by passing partials to data', function() {
-//             var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, first: { what: 'partial'}};
-//             var rendered = this.context.hogan('<div class="test_class">{{#first}}{{>first}}{{/first}} {{blurgh}}</div>', data);
-//             equal(rendered, '<div class="test_class">a partial boosh</div>');
-//           })
-//           .should('alias the hogan method and thus the extension', function() {
-//             ok(!$.isFunction(this.alias_context.hogan));
-//             ok($.isFunction(this.alias_context.hg));
-//             ok(this.alias_context.hg.toString().match(/Hogan/));
-//           });
-// 
-//         // Pretty much a copy of the Mustache tests
-//         context('Sammy', 'Handlebars', {
-//           before: function() {
-//             this.app = new Sammy.Application(function() {
-//               this.use(Sammy.Handlebars);
-//             });
-//             this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-// 
-//             this.alias_app = new Sammy.Application(function() {
-//               this.use(Sammy.Handlebars, 'hb');
-//             });
-//             this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
-//           }
-//         })
-//         .should('add handlebars helper to event context', function() {
-//           ok($.isFunction(this.context.handlebars));
-//         })
-//         .should('interpolate content', function() {
-//           var rendered = this.context.handlebars('<div class="test_class">{{text}}</div>', {text: 'TEXT!'});
-//           equal(rendered, '<div class="test_class">TEXT!</div>');
-//         })
-//         .should('set the context of the template to the test_context', function() {
-//           this.context.blurgh = 'boosh';
-//           var rendered = this.context.handlebars('<div class="test_class">{{text}} {{blurgh}}</div>', {text: 'TEXT!'});
-//           equal(rendered, '<div class="test_class">TEXT! boosh</div>');
-//         })
-//         .should('allow handlebars partials by passing partials to data', function() {
-//           var data = {blurgh: 'boosh', partials: {first: 'a {{what}}'}, what: 'partial'};
-//           var rendered = this.context.handlebars('<div class="test_class">{{>first}} {{blurgh}}</div>', data);
-//           equal(rendered, '<div class="test_class">a partial boosh</div>');
-//         })
-//         .should('alias the handlebars method and thus the extension', function() {
-//           ok(!$.isFunction(this.alias_context.handlebars));
-//           ok($.isFunction(this.alias_context.hb));
-//           ok(this.alias_context.hb.toString().match(/Handlebars/));
-//         });
-// 
-//         // Pretty much a copy of the Mustache tests
-//         context('Sammy', 'jQuery-tmpl', {
-//           before: function() {
-//             this.app = new Sammy.Application(function() {
-//               this.use(Sammy.Tmpl);
-//             });
-//             this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-// 
-//             this.alias_app = new Sammy.Application(function() {
-//               this.use(Sammy.Tmpl, 'jqt');
-//             });
-//             this.alias_context = new this.alias_app.context_prototype(this.alias_app, 'get', '#/', {});
-//           }
-//         })
-//         .should('add tmpl helper to event context', function() {
-//           ok($.isFunction(this.context.tmpl));
-//         })
-//         .should('interpolate content', function() {
-//           var rendered = this.context.tmpl('<div class="test_class">${text}</div>', {text: 'TEXT!'});
-//           sameHTML(rendered, '<div class="test_class">TEXT!</div>');
-//         })
-//         .should('set the context of the template to the test_context', function() {
-//           this.context.blurgh = 'boosh';
-//           var rendered = this.context.tmpl('<div class="test_class">${text} ${blurgh}</div>', {text: 'TEXT!'});
-//           sameHTML(rendered, '<div class="test_class">TEXT! boosh</div>');
-//         })
-//         .should('allow tmpl partials by passing partials to data', function() {
-//           var data = {blurgh: 'fizzzz', partials: {first: 'a ${what}'}, what: 'partial'};
-//           var rendered = this.context.tmpl('<div class="test_class">{{tmpl "first"}} ${blurgh}</div>', data);
-//           sameHTML(rendered, '<div class="test_class">a partial fizzzz</div>');
-//         })
-//         .should('allow tmpl partials by passing passing in separately', function() {
-//           var data = {blurgh: 'fizzzz', what: 'partial'};
-//           var partials = {first: 'a ${what}'};
-//           var rendered = this.context.tmpl('<div class="test_class">{{tmpl "first"}} ${blurgh}</div>', data, partials);
-//           sameHTML(rendered, '<div class="test_class">a partial fizzzz</div>');          
-//         })
-//         .should('alias the tmpl method and thus the extension', function() {
-//           ok(!$.isFunction(this.alias_context.tmpl));
-//           ok($.isFunction(this.alias_context.jqt));
-//           ok(this.alias_context.jqt.toString().match(/jQuery\.tmpl/));
-//         });
-// 
-//       context('Sammy', 'JSON', {
-//         before: function() {
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.JSON);
-//           });
-//           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-//         }
-//       })
-//       .should('add json helper to event context', function() {
-//         ok($.isFunction(this.context.json));
-//       })
-//       .should('ensure JSON is in the global namespace', function() {
-//         ok($.isFunction(JSON.parse));
-//         ok($.isFunction(JSON.stringify));
-//       })
-//       .should('parse JSON if object is a string', function() {
-//         equal(this.context.json("{\"test\":\"123\"}").test, "123");
-//       })
-//       .should('stringify JSON if object is an object', function() {
-//         equal(this.context.json({test: "123"}),"{\"test\":\"123\"}");
-//       });
-// 
-// 
-//       context('Sammy', 'Haml', {
-//         before: function() {
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.Haml);
-//           });
-//           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-//         }
-//       })
-//       .should('add haml helper to context', function() {
-//         ok($.isFunction(this.context.haml));
-//       })
-//       .should('use haml-js to render haml templates', function() {
-//         var template = ".mytemplate= title";
-//         sameHTML(this.context.haml(template, {title: "HAML!!"}), "<div class=\"mytemplate\">HAML!!</div>");
-//       });
-// 
-//       context('Sammy', 'Pure', {
-//         before: function() {
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.Pure);
-//           });
-//           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-//         }
-//       })
-//       .should('add pure helper to context', function() {
-//         ok($.isFunction(this.context.pure));
-//       })
-//       .should('use pure to render templates', function() {
-//         var template = "<div class='title'></div>";
-//         sameHTML(this.context.pure(template, {title: "PURE!!"}), "<div class=\"title\">PURE!!</div>");
-//       });
-// 
-//       context('Sammy', 'Form', {
-//         before: function() {
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.Form);
-//           });
-//           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-//           this.item = {
-//             name: 'Test Item'
-//           };
-//         }
-//       })
-//       .should("return simple string element with simple_element", function() {
-//         equal(this.context.simple_element('div', {'class': 'test'}, "test"), "<div class='test'>test</div>");
-//       })
-//       .should("create self closing if no content is passed", function() {
-//         equal(this.context.simple_element('div', {'class': 'test'}), "<div class='test' />");
-//       })
-//       .should("evaluate attributes that are functions", function() {
-//         equal(this.context.simple_element('div', {id: function() { return 'test'; }}), "<div id='test' />");
-//       });
-// 
-//       context('Sammy', 'Form', 'FormBuilder', {
-//         before: function() {
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.Form);
-//             this.use(Sammy.Template);
-//           });
-//           this.context = new this.app.context_prototype(this.app, 'get', '#/', {});
-// 
-//           // test item
-//           this.item = {
-//             id: "1234",
-//             name: 'Item Name',
-//             price: '$10.00',
-//             quantity: 5,
-//             description: "This is a long\ndescription",
-//             color: function() {
-//               return 'red';
-//             },
-//             meta: {
-//               url: 'http://www.quirkey.com'
-//             },
-//             is_private: false,
-//             related: [
-//               {name: 'Related 1'},
-//               {name: 'Related 2'}
-//             ]
-//           };
-//           this.builder = new Sammy.FormBuilder('item', this.item);
-//         }
-//       })
-//       .should("create form builder with name and object", function() {
-//         ok(this.builder);
-//         equal(this.builder.name, 'item');
-//         deepEqual(this.builder.object, this.item);
-//       })
-//       .should("return text field for attribute with simple keypath", function() {
-//         equal(this.builder.text('name'), "<input type='text' name='item[name]' value='Item Name' class='item-name' />")
-//       })
-//       .should("return text field with additional attributes", function() {
-//         equal(this.builder.text('name', {rel: 'test'}), "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />")
-//       })
-//       .should("return text field when the attribute doesnt exist", function() {
-//         equal(this.builder.text('none'), "<input type='text' name='item[none]' value='' class='item-none' />")
-//       })
-//       .should("return text field for an attribute with a deep keypath", function() {
-//         equal(this.builder.text('meta.url'), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
-//         equal(this.builder.text(['meta', 'url']), "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />")
-//       })
-//       .should("return text field for an attribute with an array keypath", function() {
-//         equal(this.builder.text('related.0.name'), "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />")
-//       })
-//       .should("return a select tag with options and selection", function() {
-//         equal(this.builder.select('color', ['blue', 'red', 'green']), "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>")
-//       })
-//       .should("return a label with key as for", function() {
-//         equal(this.builder.label('name', 'Name'), "<label for='item[name]'>Name</label>");
-//       })
-//       .should("return a hidden input", function() {
-//         equal(this.builder.hidden('id'), "<input type='hidden' name='item[id]' value='1234' class='item-id' />");
-//       })
-//       .should("return a textarea", function() {
-//         equal(this.builder.textarea('description'), "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>");
-//       })
-//       .should("return a checkbox", function() {
-//         equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
-//         this.item.is_private = true;
-//         equal(this.builder.checkbox('is_private', true), "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
-//       })
-//        .should("return a checkbox with no hidden element", function() {
-//           equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />");
-//           this.item.is_private = true;
-//           equal(this.builder.checkbox('is_private', true, {hidden_element: false}), "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />")
-//         })
-//       .should("return a radio button", function() {
-//         equal(this.builder.radio('quantity', 5), "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />");
-//       })
-//       .should("build a form with form in a template", function() {
-//         var template = "<% formFor('item', function(f) { %>" +
-//                        "<%= f.open() %>" +
-//                        "<p><label>Name:</label><%= f.text('name') %></p>" +
-//                        "<%= f.close() %>" +
-//                        "<% }); %>";
-//         var rendered = "<form method='post' action='#/items'><p><label>Name:</label><input type='text' name='item[name]' value='Item Name' class='item-name' /></p></form>"
-//         this.context.item = this.item;
-//         equals(this.context.template(template, {}, {escape_html: false}), rendered);
-//       });
-// 
-//       context('Sammy', 'OAuth 2.0', {
-//         before: function() {
-//           window.location.hash = '';
-//           this.app = new Sammy.Application(function() {
-//             this.use(Sammy.Session);
-//             this.use(Sammy.OAuth2);
-//             this.loseAccessToken(); // Clear from previous run
-//             this.authorize = '#/oauth/authorize-me';
-//             this.requireOAuth();
-//             this.get('#/private', function(context) {
-//               context.app.requested = true;
-//             });
-//             this.get('#/signout', function(context) {
-//               context.loseAccessToken();
-//             });
-//             this.bind('oauth.denied', function(evt, error) {
-//               this.app.denied = error;
-//             });
-//           });
-//         }
-//       })
-//       .should("request authorization if there is no token", function() {
-//          this.app.run('#/');
-//          window.location.href = '#/private';
-//          soon(function() {
-//            equal(location.hash, '#/oauth/authorize-me?state=/%23/private');
-//            ok(!this.app.requested);
-//            this.app.unload();
-//          }, this, 1, 2);
-//       })
-//       .should("capture access token from successful authorization", function() {
-//          this.app.run('#/');
-//          window.location.href = '#access_token=5678&state=%23';
-//          soon(function() {
-//            equal(this.app.getAccessToken(), '5678');
-//            this.app.unload();
-//          }, this, 1, 1);
-//       })
-//       .should("should redirect to original URL after successful authorization", function() {
-//          this.app.run('#/');
-//          window.location.href = '#state=%23/private&access_token=5678';
-//          soon(function() {
-//            ok(location.hash, '#/private');
-//            this.app.unload();
-//          }, this, 1, 1);
-//       })
-//       .should("trigger oauth.error event if authorization denied", function() {
-//          this.app.run('#/');
-//          window.location.href = '#error=access_denied&error_description=Access+Denied';
-//          soon(function() {
-//            equal(this.app.denied.code, 'access_denied');
-//            equal(this.app.denied.message, "Access Denied");
-//            this.app.unload();
-//          }, this, 1, 2);
-//       })
-//       .should("lose access token from helper method", function() {
-//          this.app.run('#/');
-//          this.app.setAccessToken('5678');
-//          equal(this.app.getAccessToken(), '5678');
-//          window.location.href = '#/signout';
-//          soon(function() {
-//            equal(this.app.getAccessToken(), null);
-//            this.app.unload();
-//          }, this, 1, 2);
-//       })
-//       .should("pass to route if token available", function() {
-//          this.app.run('#/');
-//          this.app.setAccessToken('5678');
-//          window.location.href = '#/private';
-//          soon(function() {
-//            equal(location.hash, '#/private');
-//            ok(this.app.requested);
-//            this.app.unload();
-//          }, this, 1, 2);
-//       })
-//       .should("trigger oauth.connected when connected", function() {
-//         var connected;
-//         this.app.bind('oauth.connected', function() { connected = true });
-//         this.app.run('#/');
-//         window.location.href = '#access_token=5678&state=%23';
-//         soon(function() {
-//           ok(connected);
-//           this.app.unload();
-//         }, this, 1, 1);
-//       })
-//       .should("trigger oauth.connected if started with access token", function() {
-//         var connected;
-//         this.app.bind('oauth.connected', function() { connected = true });
-//         this.app.setAccessToken('5678');
-//         this.app.run('#/');
-//         soon(function() {
-//           ok(connected);
-//           this.app.unload();
-//         }, this, 1, 1);
-//       })
-//       .should("not trigger oauth.connected if started without access token", function() {
-//         var connected;
-//         this.app.bind('oauth.connected', function() { connected = true });
-//         this.app.run('#/');
-//         soon(function() {
-//           ok(!connected);
-//           this.app.unload();
-//         }, this, 1, 1);
-//       })
-//       .should("trigger oauth.disconnected if access token lost", function() {
-//         var disconnected;
-//         this.app.bind('oauth.disconnected', function() { disconnected = true });
-//         this.app.setAccessToken('5678');
-//         this.app.run('#/');
-//         window.location.href = '#/signout';
-//         soon(function() {
-//           ok(disconnected);
-//           this.app.unload();
-//         }, this, 1, 1);
-//       })
-//       .should("pass OAuth in header when making XHR request", function() {
-//          this.app.run('#/');
-//          this.app.setAccessToken('5678');
-//          xhr = { setRequestHeader: function(name, value) { this[name] = value } };
-//          $(document).trigger('ajaxSend', xhr);
-//          equal('OAuth 5678', xhr['Authorization']);
-//          this.app.unload();
-//       })
-//     };
-// })(jQuery);
