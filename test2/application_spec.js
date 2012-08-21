@@ -4,7 +4,7 @@ describe('Application', function() {
       var app = Sammy();
       expect(app.route).to.be.a(Function);
     });
-
+  
     it('saves the application to Sammy.apps', function() {
       var app = Sammy();
       expect(Sammy.apps['body']).to.eql(app);
@@ -71,7 +71,7 @@ describe('Application', function() {
         expect(app._location_proxy.getLocation).to.be.a(Function);
       });
     });
-
+    
     describe('#route()', function() {
       beforeEach(function() {
         context = this;
@@ -157,7 +157,7 @@ describe('Application', function() {
         });
       });
     });
-
+    
     describe('#mapRoutes()', function() {
       beforeEach(function() {
         context = this;
@@ -188,7 +188,7 @@ describe('Application', function() {
         expect(route.callback).to.eql(context.empty_callback);
       });
     });
-
+    
     describe('#bind()', function() {
       beforeEach(function() {
          context = this;
@@ -387,10 +387,11 @@ describe('Application', function() {
       
       it('url encodes the form values', function(done) {
         window.location.hash = '#/';
-
+      
         app.get('#/', function() {});
         app.get('#/live', function() {
-          expect(window.location.hash).to.eql('#/live?spaces=value%20with%20spaces&pluses=%2B%2B%2B');
+          var expected = '#/live?spaces=value with spaces&pluses=+++';
+          expect(decodeURIComponent(window.location.hash)).to.eql(expected);
           app.unload();
           done();          
         });
@@ -402,7 +403,7 @@ describe('Application', function() {
            '<input type="submit" class="submit"/>' +
            '</form>'
          );
-
+      
         $('#live_form .submit').submit();
       });
       
@@ -455,12 +456,12 @@ describe('Application', function() {
       
       it('redirects to the same path after form submit', function(done) {
         app.get('#/', function() {});
-
+      
         app.get('#/postpost', function(ctx) {
           app.unload();
           done();
         });
-
+      
         app.post('#/postpost', function(ctx) {
           this.redirect('#/postpost');
         });
@@ -509,7 +510,7 @@ describe('Application', function() {
         expect(route.callback).to.be.a(Function);
       });
     });
-
+    
     describe('#runRoute()', function() {
       beforeEach(function() {
         context = this;
@@ -612,7 +613,7 @@ describe('Application', function() {
         }, done);        
       });
     });
-
+    
     describe('#before()', function() {
       beforeEach(function() {
         window.location.hash = '';
@@ -659,7 +660,7 @@ describe('Application', function() {
           }, 100);
           return false;
         });
-
+    
         app.get('#/', function() {
           context.landedHere = true;
         });
@@ -687,14 +688,14 @@ describe('Application', function() {
         app.run('#/');
       });
     });
-
+    
     describe('#after()', function() {
       beforeEach(function() {
         window.location.hash = '';
         context = this;
         app = new Sammy.Application(function() {});
       });
-
+    
       it('runs after route', function(done) {
         app.after(function() {
           app.unload();
@@ -703,7 +704,7 @@ describe('Application', function() {
         app.get('#/', function() {});
         app.run('#/');        
       });
-
+    
       it('sets the context to event context', function(done) {
         var ctx = null;
         
@@ -718,7 +719,7 @@ describe('Application', function() {
         app.run('#/');
       });
     });
-
+    
     describe('#around()', function() {
       beforeEach(function() {
         window.location.hash = '';
@@ -804,7 +805,7 @@ describe('Application', function() {
         app.run('#/');
       });
     });
-
+    
     describe('#helpers()', function() {
       beforeEach(function() {
         context = this;
@@ -841,7 +842,7 @@ describe('Application', function() {
         app.trigger('blurgh');
       });
     });
-
+    
     describe('#helper()', function() {
       beforeEach(function() {
         context = this;
@@ -863,10 +864,10 @@ describe('Application', function() {
         });
         app.run('#/');
       });
-
+    
       it('extends the event context for bind', function(done) {
         app.get('#/', function() {});
-
+    
         app.bind('blurgh', function() {
           expect(this.helpme).to.be.a(Function);
           expect(this.helpme()).to.eql('halp!');
@@ -878,7 +879,7 @@ describe('Application', function() {
         app.trigger('blurgh');        
       });
     });
-
+    
     describe('#getLocation()', function() {
       it('returns the path and hash of the browser by default', function() {
         app = new Sammy.Application();
@@ -900,11 +901,11 @@ describe('Application', function() {
         window.location.hash = '';
         context = this;
         context.visited = [];
-
+    
         $('#main').html('<form id="test_form" action="#/test" method="post">' +
           '<input type="hidden" name="test_input" value="TEST" />' +
         '</form>');
-
+    
         app = new Sammy.Application(function() {
           this.get('#/', function() {});
           
@@ -930,7 +931,7 @@ describe('Application', function() {
         window.location.hash = '/blah';
       });
     });
-
+    
     describe('#contextMatchesOptions()', function() {
       var route = null;
       
@@ -949,48 +950,48 @@ describe('Application', function() {
         expect(app.contextMatchesOptions(route, {})).to.be(true);
         expect(app.contextMatchesOptions(route)).to.be(true);
       });
-
+    
       it('matches against only with path', function() {
         expect(app.contextMatchesOptions(route, {only: {path: '#/boosh'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {only: '#/boosh'})).to.be(true);
         expect(app.contextMatchesOptions(route, {only: {path: '#/'}})).to.be(false);
         expect(app.contextMatchesOptions(route, {only: '#/'})).to.be(false);
       });
-
+    
       it('matches against only with path and verb', function() {
         expect(app.contextMatchesOptions(route, {only: {path: '#/boosh', verb: 'get'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {only: {path: '#/boosh', verb: 'put'}})).to.be(false);
         expect(app.contextMatchesOptions(route, {only: {path: '#/', verb: 'get'}})).to.be(false);
       });
-
+    
       it('matches against only with verb', function() {
         expect(app.contextMatchesOptions(route, {only: {verb: 'get'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {only: {verb: 'put'}})).to.be(false);
       });
-
+    
       it('matches against only with verb array', function() {
         expect(app.contextMatchesOptions(route, {only: {verb: ['get', 'post']}})).to.be(true);
         expect(app.contextMatchesOptions(route, {only: {verb: ['put', 'post']}})).to.be(false);
       });
-
+    
       it('matches against except with path and verb', function() {
         expect(app.contextMatchesOptions(route, {except: {path: '#/', verb: 'get'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: {path: '#/boosh', verb: 'get'}})).to.be(false);
         expect(app.contextMatchesOptions(route, {except: {path: '#/boosh', verb: 'put'}})).to.be(true);
       });
-
+    
       it('matches against except with path', function() {
         expect(app.contextMatchesOptions(route, {except: {path: '#/'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: '#/'})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: {path: '#/boosh'}})).to.be(false);
         expect(app.contextMatchesOptions(route, {except: '#/boosh'})).to.be(false);
       });
-
+    
       it('matches against except with verb', function() {
         expect(app.contextMatchesOptions(route, {except: {verb: 'get'}})).to.be(false);
         expect(app.contextMatchesOptions(route, {except: {verb: 'put'}})).to.be(true);
       });
-
+    
       it('matches against path array', function() {
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/foo']})).to.be(false);
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/boosh']})).to.be(true);
@@ -999,7 +1000,7 @@ describe('Application', function() {
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/foo']}})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/boosh']}})).to.be(false);
       });
-
+    
       it('matches against path array with verb', function() {
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/boosh'], verb: 'get'})).to.be(true);
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/boosh'], verb: 'put'})).to.be(false);
@@ -1008,7 +1009,7 @@ describe('Application', function() {
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/boosh'], verb: 'put'}})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/boosh'], verb: 'get'}})).to.be(false);
       });
-
+    
       it('matches against path array with verb array', function() {
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/boosh'], verb: ['get', 'put']})).to.be(true);
         expect(app.contextMatchesOptions(route, {path: ['#/', '#/boosh'], verb: ['put', 'post']})).to.be(false);
@@ -1017,7 +1018,7 @@ describe('Application', function() {
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/boosh'], verb: ['put', 'post']}})).to.be(true);
         expect(app.contextMatchesOptions(route, {except: {path: ['#/', '#/boosh'], verb: ['put', 'get']}})).to.be(false);
       });
-
+    
       it('matches against just path', function() {
         expect(app.contextMatchesOptions(route, '#/boosh'), 'should match exact string path').to.be(true);
         expect(app.contextMatchesOptions(route, '#/boo'), 'should not match partial string path').to.be(false);
@@ -1025,7 +1026,7 @@ describe('Application', function() {
         expect(app.contextMatchesOptions(route, /^\#\/$/), 'should not match regex').to.be(false);
       });
     });
-
+    
     describe('#use()', function() {
       beforeEach(function() {
         context = this;
@@ -1044,7 +1045,7 @@ describe('Application', function() {
           }).to.throwException(/plugin/);
         }, done);
       });
-
+    
       it('raises an error if the plugin is not a function', function(done) {
         disableTrigger(app, function() {
           var blah = 'whu';
@@ -1096,7 +1097,7 @@ describe('Application', function() {
             e.partial("Please Login");
           });
         };
-
+    
         app.use(TrivialLogin);
         app.run('#/login');
       });
@@ -1111,7 +1112,7 @@ describe('Application', function() {
             e.partial("Please Login");
           });
         };
-
+    
         app.use(TrivialLogin);
         expect(new Sammy.EventContext().partial.toString()).to.match(/RenderContext/);
       });
@@ -1122,7 +1123,7 @@ describe('Application', function() {
           app.b = b;
           this.c = c;
         };
-
+    
         app.use(TrivialLogin, 1, 2, 3);
         
         expect(app.a).to.eql(1);
@@ -1130,7 +1131,7 @@ describe('Application', function() {
         expect(app.c).to.eql(3);
       });
     });
-
+    
     describe('#$element()', function() {
       beforeEach(function() {
         app = $.sammy(function() {

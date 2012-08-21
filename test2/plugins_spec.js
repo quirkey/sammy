@@ -739,7 +739,8 @@ describe('Plugins', function() {
   
     it('requests authorization if there is no token', function(done) {
       app.bind('location-changed', evaluateSecondCall(function() {
-        expect(window.location.hash).to.eql('#/oauth/authorize-me?state=/%23/private');
+        var expected = '#/oauth/authorize-me?state=/#/private';
+        expect(decodeURIComponent(window.location.hash)).to.eql(expected);
         app.unload();
         done();
       }));
