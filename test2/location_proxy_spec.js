@@ -5,6 +5,7 @@ describe('DefaultLocationProxy', function() {
   
   beforeEach(function() {
     app = new Sammy.Application(function() {
+      this.element_selector = '#main';
       this.get('#/', function() {});
     });
     proxy = app._location_proxy;
@@ -37,6 +38,7 @@ describe('DefaultLocationProxy', function() {
     });    
   } else {
     it('sets is_native true if onhashchange exists in window', function(done) {
+      $('#main').html('');
       var i = 0;
       
       window.location.hash = '#/';
