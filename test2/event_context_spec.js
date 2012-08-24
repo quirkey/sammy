@@ -160,7 +160,7 @@ describe('EventContext', function() {
           },
           onChange: function() {
             expect(contents).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
-            expect(app.$element().html()).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
+            expect(app.$element()).to.have.sameHTMLAs('<div id="main"><div class="test_template"><span>TEMPLATE!</span></div></div>');
             app.unload();
             done();
           }
@@ -175,7 +175,7 @@ describe('EventContext', function() {
             context.partial('fixtures/partial.mustache', {name: 'TEMPLATE!', class_name: 'test_template'}, {item: 'fixtures/item.mustache'});
           },
           onChange: function() {
-            expect(app.$element().html()).to.eql('<div class="test_template"><span>TEMPLATE!</span></div>');
+            expect(app.$element()).to.have.sameHTMLAs('<div id="main"><div class="test_template"><span>TEMPLATE!</span></div></div>');
             app.unload();
             done();
           }
@@ -195,7 +195,7 @@ describe('EventContext', function() {
           },
           onChange: function() {
             expect(contents).to.eql('<div class="blah"><span>my name</span></div>');
-            expect(app.$element().html()).to.eql('<div class="blah"><span>my name</span></div>');
+            expect(app.$element()).to.have.sameHTMLAs('<div id="main"><div class="blah"><span>my name</span></div></div>');
             app.unload();
             done();
           }

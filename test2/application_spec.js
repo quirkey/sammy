@@ -546,11 +546,11 @@ describe('Application', function() {
       
       it('sets additional params from a query string after the hash', function(done) {
         app.get('#/boosh/:test/:test2', function() {
-          expect(this.params.with).to.eql('some');
+          expect(this.params.including).to.eql('some');
           expect(this.params.nifty).to.eql('params');
           done();
         });
-        app.runRoute('get', '#/boosh/farg/wow?with=some&nifty=params');
+        app.runRoute('get', '#/boosh/farg/wow?including=some&nifty=params');
       });
       
       it('sets value-less params to an empty string', function(done) {
