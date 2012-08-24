@@ -17,7 +17,7 @@ describe('DefaultLocationProxy', function() {
   
   if(!has_native) {
     it('sets is_native true if onhashchange exists in window');
-
+  
     it('sets is_native to false if onhashchange does not exist in window', function() {
       var proxy2 = new Sammy.DefaultLocationProxy(app);
       proxy2.bind();
@@ -128,19 +128,26 @@ describe('DefaultLocationProxy', function() {
   }
   
   it('handles arbitrary non-specific locations', function(done) {
-    var originalLocation, i = 0;
+    var i = 0;
 
     app.bind('location-changed', function() {
       if(i === 0) {
+        i += 1;
+        proxy.setLocation('testing');
+      } else if(i === 1) {
+        i += 1;
         if (has_history) {
           expect(proxy.getLocation()).to.eql('/testing');
         } else {
           expect(proxy.getLocation()).to.eql('/#!/testing');
         }
-        i += 1;
         proxy.setLocation('');
-      } else {
-        expect(proxy.getLocation()).to.eql('/');
+      } else if(i === 2) {
+        if (has_history) {
+          expect(proxy.getLocation()).to.eql('/');          
+        } else {
+          expect(proxy.getLocation()).to.eql('/#!/');
+        }
         app.unload();
         window.location.href = '#/';
         done();
@@ -151,10 +158,7 @@ describe('DefaultLocationProxy', function() {
     app.get('/', function() {});
     
     app.run('#/');
-    expect(app.isRunning()).to.be(true);
-    
-    originalLocation = proxy.getLocation();
-    proxy.setLocation('testing');
+    expect(app.isRunning()).to.be(true);    
   });
 });
 
