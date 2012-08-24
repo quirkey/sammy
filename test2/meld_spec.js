@@ -102,32 +102,27 @@ describe('Meld', function() {
     }})).to.have.sameHTMLAs(expected);    
   });
   
-  // it('renders templates correctly', function(done) {
-  //   var templates = 3;
-  //   console.log(context.app.namespace)
-  //   var getAndAssertTemplate = function(i) {
-  //     console.log('1')
-  //     var template, json, result;
-  //     // $.get('fixtures/meld/' + i + '.meld', function(t) {
-  //       console.log('2')
-  //       // template = t;
-  //       // $.getJSON('fixtures/meld/' + i + '.json', function(j) {
-  //       //   console.log('3')
-  //       //   json = j;
-  //       //   $.get('fixtures/meld/' + i + '.html', function(r) {
-  //       //     console.log('4', context.meld(template, json))
-  //       //     expect(context.meld(template, json)).to.have.sameHTMLAs(r);
-  //       //     console.log(i, templates)
-  //       //     if (i == templates) {
-  //             done();
-  //       //     } else {
-  //       //       getAndAssertTemplate(i + 1);
-  //       //     }
-  //       //   });
-  //       // });
-  //     // });
-  //   }
-  // 
-  //   getAndAssertTemplate(1);
-  // });
+  it('renders templates correctly', function(done) {
+    var templates = 3;
+
+    var getAndAssertTemplate = function(i) {
+      var template, json, result;
+      $.get('fixtures/meld/' + i + '.meld', function(t) {
+        template = t;
+        $.getJSON('fixtures/meld/' + i + '.json', function(j) {
+          json = j;
+          $.get('fixtures/meld/' + i + '.html', function(r) {
+            expect(context.meld(template, json)).to.have.sameHTMLAs(r);
+            if (i == templates) {
+              done();
+            } else {
+              getAndAssertTemplate(i + 1);
+            }
+          });
+        });
+      });
+    }
+  
+    getAndAssertTemplate(1);
+  });
 });

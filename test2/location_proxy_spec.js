@@ -171,16 +171,33 @@ describe('DataLocationProxy', function() {
   it('stores a pointer to the app', function() {
     expect(app._location_proxy.app).to.eql(app);
   });
-  
+
   it('can configure the data name', function() {
     var proxy = new Sammy.DataLocationProxy(app, 'othername');
     proxy.setLocation('newlocation');
     expect($('body').data('othername')).to.eql('newlocation');
   });
-  
+
+  it('returns the current location from the data', function() {
+    $('body').data(app._location_proxy.data_name, '#/zuh');
+    expect(app._location_proxy.getLocation()).to.eql('#/zuh');
+  });
+
+  it('sets the current location in the data', function() {
+    $('body').data(app._location_proxy.data_name, '#/zuh')
+    app._location_proxy.setLocation('#/boosh');
+    expect(app._location_proxy.getLocation()).to.eql('#/boosh');
+  });
+
+  it('returns an empty string when there is no location stored in the data', function() {
+    $.removeData($('body')[0], app._location_proxy.data_name);
+    expect($('body').data(app._location_proxy.data_name)).to.be(undefined);
+    expect(app._location_proxy.getLocation()).to.eql('');
+  });
+
   it('triggers an app event when data changes', function(done) {
     $('body').data(app._location_proxy.data_name, '');
-
+  
     app.get('#/newhash', function() {});
     app.bind('location-changed', function() {
       expect(app.getLocation()).to.eql('#/newhash');
@@ -188,26 +205,9 @@ describe('DataLocationProxy', function() {
       app.unload();
       done();
     });
-
+  
     app.run('#/');
     
     $('body').data(app._location_proxy.data_name, '#/newhash');    
-  });
-  
-  it('returns the current location from the data', function() {
-    $('body').data(app._location_proxy.data_name, '#/zuh');
-    expect(app._location_proxy.getLocation()).to.eql('#/zuh');
-  });
-  
-  it('sets the current location in the data', function() {
-    $('body').data(app._location_proxy.data_name, '#/zuh')
-    app._location_proxy.setLocation('#/boosh');
-    expect(app._location_proxy.getLocation()).to.eql('#/boosh');
-  });
-  
-  it('returns an empty string when there is no location stored in the data', function() {
-    $.removeData($('body')[0], app._location_proxy.data_name);
-    expect($('body').data(app._location_proxy.data_name)).to.be(undefined);
-    expect(app._location_proxy.getLocation()).to.eql('');
   });
 });
