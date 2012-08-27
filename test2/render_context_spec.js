@@ -40,8 +40,8 @@ describe('RenderContext', function() {
                .replace('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
-        expect($('#main2').html()).to.eql('<div class="inline-template-1"><div class="name"></div></div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy</div></div>');
+        expect($('#main2')).to.have.sameHTMLAs('<div id="main2"><div class="inline-template-1"><div class="name"></div></div></div>');
         app.unload();
         done();
       }
@@ -60,8 +60,8 @@ describe('RenderContext', function() {
                .replace('#main');          
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
-        expect($('#main2').html()).to.eql('<div class="inline-template-1"><div class="name"></div></div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy</div></div>');
+        expect($('#main2')).to.have.sameHTMLAs('<div id="main2"><div class="inline-template-1"><div class="name"></div></div></div>');
         app.unload();
         done();
       }
@@ -80,7 +80,7 @@ describe('RenderContext', function() {
                .replace('#main');        
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="name">Sammy Davis</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy Davis</div></div>');
         app.unload();
         done();
       }
@@ -95,7 +95,7 @@ describe('RenderContext', function() {
                .replace('#main');
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="clazz">Sammy Davis</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="clazz">Sammy Davis</div></div>');
         app.unload();
         done();
       }
@@ -114,7 +114,7 @@ describe('RenderContext', function() {
                .replace('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="name">Sammy</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy</div></div>');
         expect($('#main2').html()).to.be.empty();
         app.unload();
         done();
@@ -132,7 +132,7 @@ describe('RenderContext', function() {
         context.render($('#script-template'), {name: 'Sammy Davis'}).replace('#main');
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="name">Sammy Davis</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy Davis</div></div>');
         app.unload();
         done();
       }
@@ -151,7 +151,7 @@ describe('RenderContext', function() {
                .appendTo('#main');
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(1);
         app.unload();
         done();          
@@ -171,7 +171,7 @@ describe('RenderContext', function() {
                .appendTo('#main');
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(1);
         app.unload();
         done();          
@@ -191,7 +191,7 @@ describe('RenderContext', function() {
                .appendTo('#main');
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(2);
         app.unload();
         done();          
@@ -225,7 +225,7 @@ describe('RenderContext', function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test'}).swap();
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="class">test</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class">test</div></div>');
         app.unload();
         done();
       }
@@ -245,7 +245,7 @@ describe('RenderContext', function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test2'}).replace('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="class">test2</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class">test2</div></div>');
         app.unload();
         done();
       }
@@ -259,7 +259,7 @@ describe('RenderContext', function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test'}).appendTo('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<p>abc</p><div class="class">test</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><p>abc</p><div class="class">test</div></div>');
         app.unload();
         done();
       }
@@ -274,7 +274,7 @@ describe('RenderContext', function() {
                .replace('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="original">json</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="original">json</div></div>');
         app.unload();
         done();
       }
@@ -287,7 +287,7 @@ describe('RenderContext', function() {
            .appendTo('#main')
            .then(function(data) {
              expect(data).to.eql('<div class="test_partial">PARTIAL</div>');
-             expect($('#main').html()).to.eql('<div class="test_partial">PARTIAL</div>');
+             expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div></div>');
              done();
            });
   });
@@ -299,7 +299,7 @@ describe('RenderContext', function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test'}).prependTo('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="class">test</div><p>abc</p>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class">test</div><p>abc</p></div>');
         app.unload();
         done();
       }
@@ -311,7 +311,7 @@ describe('RenderContext', function() {
     context.render('fixtures/partial.template', {class_name: 'class', name:'test'})
            .prependTo('#main')
            .then(function(data) {
-             expect($('#main').html()).to.eql('<div class="class">test</div><p>abc</p>');
+             expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class">test</div><p>abc</p></div>');
              expect(data).to.eql('<div class="class">test</div>');
              done();
            });
@@ -341,7 +341,7 @@ describe('RenderContext', function() {
            })
            .then(function(data) {
              $(data).addClass('blah2').appendTo('#main ul');
-             expect($.trim($('#main').html())).to.eql('<ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul>');
+             expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul></div>');
              done();
            });
     
@@ -356,7 +356,7 @@ describe('RenderContext', function() {
                .appendTo('.class-name');
       },
       onChange: evaluateSecondCall(function() {
-        expect($('#main').html()).to.eql('<div class="class-name">name<span>other name</span></div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class-name">name<span>other name</span></div></div>');
         app.unload();
         done();          
       })
@@ -377,7 +377,7 @@ describe('RenderContext', function() {
                .replace('#main');
       },
       onChange: function() {
-        expect($('#main').html()).to.eql('<div class="class"><span>my name</span></div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class"><span>my name</span></div></div>');
         app.unload();
         done();          
       }
@@ -402,7 +402,7 @@ describe('RenderContext', function() {
                .appendTo('#main ul');
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<ul><li>first</li><li>second</li></ul>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li>first</li><li>second</li></ul></div>');
         app.unload();
         done();        
       })
@@ -418,7 +418,7 @@ describe('RenderContext', function() {
                .appendTo('#main ul');
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<ul><li class="item">first</li><li class="item">second</li></ul>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li class="item">first</li><li class="item">second</li></ul></div>');
         app.unload();
         done();          
       })
@@ -432,7 +432,7 @@ describe('RenderContext', function() {
              $('#main ul').append(template);
            })
            .then(function() {
-             expect($.trim($('#main').html())).to.eql('<ul><li class="item">first</li><li class="item">second</li></ul>');
+             expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li class="item">first</li><li class="item">second</li></ul></div>');
              done();
            });
   });
@@ -443,7 +443,7 @@ describe('RenderContext', function() {
         context.partial('fixtures/partial.template', {'name': 'name', 'class_name': 'class-name'});
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="class-name">name</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class-name">name</div></div>');
         app.unload();
         done();          
       }
@@ -461,7 +461,7 @@ describe('RenderContext', function() {
         });
       },
       onChange: evaluateSecondCall(function() {
-        expect($.trim($('#main').html())).to.eql('<ul><li class="item">first</li><li class="item">second</li></ul>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li class="item">first</li><li class="item">second</li></ul></div>');
         app.unload();
         done();
       })
@@ -478,7 +478,7 @@ describe('RenderContext', function() {
                .partial('fixtures/partial.template');
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="original">json</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="original">json</div></div>');
         app.unload();
         done();
       }
@@ -492,7 +492,7 @@ describe('RenderContext', function() {
                .partial('fixtures/partial.template');
       },
       onChange: function() {
-        expect($.trim($('#main').html())).to.eql('<div class="original">json</div>');
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="original">json</div></div>');
         app.unload();
         done();
       }
