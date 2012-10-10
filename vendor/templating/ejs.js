@@ -84,8 +84,8 @@ EJS = function( options ){
 EJS.prototype = {
   /**
    * Renders an object with extra view helpers attached to the view.
-   * @param {Object} object data to be rendered
-   * @param {Object} extra_helpers an object with additonal view helpers
+   * @param {Object} [object] data to be rendered
+   * @param {Object} [extra_helpers] an object with additional view helpers
    * @return {String} returns the result of the string
    */
     render : function(object, extra_helpers){
