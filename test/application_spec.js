@@ -1148,5 +1148,21 @@ describe('Application', function() {
         expect(app.$element().attr('id')).to.eql('main');
       });
     });
+	
+    describe('#unload()', function() {
+      beforeEach(function() {
+        app = $.sammy('#main');
+		app.run();
+      });
+      
+      it('new application is created after unload', function() {
+		expect(Sammy.apps['#main']).to.be.an(Object);
+		app.unload();
+		expect(Sammy.apps['#main']).to.be(undefined);
+		
+		app2 = $.sammy('#main');
+		expect(app2).not.to.be.eql(app);
+      });
+    });
   });
 });
