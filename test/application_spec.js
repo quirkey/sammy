@@ -1148,5 +1148,21 @@ describe('Application', function() {
         expect(app.$element().attr('id')).to.eql('main');
       });
     });
+	
+    describe('#destroy()', function() {
+      beforeEach(function() {
+        app = $.sammy('#main');
+		app.run();
+      });
+      
+      it('removes any mention of the object', function() {
+		expect(Sammy.apps['#main']).to.be.an(Object);
+		app.destroy();
+		expect(Sammy.apps['#main']).to.be(undefined);
+		
+		app2 = $.sammy('#main');
+		expect(app2).not.to.be.eql(app);
+      });
+    });
   });
 });
