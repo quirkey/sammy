@@ -1149,15 +1149,15 @@ describe('Application', function() {
       });
     });
 	
-    describe('#unload()', function() {
+    describe('#destroy()', function() {
       beforeEach(function() {
         app = $.sammy('#main');
 		app.run();
       });
       
-      it('new application is created after unload', function() {
+      it('removes any mention of the object', function() {
 		expect(Sammy.apps['#main']).to.be.an(Object);
-		app.unload();
+		app.destroy();
 		expect(Sammy.apps['#main']).to.be(undefined);
 		
 		app2 = $.sammy('#main');
