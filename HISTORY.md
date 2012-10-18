@@ -1,10 +1,12 @@
 New:
 
 - Partials support for jQuery.Tmpl [avalez]
+- Make tests asynchronous [endor]
 
 Fixed:
 
-- Make syntax more js-lint friendly [piecioshka]
+- Make syntax more js-lint friendly and add a missing return [piecioshka]
+- Correct mustache documentation [ept]
 - Template language plugin documentations were out of date [nsdpt]
 - Only cache json if cache is explicitly true, only stop caching everything else if cache is explicitly false [cyx]
 - Cmd-Click now works as expected on a Mac [pbiggar, o.v.]
