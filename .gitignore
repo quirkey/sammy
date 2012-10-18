@@ -6,3 +6,4 @@ _layouts
 _site
 .DS_Store
 *.swp
+.idea/
