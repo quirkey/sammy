@@ -2,6 +2,7 @@ New:
 
 - Partials support for jQuery.Tmpl [avalez]
 - Make tests asynchronous [endor]
+- Add a destroy method for unbinding and removing the app reference [mshmelev]
 
 Fixed:
 
