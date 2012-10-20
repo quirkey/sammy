@@ -1,3 +1,5 @@
+== 0.7.2 [10/19/2012]
+
 New:
 
 - Partials support for jQuery.Tmpl [avalez]
@@ -11,6 +13,10 @@ Fixed:
 - Template language plugin documentations were out of date [nsdpt]
 - Only cache json if cache is explicitly true, only stop caching everything else if cache is explicitly false [cyx]
 - Cmd-Click now works as expected on a Mac [pbiggar, o.v.]
+
+Changed:
+
+- Switch minification to use uglify.js
 
 == 0.7.1 [01/18/2012]
 

@@ -7,8 +7,6 @@ end
 
 desc 'Uses the yui-compressor to minify lib/sammy.js'
 task :minify => :version do
-  yui_path = ENV['YUI_PATH'] || '~/Sites/yui/yuicompressor-2.4.2.jar'
-  java_path = ENV['JAVA_PATH'] || '/usr/bin/java'
   puts "Minify-ing"
   
   # compress each file
@@ -23,7 +21,7 @@ task :minify => :version do
     min_path        = File.join(dir, path.gsub(/\.js$/, "-#{@version}.min.js"))
     latest_min_path = File.join(dir, path.gsub(/\.js$/, "-latest.min.js"))
     
-    `#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}`
+    `uglifyjs lib/#{path} > #{min_path}`
     minified = File.read(min_path)
     prefix = []
     prefix << "// -- Sammy.js -- #{path}"
