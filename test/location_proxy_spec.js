@@ -4,6 +4,7 @@ describe('DefaultLocationProxy', function() {
       has_history = window.history && history.pushState;
   
   beforeEach(function() {
+		window.location.hash = '';
     app = new Sammy.Application(function() {
       this.element_selector = '#main';
       this.get('#/', function() {});

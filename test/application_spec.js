@@ -273,6 +273,9 @@ describe('Application', function() {
           this.form_params = {};        
         });
       });
+			afterEach(function(){
+				app.unload();
+			});
       
       it('sets the location to the start url', function(done) {
         app.get('#/', function() {
