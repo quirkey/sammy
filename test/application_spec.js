@@ -623,8 +623,10 @@ describe('Application', function() {
       });
 			it('passes to multiple chained callbacks',function(done) {
 				var cb1 = function(ctx,next) {
-					flag = 10;
-					next();
+		      $.get('fixtures/partial', function() {
+						flag = 10;
+						next();
+					});
 				}, cb2 = function(ctx,next) {
 					expect(flag).to.eql(10);
 					next();
@@ -635,11 +637,15 @@ describe('Application', function() {
 			});
 			it('runs finally',function(done) {
 				var cb1 = function(ctx,next) {
-					flag1 = 10;
-					next();
+					$.get('fixtures/partial',function(){
+						flag1 = 10;
+						next();
+					});
 				}, cb2 = function(ctx,next) {
-					flag2 = 20;
-					next();
+					$.get('fixtures/partial.html',function(){
+						flag2 = 20;
+						next();
+					});
 				}, flag1 = 12, flag2 = 22;
 				app.get('#/chain',cb1,cb2);
 				app.finally(function() {
