@@ -112,7 +112,8 @@ describe('Application', function() {
         var route = app.routes['get'][1];
         expect(route.path).to.be.a(RegExp);
         expect(route.verb).to.eql('get');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
       });
       
       it('allows shortcuts for defining routes', function() {
@@ -123,7 +124,8 @@ describe('Application', function() {
         var route = app.routes['get'][1];
         expect(route.path).to.be.a(RegExp);
         expect(route.verb).to.eql('get');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
       });
       
       it('appends late and short route', function() {
@@ -134,7 +136,8 @@ describe('Application', function() {
         var route = app.routes['get'][1];
         expect(route.path).to.be.a(RegExp);
         expect(route.verb).to.eql('get');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
         expect(route.path.toString()).to.eql(new RegExp("#/$").toString());
       });
       
@@ -142,7 +145,7 @@ describe('Application', function() {
         app.mycallback = function() { this.redirect('#/'); };
         app.post('#/post', 'mycallback');
         
-        expect(app.routes['post'][0].callback).to.eql(app.mycallback);
+        expect(app.routes['post'][0].callback[0]).to.eql(app.mycallback);
       });
       
       it('adds an "any" route to every route verb', function() {
@@ -185,7 +188,7 @@ describe('Application', function() {
       it('look up callbacks as strings', function() {
         var route = app.routes['get'].pop();
         expect(route.path.toString()).to.eql(new RegExp("#/string$").toString());
-        expect(route.callback).to.eql(context.empty_callback);
+        expect(route.callback[0]).to.eql(context.empty_callback);
       });
     });
     
@@ -273,6 +276,9 @@ describe('Application', function() {
           this.form_params = {};        
         });
       });
+			afterEach(function(){
+				app.unload();
+			});
       
       it('sets the location to the start url', function(done) {
         app.get('#/', function() {
@@ -487,7 +493,8 @@ describe('Application', function() {
         var route = app.lookupRoute('post', '/blah');
         expect(route).to.be.an(Object);
         expect(route.verb).to.eql('post');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
       });
       
       it('finds a route by verb and partial route', function() {
@@ -497,7 +504,8 @@ describe('Application', function() {
         var route = app.lookupRoute('get','/blah/mess');
         expect(route).to.be.an(Object);
         expect(route.verb).to.eql('get');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
       });
       
       it('ignores any hash query string when looking up a route', function() {
@@ -507,7 +515,8 @@ describe('Application', function() {
         var route = app.lookupRoute('get', '#/boo?ohdontmindeme');
         expect(route).to.be.an(Object);
         expect(route.verb).to.eql('get');
-        expect(route.callback).to.be.a(Function);
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
       });
     });
     
@@ -612,6 +621,40 @@ describe('Application', function() {
           }).to.throwException(/404/);
         }, done);        
       });
+			it('passes to multiple chained callbacks',function(done) {
+				var cb1 = function(ctx,next) {
+		      $.get('fixtures/partial', function() {
+						flag = 10;
+						next();
+					});
+				}, cb2 = function(ctx,next) {
+					expect(flag).to.eql(10);
+					next();
+					done();
+				}, flag = 12;
+				app.get('#/chain',cb1,cb2);
+				app.runRoute('get','#/chain');
+			});
+			it('runs finally',function(done) {
+				var cb1 = function(ctx,next) {
+					$.get('fixtures/partial',function(){
+						flag1 = 10;
+						next();
+					});
+				}, cb2 = function(ctx,next) {
+					$.get('fixtures/partial.html',function(){
+						flag2 = 20;
+						next();
+					});
+				}, flag1 = 12, flag2 = 22;
+				app.get('#/chain',cb1,cb2);
+				app.finally(function() {
+					expect(flag1).to.eql(10);
+					expect(flag2).to.eql(20);
+					done();
+				});
+				app.runRoute('get','#/chain');
+			});
     });
     
     describe('#before()', function() {
