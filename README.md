@@ -29,6 +29,22 @@ Inside the 'app' function() `this` is the Application. This is where you can con
 
 Above, we defined a `get()` route. When the browser is pointed to `#/` the function passed to that route will be run. Inside the route function, `this` is a Sammy.EventContext. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
 
+In its coolness, Sammy can handle multiple chained asynchronous callbacks on a route.
+
+    this.get('#/', function(context,next) {
+      $('#main').text('Welcome!');
+			$.get('/some/url',function(){
+				// save the data somewhere
+				next();
+			});
+    }, function(context,next) {
+			$.get('/some/other/url',function(){
+				// save this data too
+				next();
+			});
+		});
+
+
 Once you've defined an application the only thing left to do is run it. The best-practice behavior is to encapsulate `run()` in a document.ready block:
 
     var app = $.sammy(...)
@@ -85,6 +101,7 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * kbuckler
 * dvv
 * Ben Vinegar / benvinegar
+* Avi Deitcher / deitch
 
 ## Donate!
 
