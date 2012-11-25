@@ -635,7 +635,7 @@ describe('Application', function() {
 				app.get('#/chain',cb1,cb2);
 				app.runRoute('get','#/chain');
 			});
-			it('runs finally',function(done) {
+			it('runs onComplete',function(done) {
 				var cb1 = function(ctx,next) {
 					$.get('fixtures/partial',function(){
 						flag1 = 10;
@@ -648,7 +648,7 @@ describe('Application', function() {
 					});
 				}, flag1 = 12, flag2 = 22;
 				app.get('#/chain',cb1,cb2);
-				app.finally(function() {
+				app.onComplete(function() {
 					expect(flag1).to.eql(10);
 					expect(flag2).to.eql(20);
 					done();

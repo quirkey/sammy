@@ -66,7 +66,9 @@ describe('DefaultLocationProxy', function() {
   }
   
   it('returns the full path for the location', function() {
-    expect(proxy.getLocation()).to.eql([window.location.pathname, window.location.search, window.location.hash].join(''));
+    hash = window.location.hash;
+    if(hash === '#') { hash = ''; } // IE returns '#' instead of '' when the hash is empty
+    expect(proxy.getLocation()).to.eql([window.location.pathname, window.location.search, hash].join(''));
   });
   
   if(has_history) {
@@ -130,7 +132,7 @@ describe('DefaultLocationProxy', function() {
   
   it('handles arbitrary non-specific locations', function(done) {
     var i = 0;
-
+  
     app.bind('location-changed', function() {
       if(i === 0) {
         i += 1;
@@ -154,7 +156,7 @@ describe('DefaultLocationProxy', function() {
         done();
       }
     });
-
+  
     app.get('/testing', function() {});
     app.get('/', function() {});
     
