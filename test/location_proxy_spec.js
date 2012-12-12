@@ -22,7 +22,7 @@ describe('DefaultLocationProxy', function() {
     it('sets is_native to false if onhashchange does not exist in window', function() {
       var proxy2 = new Sammy.DefaultLocationProxy(app);
       proxy2.bind();
-      window.location.hash = '#/testing'
+      window.location.hash = '#/testing';
       expect(proxy2.is_native).to.be(false);
       window.location.hash = '';
       proxy2.unbind();      
@@ -36,7 +36,14 @@ describe('DefaultLocationProxy', function() {
       var interval = Sammy.DefaultLocationProxy._interval;
       new Sammy.DefaultLocationProxy(app);
       expect(Sammy.DefaultLocationProxy._interval).to.eql(interval);
-    });    
+    });
+
+    it('creates a new poller if unbind was called on location proxy', function() {
+      var interval = Sammy.DefaultLocationProxy._interval;
+      proxy.unbind();
+      new Sammy.DefaultLocationProxy(app);
+      expect(Sammy.DefaultLocationProxy._interval).not.to.eql(interval);
+    });
   } else {
     it('sets is_native true if onhashchange exists in window', function(done) {
       $('#main').html('');
@@ -63,6 +70,7 @@ describe('DefaultLocationProxy', function() {
     it('sets is_native to false if onhashchange does not exist in window');
     it('creates poller on hash change');
     it('only creates a single poller');
+    it('creates a new poller if unbind was called on location proxy');
   }
   
   it('returns the full path for the location', function() {
