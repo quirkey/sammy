@@ -1,6 +1,7 @@
 New:
 
 - Support for asynchronous chained callbacks [deitch]
+- Make plugins AMD enabled [delrosario]
 
 == 0.7.2 [10/19/2012]
 
