@@ -1,0 +1,24 @@
+rdiscount(1) -- humane markup to HTML conversion tool
+=====================================================
+
+## SYNOPSIS
+
+`rdiscount` [<file>...]
+
+## DESCRIPTION
+
+The `rdiscount` utility reads one or more markdown(7)-formatted text <file>s and
+writes HTML to standard output. With no <file>, or when <file> is '-',
+`rdiscount` reads source text from standard input.
+
+## RETURN VALUES
+
+The `rdiscount` utility exits 0 on success, and > 0 if an error occurs.
+
+## SEE ALSO
+
+markdown(7)
+
+## AUTHOR
+
+Ryan Tomayko <http://tomayko.com/about>
