@@ -290,8 +290,20 @@ describe('Application', function() {
           app.unload();
           done();
         };
-      
+
         app.run('#/');
+      });
+
+      it('ignores links that target other windows', function() {
+        var captured = false;
+        app.get('#/', function() {});
+        app.get('#/some/route', function() { captured = true; });
+
+        $('#main').append('<a href="#/some/route" target="another-window">Open in new window</a>');
+        app.run('#/');
+        $('#main a').click();
+
+        expect(captured).to.eql(false);
       });
       
       it('binds events to all forms', function(done) {
@@ -313,7 +325,20 @@ describe('Application', function() {
         );
         
         app.run('#/');
-        $('#main form').submit();        
+        $('#main form').submit();
+      });
+
+      it('ignores forms that target other windows', function() {
+        var captured = false;
+        app.get('#/', function() {});
+        app.get('#/a/route', function() { captured = true; });
+
+        $('#main').append('<form action="#/a/route" method="get" target="foo">' +
+          '<input type="submit" /></form>');
+        app.run('#/');
+        $('#main form').submit();
+
+        expect(captured).to.eql(false);
       });
       
       it('binds events to all future forms', function(done) {
