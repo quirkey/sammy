@@ -2,6 +2,7 @@ New:
 
 - Support for asynchronous chained callbacks [deitch]
 - Make plugins AMD enabled [delrosario]
+- Mixpanel and kissmetrics plugins [jpgarcia]
 
 Fixed:
 
