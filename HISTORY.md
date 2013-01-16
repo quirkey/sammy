@@ -7,6 +7,7 @@ New:
 Fixed:
 
 - Better target checking for links and forms [jamesarosen]
+- Changed $.live() to $.delegate() [smithkl42]
 
 == 0.7.2 [10/19/2012]
 
