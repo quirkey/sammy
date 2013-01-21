@@ -4,30 +4,30 @@ describe('Storage', function() {
       var app = new Sammy.Application(function() {
         this.use(Sammy.Storage);
       });
-      
+
       expect(app.store).to.be.a(Function);
     });
-    
+
     it('adds the store method to the event contexts', function() {
       var app = new Sammy.Application(function() {
         this.use(Sammy.Storage);
       });
       var context = new app.context_prototype(app, 'get', '#/', {});
-    
+
       expect(context.store).to.be.a(Function);
     });
   });
-  
+
   describe('#store()', function() {
     var store, app, context;
-  
+
     beforeEach(function() {
       app = new Sammy.Application(function() {
         this.use(Sammy.Storage);
         store = this.store('session');
       });
       context = new app.context_prototype(app, 'get', '#/', {});
-      store.clearAll();    
+      store.clearAll();
     });
 
     it('creates a new sammy store if it does not exist', function() {
@@ -54,11 +54,11 @@ describe('Storage', function() {
 
     it('calls fetch if callback is passed', function() {
       expect(store.get('foo')).to.be(undefined);
-      
+
       context.session('foo', function() {
         return "bar";
       });
-      
+
       expect(store.get('foo')).to.eql('bar');
       expect(context.session('foo', function() {
         return 'baz';
@@ -78,7 +78,7 @@ describe('Storage', function() {
     if (Sammy.Store.isAvailable(store_type)) {
       describe(store_type, function() {
         var store, store_attributes, other_store;
-        
+
         beforeEach(function() {
           store_attributes = {
             element: '#main',
@@ -86,7 +86,7 @@ describe('Storage', function() {
             type: store_type
           };
           store = new Sammy.Store(store_attributes);
-          
+
           other_store = new Sammy.Store({
             element: '#main',
             name: 'other_test_store',
@@ -95,7 +95,7 @@ describe('Storage', function() {
           store.clearAll();
           other_store.clearAll();
         });
-        
+
         it('sets the store type', function() {
           expect(store.type).to.eql(store_type);
         });
@@ -130,7 +130,7 @@ describe('Storage', function() {
         it('stores in global space accessible by name', function() {
           store.set('foo', 'bar');
           var new_store = new Sammy.Store(store_attributes);
-          expect(new_store.get('foo')).to.eql('bar');          
+          expect(new_store.get('foo')).to.eql('bar');
         });
 
         it('clear the value', function() {
@@ -213,7 +213,7 @@ describe('Storage', function() {
           store.fetch('foo', function() {
             return "bar";
           });
-          
+
           expect(store.get('foo')).to.eql('bar');
           expect(store.fetch('foo', function() {
             return "baz";

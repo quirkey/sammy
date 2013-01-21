@@ -13,7 +13,7 @@ window.Exceptional = {
 
 describe('Exceptional', function() {
   var app;
-  
+
   beforeEach(function() {
     $('#main').html('<form id="myform" method="post" action="#/handle_my_form"></form>');
     app = new Sammy.Application(function() {
@@ -26,7 +26,7 @@ describe('Exceptional', function() {
     });
     app.run('#/');
   });
-  
+
   it('does not send an error to Exceptional when none is thrown', function(done) {
     app.bind('done', function() {
       expect(window.Exceptional.errors).to.be.empty();
@@ -38,7 +38,7 @@ describe('Exceptional', function() {
     });
     $('#myform').submit();
   });
-  
+
   it('sends an error to Exceptional if one is thrown', function(done) {
     app.bind('error', function(e) {
       e.preventDefault();

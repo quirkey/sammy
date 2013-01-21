@@ -7,9 +7,9 @@ describe('RenderContext', function() {
     Sammy.log('jQuery.ajax', arguments, jQuery.ajaxcount);
     original_ajax.apply(this, arguments);
   };
-  
+
   var app, context;
-  
+
   beforeEach(function() {
     app = new Sammy.Application(function() {
       this.raise_errors = false;
@@ -17,9 +17,9 @@ describe('RenderContext', function() {
       this.use(Sammy.Template);
       this.use(Sammy.Mustache);
     });
-    context = new app.context_prototype(app, 'get', '#/test/:test', {test: 'hooray'});    
+    context = new app.context_prototype(app, 'get', '#/test/:test', {test: 'hooray'});
   });
-  
+
   it('passes rendered data to the callback', function(done) {
     context.name = 'test';
     context.class_name = 'class';
@@ -28,7 +28,7 @@ describe('RenderContext', function() {
       done();
     });
   });
-  
+
   it('loads the contents from inside a jQuery object', function(done) {
     listenToChanged(app, {
       setup: function() {
@@ -47,17 +47,17 @@ describe('RenderContext', function() {
       }
     });
   });
-    
+
   it('loads the contents from inside a DOM element', function(done) {
     listenToChanged(app, {
       setup: function() {
         $('#main2').html('<div class="inline-template-1"><div class="name"></div></div>');
-        
+
         context.load($('.inline-template-1')[0])
                .then(function(content) {
                  return $(content).text('Sammy');
                })
-               .replace('#main');          
+               .replace('#main');
       },
       onChange: function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy</div></div>');
@@ -67,26 +67,26 @@ describe('RenderContext', function() {
       }
     });
   });
-  
+
   it('loads the contents from inside of a script tag', function(done) {
     listenToChanged(app, {
       setup: function() {
         $('#main2').html('<script id="script-template" type="text/html" charset="utf-8" data-engine="template">' +
           '<div class="name"><%= name %></div>' +
         '</script>');
-        
+
         context.load($('#script-template'))
                .interpolate({name: 'Sammy Davis'}, 'template')
-               .replace('#main');        
+               .replace('#main');
       },
       onChange: function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="name">Sammy Davis</div></div>');
         app.unload();
         done();
       }
-    });    
+    });
   });
-  
+
   it('interpolates the data using the engine set by load', function(done) {
     listenToChanged(app, {
       setup: function() {
@@ -101,12 +101,12 @@ describe('RenderContext', function() {
       }
     });
   });
-  
+
   it('loads an element and does not clone the element if clone: false', function(done) {
     listenToChanged(app, {
       setup: function() {
         $('#main2').html('<div class="inline-template-1"><div class="name"></div></div>');
-        
+
         context.load($('.inline-template-1'), {clone: false})
                .then(function(content) {
                  return $(content).text('Sammy');
@@ -122,13 +122,13 @@ describe('RenderContext', function() {
     });
   });
 
-  it('gets the engine from the data-engine attribute', function(done) {    
+  it('gets the engine from the data-engine attribute', function(done) {
     listenToChanged(app, {
       setup: function() {
         $('#main2').html('<script id="script-template" type="text/html" charset="utf-8" data-engine="template">' +
           '<div class="name"><%= name %></div>' +
         '</script>');
-        
+
         context.render($('#script-template'), {name: 'Sammy Davis'}).replace('#main');
       },
       onChange: function() {
@@ -136,7 +136,7 @@ describe('RenderContext', function() {
         app.unload();
         done();
       }
-    });    
+    });
   });
 
   it('caches the template by default', function(done) {
@@ -154,7 +154,7 @@ describe('RenderContext', function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(1);
         app.unload();
-        done();          
+        done();
       })
     });
   });
@@ -174,7 +174,7 @@ describe('RenderContext', function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(1);
         app.unload();
-        done();          
+        done();
       })
     });
   });
@@ -194,7 +194,7 @@ describe('RenderContext', function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div><div class="test_partial">PARTIAL</div></div>');
         expect(jQuery.ajaxcount).to.eql(2);
         app.unload();
-        done();          
+        done();
       })
     });
   });
@@ -208,7 +208,7 @@ describe('RenderContext', function() {
              done();
            });
   });
-  
+
   it('does not cache json unless cache is explicitly true', function(done) {
     jQuery.ajaxcount = 0;
     context.load('fixtures/partial.json', {cache: 1})
@@ -216,12 +216,12 @@ describe('RenderContext', function() {
            .then(function() {
              expect(jQuery.ajaxcount).to.eql(2);
              done();
-           });    
+           });
   });
 
   it('swaps the rendered contents', function(done) {
     listenToChanged(app, {
-      setup: function() {        
+      setup: function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test'}).swap();
       },
       onChange: function() {
@@ -241,7 +241,7 @@ describe('RenderContext', function() {
 
   it('replaces the rendered contents', function(done) {
     listenToChanged(app, {
-      setup: function() {        
+      setup: function() {
         context.render('fixtures/partial.template', {class_name: 'class', name:'test2'}).replace('#main');
       },
       onChange: function() {
@@ -263,7 +263,7 @@ describe('RenderContext', function() {
         app.unload();
         done();
       }
-    });    
+    });
   });
 
   it('uses the contents of a previous load as the data for render', function(done) {
@@ -280,7 +280,7 @@ describe('RenderContext', function() {
       }
     });
   });
-  
+
   it('appends then passes data to then', function(done) {
     $('#main').html('');
     context.load('fixtures/partial.html')
@@ -305,7 +305,7 @@ describe('RenderContext', function() {
       }
     });
   });
-  
+
   it('prepends then passes data to then', function(done) {
     $('#main').html('<p>abc</p>');
     context.render('fixtures/partial.template', {class_name: 'class', name:'test'})
@@ -344,7 +344,7 @@ describe('RenderContext', function() {
              expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><div class="class blah">my name</div><div class="class blah2">my name</div></ul></div>');
              done();
            });
-    
+
   });
 
   it('chains multiple renders', function(done) {
@@ -358,7 +358,7 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class-name">name<span>other name</span></div></div>');
         app.unload();
-        done();          
+        done();
       })
     });
   });
@@ -379,7 +379,7 @@ describe('RenderContext', function() {
       onChange: function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class"><span>my name</span></div></div>');
         app.unload();
-        done();          
+        done();
       }
     });
   });
@@ -404,9 +404,9 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li>first</li><li>second</li></ul></div>');
         app.unload();
-        done();        
+        done();
       })
-    });    
+    });
   });
 
   it('renders each with a collection', function(done) {
@@ -420,7 +420,7 @@ describe('RenderContext', function() {
       onChange: evaluateSecondCall(function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><ul><li class="item">first</li><li class="item">second</li></ul></div>');
         app.unload();
-        done();          
+        done();
       })
     });
   });
@@ -445,9 +445,9 @@ describe('RenderContext', function() {
       onChange: function() {
         expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="class-name">name</div></div>');
         app.unload();
-        done();          
+        done();
       }
-    });    
+    });
   });
 
   it('runs commands within a render function as if they were chained', function(done) {
@@ -482,7 +482,7 @@ describe('RenderContext', function() {
         app.unload();
         done();
       }
-    });    
+    });
   });
 
   it('sends a function with arguments and waits for the callback', function(done) {
@@ -496,6 +496,6 @@ describe('RenderContext', function() {
         app.unload();
         done();
       }
-    });    
+    });
   });
 });

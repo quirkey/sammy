@@ -19,7 +19,7 @@ describe('Hoptoad', function() {
         this.trigger('done');
       });
     });
-    
+
     app.run('#/');
   });
 
@@ -37,7 +37,7 @@ describe('Hoptoad', function() {
     app.get('#/test', function() {
       this.redirect('#/');
     });
-    
+
     window.location.href = '#/test';
   });
 
