@@ -1,3 +1,4 @@
+== 0.7.3 [1/27/2013]
 New:
 
 - Support for asynchronous chained callbacks [deitch]
