@@ -286,7 +286,7 @@ describe('RenderContext', function() {
     context.load('fixtures/partial.html')
            .appendTo('#main')
            .then(function(data) {
-             expect(data).to.eql('<div class="test_partial">PARTIAL</div>');
+             expect($.trim(data)).to.eql('<div class="test_partial">PARTIAL</div>');
              expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="test_partial">PARTIAL</div></div>');
              done();
            });

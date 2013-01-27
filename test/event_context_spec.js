@@ -65,7 +65,7 @@ describe('EventContext', function() {
     it('passes the contents to the callback', function(done) {
       this.timeout(4000);
       context.partial('fixtures/partial.html').then(function(data) {
-        expect(data).to.eql('<div class="test_partial">PARTIAL</div>');
+        expect($.trim(data)).to.eql('<div class="test_partial">PARTIAL</div>');
         done();
       });
     });
