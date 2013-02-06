@@ -1,4 +1,10 @@
 describe('Application', function() {
+  describe('AMD module', function() {
+    it('should register as an AMD module', function() {
+      expect(amdDefined).to.eql(Sammy);
+    });
+  });
+
   describe('apps', function() {
     it('returns a new application if no arguments are passed', function() {
       var app = Sammy();

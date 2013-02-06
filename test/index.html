@@ -13,6 +13,32 @@
     <script src="../vendor/mocha/mocha.js"></script>
     <script src="../vendor/mocha/helpers.js"></script>
     <script>
+      /**
+       * Set up a mock AMD define function for testing AMD registration.
+       */
+      function define(dependencies, callback) {
+        // These libs behave like good AMD citizens, treat them that way.
+        var moduleMap = {
+          'jquery':     window.jQuery,
+          'sammy':      window.Sammy,
+          'mustache':   window.Mustache,
+          'ejs':        window.EJS
+        },
+        modules = dependencies.map(function (modName) {
+          return moduleMap[modName];
+        })
+
+        // Sammy is being defined
+        if (dependencies.length == 1) {
+          amdDefined = callback(jQuery);
+          window.Sammy = jQuery.sammy = amdDefined;
+        } else
+          callback.apply(undefined, modules);
+      }
+      define.amd = {
+        jQuery: true
+      };
+
       mocha.setup({
         ui: 'bdd',
         ignoreLeaks: true
