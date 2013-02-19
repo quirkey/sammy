@@ -580,15 +580,15 @@ describe('Plugins', function() {
       });
 
       it('returns a simple string element with simple_element', function() {
-        expect(context.simple_element('div', {'class': 'test'}, "test")).to.eql("<div class='test'>test</div>");
+        expect(context.simple_element('div', {'class': 'test'}, "test")).to.eql('<div class="test">test</div>');
       });
 
       it('creates a self closing if no content is passed', function() {
-        expect(context.simple_element('div', {'class': 'test'})).to.eql("<div class='test' />");
+        expect(context.simple_element('div', {'class': 'test'})).to.eql('<div class="test" />');
       });
 
       it('evaluates attributes that are functions', function() {
-        expect(context.simple_element('div', {id: function() { return 'test'; }})).to.eql("<div id='test' />");
+        expect(context.simple_element('div', {id: function() { return 'test'; }})).to.eql('<div id="test" />');
       });
     });
 
@@ -630,84 +630,84 @@ describe('Plugins', function() {
       });
 
       it('returns a text field for attributes with a simple keypath', function() {
-        var expected = "<input type='text' name='item[name]' value='Item Name' class='item-name' />";
+        var expected = '<input type="text" name="item[name]" value="Item Name" class="item-name" id="item-name-16532" />';
         expect(builder.text('name')).to.eql(expected);
       });
 
       it('returns a text field with additional attributes', function() {
-        var expected = "<input type='text' name='item[name]' value='Item Name' class='item-name' rel='test' />";
+        var expected = '<input type="text" name="item[name]" value="Item Name" class="item-name" id="item-name-16532" rel="test" />';
         expect(builder.text('name', {rel: 'test'})).to.eql(expected);
       });
 
       it('returns a text field when the attribute does not exist', function() {
-        var expected = "<input type='text' name='item[none]' value='' class='item-none' />";
+        var expected = '<input type="text" name="item[none]" value="" class="item-none" id="item-none-22420" />';
         expect(builder.text('none')).to.eql(expected);
       });
 
       it('returns a text field for an attribute with a deep keypath', function() {
-        var expected = "<input type='text' name='item[meta][url]' value='http://www.quirkey.com' class='item-meta-url' />";
+        var expected = '<input type="text" name="item[meta][url]" value="http://www.quirkey.com" class="item-meta-url" id="item-meta-url-14475" />';
         expect(builder.text('meta.url')).to.eql(expected);
         expect(builder.text(['meta', 'url'])).to.eql(expected);
       });
 
       it('returns a text field for an attribute with an array keypath', function() {
-        var expected = "<input type='text' name='item[related][0][name]' value='Related 1' class='item-related-0-name' />";
+        var expected = '<input type="text" name="item[related][0][name]" value="Related 1" class="item-related-0-name" id="item-related-0-name-24016" />';
         expect(builder.text('related.0.name')).to.eql(expected);
       });
 
       it('returns a select tag with options and selection', function() {
-        var expected = "<select name='item[color]' class='item-color'><option value='blue'>blue</option><option value='red' selected='selected'>red</option><option value='green'>green</option></select>";
+        var expected = '<select name="item[color]" class="item-color" id="item-color-2675"><option value="blue">blue</option><option value="red" selected="selected">red</option><option value="green">green</option></select>';
         expect(builder.select('color', ['blue', 'red', 'green'])).to.eql(expected);
       });
 
       it('returns a label with key as for', function() {
-        var expected = "<label for='item[name]'>Name</label>";
+        var expected = '<label for="item-name-16532">Name</label>';
         expect(builder.label('name', 'Name')).to.eql(expected);
       });
 
       it('returns a hidden input', function() {
-        var expected = "<input type='hidden' name='item[id]' value='1234' class='item-id' />";
+        var expected = '<input type="hidden" name="item[id]" value="1234" class="item-id" />';
         expect(builder.hidden('id')).to.eql(expected);
       });
 
       it('returns a textarea', function() {
-        var expected = "<textarea name='item[description]' class='item-description'>This is a long\ndescription</textarea>";
+        var expected = '<textarea name="item[description]" class="item-description" id="item-description-5836">This is a long\ndescription</textarea>';
         expect(builder.textarea('description')).to.eql(expected);
       });
 
       it('returns a checkbox', function() {
-        var expected = "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />";
+        var expected = '<input type="hidden" name="item[is_private]" value="false" class="item-is_private" /><input type="checkbox" name="item[is_private]" value="true" class="item-is_private" id="item-is_private-4814" />';
         expect(builder.checkbox('is_private', true)).to.eql(expected);
 
         item.is_private = true;
-        expected = "<input type='hidden' name='item[is_private]' value='false' class='item-is_private' /><input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />";
+        expected = '<input type="hidden" name="item[is_private]" value="false" class="item-is_private" /><input type="checkbox" name="item[is_private]" value="true" class="item-is_private" id="item-is_private-4814" checked="checked" />';
         expect(builder.checkbox('is_private', true)).to.eql(expected);
       });
 
       it('returns a checkbox with no hidden element', function() {
-        var expected = "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' />";
+        var expected = '<input type="checkbox" name="item[is_private]" value="true" class="item-is_private" id="item-is_private-4814" />';
         expect(builder.checkbox('is_private', true, {hidden_element: false})).to.eql(expected);
 
         item.is_private = true;
-        expected = "<input type='checkbox' name='item[is_private]' value='true' class='item-is_private' checked='checked' />";
+        expected = '<input type="checkbox" name="item[is_private]" value="true" class="item-is_private" id="item-is_private-4814" checked="checked" />';
         expect(builder.checkbox('is_private', true, {hidden_element: false})).to.eql(expected);
       });
 
       it('returns a radio button', function() {
-        var expected = "<input type='radio' name='item[quantity]' value='5' class='item-quantity' checked='checked' />";
+        var expected = '<input type="radio" name="item[quantity]" value="5" class="item-quantity" id="item-quantity-17125" checked="checked" />';
         expect(builder.radio('quantity', 5)).to.eql(expected);
       });
 
       it('builds a form with form in a template', function() {
         var template = "<% formFor('item', function(f) { %>" +
                        "<%= f.open() %>" +
-                       "<p><label>Name:</label><%= f.text('name') %></p>" +
+                       "<p><%= f.label('name', 'Name:') %><%= f.text('name') %></p>" +
                        "<%= f.close() %>" +
                        "<% }); %>";
-        var rendered = "<form method='post' action='#/items'>" +
-          "<p><label>Name:</label>" +
-          "<input type='text' name='item[name]' value='Item Name' class='item-name' />" +
-          "</p></form>";
+        var rendered = '<form method="post" action="#/items">' +
+          '<p><label for="item-name-16532">Name:</label>' +
+          '<input type="text" name="item[name]" value="Item Name" class="item-name" id="item-name-16532" />' +
+          '</p></form>';
 
         context.item = item;
         expect(context.template(template, {}, {escape_html: false})).to.eql(rendered);
