@@ -26,23 +26,25 @@
         },
         modules = dependencies.map(function (modName) {
           return moduleMap[modName];
-        })
+        });
 
         // Sammy is being defined
         if (dependencies.length == 1) {
-          amdDefined = callback(jQuery);
-          window.Sammy = jQuery.sammy = amdDefined;
-        } else
+          // this global var is the tested object in the AMD test
+          window.amdDefined = callback(jQuery);
+          window.Sammy = jQuery.sammy = window.amdDefined;
+        } else {
           callback.apply(undefined, modules);
+        }
       }
       define.amd = {
         jQuery: true
       };
 
-      mocha.setup({
+      window.mocha.setup({
         ui: 'bdd',
         ignoreLeaks: true
-      })
+      });
     </script>
 
     <script type="text/javascript" src="../vendor/templating/mustache.js"></script>
