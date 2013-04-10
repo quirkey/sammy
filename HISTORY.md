@@ -2,6 +2,7 @@ Fixed:
 
 - Documentation for onComplete was formatted incorrectly [togakangaroo]
 - AMD issues [rikkert]
+- Hostname issues in IE [teelahti]
 
 == 0.7.4 [1/27/2013]
 
