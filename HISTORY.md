@@ -1,9 +1,15 @@
+Fixed:
+
+- Documentation for onComplete was formatted incorrectly [togakangaroo]
+
 == 0.7.4 [1/27/2013]
 
 Fixed:
+
 - Hotfix for bad jshinting of form matching
 
 == 0.7.3 [1/27/2013]
+
 New:
 
 - Support for asynchronous chained callbacks [deitch]
