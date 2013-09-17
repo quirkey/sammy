@@ -311,6 +311,18 @@ describe('Application', function() {
 
         expect(captured).to.eql(false);
       });
+	  
+	  it('ignores links with contents that target other windows', function() {
+        var captured = false;
+        app.get('#/', function() {});
+        app.get('#/some/route', function() { captured = true; });
+
+        $('#main').append('<a href="#/some/route" target="another-window"><span>Open in new window</span></a>');
+        app.run('#/');
+        $('#main a span').click();
+
+        expect(captured).to.eql(false);
+      });
 
       it('binds events to all forms', function(done) {
         app.get('#/', function() {});
