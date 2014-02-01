@@ -311,8 +311,8 @@ describe('Application', function() {
 
         expect(captured).to.eql(false);
       });
-	  
-	  it('ignores links with contents that target other windows', function() {
+
+      it('ignores links with contents that target other windows', function() {
         var captured = false;
         app.get('#/', function() {});
         app.get('#/some/route', function() { captured = true; });
