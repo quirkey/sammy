@@ -95,6 +95,15 @@ describe('EventContext', function() {
       });
     });
 
+    it('runs through template() if Sammy.Template _is_ present _and_ GET parameters appended', function(done) {
+      app.use(Sammy.Template);
+      context = new app.context_prototype(app);
+      context.partial('./fixtures/../fixtures/partial.template?var1=09&var2=abc', {name: 'TEMPLATE!', class_name: 'test_template'}).then(function(data) {
+        expect(data).to.eql('<div class="test_template">TEMPLATE!</div>');
+        done();
+      });
+    });
+
     it('replaces the default app element if no callback is passed', function(done) {
       listenToChanged(app, {
         setup: function() {
