@@ -105,7 +105,7 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 
 ## Donate!
 
-If you're using Sammy.js in production or just for fun, instead of gifting me a beer - please consider donating to the [Code for Other People Fund](http://pledgie.com/campaigns/15239) - you can probably spare a dollar or ten and it will be greatly appreciated.
+If you're using Sammy.js in production or just for fun, instead of gifting me a beer - please consider donating to the [Code for Other People Fund](http://pledgie.com/campaigns/15239). - you can probably spare a dollar or ten and it will be greatly appreciated.
 
 ## License
 
