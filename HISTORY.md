@@ -3,6 +3,8 @@ Fixed:
 - Documentation for onComplete was formatted incorrectly [togakangaroo]
 - AMD issues [rikkert]
 - Hostname issues in IE [teelahti]
+- Clicking an element within a link that targets a different window should be ignored [dtretyakov]
+- Allow using jQuery in noConflict mode [vicb]
 
 == 0.7.4 [1/27/2013]
 
