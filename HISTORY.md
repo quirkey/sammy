@@ -1,3 +1,7 @@
+New:
+
+- Allow for different selectors in the push location proxy and only bind them within the app's element [kevingessner]
+
 Fixed:
 
 - Documentation for onComplete was formatted incorrectly [togakangaroo]
