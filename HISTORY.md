@@ -2,7 +2,8 @@ New:
 
 - Allow for different selectors in the push location proxy and only bind them within the app's element [kevingessner]
 - Add AMD support to Handlebars [rikkert]
-- Allow template paths with GET parameters [trengrj]
+- Allow template paths with query parameters [trengrj]
+- Allow JSON paths with query parameters [vicb]
 
 Fixed:
 
