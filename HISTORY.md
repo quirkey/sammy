@@ -4,6 +4,7 @@ New:
 - Add AMD support to Handlebars [rikkert]
 - Allow template paths with query parameters [trengrj]
 - Allow JSON paths with query parameters [vicb]
+- Support for new Google Analytics [erpheus]
 
 Fixed:
 
@@ -13,6 +14,7 @@ Fixed:
 - Clicking an element within a link that targets a different window should be ignored [dtretyakov]
 - Allow using jQuery in noConflict mode [vicb]
 - Test for console.log is broken in IE8 [CodeOtter]
+- When not passing a verb to `route`, the assignment of path is broken [luckydrq]
 
 == 0.7.4 [1/27/2013]
 
