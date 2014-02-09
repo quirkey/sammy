@@ -147,6 +147,19 @@ describe('Application', function() {
         expect(route.path.toString()).to.eql(new RegExp("#/$").toString());
       });
 
+      it('assumes the verb is any if only path and callback are passed as parameters', function() {
+        app.route('/blah', function() {
+          $('#testarea').show();
+        });
+
+        var route = app.routes['get'][1];
+        expect(route.callback[0]).to.be.a(Function);
+        expect(route.path.toString()).to.eql(new RegExp("/blah$").toString());
+        route = app.routes['post'][0];
+        expect(route.callback[0]).to.be.a(Function);
+        expect(route.path.toString()).to.eql(new RegExp("/blah$").toString());
+      });
+
       it('looks up the callback as a string', function() {
         app.mycallback = function() { this.redirect('#/'); };
         app.post('#/post', 'mycallback');
