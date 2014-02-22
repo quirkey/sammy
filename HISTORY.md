@@ -1,3 +1,5 @@
+== 0.7.5 [2/22/2014]
+
 New:
 
 - Allow for different selectors in the push location proxy and only bind them within the app's element [kevingessner]
