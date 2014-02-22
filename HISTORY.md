@@ -5,6 +5,7 @@ New:
 - Allow template paths with query parameters [trengrj]
 - Allow JSON paths with query parameters [vicb]
 - Support for new Google Analytics [erpheus]
+- More documentation for contextMatchesOptions [PhilippSoehnlein]
 
 Fixed:
 
