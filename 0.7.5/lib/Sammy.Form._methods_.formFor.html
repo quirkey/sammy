@@ -1,0 +1,37 @@
+<div class='individual meth' id='Sammy.Form-formFor'>
+  <a href='/docs/api/lib//'>
+    <strong>&laquo; Back</strong>
+  </a>
+  <h3>
+    <strong>Sammy.Form</strong>
+    <a href='Sammy.Form._methods_.formFor'>formFor</a>
+    <span>
+      (
+      <em>name, object, content_callback</em>
+      )
+    </span>
+  </h3>
+  <div class='links'>
+    <a href='Sammy.Form._methods_.formFor#comments'>Comments</a>
+    |
+    <a href='https://github.com/quirkey/sammy/tree/lib//lib/plugins/sammy.form.js#L268' target='all'>Show in GitHub</a>
+  </div><div class='doc'><p>formFor creates a Sammy.Form builder object with the passed <code>name</code>&#x000A;and <code>object</code> and passes it as an argument to the <code>content_callback</code>.&#x000A;This is a shortcut for creating FormBuilder objects for use within&#x000A;templates.</p>&#x000A;&#x000A;<h3>Example</h3>&#x000A;&#x000A;<pre class='prettyprint'><code> // in item_form.template&#x000A;&#x000A; &lt;% formFor('item', item, function(f) { %&gt;&#x000A;   &lt;%= f.open({action: '#/items'}) %&gt;&#x000A;   &lt;p&gt;&#x000A;     &lt;%= f.label('name') %&gt;&#x000A;     &lt;%= f.text('name') %&gt;&#x000A;   &lt;/p&gt;&#x000A;   &lt;p&gt;&#x000A;     &lt;%= f.submit() %&gt;&#x000A;   &lt;/p&gt;&#x000A;   &lt;%= f.close() %&gt;&#x000A; &lt;% }); %&gt;&#x000A;</code></pre>&#x000A;&#x000A;<p>Note: If you're using the <code>Sammy.Template</code> plugin for templating as above,&#x000A;you need to turn off the automatic html escaping for this to work. See&#x000A;the docs for <code>Sammy.Template</code> for more information.</p></div><div id='comments'>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'sammyjsorg'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = "sammyjsdocs-lib/-Sammy.Form-formFor";
+    var disqus_url = 'http://www.sammyjs.org/docs/api/lib//Sammy.Form._methods_.formFor';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</div>

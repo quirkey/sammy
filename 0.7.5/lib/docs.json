@@ -1,0 +1,1007 @@
+[
+  [
+    "Sammy.Cache",
+    {
+      "name": "Sammy.Cache",
+      "args": [
+        "app",
+        "options"
+      ],
+      "doc": "<p>Sammy.Cache provides helpers for caching data within the lifecycle of a\nSammy app. The plugin provides two main methods on <code>Sammy.Application</code>,\n<code>cache</code> and <code>clearCache</code>. Each app has its own cache store so that\nyou dont have to worry about collisions. As of 0.5 the original Sammy.Cache module\nhas been deprecated in favor of this one based on Sammy.Storage. The exposed\nAPI is almost identical, but Sammy.Storage provides additional backends including\nHTML5 Storage. <code>Sammy.Cache</code> will try to use these backends when available\n(in this order) <code>LocalStorage</code>, <code>SessionStorage</code>, and <code>Memory</code></p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 573,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.DataCacheProxy",
+    {
+      "name": "Sammy.DataCacheProxy",
+      "args": [
+        "initial",
+        "$element"
+      ],
+      "doc": "<p>A simple cache strategy that stores key/values <tt>$element.data()</tt> with a <tt>cache.</tt> prefix</p>\n",
+      "filename": "/lib/plugins/sammy.cache.js",
+      "lineno": 31,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.DataLocationProxy",
+    {
+      "name": "Sammy.DataLocationProxy",
+      "args": [
+        "app",
+        "data_name",
+        "href_attribute"
+      ],
+      "doc": "<p>The DataLocationProxy is an optional location proxy prototype. As opposed to\nthe <code>HashLocationProxy</code> it gets its location from a jQuery.data attribute\ntied to the application's element. You can set the name of the attribute by\npassing a string as the second argument to the constructor. The default attribute\nname is 'sammy-location'. To read more about location proxies, check out the\ndocumentation for <code>Sammy.HashLocationProxy</code></p>\n\n<p>An optional <code>href_attribute</code> can be passed, which specifies a DOM element\nattribute that holds \"links\" to different locations in the app. When the\nproxy is bound, clicks to element that have this attribute activate a\n<code>setLocation()</code> using the contents of the <code>href_attribute</code>.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code> var app = $.sammy(function() {\n   // set up the location proxy\n   this.setLocationProxy(new Sammy.DataLocationProxy(this, 'location', 'rel'));\n\n   this.get('about', function() {\n     this.partial('about.html');\n   });\n\n });\n</code></pre>\n\n<p>In this scenario, if an element existed within the template:</p>\n\n<pre class='prettyprint'><code> &lt;a href=\"/about\" rel=\"about\"&gt;About Us&lt;/a&gt;\n</code></pre>\n\n<p>Clicking on that link would not go to /about, but would set the apps location\nto 'about' and trigger the route.</p>\n",
+      "filename": "/lib/plugins/sammy.data_location_proxy.js",
+      "lineno": 39,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.EJS",
+    {
+      "name": "Sammy.EJS",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.EJS</code> is a thin wrapper around the EJS templating engine which can be donwloaded\nat http://embeddedjs.com/</p>\n\n<p>Note: As of Sammy 0.7, Sammy.EJS does not include the actual templating engine in the source.\nInclude ejs.js before including sammy.ejs.js</p>\n",
+      "filename": "/lib/plugins/sammy.ejs.js",
+      "lineno": 14,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Exceptional",
+    {
+      "name": "Sammy.Exceptional",
+      "args": [
+        "app",
+        "errorReporter"
+      ],
+      "doc": "<p>A plugin that posts errors to Exceptional.</p>\n\n<h3>Arguments</h3>\n\n<p>Sammy.Exceptional accepts an optional argument that is the Exceptional\nimplementation. It will default to the global <code>Exceptional</code> object.</p>\n\n<h3>Requirements</h3>\n\n<p>The sole requirement is a global Exceptional object with a handle\nfunction. Contrast have published an implementation (see below).</p>\n\n<h3>See Also</h3>\n\n<ul>\n<li>http://www.getexceptional.com/</li>\n<li>https://github.com/contrast/exceptional-js</li>\n</ul>\n\n",
+      "filename": "/lib/plugins/sammy.exceptional.js",
+      "lineno": 24,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Flash",
+    {
+      "name": "Sammy.Flash",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.Flash is a plugin for storing and sending status messages to the client. It's API and use\nis similar to Ruby on Rails' <code>flash</code> explained here:\n<a href=\"http://apidock.com/rails/ActionController/Flash\">http://apidock.com/rails/ActionController/Flash</a></p>\n",
+      "filename": "/lib/plugins/sammy.flash.js",
+      "lineno": 66,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Form",
+    {
+      "name": "Sammy.Form",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.Form is a Sammy plugin that adds form building helpers to a\nSammy.Application</p>\n",
+      "filename": "/lib/plugins/sammy.form.js",
+      "lineno": 229,
+      "methods": [
+        {
+          "name": "formFor",
+          "args": [
+            "name",
+            "object",
+            "content_callback"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 268,
+          "doc": "<p>formFor creates a Sammy.Form builder object with the passed <code>name</code>\nand <code>object</code> and passes it as an argument to the <code>content_callback</code>.\nThis is a shortcut for creating FormBuilder objects for use within\ntemplates.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code> // in item_form.template\n\n &lt;% formFor('item', item, function(f) { %&gt;\n   &lt;%= f.open({action: '#/items'}) %&gt;\n   &lt;p&gt;\n     &lt;%= f.label('name') %&gt;\n     &lt;%= f.text('name') %&gt;\n   &lt;/p&gt;\n   &lt;p&gt;\n     &lt;%= f.submit() %&gt;\n   &lt;/p&gt;\n   &lt;%= f.close() %&gt;\n &lt;% }); %&gt;\n</code></pre>\n\n<p>Note: If you're using the <code>Sammy.Template</code> plugin for templating as above,\nyou need to turn off the automatic html escaping for this to work. See\nthe docs for <code>Sammy.Template</code> for more information.</p>\n"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "simple_element",
+          "default": "simple_element",
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 242,
+          "doc": "<p>simple_element is a simple helper for creating HTML tags.</p>\n\n<h3>Arguments</h3>\n\n<ul>\n<li><code>tag</code> the HTML tag to generate e.g. input, p, etc/</li>\n<li><code>attributes</code> an object representing the attributes of the element as\nkey value pairs. e.g. {class: 'element-class'}</li>\n<li><code>content</code> an optional string representing the content for the\nthe element. If ommited, the element becomes self closing</li>\n</ul>\n\n"
+        }
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.FormBuilder",
+    {
+      "name": "Sammy.FormBuilder",
+      "args": [
+        "name",
+        "object"
+      ],
+      "doc": "<p>Sammy.FormBuilder is based very closely on the Rails FormBuilder classes.\nIts goal is to make it easy to create HTML forms for creating and editing\nJavaScript objects. It eases the process by auto-populating existing values\ninto form inputs and creating input names suitable for parsing by\nSammy.NestedParams and other backend frameworks.</p>\n\n<p>You initialize a Sammy.FormBuilder by passing the 'name' of the object and\nthe object itself. Once initialized you create form elements with the object's\nprototype methods. Each of these methods returns a string of HTML suitable for\nappending through a template or directly with jQuery.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code> var item = {\n   name: 'My Item',\n   price: '$25.50',\n   meta: {\n     id: '123'\n   }\n };\n var form = new Sammy.FormBuilder('item', item);\n form.text('name');\n //=&gt; &lt;input type='text' name='item[form]' value='My Item' /&gt;\n</code></pre>\n\n<p>Nested attributes can be accessed/referred to by a 'keypath' which is\nbasically a string representation of the dot notation.</p>\n\n<pre class='prettyprint'><code> form.hidden('meta.id');\n //=&gt; &lt;input type='hidden' name='item[meta][id]' value='123' /&gt;\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.form.js",
+      "lineno": 72,
+      "methods": [
+        {
+          "name": "checkbox",
+          "args": [
+            "keypath",
+            "value",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 187,
+          "doc": "<p>creates a checkbox input for keypath with the value <code>value</code>. Multiple\ncheckboxes can be created with different value, if <code>value</code> equals the\ncurrent value of the key of the form builder's object the attribute\nchecked='checked' will be added.</p>\n\n<p>By default <code>checkbox()</code> also generates a hidden element whose value is\nthe inverse of the value given. This is known hack to get around a common\ngotcha where browsers and jQuery itself does not include 'unchecked'\nelements in the list of submittable inputs. This ensures that a value\nshould always be passed to Sammy and hence the server. You can disable\nthe creation of the hidden element by setting the <code>hidden_element</code> attribute\nto <code>false</code></p>\n"
+        },
+        {
+          "name": "close",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 85,
+          "doc": "<p>closes the form</p>\n"
+        },
+        {
+          "name": "hidden",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 97,
+          "doc": "<p>creates a hidden input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "name": "label",
+          "args": [
+            "keypath",
+            "content",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 91,
+          "doc": "<p>creates a label for <code>keypath</code> with the text <code>content\nwith an optional</code>attributes` object</p>\n"
+        },
+        {
+          "name": "open",
+          "args": [
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 80,
+          "doc": "<p>creates the open form tag with the object attributes</p>\n"
+        },
+        {
+          "name": "password",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 118,
+          "doc": "<p>creates a password input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "name": "radio",
+          "args": [
+            "keypath",
+            "value",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 164,
+          "doc": "<p>creates a radio input for keypath with the value <code>value</code>. Multiple\nradios can be created with different value, if <code>value</code> equals the\ncurrent value of the key of the form builder's object the attribute\nchecked='checked' will be added.</p>\n"
+        },
+        {
+          "name": "select",
+          "args": [
+            "keypath",
+            "options",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 138,
+          "doc": "<p>creates a select element for <code>keypath</code> with the option elements\nspecified by an array in <code>options</code>. If <code>options</code> is an array of arrays,\nthe first element in each subarray becomes the text of the option and the\nsecond becomes the value.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>var options = [\n  ['Small', 's'],\n  ['Medium', 'm'],\n  ['Large', 'l']\n];\nform.select('size', options);\n//=&gt; &lt;select name='item[size]'&gt;&lt;option value='s'&gt;Small&lt;/option&gt; ...\n</code></pre>\n"
+        },
+        {
+          "name": "submit",
+          "args": [
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 199,
+          "doc": "<p>creates a submit input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "name": "text",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 103,
+          "doc": "<p>creates a text input for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        },
+        {
+          "name": "textarea",
+          "args": [
+            "keypath",
+            "attributes"
+          ],
+          "filename": "/lib/plugins/sammy.form.js",
+          "lineno": 109,
+          "doc": "<p>creates a textarea for <code>keypath</code> with an optional <code>attributes</code> object</p>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.GoogleAnalytics",
+    {
+      "name": "Sammy.GoogleAnalytics",
+      "args": [
+        "app",
+        "tracker"
+      ],
+      "doc": "<p>A simple plugin that pings Google Analytics tracker\nevery time a route is triggered. Originally by Brit Gardner (britg),\nwith updates from Aaron Quint (quirkey).</p>\n\n<h3>Arguments</h3>\n\n<p>+tracker+:: the Google Analytics pageTracker object.  Defaults to\nthe default object defined by the GA snippet, or pass your own if you\nhave a custom install. If using analytics.js pass a string with the\nname of your tracker.</p>\n\n<h3>Example</h3>\n\n<p>Install Google Analytics to your site as you normally would.</p>\n\n<p>If using ga.js be sure that the 'pageTracker' global variable exists.\nIf using analytics.js there is nothing to do (but you probably want\nto remove the ga('send','pageview') line)</p>\n\n<p>Then, simply add the plugin to your Sammy App and it will automatically\ntrack all of your routes in Google Analytics.\nThey will appear as page views to the route's path.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('GoogleAnalytics');\n\n   ...\n });\n</code></pre>\n\n<p>If you have routes that you do not want to track, simply call <code>noTrack</code>\nwithin the route.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('GoogleAnalytics')\n\n   this.get('#/dont/track/me', function() {\n     this.noTrack();  // This route will not be tracked\n   });\n });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.googleanalytics.js",
+      "lineno": 49,
+      "methods": [
+        {
+          "name": "noTrack",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.googleanalytics.js",
+          "lineno": 79,
+          "doc": "<p>Disable tracking for the current route. Put at the begining of the\nroute's callback</p>\n"
+        },
+        {
+          "name": "track",
+          "args": [
+            "path"
+          ],
+          "filename": "/lib/plugins/sammy.googleanalytics.js",
+          "lineno": 83,
+          "doc": "<p>send a page view to the tracker with <code>path</code></p>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Haml",
+    {
+      "name": "Sammy.Haml",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Haml</code> provides a quick way of using haml style templates in your app.\nThe plugin wraps haml-js library created by Tim Caswell at\nat http://github.com/creationix/haml-js</p>\n\n<p>Note: As of Sammy 0.7, Sammy.Haml does not include the actual templating engine in the source.\nInclude haml.js before including sammy.haml.js</p>\n\n<p>Haml is an alternative HTML syntax that is really great for describing\nthe structure of HTML documents.</p>\n\n<p>By default using Sammy.Haml in your app adds the <tt>haml()</tt> method to the EventContext\nprototype. However, just like <code>Sammy.Template</code> you can change the default name of the method\nby passing a second argument (e.g. you could use the hml() as the method alias so that all the template\nfiles could be in the form file.hml instead of file.haml)</p>\n\n<h3>Example</h3>\n\n<p>The template (mytemplate.haml):</p>\n\n<pre class='prettyprint'><code>  %h1&amp;= title\n\n  Hey, #{name}! Welcome to Haml!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin\n    this.use(Sammy.Haml);\n\n    this.get('#/hello/:name', function() {\n      // set local vars\n      this.title = 'Hello!'\n      this.name = this.params.name;\n      // render the template and pass it through haml\n      this.partial('mytemplate.haml');\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to <code>#/hello/AQ</code> in the browser, Sammy will render this to the <code>body</code>:</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;Hello!&lt;/h1&gt;\n\n  Hey, AQ! Welcome to HAML!\n</code></pre>\n\n<p>Note: You dont have to include the haml.js file on top of the plugin as the plugin\nincludes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.haml.js",
+      "lineno": 60,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Handlebars",
+    {
+      "name": "Sammy.Handlebars",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Handlebars</tt> provides a quick way of using Handlebars templates in your app.</p>\n\n<p>Note: As of Sammy 0.7 Handlebars itself is not included in the source. Please download and\ninclude handlebars.js before Sammy.Handlebars.</p>\n\n<p>Handlebars.js is an extension to the Mustache templating language created by Chris Wanstrath. Handlebars.js\nand Mustache are both logicless templating languages that keep the view and the code separated like\nwe all know they should be.</p>\n\n<p>By default using Sammy.Handlbars in your app adds the <tt>handlebars()</tt> method to the EventContext\nprototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method\nby passing a second argument (e.g. you could use the hbr() as the method alias so that all the template\nfiles could be in the form file.hbr instead of file.handlebars)</p>\n\n<h3>Example #1</h3>\n\n<p>The template (mytemplate.hb):</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;{{title}}&lt;h1&gt;\n\n  Hey, {{name}}! Welcome to Handlebars!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias handlebars() to hb()\n    this.use('Handlebars', 'hb');\n\n    this.get('#/hello/:name', function() {\n      // set local vars\n      this.title = 'Hello!'\n      this.name = this.params.name;\n      // render the template and pass it through handlebars\n      this.partial('mytemplate.hb');\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;Hello!&lt;/h1&gt;\n\n  Hey, AQ! Welcome to Handlebars!\n</code></pre>\n\n<h3>Example #2 - Handlebars partials</h3>\n\n<p>The template (mytemplate.hb)</p>\n\n<pre class='prettyprint'><code>  Hey, {{name}}! {{&gt;hello_friend}}\n</code></pre>\n\n<p>The partial (mypartial.hb)</p>\n\n<pre class='prettyprint'><code>  Say hello to your friend {{friend}}!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias handlebars() to hb()\n    this.use('Handlebars', 'hb');\n\n    this.get('#/hello/:name/to/:friend', function(context) {\n      // fetch handlebars-partial first\n      this.load('mypartial.hb')\n          .then(function(partial) {\n            // set local vars\n            context.partials = {hello_friend: partial};\n            context.name = context.params.name;\n            context.friend = context.params.friend;\n\n            // render the template and pass it through handlebars\n            context.partial('mytemplate.hb');\n          });\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  Hey, AQ! Say hello to your friend dP!\n</code></pre>\n\n<p>Note: You dont have to include the handlebars.js file on top of the plugin as the plugin\nincludes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.handlebars.js",
+      "lineno": 102,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Hogan",
+    {
+      "name": "Sammy.Hogan",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Hogan</tt> provides a quick way of using hogan.js style templates in your app.\nThe plugin wraps the awesome hogan.js lib created and maintained by Twitter\nat http://twitter.github.com/hogan.js/</p>\n\n<p>Note: As of Sammy 0.7 the Hogan.js lib is not included in the templates source. Please download\nhogan.js and include it before Sammy.Hogan.</p>\n\n<p>Hogan.js is a clever templating system that relys on double brackets {{}} for interpolation.\nFor full details on syntax check out the documentation at\nhttp://twitter.github.com/hogan.js/</p>\n\n<p>By default using Sammy.Hogan in your app adds the <tt>hogan()</tt> method to the EventContext\nprototype. However, just like <tt>Sammy.Hogan</tt> you can change the default name of the method\nby passing a second argument (e.g. you could use the hg() as the method alias so that all the template\nfiles could be in the form file.hg instead of file.hogan)</p>\n\n<h3>Example #1</h3>\n\n<p>The template (mytemplate.hg):</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;{{title}}&lt;h1&gt;\n\n  Hey, {{name}}! Welcome to Mustache!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias hogan() to hg()\n    this.use('Hogan', 'hg');\n\n    this.get('#/hello/:name', function() {\n      // set local vars\n      this.title = 'Hello!'\n      this.name = this.params.name;\n      // render the template and pass it through hogan\n      this.partial('mytemplate.hg');\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;Hello!&lt;/h1&gt;\n\n  Hey, AQ! Welcome to Mustache!\n</code></pre>\n\n<h3>Example #2 - Hogan partials</h3>\n\n<p>The template (mytemplate.hg)</p>\n\n<pre class='prettyprint'><code>  Hey, {{name}}! {{&gt;hello_friend}}\n</code></pre>\n\n<p>The partial (mypartial.hg)</p>\n\n<pre class='prettyprint'><code>  Say hello to your friend {{friend}}!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias hogan() to hg()\n    this.use('Hogan', 'hg');\n\n    this.get('#/hello/:name/to/:friend', function(context) {\n      // fetch hogan-partial first\n      this.load('mypartial.hg')\n          .then(function(partial) {\n            // set local vars\n            context.partials = {hello_friend: partial};\n            context.name = context.params.name;\n            context.friend = context.params.friend;\n\n            // render the template and pass it through hogan\n            context.partial('mytemplate.hg');\n          });\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  Hey, AQ! Say hello to your friend dP!\n</code></pre>\n\n<p>Note: You dont have to include the hogan.js file on top of the plugin as the plugin\nincludes the full source.</p>\n",
+      "filename": "/lib/plugins/sammy.hogan.js",
+      "lineno": 102,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Hoptoad",
+    {
+      "name": "Sammy.Hoptoad",
+      "args": [
+        "app",
+        "errorReporter"
+      ],
+      "doc": "<p>A plugin that posts errors to Hoptoad.</p>\n\n<h3>Requirements</h3>\n\n<p>The sole requirement is a Hoptoad object with a notify function.\nThoughtbot have published an implementation (see below).</p>\n\n<h3>Arguments</h3>\n\n<p>Sammy.Hoptoad accepts an optional argument that is the\nHoptoad implementation. It will default to the global <code>Hoptoad</code> object.</p>\n\n<h3>See Also</h3>\n\n<ul>\n<li>http://hoptoadapp.com/</li>\n<li>http://robots.thoughtbot.com/post/899737797</li>\n<li>http://hoptoadapp.com/javascripts/notifier.js</li>\n</ul>\n\n",
+      "filename": "/lib/plugins/sammy.hoptoad.js",
+      "lineno": 25,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.JSON",
+    {
+      "name": "Sammy.JSON",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.JSON is a simple wrapper around Douglas Crockford's ever-useful json2.js\n(http://www.json.org/js.html]) Sammy.JSON includes the top level JSON object if\nit doesn't already exist (a.k.a. does not override the native implementation that\nsome browsers include). It also adds a <tt>json()</tt> helper to a Sammy app when\nincluded.</p>\n",
+      "filename": "/lib/plugins/sammy.json.js",
+      "lineno": 335,
+      "methods": [
+        {
+          "name": "json",
+          "args": [
+            "object"
+          ],
+          "filename": "/lib/plugins/sammy.json.js",
+          "lineno": 355,
+          "doc": "<p>json is a polymorphic function that translates objects aback and forth\nfrom JSON to JS. If given a string, it will parse into JS, if given a JS\nobject it will stringify into JSON.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code> var app = $.sammy(function() {\n   this.use(Sammy.JSON);\n\n   this.get('#/', function() {\n     this.json({user_id: 123}); //=&gt; \"{\\\"user_id\\\":\\\"123\\\"}\"\n     this.json(\"{\\\"user_id\\\":\\\"123\\\"}\"); //=&gt; [object Object]\n     this.json(\"{\\\"user_id\\\":\\\"123\\\"}\").user_id; //=&gt; \"123\"\n   });\n })\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.KISSmetrics",
+    {
+      "name": "Sammy.KISSmetrics",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>A simple plugin that pings KISSmetrics tracker\nevery time a route is triggered. Created by Juan Pablo Garcia Dalolla\n(jpgarcia), based on the Sammy.GoogleAnalytics\nplugin developed by Brit Gardner (britg) with updates from\nAaron Quint (quirkey).</p>\n\n<h3>Example</h3>\n\n<p>Install KISSmetrics to your site as you normally would. Be sure that\nthe '_kmq' global variable exists (it should be created by the\nscript provided by KISSmetrics).</p>\n\n<p>Then, simply add the plugin to your Sammy App and it will automatically\ntrack all of your routes in KISSmetrics.\nThey will appear as page views to the route's path.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('KISSmetrics');\n\n   ...\n });\n</code></pre>\n\n<p>If you have routes that you do not want to track, simply call\n`doNotTrackKISSmetrics within the route.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('KISSmetrics')\n\n   this.get('#/dont/track/me', function() {\n     this.doNotTrackKISSmetrics();  // This route will not be tracked\n   });\n });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.kissmetrics.js",
+      "lineno": 42,
+      "methods": [
+        {
+          "name": "doNotTrackKISSmetrics",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.kissmetrics.js",
+          "lineno": 56,
+          "doc": "<p>Disable tracking for the current route. Put at the begining of the\nroute's callback</p>\n"
+        },
+        {
+          "name": "trackKISSmetrics",
+          "args": [
+            "path"
+          ],
+          "filename": "/lib/plugins/sammy.kissmetrics.js",
+          "lineno": 60,
+          "doc": "<p>send a page view to the tracker with <code>path</code></p>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Meld",
+    {
+      "name": "Sammy.Meld",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Meld</code> is a simple templating engine that uses the power of jQuery's\nDOM manipulation to easily meld JSON data and HTML templates very quickly.</p>\n\n<p>The template can either be a string (i.e. loaded from a remote template)\nor a DOM Element/jQuery object. This allows you to have templates be DOM\nelements as the initial document load.</p>\n\n<h3>Example</h3>\n\n<p>The simplest case is a nested <code>&lt;div&gt;</code> whose class name is tied to a\nproperty of a JS object.</p>\n\n<p>Template:</p>\n\n<pre class='prettyprint'><code>   &lt;div class=\"post\"&gt;\n     &lt;div class=\"title\"&gt;&lt;/div&gt;\n     &lt;div class=\"entry\"&gt;&lt;/div&gt;\n     &lt;div class=\"author\"&gt;\n       &lt;span class=\"name\"&gt;&lt;/span&gt;\n     &lt;/div&gt;\n   &lt;/div&gt;\n</code></pre>\n\n<p>Data:</p>\n\n<pre class='prettyprint'><code>   {\n     \"post\": {\n       \"title\": \"My Post\",\n       \"entry\": \"My Entry\",\n       \"author\": {\n         \"name\": \"@aq\"\n       }\n     }\n   }\n</code></pre>\n\n<p>Result:</p>\n\n<pre class='prettyprint'><code>   &lt;div class=\"post\"&gt;\n     &lt;div class=\"title\"&gt;My Post&lt;/div&gt;\n     &lt;div class=\"entry\"&gt;My Entry&lt;/div&gt;\n     &lt;div class=\"author\"&gt;\n       &lt;span class=\"name\"&gt;@aq&lt;/span&gt;\n     &lt;/div&gt;\n   &lt;/div&gt;\n</code></pre>\n\n<p>Templates can be much more complex, and more deeply nested.\nMore examples can be found in <code>test/fixtures/meld/</code></p>\n\n<p>If you don't think the lookup by classes is semantic for you, you can easily\nswitch the method of lookup by defining a selector function in the options</p>\n\n<p>For example:</p>\n\n<pre class='prettyprint'><code> meld($('.post'), post_data, {\n   selector: function(k) {\n     return '[data-key=' + k + ']';\n   }\n });\n</code></pre>\n\n<p>Would look for template nodes like <code>&lt;div data-key='entry'&gt;</code></p>\n",
+      "filename": "/lib/plugins/sammy.meld.js",
+      "lineno": 69,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.MemoryCacheProxy",
+    {
+      "name": "Sammy.MemoryCacheProxy",
+      "args": [
+        "initial"
+      ],
+      "doc": "<p>A simple cache strategy that stores key/values in memory.</p>\n",
+      "filename": "/lib/plugins/sammy.cache.js",
+      "lineno": 11,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Mixpanel",
+    {
+      "name": "Sammy.Mixpanel",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>A simple plugin that pings Mixpanel tracker\nevery time a route is triggered. Created by Juan Pablo Garcia Dalolla\n(jpgarcia), based on the Sammy.GoogleAnalytics\nplugin developed by Brit Gardner (britg) with updates from\nAaron Quint (quirkey).</p>\n\n<h3>Example</h3>\n\n<p>Install Mixpanel to your site as you normally would. Be sure that\nthe 'mixpanel' global variable exists (it should be created by the\nscript provided by Mixpanel).</p>\n\n<p>Then, simply add the plugin to your Sammy App and it will automatically\ntrack all of your routes in Mixpanel.\nThey will appear as page views to the route's path.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('Mixpanel');\n\n   ...\n });\n</code></pre>\n\n<p>If you have routes that you do not want to track, simply call\n`doNotTrackMixpanel within the route.</p>\n\n<pre class='prettyprint'><code> $.sammy(function() {\n   this.use('Mixpanel')\n\n   this.get('#/dont/track/me', function() {\n     this.doNotTrackMixpanel();  // This route will not be tracked\n   });\n });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.mixpanel.js",
+      "lineno": 42,
+      "methods": [
+        {
+          "name": "doNotTrackMixpanel",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.mixpanel.js",
+          "lineno": 56,
+          "doc": "<p>Disable tracking for the current route. Put at the begining of the\nroute's callback</p>\n"
+        },
+        {
+          "name": "trackMixpanel",
+          "args": [
+            "path"
+          ],
+          "filename": "/lib/plugins/sammy.mixpanel.js",
+          "lineno": 60,
+          "doc": "<p>send a page view to the tracker with <code>path</code></p>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Mustache",
+    {
+      "name": "Sammy.Mustache",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><tt>Sammy.Mustache</tt> provides a quick way of using mustache style templates in your app.\nThe plugin wraps the awesome mustache.js lib created and maintained by Jan Lehnardt\nat http://github.com/janl/mustache.js</p>\n\n<p>Note: As of Sammy 0.7 the Mustache lib is not included in the templates source. Please download\nmustache.js and include it before Sammy.Mustache.</p>\n\n<p>Mustache is a clever templating system that relys on double brackets {{}} for interpolation.\nFor full details on syntax check out the original Ruby implementation created by Chris Wanstrath at\nhttp://github.com/defunkt/mustache</p>\n\n<p>By default using Sammy.Mustache in your app adds the <tt>mustache()</tt> method to the EventContext\nprototype. However, just like <tt>Sammy.Template</tt> you can change the default name of the method\nby passing a second argument (e.g. you could use the ms() as the method alias so that all the template\nfiles could be in the form file.ms instead of file.mustache)</p>\n\n<h3>Example #1</h3>\n\n<p>The template (mytemplate.ms):</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;{{title}}&lt;h1&gt;\n\n  Hey, {{name}}! Welcome to Mustache!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias mustache() to ms()\n    this.use('Mustache', 'ms');\n\n    this.get('#/hello/:name', function() {\n      // set local vars\n      this.title = 'Hello!'\n      this.name = this.params.name;\n      // render the template and pass it through mustache\n      this.partial('mytemplate.ms');\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  &lt;h1&gt;Hello!&lt;/h1&gt;\n\n  Hey, AQ! Welcome to Mustache!\n</code></pre>\n\n<h3>Example #2 - Mustache partials</h3>\n\n<p>The template (mytemplate.ms)</p>\n\n<pre class='prettyprint'><code>  Hey, {{name}}! {{&gt;hello_friend}}\n</code></pre>\n\n<p>The partial (mypartial.ms)</p>\n\n<pre class='prettyprint'><code>  Say hello to your friend {{friend}}!\n</code></pre>\n\n<p>The app:</p>\n\n<pre class='prettyprint'><code>  var app = $.sammy(function() {\n    // include the plugin and alias mustache() to ms()\n    this.use('Mustache', 'ms');\n\n    this.get('#/hello/:name/to/:friend', function(context) {\n      // fetch mustache-partial first\n      this.load('mypartial.ms')\n          .then(function(partial) {\n            // set local vars\n            context.partials = {hello_friend: partial};\n            context.name = context.params.name;\n            context.friend = context.params.friend;\n\n            // render the template and pass it through mustache\n            context.partial('mytemplate.ms');\n          });\n    });\n  });\n\n  $(function() {\n    app.run()\n  });\n</code></pre>\n\n<p>If I go to #/hello/AQ/to/dP in the browser, Sammy will render this to the <tt>body</tt>:</p>\n\n<pre class='prettyprint'><code>  Hey, AQ! Say hello to your friend dP!\n</code></pre>\n\n<p>Note: You need to include the mustache.js file before this plugin.</p>\n",
+      "filename": "/lib/plugins/sammy.mustache.js",
+      "lineno": 101,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.NestedParams",
+    {
+      "name": "Sammy.NestedParams",
+      "args": [
+        "app"
+      ],
+      "doc": "<p><tt>Sammy.NestedParams</tt> overrides the default form parsing behavior to provide\nextended functionality for parsing Rack/Rails style form name/value pairs into JS\nObjects. In fact it passes the same suite of tests as Rack's nested query parsing.\nThe code and tests were ported to JavaScript/Sammy by http://github.com/endor</p>\n\n<p>This allows you to translate a form with properly named inputs into a JSON object.</p>\n\n<h3>Example</h3>\n\n<p>Given an HTML form like so:</p>\n\n<pre class='prettyprint'><code>&lt;form action=\"#/parse_me\" method=\"post\"&gt;\n  &lt;input type=\"text\" name=\"obj[first]\" /&gt;\n  &lt;input type=\"text\" name=\"obj[second]\" /&gt;\n  &lt;input type=\"text\" name=\"obj[hash][first]\" /&gt;\n  &lt;input type=\"text\" name=\"obj[hash][second]\" /&gt;\n&lt;/form&gt;\n</code></pre>\n\n<p>And a Sammy app like:</p>\n\n<pre class='prettyprint'><code>var app = $.sammy(function(app) {\n  this.use(Sammy.NestedParams);\n\n  this.post('#/parse_me', function(context) {\n    $.log(this.params);\n  });\n});\n</code></pre>\n\n<p>If you filled out the form with some values and submitted it, you would see something\nlike this in your log:</p>\n\n<pre class='prettyprint'><code>{\n  'obj': {\n    'first': 'value',\n    'second': 'value',\n    'hash': {\n      'first': 'value',\n      'second': 'value'\n    }\n  }\n}\n</code></pre>\n\n<p>It supports creating arrays with [] and other niceities. Check out the tests for\nfull specs.</p>\n",
+      "filename": "/lib/plugins/sammy.nested_params.js",
+      "lineno": 116,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.OAuth2",
+    {
+      "name": "Sammy.OAuth2",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.OAuth2 is a plugin for using OAuth 2.0 to authenticate users and\naccess your application's API. Requires Sammy.Session.</p>\n\n<p>Triggers the following events:</p>\n\n<ul>\n<li><code>oauth.connected</code> - Access token set and ready to use. Triggered when new\naccess token acquired, of when application starts and already has access\ntoken.</li>\n<li><code>oauth.disconnected</code> - Access token reset. Triggered by\nloseAccessToken().</li>\n<li><code>oauth.denied</code> - Authorization attempt rejected.</li>\n</ul>\n\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>  this.use('Storage');\n  this.use('OAuth2');\n  this.oauthorize = \"/oauth/authorize\";\n\n  // The quick &amp; easy way\n  this.requireOAuth();\n  // Specific path\n  this.requireOAuth(\"/private\");\n  // Filter you can apply to specific URLs\n  this.before(function(context) { return context.requireOAuth(); })\n  // Apply to specific request\n  this.get(\"/private\", function(context) {\n    this.requireOAuth(function() {\n      // Do something\n    });\n  });\n\n // Sign in/sign out.\n this.bind(\"oauth.connected\", function() { $(\"#signin\").hide() });\n this.bind(\"oauth.disconnected\", function() { $(\"#signin\").show() });\n\n // Handle access denied and other errors\n this.bind(\"oauth.denied\", function(evt, error) {\n   this.partial(\"admin/views/no_access.tmpl\", { error: error.message });\n });\n\n // Sign out.\n this.get(\"#/signout\", function(context) {\n   context.loseAccessToken();\n   context.redirect(\"#/\");\n });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.oauth2.js",
+      "lineno": 55,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.PathLocationProxy",
+    {
+      "name": "Sammy.PathLocationProxy",
+      "args": [
+        "app"
+      ],
+      "doc": "<p><code>Sammy.PathLocationProxy</code> is a simple Location Proxy that just\ngets and sets window.location. This allows you to use\nSammy to route on the full URL path instead of just the hash. It\nwill take a full refresh to get the app to change state.</p>\n\n<p>To read more about location proxies, check out the\ndocumentation for <code>Sammy.HashLocationProxy</code></p>\n",
+      "filename": "/lib/plugins/sammy.path_location_proxy.js",
+      "lineno": 16,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Pure",
+    {
+      "name": "Sammy.Pure",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Pure</code> is a simple wrapper around the pure.js templating engine for\nuse in Sammy apps.</p>\n\n<p>Note: You must include the pure.js source before including sammy.pure.js.</p>\n\n<p>See http://beebole.com/pure/ for detailed documentation.</p>\n",
+      "filename": "/lib/plugins/sammy.pure.js",
+      "lineno": 15,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.PushLocationProxy",
+    {
+      "name": "Sammy.PushLocationProxy",
+      "args": [
+        "app",
+        "selector"
+      ],
+      "doc": "<p>The PushLocationProxy is an optional location proxy prototype.\nPushLocationProxy gets its location from history API. No hash needed here.\nOnly compatible with Firefox >= Chrom 6, Firefox 4.0, Safari 5.0</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>var app = $.sammy(function() {\n    // set up the location proxy\n    this.setLocationProxy(new Sammy.PushLocationProxy(this));\n\n    this.get('/about', function() {\n      // Do something here\n    });\n\n});\n</code></pre>\n\n<p>Clicking on that link would not go to /about, but would set the apps location\nto 'about' and trigger the route.</p>\n",
+      "filename": "/lib/plugins/sammy.push_location_proxy.js",
+      "lineno": 27,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Session",
+    {
+      "name": "Sammy.Session",
+      "args": [
+        "app",
+        "options"
+      ],
+      "doc": "<p>Sammy.Session is an additional plugin for creating a common 'session' store\nfor the given app. It is a very simple wrapper around <code>Sammy.Storage</code>\nthat provides a simple fallback mechanism for trying to provide the best\npossible storage type for the session. This means, <code>LocalStorage</code>\nif available, otherwise <code>Cookie</code>, otherwise <code>Memory</code>.\nIt provides the <code>session()</code> helper through <code>Sammy.Storage#store()</code>.</p>\n\n<p>See the <code>Sammy.Storage</code> plugin for full documentation.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 559,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Storage",
+    {
+      "name": "Sammy.Storage",
+      "args": [
+        "app"
+      ],
+      "doc": "<p>Sammy.Storage is a plugin that provides shortcuts for creating and using\nSammy.Store objects. Once included it provides the <code>store()</code> app level\nand helper methods. Depends on Sammy.JSON (or json2.js).</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 460,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store",
+    {
+      "name": "Sammy.Store",
+      "args": [
+        "options"
+      ],
+      "doc": "<p>Sammy.Store is an abstract adapter class that wraps the multitude of in\nbrowser data storage into a single common set of methods for storing and\nretreiving data. The JSON library is used (through the inclusion of the\nSammy.JSON) plugin, to automatically convert objects back and forth from\nstored strings.</p>\n\n<p>Sammy.Store can be used directly, but within a Sammy.Application it is much\neasier to use the <code>Sammy.Storage</code> plugin and its helper methods.</p>\n\n<p>Sammy.Store also supports the KVO pattern, by firing DOM/jQuery Events when\na key is set.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>  // create a new store named 'mystore', tied to the #main element, using HTML5 localStorage\n  // Note: localStorage only works on browsers that support it\n  var store = new Sammy.Store({name: 'mystore', element: '#element', type: 'local'});\n  store.set('foo', 'bar');\n  store.get('foo'); //=&gt; 'bar'\n  store.set('json', {obj: 'this is an obj'});\n  store.get('json'); //=&gt; {obj: 'this is an obj'}\n  store.keys(); //=&gt; ['foo','json']\n  store.clear('foo');\n  store.keys(); //=&gt; ['json']\n  store.clearAll();\n  store.keys(); //=&gt; []\n</code></pre>\n\n<h3>Arguments</h3>\n\n<p>The constructor takes a single argument which is a Object containing these possible options.</p>\n\n<ul>\n<li><code>name</code> The name/namespace of this store. Stores are unique by name/type. (default 'store')</li>\n<li><code>element</code> A selector for the element that the store is bound to. (default 'body')</li>\n<li><code>type</code> The type of storage/proxy to use (default 'memory')</li>\n</ul>\n\n\n<p>Extra options are passed to the storage constructor.\nSammy.Store supports the following methods of storage:</p>\n\n<ul>\n<li><code>memory</code> Basic object storage</li>\n<li><code>data</code> jQuery.data DOM Storage</li>\n<li><code>cookie</code> Access to document.cookie. Limited to 2K</li>\n<li><code>local</code> HTML5 DOM localStorage, browswer support is currently limited.</li>\n<li><code>session</code> HTML5 DOM sessionStorage, browswer support is currently limited.</li>\n</ul>\n\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 53,
+      "methods": [
+        {
+          "name": "clear",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 133,
+          "doc": "<p>Removes the value at <code>key</code> from the current store</p>\n"
+        },
+        {
+          "name": "clearAll",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 138,
+          "doc": "<p>Clears all the values for the current store.</p>\n"
+        },
+        {
+          "name": "each",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 157,
+          "doc": "<p>Iterates over each key value pair passing them to the <code>callback</code> function</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>store.each(function(key, value) {\n  Sammy.log('key', key, 'value', value);\n});\n</code></pre>\n"
+        },
+        {
+          "name": "exists",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 91,
+          "doc": "<p>Checks for the existance of <code>key</code> in the current store. Returns a boolean.</p>\n"
+        },
+        {
+          "name": "fetch",
+          "args": [
+            "key",
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 220,
+          "doc": "<p>Returns the value at <code>key</code> if set, otherwise, runs the callback\nand sets the value to the value returned in the callback.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>var store = new Sammy.Store;\nstore.exists('foo'); //=&gt; false\nstore.fetch('foo', function() {\n  return 'bar!';\n}); //=&gt; 'bar!'\nstore.get('foo') //=&gt; 'bar!'\nstore.fetch('foo', function() {\n  return 'baz!';\n}); //=&gt; 'bar!\n</code></pre>\n"
+        },
+        {
+          "name": "filter",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 183,
+          "doc": "<p>Filters the store by a filter function that takes a key value.\nReturns an array of arrays where the first element of each array\nis the key and the second is the value of that key.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>var store = new Sammy.Store;\nstore.set('one', 'two');\nstore.set('two', 'three');\nstore.set('1', 'two');\nvar returned = store.filter(function(key, value) {\n  // only return\n  return value === 'two';\n});\n// returned =&gt; [['one', 'two'], ['1', 'two']];\n</code></pre>\n"
+        },
+        {
+          "name": "first",
+          "args": [
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 195,
+          "doc": "<p>Works exactly like filter except only returns the first matching key\nvalue pair instead of all of them</p>\n"
+        },
+        {
+          "name": "get",
+          "args": [
+            "key"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 121,
+          "doc": "<p>Returns the set value at <code>key</code>, parsing with <code>JSON.parse</code> and\nturning into an object if possible</p>\n"
+        },
+        {
+          "name": "isAvailable",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 83,
+          "doc": "<p>Checks for the availability of the current storage type in the current browser/config.</p>\n"
+        },
+        {
+          "name": "keys",
+          "args": [
+
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 146,
+          "doc": "<p>Returns the all the keys set for the current store as an array.\nInternally Sammy.Store keeps this array in a 'meta_key' for easy access.</p>\n"
+        },
+        {
+          "name": "load",
+          "args": [
+            "key",
+            "path",
+            "callback"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 242,
+          "doc": "<p>loads the response of a request to <code>path</code> into <code>key</code>.</p>\n\n<h3>Example</h3>\n\n<p>In /mytemplate.tpl:</p>\n\n<pre class='prettyprint'><code>My Template\n</code></pre>\n\n<p>In app.js:</p>\n\n<pre class='prettyprint'><code>var store = new Sammy.Store;\nstore.load('mytemplate', '/mytemplate.tpl', function() {\n  s.get('mytemplate') //=&gt; My Template\n});\n</code></pre>\n"
+        },
+        {
+          "name": "set",
+          "args": [
+            "key",
+            "value"
+          ],
+          "filename": "/lib/plugins/sammy.storage.js",
+          "lineno": 107,
+          "doc": "<p>Sets the value of <code>key</code> with <code>value</code>. If <code>value</code> is an\nobject, it is turned to and stored as a string with <code>JSON.stringify</code>.\nIt also tries to conform to the KVO pattern triggering jQuery events on the\nelement that the store is bound to.</p>\n\n<h3>Example</h3>\n\n<pre class='prettyprint'><code>var store = new Sammy.Store({name: 'kvo'});\n$('body').bind('set-kvo-foo', function(e, data) {\n  Sammy.log(data.key + ' changed to ' + data.value);\n});\nstore.set('foo', 'bar'); // logged: foo changed to bar\n</code></pre>\n"
+        }
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.Cookie",
+    {
+      "name": "Sammy.Store.Cookie",
+      "args": [
+        "name",
+        "element",
+        "options"
+      ],
+      "doc": "<p>.Cookie ('cookie') storage uses browser cookies to store data. JavaScript\nhas access to a single document.cookie variable, which is limited to 2Kb in\nsize. Cookies are also considered 'unsecure' as the data can be read easily\nby other sites/JS. Cookies do have the advantage, though, of being widely\nsupported and persistent through refresh and close/open. Where available,\nHTML5 DOM Storage like LocalStorage and SessionStorage should be used.</p>\n\n<p>.Cookie can also take additional options:</p>\n\n<ul>\n<li><code>expires_in</code> Number of seconds to keep the cookie alive (default 2 weeks).</li>\n<li><code>path</code> The path to activate the current cookie for (default '/').</li>\n</ul>\n\n\n<p>For more information about document.cookie, check out the pre-eminint article\nby ppk: http://www.quirksmode.org/js/cookies.html</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 412,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.Data",
+    {
+      "name": "Sammy.Store.Data",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>Data ('data') stores objects using the jQuery.data() methods. This has the advantadge\nof scoping the data to the specific element. Like the 'memory' store its data\nwill only last for the length of the current request (data is lost on refresh/etc).</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 303,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.LocalStorage",
+    {
+      "name": "Sammy.Store.LocalStorage",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>LocalStorage ('local') makes use of HTML5 DOM Storage, and the window.localStorage\nobject. The great advantage of this method is that data will persist beyond\nthe current request. It can be considered a pretty awesome replacement for\ncookies accessed via JS. The great disadvantage, though, is its only available\non the latest and greatest browsers.</p>\n\n<p>For more info on DOM Storage:\nhttps://developer.mozilla.org/en/DOM/Storage\nhttp://www.w3.org/TR/2009/WD-webstorage-20091222/</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 337,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.Memory",
+    {
+      "name": "Sammy.Store.Memory",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>Memory ('memory') is the basic/default store. It stores data in a global\nJS object. Data is lost on refresh.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 276,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.SessionStorage",
+    {
+      "name": "Sammy.Store.SessionStorage",
+      "args": [
+        "name",
+        "element"
+      ],
+      "doc": "<p>.SessionStorage ('session') is similar to LocalStorage (part of the same API)\nand shares similar browser support/availability. The difference is that\nSessionStorage is only persistant through the current 'session' which is defined\nas the length that the current window is open. This means that data will survive\nrefreshes but not close/open or multiple windows/tabs. For more info, check out\nthe <code>LocalStorage</code> documentation and links.</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 368,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Store.isAvailable",
+    {
+      "name": "Sammy.Store.isAvailable",
+      "args": [
+        "type"
+      ],
+      "doc": "<p>Tests if the type of storage is available/works in the current browser/config.\nEspecially useful for testing the availability of the awesome, but not widely\nsupported HTML5 DOM storage</p>\n",
+      "filename": "/lib/plugins/sammy.storage.js",
+      "lineno": 266,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Template",
+    {
+      "name": "Sammy.Template",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Template</code> is a simple plugin that provides a way to create\nand render client side templates. The rendering code is based on John Resig's\nquick templates and Greg Borenstien's srender plugin.\nThis is also a great template/boilerplate for Sammy plugins.</p>\n\n<p>Templates use <code>&lt;% %&gt;</code> tags to denote embedded javascript.</p>\n\n<h3>Examples</h3>\n\n<p>Here is an example template (user.template):</p>\n\n<pre class='prettyprint'><code>  // user.template\n  &lt;div class=\"user\"&gt;\n    &lt;div class=\"user-name\"&gt;&lt;%= user.name %&gt;&lt;/div&gt;\n    &lt;% if (user.photo_url) { %&gt;\n      &lt;div class=\"photo\"&gt;&lt;img src=\"&lt;%= user.photo_url %&gt;\" /&gt;&lt;/div&gt;\n    &lt;% } %&gt;\n  &lt;/div&gt;\n</code></pre>\n\n<p>Given that is a publicly accesible file, you would render it like:</p>\n\n<pre class='prettyprint'><code>  // app.js\n  $.sammy(function() {\n    // include the plugin\n    this.use('Template');\n\n    this.get('#/', function() {\n      // the template is rendered in the current context.\n      this.user = {name: 'Aaron Quint'};\n      // partial calls template() because of the file extension\n      this.partial('user.template');\n    })\n  });\n</code></pre>\n\n<p>You can also pass a second argument to use() that will alias the template\nmethod and therefore allow you to use a different extension for template files\nin <tt>partial()</tt></p>\n\n<pre class='prettyprint'><code>  // alias to 'tpl'\n  this.use(Sammy.Template, 'tpl');\n\n  // now .tpl files will be run through srender\n  this.get('#/', function() {\n    this.partial('myfile.tpl');\n  });\n</code></pre>\n\n<p>By default, the data passed into the tempalate is passed automatically passed through\nSammy's <code>escapeHTML</code> method in order to prevent possible XSS attacks. This is\na problem though if you're using something like <code>Sammy.Form</code> which renders HTML\nwithin the templates. You can get around this in two ways. One, you can use the\n<code>&lt;%! %&gt;</code> instead of <code>&lt;%= %&gt;</code>. Two, you can pass the <code>escape_html = false</code> option\nwhen interpolating, i.e:</p>\n\n<pre class='prettyprint'><code>  this.get('#/', function() {\n    this.template('myform.tpl', {form: \"&lt;form&gt;&lt;/form&gt;\"}, {escape_html: false});\n  });\n</code></pre>\n",
+      "filename": "/lib/plugins/sammy.template.js",
+      "lineno": 118,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Title",
+    {
+      "name": "Sammy.Title",
+      "args": [
+
+      ],
+      "doc": "<p>Sammy.Title is a very simple plugin to easily set the document's title.\nIt supplies a helper for setting the title (<code>title()</code>) within routes,\nand an app level method for setting the global title (<code>setTitle()</code>)</p>\n",
+      "filename": "/lib/plugins/sammy.title.js",
+      "lineno": 12,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ],
+  [
+    "Sammy.Tmpl",
+    {
+      "name": "Sammy.Tmpl",
+      "args": [
+        "app",
+        "method_alias"
+      ],
+      "doc": "<p><code>Sammy.Tmpl</code> is a small wrapper around the $.tmpl templating engine. You\ncan find more information and download the engine itself at\nhttps://github.com/jquery/jquery-tmpl</p>\n\n<p>Note: This does not include $.tmpl in the source. Please include $.tmpl.js before\nsammy.tmpl.js</p>\n",
+      "filename": "/lib/plugins/sammy.tmpl.js",
+      "lineno": 15,
+      "methods": [
+
+      ],
+      "attributes": [
+
+      ],
+      "plugin": 38
+    }
+  ]
+]

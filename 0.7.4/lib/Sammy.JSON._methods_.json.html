@@ -1,0 +1,37 @@
+<div class='individual meth' id='Sammy.JSON-json'>
+  <a href='/docs/api/lib//'>
+    <strong>&laquo; Back</strong>
+  </a>
+  <h3>
+    <strong>Sammy.JSON</strong>
+    <a href='Sammy.JSON._methods_.json'>json</a>
+    <span>
+      (
+      <em>object</em>
+      )
+    </span>
+  </h3>
+  <div class='links'>
+    <a href='Sammy.JSON._methods_.json#comments'>Comments</a>
+    |
+    <a href='https://github.com/quirkey/sammy/tree/lib//lib/plugins/sammy.json.js#L355' target='all'>Show in GitHub</a>
+  </div><div class='doc'><p>json is a polymorphic function that translates objects aback and forth&#x000A;from JSON to JS. If given a string, it will parse into JS, if given a JS&#x000A;object it will stringify into JSON.</p>&#x000A;&#x000A;<h3>Example</h3>&#x000A;&#x000A;<pre class='prettyprint'><code> var app = $.sammy(function() {&#x000A;   this.use(Sammy.JSON);&#x000A;&#x000A;   this.get('#/', function() {&#x000A;     this.json({user_id: 123}); //=&gt; "{\"user_id\":\"123\"}"&#x000A;     this.json("{\"user_id\":\"123\"}"); //=&gt; [object Object]&#x000A;     this.json("{\"user_id\":\"123\"}").user_id; //=&gt; "123"&#x000A;   });&#x000A; })&#x000A;</code></pre></div><div id='comments'>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'sammyjsorg'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = "sammyjsdocs-lib/-Sammy.JSON-json";
+    var disqus_url = 'http://www.sammyjs.org/docs/api/lib//Sammy.JSON._methods_.json';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</div>
