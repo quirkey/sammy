@@ -33,16 +33,16 @@ In its coolness, Sammy can handle multiple chained asynchronous callbacks on a r
 
     this.get('#/', function(context,next) {
       $('#main').text('Welcome!');
-			$.get('/some/url',function(){
-				// save the data somewhere
-				next();
-			});
+      $.get('/some/url',function(){
+        // save the data somewhere
+        next();
+      });
     }, function(context,next) {
-			$.get('/some/other/url',function(){
-				// save this data too
-				next();
-			});
-		});
+      $.get('/some/other/url',function(){
+        // save this data too
+        next();
+      });
+    });
 
 
 Once you've defined an application the only thing left to do is run it. The best-practice behavior is to encapsulate `run()` in a document.ready block:
