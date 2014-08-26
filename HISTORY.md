@@ -1,3 +1,14 @@
+== 0.7.6 [8/26/2014]
+
+New:
+
+- Extended renderEach documentation [rprince]
+- Added bower.json file [mkoryak]
+
+Fixed:
+
+- Indentation in README [crzidea]
+
 == 0.7.5 [2/22/2014]
 
 New:
