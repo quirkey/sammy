@@ -1,6 +1,7 @@
 {
   "name": "sammy",
   "version": "0.7.6",
+  "main": "lib/sammy.js",
   "maintainers": [{"name":"Aaron Quint", "web": "http://www.quirkey.com"}],
   "description": "Sammy is a RESTful Evented JavaScript framework built on top of jQuery",
   "keywords": ["framework", "jquery", "sammy"],
