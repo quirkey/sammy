@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>Hello World</title>
+
+  <style type="text/css" media="screen">
+
+  </style>
+
+  <script src="../../vendor/coffee-script.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/coffeescript" charset="utf-8">
+    (($) ->
+      app = $.sammy(->
+        @get "#/", ->
+          $("#main").text ""
+
+        @get "#/test", ->
+          $("#main").text "Hello World"
+      )
+      $ -> app.run()
+    ) jQuery
+  </script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="main">
+    </div>
+    <ul id="link">
+      <li><a href="#/test">Click me!</a></li>
+      <li><a href="#/">Back</a></li>
+    </ul>
+  </div>
+</body>
+</html>
