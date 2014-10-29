@@ -10,6 +10,7 @@
   </style>
   <script src="../../vendor/jquery.js" type="text/javascript"></script>
   <script src="../../lib/sammy.js" type="text/javascript"></script>
+  <script src="../../vendor/templating/ejs.js" type="text/javascript"></script>
   <script src="../../lib/plugins/sammy.ejs.js" type="text/javascript"></script>
   <script type="text/javascript">
     ;(function($) {
@@ -37,13 +38,13 @@
         });
 
         this.get('#/who', function() {
-          this.partial('who.ejs', whos, function(html) {
+          this.render('who.ejs', whos, function(html) {
             $('#main').html(html);
           });
         });
 
         this.get('#/what', function() {
-          this.partial('what.ejs', whats, function(html) {
+          this.render('what.ejs', whats, function(html) {
             $('#main').html(html);
           });
         });
