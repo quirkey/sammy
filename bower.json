@@ -7,7 +7,7 @@
     "Frank Prößdorf"
   ],
   "description": "Sammy is a tiny javascript framework built on top of jQuery, It's RESTful Evented Javascript",
-  "main": "/lib/sammy.js",
+  "main": "lib/sammy.js",
   "keywords": [
     "mvc",
     "REST",
@@ -17,7 +17,8 @@
   "license": "MIT",
   "ignore": [
     "test",
-    "vendor"
+    "vendor",
+    "examples"
   ],
   "dependencies": {
     "jquery": ">=1.4.1"
