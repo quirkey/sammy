@@ -5,10 +5,8 @@ task :version do
   puts "VERSION: " + @version
 end
 
-desc 'Uses the yui-compressor to minify lib/sammy.js'
+desc 'Uses the uglify to minify lib/sammy.js'
 task :minify => :version do
-  yui_path = ENV['YUI_PATH'] || '~/Sites/yui/yuicompressor-2.4.2.jar'
-  java_path = ENV['JAVA_PATH'] || '/usr/bin/java'
   puts "Minify-ing"
   
   # compress each file
@@ -23,7 +21,7 @@ task :minify => :version do
     min_path        = File.join(dir, path.gsub(/\.js$/, "-#{@version}.min.js"))
     latest_min_path = File.join(dir, path.gsub(/\.js$/, "-latest.min.js"))
     
-    `#{java_path} -jar #{yui_path} -o #{min_path} lib/#{path}`
+    `uglifyjs lib/#{path} > #{min_path}`
     minified = File.read(min_path)
     prefix = []
     prefix << "// -- Sammy.js -- #{path}"
@@ -38,63 +36,6 @@ task :minify => :version do
   end
 end
 
-# Modified from peterc: http://gist.github.com/113226
-desc "Automatically run something when code is changed"
-task :autotest do
-  require 'find'
-  files = {}
-  test_path = ENV['TEST'] || File.join(File.dirname(__FILE__), 'test', 'index.html')
-  loop do
-    changed = false
-    Find.find(File.dirname(__FILE__)) do |file|
-      next unless file =~ /\.js$/
-      ctime = File.ctime(file).to_i
- 
-      if ctime != files[file]
-        files[file] = ctime
-        changed = true
-      end
-    end
- 
-    if changed
-      puts "Running #{test_path} at #{Time.now}"
-      system "open #{test_path}"
-      puts "\nWaiting for a *.js change"
-    end
- 
-    sleep 1
-  end
-end
-
-desc 'launch the test file in the browser' 
-task :test do
-  system "open #{File.join(File.dirname(__FILE__), 'test', 'index.html')}"
-end
-
-
-desc 'copy files into the site branch'
-task :copy_test_and_examples do
-  sh "mkdir -p site/examples site/test site/lib site/vendor"
-  sh "cp -r examples/* site/examples/"
-  sh "cp -r test/* site/test/"
-  sh "cp -r lib/* site/lib/"
-  sh "cp -r vendor/* site/vendor/"
-end
-
-
-desc 'update the current version # in the pages'
-task :update_version => :version do
-  Dir['site/**/*.*'].each do |file|
-    File.open(file, 'r+') do |f|
-      contents = f.read
-      contents.gsub!(/current_version\: ([\w\d\.]+)/, "current_version: #{@version}")
-      f.truncate(0)
-      f.rewind
-      f << contents
-    end
-  end
-end
-
 desc 'Tag with the current version'
 task :tag => :version do
   sh "git add ."
@@ -103,19 +44,7 @@ task :tag => :version do
   sh "git push --tags"
 end
 
-task :release => [:minify, :tag, :site]
-
-task :push_site do
-  sh "cd site && git add ."
-  sh "cd site && git commit -am 'Updated Site via Rake'"
-  sh "cd site && git push upstream gh-pages"
-end
-
-desc 'Build the site'
-task :build_site => [:copy_test_and_examples, :update_version]
-
-desc 'Build the site, then push it to github'
-task :site => [:build_site, :push_site]
+task :release => [:minify, :tag]
 
 desc 'Generate the docs for the current version to DIR'
 task :docs => :version do

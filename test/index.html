@@ -1,114 +1,101 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>Sammy Test Suite</title>
-  <link rel="stylesheet" href="../vendor/qunit/qunit.css" type="text/css" media="screen">
-  <script type="text/javascript" src="../vendor/qunit/qunit.js"></script>
-  <script type="text/javascript" src="../vendor/jquery.js"></script>
-  <script type="text/javascript" src="../vendor/qunit-spec.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../vendor/mocha/mocha.css" />
+    <style>
+      #main {
+        display: none;
+      }
+    </style>
+    <script src="../vendor/jquery.js"></script>
+    <script src="../vendor/mocha/expect.js"></script>
+    <script src="../vendor/mocha/mocha.js"></script>
+    <script src="../vendor/mocha/helpers.js"></script>
+    <script>
+      /**
+       * Set up a mock AMD define function for testing AMD registration.
+       */
+      function define(dependencies, callback) {
+        // These libs behave like good AMD citizens, treat them that way.
+        var moduleMap = {
+          'jquery':     window.jQuery,
+          'sammy':      window.Sammy,
+          'mustache':   window.Mustache,
+          'ejs':        window.EJS
+        },
+        modules = dependencies.map(function (modName) {
+          return moduleMap[modName];
+        });
 
-  <script type="text/javascript" src="../lib/sammy.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.storage.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.ejs.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.nested_params.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.mustache.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.handlebars.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.tmpl.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.json.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.haml.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.form.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.title.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.meld.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.pure.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.data_location_proxy.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.oauth2.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.flash.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.hoptoad.js"></script>
-  <script type="text/javascript" src="../lib/plugins/sammy.exceptional.js"></script>
+        // Sammy is being defined
+        if (dependencies.length == 1) {
+          // this global var is the tested object in the AMD test
+          window.amdDefined = callback(jQuery);
+          window.Sammy = jQuery.sammy = window.amdDefined;
+        } else {
+          callback.apply(undefined, modules);
+        }
+      }
+      define.amd = {
+        jQuery: true
+      };
 
-</head>
-<body>
-  <h1 id="qunit-header">Sammy Test Suite</h1>
-  <h2 id="qunit-banner"></h2>
-  <div id="qunit-testrunner-toolbar"></div>
-  <h2 id="qunit-userAgent"></h2>
-  <ol id="qunit-tests"></ol>
-
-
-  <!-- Test HTML -->
-  <div id="main" style="display:none;">
-    <div class="get_area"></div>
-    <div id="test_area"></div>
-    <form id="test_form" action="#/test" method="post">
-      <input type="hidden" name="test_input" value="TEST" />
-
-      <input type="checkbox" name="check[]" value="TEST 1" checked="checked" />
-      <input type="checkbox" name="check[]" value="TEST 2" checked="checked" />
-    </form>
-
-    <a id="pop" href="/">test</a>
-    <a id="push" href="/push">test</a>
-
-    <div class="inline-template-1"><div class="name"></div></div>
-
-    <script id="script-template" type="text/html" charset="utf-8" data-engine="template">
-      <div class="name"><%= name %></div>
+      window.mocha.setup({
+        ui: 'bdd',
+        ignoreLeaks: true
+      });
     </script>
-  </div>
 
-  <div id="form_params" style="display:none;">
-    <form id="nested_params_test_form" action="#/test_nested_params" method="post">
-      <input type="text" name="author" value="Wilde" />
-      <input type="text" name="author" value="Thoreau" />
-      <input type="text" name="title" value="Walden%21" />
+    <script type="text/javascript" src="../vendor/templating/mustache.js"></script>
+    <script type="text/javascript" src="../vendor/templating/ejs.js"></script>
+    <script type="text/javascript" src="../vendor/templating/hogan.js"></script>
+    <script type="text/javascript" src="../vendor/templating/handlebars.js"></script>
+    <script type="text/javascript" src="../vendor/templating/pure.js"></script>
+    <script type="text/javascript" src="../vendor/templating/haml.js"></script>
+    <script type="text/javascript" src="../vendor/templating/tmpl.js"></script>
 
-      <input type="text" name="genre[]" value="documentary" />
-      <input type="text" name="genre[]" value="nature" />
+    <script src="../lib/sammy.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.exceptional.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.hoptoad.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.flash.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.template.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.mustache.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.meld.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.data_location_proxy.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.json.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.storage.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.cache.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.ejs.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.haml.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.hogan.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.handlebars.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.pure.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.tmpl.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.nested_params.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.form.js"></script>
+    <script type="text/javascript" src="../lib/plugins/sammy.oauth2.js"></script>
 
-      <input type="checkbox" name="truevalue" value="true" checked="checked" />
-      <input type="checkbox" name="falsevalue" value="false" checked="checked" />
+    <script src="application_spec.js"></script>
+    <script src="event_context_spec.js"></script>
+    <script src="exceptional_spec.js"></script>
+    <script src="flash_spec.js"></script>
+    <script src="location_proxy_spec.js"></script>
+    <script src="meld_spec.js"></script>
+    <script src="render_context_spec.js"></script>
+    <script src="storage_spec.js"></script>
+    <script src="plugins_spec.js"></script>
+    <script src="hoptoad_spec.js"></script>
 
-      <input type="text" name="woods[trees][][name]" value="Spruce" />
-      <input type="text" name="woods[trees][][name]" value="Maple" />
-
-      <input type="text" name="poll[name]" value="Which beverage do you like best?" />
-      <input type="text" name="poll[priority]" value="10" />
-      <input type="hidden" name="poll[options][1][id]" value="Ko5Pi" />
-      <input type="text" name="poll[options][1][name]" value="Coffee" />
-      <input type="hidden" name="poll[options][2][id]" value="Oaj5N" />
-      <input type="text" name="poll[options][2][name]" value="Tea" />
-
-      <input type="text" name="poll[options][1][ingredients][]" value="Water" />
-      <input type="text" name="poll[options][1][ingredients][]" value="Coffein" />
-      <input type="text" name="pages[][words][]" value="Woods" />
-      <input type="text" name="pages[][words][]" value="Money" />
-
-      <input type="text" name="music[instruments][][name]" value="Piano" />
-      <input type="text" name="music[instruments][][size]" value="big" />
-      <input type="text" name="music[instruments][][name]" value="Flute" />
-      <input type="text" name="music[instruments][][size]" value="small" />
-    </form>
-
-    <form id="bad_nested_params_form" action="#/bad_nested_params" method="post">
-      <!-- these produce bad request errors -->
-      <input type="text" name="woods[trees][]name" value="Oak" />
-      <input type="text" name="softdrinks[]" value="Pepsi" />
-      <input type="text" name="softdrinks[name]" value="Cola" />
-      <input type="text" name="beverages[wine]" value="Cuvee du Vatican" />
-      <input type="text" name="beverages[wine][][name]" value="Fleurie" />
-    </form>
-  </div>
-
-  <script type="text/javascript" src="test_sammy_application.js"></script>
-  <script type="text/javascript" src="test_sammy_event_context.js"></script>
-  <script type="text/javascript" src="test_sammy_render_context.js"></script>
-  <script type="text/javascript" src="test_sammy_location_proxy.js"></script>
-  <script type="text/javascript" src="test_sammy_plugins.js"></script>
-  <script type="text/javascript" src="test_sammy_flash.js"></script>
-  <script type="text/javascript" src="test_sammy_meld.js"></script>
-  <script type="text/javascript" src="test_sammy_storage.js"></script>
-  <script type="text/javascript" src="test_sammy_hoptoad.js"></script>
-  <script type="text/javascript" src="test_sammy_exceptional.js"></script>
-</body>
+    <script>
+      $(function() {
+        mocha.run();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <div id="main"></div>
+    <div id="main2"></div>
+  </body>
 </html>

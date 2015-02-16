@@ -18,21 +18,37 @@ Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are 
 You set up a Sammy Application by passing a Function to the `$.sammy` (which is a shortcut for the Sammy.Application constructor).
 
     $.sammy(function() {
-      
+
       this.get('#/', function() {
         $('#main').text('Welcome!');
       });
-      
+
     });
 
 Inside the 'app' function() `this` is the Application. This is where you can configure the application and add routes.
 
 Above, we defined a `get()` route. When the browser is pointed to `#/` the function passed to that route will be run. Inside the route function, `this` is a Sammy.EventContext. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
 
+In its coolness, Sammy can handle multiple chained asynchronous callbacks on a route.
+
+    this.get('#/', function(context,next) {
+      $('#main').text('Welcome!');
+      $.get('/some/url',function(){
+        // save the data somewhere
+        next();
+      });
+    }, function(context,next) {
+      $.get('/some/other/url',function(){
+        // save this data too
+        next();
+      });
+    });
+
+
 Once you've defined an application the only thing left to do is run it. The best-practice behavior is to encapsulate `run()` in a document.ready block:
 
     var app = $.sammy(...)
-    
+
     $(function() {
       app.run();
     });
@@ -63,7 +79,7 @@ Get it from: [http://jquery.com](http://jquery.com)
 
 Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> with additional features and fixes contributed by these talented individuals:
 
-* Frank Prößdorf / endor 
+* Frank Prößdorf / endor
 * Alexander Lang / langalex
 * Scott McMillin / scottymac
 * ZhangJinzhu / jinzhu
@@ -71,10 +87,10 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * Jonathan Vaught / gravelpup
 * Jason Davies / jasondavies
 * Russell Jones / CodeOfficer
-* Geoff Longman 
+* Geoff Longman
 * Jens Bissinger / dpree
 * Tim Caswell / creationix
-* Mark Needham 
+* Mark Needham
 * SamDeLaGarza
 * Mickael Bailly / dready92
 * Rich Manalang / manalang
@@ -85,10 +101,11 @@ Sammy.js was created and is maintained by Aaron Quint <aaron at quirkey.com> wit
 * kbuckler
 * dvv
 * Ben Vinegar / benvinegar
+* Avi Deitcher / deitch
 
 ## Donate!
 
-If you're using Sammy.js in production or just for fun, instead of gifting me a beer - please consider donating to the [Code for Other People Fund]:http://pledgie.com/campaigns/15239 - you can probably spare a dollar or ten and it will be greatly appreciated.
+If you're using Sammy.js in production or just for fun, instead of gifting me a beer - please consider donating to the [Code for Other People Fund](http://pledgie.com/campaigns/15239). - you can probably spare a dollar or ten and it will be greatly appreciated.
 
 ## License
 

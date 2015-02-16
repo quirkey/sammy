@@ -1,7 +1,9 @@
-tmp*
+tmp/*
+vegas/*
 .lock
 .bundle
 .rvmrc
 _layouts
 _site
 .DS_Store
+*.swp
