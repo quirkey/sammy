@@ -561,7 +561,7 @@ describe('Application', function() {
         expect(route.verb).to.eql('patch');
         expect(route.callback).to.be.a(Array);
         expect(route.callback[0]).to.be.a(Function);
-      })
+      });
       it('finds a route by verb and partial route', function() {
         app.get(/\/blah\/(.+)/, function() {
           $('#main').trigger('click');
