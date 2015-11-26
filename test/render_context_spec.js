@@ -281,6 +281,21 @@ describe('RenderContext', function() {
     });
   });
 
+  it('detects json format when a query string is present', function(done) {
+    listenToChanged(app, {
+      setup: function() {
+        context.load('fixtures/partial.json?qs=1')
+          .render('fixtures/partial.template')
+          .replace('#main');
+      },
+      onChange: function() {
+        expect($('#main')).to.have.sameHTMLAs('<div id="main"><div class="original">json</div></div>');
+        app.unload();
+        done();
+      }
+    });
+  });
+
   it('appends then passes data to then', function(done) {
     $('#main').html('');
     context.load('fixtures/partial.html')

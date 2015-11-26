@@ -133,9 +133,34 @@ describe('DefaultLocationProxy', function() {
       var originalLocation = proxy.getLocation();
       $('#push').click();
     });
+
+    it('empty link hostname does not break push state links', function (done) {
+      var link = $('<a href="/push">test</a>');
+
+      app.bind('location-changed', function () {
+        expect(proxy.getLocation()).to.eql('/push');
+        app.unload();
+        done();
+      });
+
+      $('#main').append(link);
+
+      // Browsers do not allow clearing hostname by JS without affecting 
+      // the href property. Therefore this test is meaningful on IE only, 
+      // as the following line clears the hostname property on IE.
+      link.get(0).setAttribute('href', '/push');
+      
+      app.get('/push', function () { });
+
+      app.run('#/');
+      expect(app.isRunning()).to.be(true);
+
+      link.click();
+    });
   } else {
     it('pushes and pops state if History is available');
     it('binds to push state links');
+    it('empty link hostname does not break push state links');
   }
 
   it('handles arbitrary non-specific locations', function(done) {

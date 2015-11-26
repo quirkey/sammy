@@ -1,0 +1,25 @@
+{
+  "name": "sammy",
+  "version": "0.7.6",
+  "homepage": "http://sammyjs.org",
+  "authors": [
+    "Aaron Quint",
+    "Frank Prößdorf"
+  ],
+  "description": "Sammy is a tiny javascript framework built on top of jQuery, It's RESTful Evented Javascript",
+  "main": "/lib/sammy.js",
+  "keywords": [
+    "mvc",
+    "REST",
+    "framework",
+    "routing"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "test",
+    "vendor"
+  ],
+  "dependencies": {
+    "jquery": ">=1.4.1"
+  }
+}

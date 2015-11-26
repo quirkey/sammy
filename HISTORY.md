@@ -1,9 +1,43 @@
+== 0.7.6 [8/26/2014]
+
+New:
+
+- Extended renderEach documentation [rprince]
+- Added bower.json file [mkoryak]
+
+Fixed:
+
+- Indentation in README [crzidea]
+
+== 0.7.5 [2/22/2014]
+
+New:
+
+- Allow for different selectors in the push location proxy and only bind them within the app's element [kevingessner]
+- Add AMD support to Handlebars [rikkert]
+- Allow template paths with query parameters [trengrj]
+- Allow JSON paths with query parameters [vicb]
+- Support for new Google Analytics [erpheus]
+- More documentation for contextMatchesOptions [PhilippSoehnlein]
+
+Fixed:
+
+- Documentation for onComplete was formatted incorrectly [togakangaroo]
+- AMD issues [rikkert]
+- Hostname issues in IE [teelahti]
+- Clicking an element within a link that targets a different window should be ignored [dtretyakov]
+- Allow using jQuery in noConflict mode [vicb]
+- Test for console.log is broken in IE8 [CodeOtter]
+- When not passing a verb to `route`, the assignment of path is broken [luckydrq]
+
 == 0.7.4 [1/27/2013]
 
 Fixed:
+
 - Hotfix for bad jshinting of form matching
 
 == 0.7.3 [1/27/2013]
+
 New:
 
 - Support for asynchronous chained callbacks [deitch]

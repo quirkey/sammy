@@ -1,4 +1,10 @@
 describe('Application', function() {
+  describe('AMD module', function() {
+    it('should register as an AMD module', function() {
+      expect(amdDefined).to.eql(Sammy);
+    });
+  });
+
   describe('apps', function() {
     it('returns a new application if no arguments are passed', function() {
       var app = Sammy();
@@ -139,6 +145,19 @@ describe('Application', function() {
         expect(route.callback).to.be.a(Array);
         expect(route.callback[0]).to.be.a(Function);
         expect(route.path.toString()).to.eql(new RegExp("#/$").toString());
+      });
+
+      it('assumes the verb is any if only path and callback are passed as parameters', function() {
+        app.route('/blah', function() {
+          $('#testarea').show();
+        });
+
+        var route = app.routes['get'][1];
+        expect(route.callback[0]).to.be.a(Function);
+        expect(route.path.toString()).to.eql(new RegExp("/blah$").toString());
+        route = app.routes['post'][0];
+        expect(route.callback[0]).to.be.a(Function);
+        expect(route.path.toString()).to.eql(new RegExp("/blah$").toString());
       });
 
       it('looks up the callback as a string', function() {
@@ -302,6 +321,18 @@ describe('Application', function() {
         $('#main').append('<a href="#/some/route" target="another-window">Open in new window</a>');
         app.run('#/');
         $('#main a').click();
+
+        expect(captured).to.eql(false);
+      });
+
+      it('ignores links with contents that target other windows', function() {
+        var captured = false;
+        app.get('#/', function() {});
+        app.get('#/some/route', function() { captured = true; });
+
+        $('#main').append('<a href="#/some/route" target="another-window"><span>Open in new window</span></a>');
+        app.run('#/');
+        $('#main a span').click();
 
         expect(captured).to.eql(false);
       });
