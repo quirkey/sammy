@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Eco</title>
+  <script src="../../vendor/jquery.js"></script>
+  <script src="../../lib/sammy.js"></script>
+  <script src="../../lib/plugins/sammy.eco.js"></script>
+  <script src="home.js"></script>
+  <script type="text/javascript">
+    ;(function($) {
+      var app = $.sammy('#main', function() {
+        this.use(Sammy.Eco);
+        
+        this.get('#/', function() {
+          this.$element().html('Nothing to see here!');
+        });
+        
+        this.get('#/hi/:name', function() {
+          var data = {
+             prefixes: ['Hi', 'Hello', 'Hallo', 'Hola', 'Bonjour'],
+             name: this.params.name
+          };
+          // render the template and pass it through Eco
+          var html = this.eco('home', data);
+          // update the view
+          this.$element().html(html);
+      });
+    });
+      
+    $(function() {
+      app.run('#/');
+    });
+    
+    })(jQuery);
+  </script>
+
+</head>
+
+<body>
+  <div id="container">
+    <ul id="link">
+      <li><a href="index.html">reset!</a></li>
+      <li><a href="#/hi/Jason">Say Hi!</a></li>
+    </ul>
+    <div id="main"> </div>
+  </div>
+</body>
+</html>
