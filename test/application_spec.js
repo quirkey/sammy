@@ -552,7 +552,16 @@ describe('Application', function() {
         expect(route.callback).to.be.a(Array);
         expect(route.callback[0]).to.be.a(Function);
       });
-
+      it('finds patch route', function() {
+        app.patch('/blah', function() {
+          $('#testarea').show();
+        });
+        var route = app.lookupRoute('patch', '/blah');
+        expect(route).to.be.an(Object);
+        expect(route.verb).to.eql('patch');
+        expect(route.callback).to.be.a(Array);
+        expect(route.callback[0]).to.be.a(Function);
+      });
       it('finds a route by verb and partial route', function() {
         app.get(/\/blah\/(.+)/, function() {
           $('#main').trigger('click');
