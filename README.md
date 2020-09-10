@@ -16,42 +16,43 @@ Include it in your document AFTER jQuery.
 Like Sinatra, a Sammy application revolves around 'routes'. Routes in Sammy are a little different, though. Not only can you define 'get' and 'post' routes, but you can also bind routes to custom events triggered by your application.
 
 You set up a Sammy Application by passing a Function to the `$.sammy` (which is a shortcut for the Sammy.Application constructor).
+```javascript
+$.sammy(function() {
 
-    $.sammy(function() {
+  this.get('#/', function() {
+    $('#main').text('Welcome!');
+  });
 
-      this.get('#/', function() {
-        $('#main').text('Welcome!');
-      });
-
-    });
-
+});
+```
 Inside the 'app' function() `this` is the Application. This is where you can configure the application and add routes.
 
 Above, we defined a `get()` route. When the browser is pointed to `#/` the function passed to that route will be run. Inside the route function, `this` is a Sammy.EventContext. EventContext has a bunch of special methods and properties including a params hash, the ability to redirect, render partials, and more.
 
 In its coolness, Sammy can handle multiple chained asynchronous callbacks on a route.
-
-    this.get('#/', function(context,next) {
-      $('#main').text('Welcome!');
-      $.get('/some/url',function(){
-        // save the data somewhere
-        next();
-      });
-    }, function(context,next) {
-      $.get('/some/other/url',function(){
-        // save this data too
-        next();
-      });
-    });
-
+```javascript
+this.get('#/', function(context,next) {
+  $('#main').text('Welcome!');
+  $.get('/some/url',function(){
+    // save the data somewhere
+    next();
+  });
+}, function(context,next) {
+  $.get('/some/other/url',function(){
+    // save this data too
+    next();
+  });
+});
+```
 
 Once you've defined an application the only thing left to do is run it. The best-practice behavior is to encapsulate `run()` in a document.ready block:
+```javascript
+var app = $.sammy(...)
 
-    var app = $.sammy(...)
-
-    $(function() {
-      app.run();
-    });
+$(function() {
+  app.run();
+});
+```
 
 This will guarantee that the DOM is loaded before we try to apply functionality to it.
 
