@@ -1,4 +1,4 @@
-# Sammy
+# mshale
 
 [http://sammyjs.org](http://sammyjs.org)
 
